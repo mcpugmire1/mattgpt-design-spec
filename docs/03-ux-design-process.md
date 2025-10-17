@@ -85,6 +85,10 @@ About Matt
 
 MattGPT supports six distinct user journey patterns, each optimized for different discovery behaviors.
 
+### Visual Wireflow Diagrams
+
+The following diagrams illustrate the screen-to-screen navigation paths for each user journey.
+
 ### Flow 1: Banking Browse-First User
 
 **Journey:**
@@ -99,6 +103,21 @@ MattGPT supports six distinct user journey patterns, each optimized for differen
 
 **Persona:** Recruiter or hiring manager with specific industry focus
 **Goal:** Validate industry-specific experience depth
+
+```mermaid
+graph TD
+    A[Home Page] -->|Clicks 'See Banking Projects'| B[Banking Landing Page]
+    B -->|Views 16 Capability Categories| C{Select Category}
+    C -->|Clicks 'Agile Transformation 8'| D[8 Agile Stories List]
+    D -->|Clicks Story| E[Story Detail View]
+    E -->|Reads Full STAR| F[End: Validated Experience]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style D fill:#3498DB,color:#fff
+    style E fill:#2ECC71,color:#fff
+    style F fill:#27AE60,color:#fff
+```
 
 ---
 
@@ -117,6 +136,26 @@ MattGPT supports six distinct user journey patterns, each optimized for differen
 **Persona:** Recruiter with keyword checklist
 **Goal:** Quick keyword validation with option to explore depth
 
+```mermaid
+graph TD
+    A[Home Page] -->|Searches 'banking transformation'| B[Explore Stories Page]
+    B -->|Views 11 Semantic Matches| C[Results List]
+    C -->|Sees Transparency Banner| D{'11 of 55 banking projects - View all'}
+    D -->|Clicks 'View all'| E[Banking Landing Page]
+    E -->|Browse Categories or Stories| F{Select Option}
+    F -->|View Category| G[Category Stories]
+    F -->|View Story| H[Story Detail View]
+    G -->|Click Story| H
+    H -->|End| I[Validated Keyword + Depth]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#3498DB,color:#fff
+    style E fill:#6366F1,color:#fff
+    style H fill:#2ECC71,color:#fff
+    style I fill:#27AE60,color:#fff
+```
+
 ---
 
 ### Flow 3: Capability-First User
@@ -131,6 +170,25 @@ MattGPT supports six distinct user journey patterns, each optimized for differen
 
 **Persona:** Hiring manager seeking specific skill evidence
 **Goal:** Find proof of capability regardless of industry
+
+```mermaid
+graph TD
+    A[Home Page] -->|Clicks 'Product Innovation & Strategy'| B[Explore Stories]
+    B -->|Filtered by Capability| C[Stories Across All Industries]
+    C -->|Optional: Filter by Industry| D{Apply Industry Filter?}
+    D -->|Yes| E[Refined Results]
+    D -->|No| F[Browse All Capability Stories]
+    E -->|Browse| F
+    F -->|Clicks Story| G[Story Detail View]
+    G -->|Reads STAR| H[End: Capability Validated]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#3498DB,color:#fff
+    style F fill:#3498DB,color:#fff
+    style G fill:#2ECC71,color:#fff
+    style H fill:#27AE60,color:#fff
+```
 
 ---
 
@@ -148,6 +206,26 @@ MattGPT supports six distinct user journey patterns, each optimized for differen
 **Persona:** Time-constrained decision-maker
 **Goal:** Fast, natural language query with verifiable sources
 
+```mermaid
+graph TD
+    A[Home Page] -->|Clicks 'Quick Question'| B[Ask MattGPT]
+    B -->|Types Question| C[AI Processing]
+    C -->|Returns Response| D[Conversational Answer + Sources]
+    D -->|Reads Answer| E{Next Action?}
+    E -->|Clicks Source Citation| F[Story Detail View]
+    E -->|Ask Follow-up| C
+    E -->|Pivot to Browse| G[Industry/Category Landing]
+    F -->|Explore More| G
+    G -->|Browse Categories| H[End: Deep Dive]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#9333EA,color:#fff
+    style D fill:#3498DB,color:#fff
+    style F fill:#2ECC71,color:#fff
+    style H fill:#27AE60,color:#fff
+```
+
 ---
 
 ### Flow 5: Cross-Industry User
@@ -164,6 +242,25 @@ MattGPT supports six distinct user journey patterns, each optimized for differen
 **Persona:** Hiring manager seeking transferable patterns
 **Goal:** Find methodology consistency across contexts
 
+```mermaid
+graph TD
+    A[Home Page] -->|Clicks 'Cross-Industry'| B[Cross-Industry Landing]
+    B -->|Views 51 Projects| C[15+ Transformation Capabilities]
+    C -->|Clicks 'Digital Product Development 3'| D[3 Stories List]
+    D -->|Clicks Story| E[Story Detail View]
+    E -->|Reads STAR| F{Explore More?}
+    F -->|Yes - Different Capability| C
+    F -->|Yes - Compare Industries| G[Browse by Industry]
+    F -->|No| H[End: Pattern Validated]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#3498DB,color:#fff
+    style D fill:#3498DB,color:#fff
+    style E fill:#2ECC71,color:#fff
+    style H fill:#27AE60,color:#fff
+```
+
 ---
 
 ### Flow 6: Direct Search
@@ -178,6 +275,27 @@ MattGPT supports six distinct user journey patterns, each optimized for differen
 
 **Persona:** Recruiter validating specific client experience
 **Goal:** Confirm breadth of work with target organization
+
+```mermaid
+graph TD
+    A[Home Page] -->|Searches 'JPMorgan'| B[Explore Stories]
+    B -->|33 JPMorgan Results| C[Complete Results - No Banner]
+    C -->|Browse Results| D{User Action?}
+    D -->|Apply Filters| E[Refine by Role/Domain]
+    D -->|Sort Results| F[Sort by Date/Relevance]
+    D -->|Click Story| G[Story Detail View]
+    E -->|Browse Filtered| G
+    F -->|Browse Sorted| G
+    G -->|Read STAR| H{Explore More?}
+    H -->|Yes - View Another| D
+    H -->|No| I[End: Client Experience Confirmed]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#3498DB,color:#fff
+    style G fill:#2ECC71,color:#fff
+    style I fill:#27AE60,color:#fff
+```
 
 ---
 
