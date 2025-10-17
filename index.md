@@ -39,18 +39,18 @@ This isn't just a portfolio — it's a **demonstration of modern AI product deve
 
 ### Core Strategy & Vision
 
-**[📘 Product Vision](/docs/01-product-vision.html)**
+**[📘 Product Vision](/mattgpt-design-spec/docs/01-product-vision)**
 The Credibility Engine — WHY, HOW, WHAT framework, user personas, data governance model, and AI system prompt.
 
-**[🏗️ Technical Architecture](/docs/02-technical-architecture.html)**
+**[🏗️ Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture)**
 Three-phase evolution from MVP to enterprise scale, tech stack decisions, and strategic trade-offs.
 
 ### Design & Implementation
 
-**[🎨 UX Design Process](/docs/03-ux-design-process.html)**
+**[🎨 UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process)**
 Complete site architecture, user flows, and detailed wireframe specifications for every view.
 
-**[🔨 Building MattGPT](/docs/04-building-mattgpt.html)**
+**[🔨 Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt)**
 The development journey, technical challenges, hybrid search algorithm, and product roadmap.
 
 ---
@@ -60,31 +60,31 @@ The development journey, technical challenges, hybrid search algorithm, and prod
 Explore clickable HTML prototypes of the MattGPT interface:
 
 ### Core Views
-- **[Homepage](wireframes/homepage_wireframe.html)** - Entry point with starter cards
-- **[Banking Landing Page](wireframes/banking_landing_page_wireframe.html)** - Industry-specific view (55 projects, 16 capabilities)
-- **[Cross-Industry Landing](wireframes/cross_industry_landing_page_wireframe.html)** - Transformation patterns across sectors
+- **[Homepage](/mattgpt-design-spec/wireframes/homepage_wireframe.html)** - Entry point with starter cards
+- **[Banking Landing Page](/mattgpt-design-spec/wireframes/banking_landing_page_wireframe.html)** - Industry-specific view (55 projects, 16 capabilities)
+- **[Cross-Industry Landing](/mattgpt-design-spec/wireframes/cross_industry_landing_page_wireframe.html)** - Transformation patterns across sectors
 
 ### Explore Stories Interface
-- **[Table View](wireframes/explore_stories_table_view_wireframe.html)** - High-density browsing for recruiters
-- **[Card View](wireframes/explore_stories_card_view_wireframe.html)** - Visual story previews
-- **[Timeline View](wireframes/explore_stories_timeline_view_wireframe.html)** - Chronological career progression
-- **[Detail View](wireframes/explore_stories_detail_view_wireframe.html)** - Full STAR story with metrics
+- **[Table View](/mattgpt-design-spec/wireframes/explore_stories_table_view_wireframe.html)** - High-density browsing for recruiters
+- **[Card View](/mattgpt-design-spec/wireframes/explore_stories_card_view_wireframe.html)** - Visual story previews
+- **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_view_wireframe.html)** - Chronological career progression
+- **[Detail View](/mattgpt-design-spec/wireframes/explore_stories_detail_view_wireframe.html)** - Full STAR story with metrics
 
 ### Ask MattGPT (AI Interface)
-- **[Landing Page](wireframes/ask_mattgpt_landing_wireframe.html)** - Conversational search entry
-- **[Conversation View](wireframes/ask_mattgpt_conversation_wireframe.html)** - Live chat with source citations
+- **[Landing Page](/mattgpt-design-spec/wireframes/ask_mattgpt_landing_wireframe.html)** - Conversational search entry
+- **[Conversation View](/mattgpt-design-spec/wireframes/ask_mattgpt_conversation_wireframe.html)** - Live chat with source citations
 
 ### About Matt
-- **[About Matt Page](wireframes/about_matt_wireframe.html)** - Career journey, competencies, leadership philosophy
+- **[About Matt Page](/mattgpt-design-spec/wireframes/about_matt_wireframe.html)** - Career journey, competencies, leadership philosophy
 
 ---
 
 ## Component Library
 
-**[📦 Component Inventory](components/component_inventory.html)**
+**[📦 Component Inventory](/mattgpt-design-spec/components/component_inventory)**
 Complete catalog of reusable UI components with specifications.
 
-**[🗺️ Sitemap & Navigation](components/sitemap_navigation.html)**
+**[🗺️ Sitemap & Navigation](/mattgpt-design-spec/components/sitemap_navigation)**
 Information architecture and navigation patterns.
 
 ---
@@ -92,14 +92,14 @@ Information architecture and navigation patterns.
 ## Design Artifacts
 
 ### Architecture Diagrams
-- [RAG Workflow](images/architecture/rag_workflow.svg) - Data ingestion → retrieval pipeline
-- [Site Architecture](images/architecture/site_architecture.svg) - Full information hierarchy
-- [Architecture Evolution Slide](wireframes/architecture_evolution_slide_wireframe.html) - MVP → Production → Enterprise roadmap
+- [RAG Workflow](/mattgpt-design-spec/images/architecture/rag_workflow.svg) - Data ingestion → retrieval pipeline
+- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.svg) - Full information hierarchy
+- [Architecture Evolution Slide](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - MVP → Production → Enterprise roadmap
 
 ### Brand Assets
-- [Logo Variations](brand-kit/logos/) - Full brand kit with usage guidelines
-- [Color Palette](brand-kit/colors/) - Primary, secondary, and semantic colors
-- [Typography](brand-kit/typography/) - Font specifications and hierarchy
+- [Logo Variations](/mattgpt-design-spec/brand-kit/logos/) - Full brand kit with usage guidelines
+- [Color Palette](/mattgpt-design-spec/brand-kit/colors/) - Primary, secondary, and semantic colors
+- [Typography](/mattgpt-design-spec/brand-kit/typography/) - Font specifications and hierarchy
 
 ---
 
@@ -154,7 +154,7 @@ Every project includes Situation, Task, Action, Result with measurable metrics.
 
 **Try the working MVP:** [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
 
-**GitHub Repository:** [github.com/matthewpugmire/mattgpt-design-spec](https://github.com/matthewpugmire/mattgpt-design-spec)
+**GitHub Repository:** [github.com/mcpugmire1/mattgpt-design-spec](https://github.com/mcpugmire1/mattgpt-design-spec)
 
 ---
 
