@@ -11,7 +11,7 @@ url: "https://matthewpugmire.github.io"
 theme: jekyll-theme-minimal
 
 # Logo (Agy the Plott Hound)
-logo: /mattgpt-design-spec/images/logos/agy_hero.png
+logo: /images/logos/agy_hero.png
 
 # Navigation
 header_pages:
@@ -73,8 +73,7 @@ keep_files:
   - images
   - brand-kit
 
-# Include these file types
+# Include these file types (files that start with underscore or dot)
 include:
-  - wireframes/*.html
-  - components/*.html
-  - components/*.md
+  - "wireframes"
+  - "_wireframes"

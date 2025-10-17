@@ -60,19 +60,18 @@ The development journey, technical challenges, hybrid search algorithm, and prod
 Explore clickable HTML prototypes of the MattGPT interface:
 
 ### Core Views
-- **[Homepage](/mattgpt-design-spec/wireframes/homepage_wireframe.html)** - Entry point with starter cards
-- **[Banking Landing Page](/mattgpt-design-spec/wireframes/banking_landing_page_wireframe.html)** - Industry-specific view (55 projects, 16 capabilities)
-- **[Cross-Industry Landing](/mattgpt-design-spec/wireframes/cross_industry_landing_page_wireframe.html)** - Transformation patterns across sectors
+- **[Homepage](/mattgpt-design-spec/wireframes/index.html)** - Entry point with starter cards
+- **[Banking Landing Page](/mattgpt-design-spec/wireframes/banking_landing_page.html)** - Industry-specific view (55 projects, 16 capabilities)
 
 ### Explore Stories Interface
-- **[Table View](/mattgpt-design-spec/wireframes/explore_stories_table_view_wireframe.html)** - High-density browsing for recruiters
-- **[Card View](/mattgpt-design-spec/wireframes/explore_stories_card_view_wireframe.html)** - Visual story previews
-- **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_view_wireframe.html)** - Chronological career progression
-- **[Detail View](/mattgpt-design-spec/wireframes/explore_stories_detail_view_wireframe.html)** - Full STAR story with metrics
+- **[Table View](/mattgpt-design-spec/wireframes/explore_stories_table_wireframe.html)** - High-density browsing for recruiters
+- **[Card View](/mattgpt-design-spec/wireframes/explore_stories_cards_wireframe.html)** - Visual story previews
+- **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_wireframe.html)** - Chronological career progression
+- **[Mobile View](/mattgpt-design-spec/wireframes/explore_stories_mobile_wireframe.html)** - Mobile-optimized story browsing
 
 ### Ask MattGPT (AI Interface)
 - **[Landing Page](/mattgpt-design-spec/wireframes/ask_mattgpt_landing_wireframe.html)** - Conversational search entry
-- **[Conversation View](/mattgpt-design-spec/wireframes/ask_mattgpt_conversation_wireframe.html)** - Live chat with source citations
+- **[Conversation View](/mattgpt-design-spec/wireframes/ask_mattgpt_wireframe.html)** - Live chat with source citations
 
 ### About Matt
 - **[About Matt Page](/mattgpt-design-spec/wireframes/about_matt_wireframe.html)** - Career journey, competencies, leadership philosophy
