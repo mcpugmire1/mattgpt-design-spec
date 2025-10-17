@@ -1,0 +1,80 @@
+# Jekyll Configuration for MattGPT Design Specification
+# GitHub Pages will automatically use this configuration
+
+# Site Settings
+title: MattGPT Design Specification
+description: Complete product blueprint for strategy, auditable architecture, and technical execution
+baseurl: "/mattgpt-design-spec"
+url: "https://matthewpugmire.github.io"
+
+# Theme
+theme: jekyll-theme-cayman
+# Alternative themes you can try:
+# theme: jekyll-theme-minimal
+# theme: jekyll-theme-architect
+# theme: jekyll-theme-slate
+
+# Navigation
+header_pages:
+  - docs/01-product-vision.md
+  - docs/02-technical-architecture.md
+  - docs/03-ux-design-process.md
+  - docs/04-building-mattgpt.md
+
+# Collections
+collections:
+  wireframes:
+    output: true
+    permalink: /wireframes/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: "docs"
+    values:
+      layout: "default"
+      nav_order: 1
+  - scope:
+      path: "wireframes"
+    values:
+      layout: "default"
+      nav_order: 2
+
+# Markdown Settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
+
+# Enable relative links
+relative_links:
+  enabled: true
+  collections: true
+
+# Convert titles from headings
+titles_from_headings:
+  enabled: true
+  strip_title: false
+  collections: true
+
+# Social/Contact
+author: Matt Pugmire
+email: mpugmire@gmail.com
+linkedin: https://www.linkedin.com/in/mattpugmire/
+
+# Exclude from processing
+exclude:
+  - README.md
+  - .gitignore
+  - vendor
+  - Gemfile
+  - Gemfile.lock
