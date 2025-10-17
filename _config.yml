@@ -20,12 +20,6 @@ header_pages:
   - docs/03-ux-design-process.md
   - docs/04-building-mattgpt.md
 
-# Collections
-collections:
-  wireframes:
-    output: true
-    permalink: /wireframes/:name/
-
 # Defaults
 defaults:
   - scope:
@@ -33,11 +27,6 @@ defaults:
     values:
       layout: "default"
       nav_order: 1
-  - scope:
-      path: "wireframes"
-    values:
-      layout: "default"
-      nav_order: 2
 
 # Markdown Settings
 markdown: kramdown
