@@ -1,7 +1,7 @@
 # Current Project Context
 
 **Last Updated:** October 17, 2024
-**Session Status:** Documentation site deployed, wireflow diagrams needed
+**Session Status:** Wireflow diagrams complete, Mermaid.js integration in progress
 
 ---
 
@@ -41,22 +41,36 @@ A **multi-purpose design specification** for MattGPT that serves as:
 
 ## Current Work (What's In Progress)
 
-### 🔄 Wireflow Diagrams (OUTSTANDING)
-**Need:** Visual wireflow mappings for MattGPT app showing:
-- Screen-to-screen transitions
-- User decision points
-- Interaction states
-- Edge cases and error handling
+### ✅ Wireflow Diagrams (COMPLETED - October 17)
+**Status:** Complete! Added 6 visual Mermaid.js diagrams to `/docs/03-ux-design-process.md`
 
-**Purpose:** Actionable design spec for developers (not just portfolio fluff)
+**What was created:**
+- Flow 1: Banking Browse-First User
+- Flow 2: Search-First User
+- Flow 3: Capability-First User
+- Flow 4: Conversational User (Ask MattGPT)
+- Flow 5: Cross-Industry User
+- Flow 6: Direct Search User
 
-**Format Options:**
-- Option A: Miro/Mural flowcharts → export as images → add to `/images/wireflows/`
-- Option B: Figma prototype with flow arrows → export → add to site
-- Option C: Hand-drawn diagrams → scan → add to site
-- Option D: Markdown with Mermaid.js diagrams (text-based, version-controllable)
+**Format:** Mermaid.js (text-based, version-controllable, renders as interactive diagrams)
+**Location:** Lines 88-298 in `/docs/03-ux-design-process.md`
+**Colors:** Branded with MattGPT palette (purple, indigo, blue, green)
 
-**Status:** Not started - waiting for decision on format
+**Awaiting:** GitHub Pages rebuild (5-10 mins) to see diagrams render live
+
+---
+
+### 🔄 Mermaid.js Integration (IN PROGRESS)
+**Need:** Enable Mermaid diagram rendering on GitHub Pages
+
+**What was done:**
+- Created custom `_layouts/default.html` extending minimal theme
+- Added Mermaid.js library from CDN (v10)
+- Configured Mermaid theme with brand colors
+- Removed wireframes from collections processing
+
+**Status:** Changes pushed to GitHub, awaiting Pages rebuild
+**Testing:** See `LINK-TESTING.md` for comprehensive testing checklist
 
 ---
 

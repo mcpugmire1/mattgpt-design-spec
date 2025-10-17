@@ -95,14 +95,9 @@ Complete brand kit with logos, colors, typography, and usage guidelines.
 ## Design Artifacts
 
 ### Architecture Diagrams
-- [RAG Workflow](/mattgpt-design-spec/images/architecture/rag_workflow.svg) - Data ingestion → retrieval pipeline
+- [RAG Architecture](/mattgpt-design-spec/images/architecture/rag_architecture_ref.svg) - Data ingestion → retrieval pipeline
 - [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.svg) - Full information hierarchy
 - [Architecture Evolution Slide](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - MVP → Production → Enterprise roadmap
-
-### Brand Assets
-- [Logo Variations](/mattgpt-design-spec/brand-kit/logos/) - Full brand kit with usage guidelines
-- [Color Palette](/mattgpt-design-spec/brand-kit/colors/) - Primary, secondary, and semantic colors
-- [Typography](/mattgpt-design-spec/brand-kit/typography/) - Font specifications and hierarchy
 
 ---
 
