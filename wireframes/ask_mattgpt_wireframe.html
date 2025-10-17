@@ -127,15 +127,13 @@
             font-size: 13px;
             color: #7f8c8d;
             margin-bottom: 12px;
-            animation: fadeOut 0.3s ease-out 2s forwards;
+            animation: fadeOutSmooth 0.5s ease-out 2s forwards;
         }
 
-        @keyframes fadeOut {
+        @keyframes fadeOutSmooth {
             to {
                 opacity: 0;
-                height: 0;
-                margin: 0;
-                padding: 0;
+                transform: translateY(-8px);
             }
         }
 
