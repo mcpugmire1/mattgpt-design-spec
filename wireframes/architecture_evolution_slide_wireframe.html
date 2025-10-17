@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture Evolution: MVP to Production</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .slide {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .slide-header {
+            margin-bottom: 40px;
+        }
+
+        .slide-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .slide-subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        /* Phase Timeline */
+        .phases-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .phase-card {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .phase-card.current {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .phase-card.target {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .phase-card.future {
+            border-color: #9b59b6;
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+        }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .phase-card.current .phase-badge {
+            background: #27ae60;
+            color: white;
+        }
+
+        .phase-card.target .phase-badge {
+            background: #3498db;
+            color: white;
+        }
+
+        .phase-card.future .phase-badge {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .phase-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .phase-timeline {
+            font-size: 13px;
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .phase-goal {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            border-left: 4px solid;
+        }
+
+        .phase-card.current .phase-goal {
+            border-left-color: #27ae60;
+        }
+
+        .phase-card.target .phase-goal {
+            border-left-color: #3498db;
+        }
+
+        .phase-card.future .phase-goal {
+            border-left-color: #9b59b6;
+        }
+
+        .phase-goal-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            margin-bottom: 6px;
+        }
+
+        .phase-goal-text {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .phase-section {
+            margin-bottom: 16px;
+        }
+
+        .phase-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .tech-item {
+            font-size: 13px;
+            color: #2c3e50;
+            padding: 6px 10px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-icon {
+            font-size: 16px;
+        }
+
+        .tradeoffs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .tradeoff-item {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .tradeoff-item::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            font-weight: 700;
+        }
+
+        /* Arrow between phases */
+        .phase-card::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 32px;
+            color: #bdc3c7;
+            font-weight: 700;
+        }
+
+        .phase-card:last-child::after {
+            content: '';
+        }
+
+        /* Rationale Section */
+        .rationale-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .rationale-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rationale-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .rationale-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 4px solid #3498db;
+        }
+
+        .rationale-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .rationale-card-text {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Status indicators */
+        .status-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .status-dot.current {
+            background: #27ae60;
+        }
+
+        .status-dot.target {
+            background: #3498db;
+        }
+
+        .status-dot.future {
+            background: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <!-- Header -->
+        <div class="slide-header">
+            <h1 class="slide-title">Architecture Roadmap: MVP to Production</h1>
+            <p class="slide-subtitle">
+                Intentional evolution from rapid prototyping to enterprise-grade scalability — demonstrating trade-off awareness and strategic technical planning
+            </p>
+        </div>
+
+        <!-- Phase Cards -->
+        <div class="phases-container">
+            <!-- Phase 1: MVP -->
+            <div class="phase-card current">
+                <div class="phase-badge">Phase 1 • MVP</div>
+                <h3 class="phase-title">Rapid Validation</h3>
+                <div class="phase-timeline">Current State</div>
+
+                <div class="phase-goal">
+                    <div class="phase-goal-label">Primary Goal</div>
+                    <div class="phase-goal-text">Validate product-market fit with minimal investment</div>
+                </div>
+
+                <div class="phase-section">
+                    <div class="phase-section-title">Tech Stack</div>
+                    <div class="tech-list">
+                        <div class="tech-item">
+                            <span class="tech-icon">🐍</span>
+                            <span>Streamlit (Monolith)</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">🤖</span>
+                            <span>OpenAI GPT-4</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">🌲</span>
+                            <span>Pinecone Vector DB</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">🐳</span>
+                            <span>Docker (Local)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-section">
+                    <div class="phase-section-title">Trade-offs</div>
+                    <div class="tradeoffs-list">
+                        <div class="tradeoff-item">Desktop-first (not mobile optimized)</div>
+                        <div class="tradeoff-item">Limited scalability (~100 users)</div>
+                        <div class="tradeoff-item">No CDN or caching layer</div>
+                        <div class="tradeoff-item">Monolithic architecture</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2: Production -->
+            <div class="phase-card target">
+                <div class="phase-badge">Phase 2 • Target</div>
+                <h3 class="phase-title">Production Scale</h3>
+                <div class="phase-timeline">Target State (Q2 2025)</div>
+
+                <div class="phase-goal">
+                    <div class="phase-goal-label">Primary Goal</div>
+                    <div class="phase-goal-text">Scalable architecture for 10K+ concurrent users</div>
+                </div>
+
+                <div class="phase-section">
+                    <div class="phase-section-title">Tech Stack</div>
+                    <div class="tech-list">
+                        <div class="tech-item">
+                            <span class="tech-icon">⚛️</span>
+                            <span>React + Next.js</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">🚀</span>
+                            <span>FastAPI Gateway</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">🦜</span>
+                            <span>LangChain/LlamaIndex</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">☁️</span>
+                            <span>AWS/Azure Deployment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-section">
+                    <div class="phase-section-title">Improvements</div>
+                    <div class="tradeoffs-list">
+                        <div class="tradeoff-item">Mobile-first responsive design</div>
+                        <div class="tradeoff-item">Micro-frontend architecture</div>
+                        <div class="tradeoff-item">API Gateway + service isolation</div>
+                        <div class="tradeoff-item">Horizontal auto-scaling</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Scale -->
+            <div class="phase-card future">
+                <div class="phase-badge">Phase 3 • Future</div>
+                <h3 class="phase-title">Enterprise-Grade</h3>
+                <div class="phase-timeline">Future State (2026+)</div>
+
+                <div class="phase-goal">
+                    <div class="phase-goal-label">Primary Goal</div>
+                    <div class="phase-goal-text">Enterprise resilience & observability at scale</div>
+                </div>
+
+                <div class="phase-section">
+                    <div class="phase-section-title">Tech Stack</div>
+                    <div class="tech-list">
+                        <div class="tech-item">
+                            <span class="tech-icon">🌐</span>
+                            <span>Global CDN (CloudFlare)</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">💾</span>
+                            <span>Redis Caching Layer</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">📊</span>
+                            <span>DataDog/New Relic APM</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-icon">🔄</span>
+                            <span>Airflow ETL Orchestration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-section">
+                    <div class="phase-section-title">Capabilities</div>
+                    <div class="tradeoffs-list">
+                        <div class="tradeoff-item">Multi-region deployment</div>
+                        <div class="tradeoff-item">99.9% uptime SLA</div>
+                        <div class="tradeoff-item">Real-time monitoring & alerting</div>
+                        <div class="tradeoff-item">A/B testing infrastructure</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rationale Section -->
+        <div class="rationale-section">
+            <h3 class="rationale-title">
+                <span>💡</span>
+                <span>Strategic Rationale: Why This Approach?</span>
+            </h3>
+            <div class="rationale-content">
+                <div class="rationale-card">
+                    <div class="rationale-card-title">De-Risk with MVP-First Thinking</div>
+                    <div class="rationale-card-text">
+                        Streamlit allowed 2-week build time vs 3+ months for React. Validated RAG architecture, system prompt design, and user experience before committing to production infrastructure.
+                    </div>
+                </div>
+
+                <div class="rationale-card">
+                    <div class="rationale-card-title">Preserve Core IP Across Phases</div>
+                    <div class="rationale-card-text">
+                        Data pipeline (embeddings, Pinecone indexing, STAR taxonomy) remains unchanged. Only presentation layer evolves — minimizing technical debt and preserving investment.
+                    </div>
+                </div>
+
+                <div class="rationale-card">
+                    <div class="rationale-card-title">Demonstrate Trade-Off Awareness</div>
+                    <div class="rationale-card-text">
+                        Consciously accepted MVP limitations (desktop-only, monolithic) to accelerate learning. Architecture evolution shows intentional shortcuts vs accidental technical debt.
+                    </div>
+                </div>
+
+                <div class="rationale-card">
+                    <div class="rationale-card-title">Align Architecture to Business Goals</div>
+                    <div class="rationale-card-text">
+                        Phase 1: Portfolio showcase (100 users). Phase 2: Public product (10K users). Phase 3: Revenue-generating SaaS (enterprise scale). Stack complexity matches business maturity.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Row -->
+        <div class="status-row">
+            <div class="status-item">
+                <div class="status-dot current"></div>
+                <span>Phase 1: Complete (Jan 2025)</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot target"></div>
+                <span>Phase 2: Planned (Q2 2025)</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot future"></div>
+                <span>Phase 3: Aspirational (2026+)</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

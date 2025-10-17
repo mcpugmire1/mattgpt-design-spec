@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Matt Pugmire | Director of Technology Delivery | Digital Transformation Leader</title>
+    <meta name="description" content="20+ years scaling engineering teams, accelerating delivery 3-20x, and leading organizational transformation at Fortune 500 companies. Director-level experience in product leadership, platform engineering, and agile transformation at JPMorgan Chase, Accenture, Capital One. Available for immediate opportunities.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .page {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .nav-item.active {
+            background: #34495e;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-avatar {
+            width: 140px;
+            height: 140px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border: 4px solid white;
+        }
+
+        .hero-text h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .hero-text .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .hero-text .bio {
+            font-size: 15px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .stat {
+            padding: 30px;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8B5CF6;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Section */
+        .section {
+            padding: 50px 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+
+        /* Career Timeline */
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #8B5CF6, #7C3AED);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -47px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border: 3px solid #8B5CF6;
+            border-radius: 50%;
+        }
+
+        .timeline-year {
+            font-size: 14px;
+            font-weight: 700;
+            color: #8B5CF6;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+
+        .timeline-company {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Competencies Grid */
+        .competencies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .competency-card {
+            background: #fafafa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .competency-card:hover {
+            border-color: #8B5CF6;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+        }
+
+        .competency-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .competency-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .competency-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .competency-list li {
+            font-size: 13px;
+            color: #555;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .competency-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #8B5CF6;
+        }
+
+        /* Philosophy Cards */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .philosophy-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .philosophy-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .philosophy-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        /* Technical Architecture Section */
+        .architecture-section {
+            background: #fafafa;
+        }
+
+        .architecture-intro {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .architecture-intro h3 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .architecture-intro p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .tech-stack-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: #ecf0f1;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* Architecture Diagram */
+        .architecture-diagram {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .diagram-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .diagram-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .flow-step {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #8B5CF6;
+        }
+
+        .flow-step:last-child::after {
+            content: '';
+        }
+
+        .flow-step-number {
+            width: 28px;
+            height: 28px;
+            background: #8B5CF6;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
+        .flow-step-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+
+        .flow-step-desc {
+            font-size: 11px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        /* Technical Details Grid */
+        .tech-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .tech-detail-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .tech-detail-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-detail-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tech-detail-list li {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tech-detail-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: 700;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-top: 12px;
+            white-space: pre-wrap;
+        }
+
+        .code-comment {
+            color: #95a5a6;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: white;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .contact-btn {
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .contact-btn:hover {
+            background: white;
+            color: #8B5CF6;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="index.html" class="nav-item">Homepage</a>
+            <a href="explore_stories_cards_wireframe.html" class="nav-item">Explore Stories</a>
+            <a href="ask_mattgpt_landing_wireframe.html" class="nav-item">Ask MattGPT</a>
+            <a href="about_matt_wireframe.html" class="nav-item active">About Matt</a>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-avatar">
+                    <img src="mattgpt_brand_kit/chat_avatars/agy_avatar_128_light.png" alt="Matt Pugmire" style="width: 120px; height: 120px; border-radius: 50%;">
+                </div>
+                <div class="hero-text">
+                    <h1>Matt Pugmire</h1>
+                    <p class="subtitle">Digital Transformation Leader | Director of Technology Delivery</p>
+                    <p class="bio">
+                        20+ years driving innovation, agile transformation, and application modernization across Fortune 500 companies.
+                        Proven track record of accelerating delivery 3-20x, scaling engineering teams to 150+ people, and building
+                        high-performing product organizations. Currently exploring opportunities to lead platform engineering,
+                        product innovation, and organizational transformation initiatives.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">115</div>
+                <div class="stat-label">Projects Delivered</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">300+</div>
+                <div class="stat-label">Professionals Trained</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Enterprise Clients</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">3-20x</div>
+                <div class="stat-label">Delivery Acceleration</div>
+            </div>
+        </div>
+
+        <!-- Career Evolution -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Career Evolution</h2>
+                <p>From individual contributor to enterprise transformation leader</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2023–Present</div>
+                    <div class="timeline-title">🧘 Sabbatical | Innovation & Upskilling</div>
+                    <div class="timeline-company">Independent</div>
+                    <div class="timeline-desc">
+                        Focused on GenAI, cloud-native architecture, and building LLM-powered portfolio assistant
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2019–2023</div>
+                    <div class="timeline-title">🚀 Director, Cloud Innovation Center</div>
+                    <div class="timeline-company">Accenture</div>
+                    <div class="timeline-desc">
+                        Launched Innovation Centers (150+ engineers) • 30+ products • $300M+ revenue • 4x faster delivery
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2016–2023</div>
+                    <div class="timeline-title">📚 Capability Development Lead, CloudFirst</div>
+                    <div class="timeline-company">Accenture</div>
+                    <div class="timeline-desc">
+                        Upskilled 300+ professionals • 40% proficiency increase • 50% faster delivery • Culture transformation
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2018–2019</div>
+                    <div class="timeline-title">☁️ Cloud Native Architecture Lead, Liquid Studio</div>
+                    <div class="timeline-company">Accenture</div>
+                    <div class="timeline-desc">
+                        Built cloud-native accelerator • AWS enablement (200+ certs) • Rapid prototyping for Fortune 500
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2009–2017</div>
+                    <div class="timeline-title">💳 Sr. Technology Architecture Manager, Payments</div>
+                    <div class="timeline-company">Accenture</div>
+                    <div class="timeline-desc">
+                        $500M+ payments modernization • 12 countries • ACH/FX/Wire hubs • Salesforce integration
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2005–2009</div>
+                    <div class="timeline-title">🏗️ Technology Manager</div>
+                    <div class="timeline-company">Accenture</div>
+                    <div class="timeline-desc">
+                        Early leadership in payments, banking, and platform modernization
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2000–2005</div>
+                    <div class="timeline-title">⚡ Startups & Consulting</div>
+                    <div class="timeline-company">Including Cendian Corp</div>
+                    <div class="timeline-desc">
+                        Built B2B/supply chain platforms • webMethods & J2EE integration solutions
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Competencies -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Core Competencies</h2>
+                <p>Technical expertise meets organizational transformation</p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 32px;">
+                <span style="display: inline-block; background: #8B5CF6; color: white; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; margin: 0 8px;">💻 Technical</span>
+                <span style="display: inline-block; background: #8B5CF6; color: white; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; margin: 0 8px;">👥 Leadership</span>
+            </div>
+
+            <div class="competencies-grid">
+                <div class="competency-card">
+                    <div class="competency-icon">🚀</div>
+                    <div class="competency-title">Product & Innovation</div>
+                    <ul class="competency-list">
+                        <li>Lean Product Management</li>
+                        <li>Hypothesis-Driven Development</li>
+                        <li>OKRs & North Star Metrics</li>
+                        <li>Product-Market Fit Validation</li>
+                        <li>Design Thinking & Prototyping</li>
+                    </ul>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">🔧</div>
+                    <div class="competency-title">Modern Engineering</div>
+                    <ul class="competency-list">
+                        <li>Cloud-Native Microservices</li>
+                        <li>Event-Driven Architecture</li>
+                        <li>CI/CD & DevOps Practices</li>
+                        <li>TDD/BDD & Extreme Programming</li>
+                        <li>Platform Engineering</li>
+                    </ul>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">⚡</div>
+                    <div class="competency-title">Agile at Scale</div>
+                    <ul class="competency-list">
+                        <li>SAFe, LeSS, Scrum@Scale</li>
+                        <li>Team Topologies</li>
+                        <li>Organizational Design</li>
+                        <li>Servant Leadership</li>
+                        <li>Continuous Improvement</li>
+                    </ul>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">💡</div>
+                    <div class="competency-title">Transformation Leadership</div>
+                    <ul class="competency-list">
+                        <li>Change Management</li>
+                        <li>Stakeholder Engagement</li>
+                        <li>Executive Communication</li>
+                        <li>Value Stream Mapping</li>
+                        <li>Business Agility</li>
+                    </ul>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">👥</div>
+                    <div class="competency-title">Team Building</div>
+                    <ul class="competency-list">
+                        <li>Talent Development & Coaching</li>
+                        <li>Innovation Center Setup</li>
+                        <li>Cross-Functional Collaboration</li>
+                        <li>Performance Management</li>
+                        <li>Culture Transformation</li>
+                    </ul>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">🤖</div>
+                    <div class="competency-title">AI & Emerging Tech</div>
+                    <ul class="competency-list">
+                        <li>GenAI Application Development</li>
+                        <li>Vector Databases & RAG</li>
+                        <li>LLM Integration (GPT-4, Claude)</li>
+                        <li>Semantic Search & NLP</li>
+                        <li>Python & Data Engineering</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leadership Philosophy -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Leadership Philosophy</h2>
+                <p>How I approach transformation and team development</p>
+            </div>
+
+            <div class="philosophy-grid">
+                <div class="philosophy-card">
+                    <h3>🎯 Outcomes Over Output</h3>
+                    <p>
+                        I don't measure success by velocity or features shipped. I measure it by business outcomes, customer
+                        impact, and organizational capability built. Teams should be empowered to solve problems, not just
+                        deliver tickets.
+                    </p>
+                </div>
+
+                <div class="philosophy-card">
+                    <h3>🔬 Experimentation Culture</h3>
+                    <p>
+                        Innovation requires safe-to-fail environments. I create spaces where teams can test hypotheses,
+                        learn from failures fast, and iterate toward product-market fit. Data informs decisions, not opinions.
+                    </p>
+                </div>
+
+                <div class="philosophy-card">
+                    <h3>🤝 Servant Leadership</h3>
+                    <p>
+                        My job is to remove blockers, amplify team voices, and create conditions for excellence. I lead from
+                        the side, not from the front. The best ideas come from the people closest to the work.
+                    </p>
+                </div>
+
+                <div class="philosophy-card">
+                    <h3>📈 Continuous Learning</h3>
+                    <p>
+                        Technology evolves fast. Organizations that don't invest in upskilling fall behind. I build learning
+                        cultures through coaching, mentorship, training programs, and hands-on practice.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Architecture -->
+        <div class="section architecture-section">
+            <div class="section-header">
+                <h2>How I Built MattGPT</h2>
+                <p>A technical deep-dive into the system architecture behind this portfolio</p>
+            </div>
+
+            <div class="architecture-intro">
+                <h3>💭 The Problem</h3>
+                <p>
+                    Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily
+                    search 115+ projects by methodology, outcome, or domain. I wanted to create an <strong>intelligent,
+                    conversational interface</strong> that understands intent and surfaces relevant experience.
+                </p>
+                <p>
+                    This isn't just a portfolio—it's a <strong>functional AI application</strong> demonstrating product
+                    thinking, modern engineering practices, and hands-on GenAI implementation.
+                </p>
+                <h3 style="margin-top: 20px;">🛠️ Tech Stack</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🐍</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Python 3.11</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">⚡</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Streamlit</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🤖</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">OpenAI GPT-4</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">📌</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Pinecone</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🐳</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Docker</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🔀</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Git/GitHub</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🧠</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Sentence Transformers</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🐼</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">Pandas</div>
+                    </div>
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🔢</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #2c3e50;">NumPy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-diagram">
+                <div class="diagram-title">🔄 System Architecture Flow</div>
+                <div class="diagram-flow">
+                    <div class="flow-step">
+                        <div class="flow-step-number">1</div>
+                        <div class="flow-step-title">Data Ingestion</div>
+                        <div class="flow-step-desc">Excel → JSONL conversion with STAR format</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">2</div>
+                        <div class="flow-step-title">Embeddings</div>
+                        <div class="flow-step-desc">384-dim vectors via all-MiniLM-L6-v2</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">3</div>
+                        <div class="flow-step-title">Vector Store</div>
+                        <div class="flow-step-desc">Pinecone index with metadata filters</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">4</div>
+                        <div class="flow-step-title">Hybrid Search</div>
+                        <div class="flow-step-desc">80% semantic + 20% keyword matching</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 24px; margin-bottom: 12px;">
+                    <div style="display: inline-block; background: #e3f2fd; color: #1976d2; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                        🔬 The Secret Sauce: Actual Python Code Powering the System
+                    </div>
+                </div>
+
+                <div class="code-block">
+<span class="code-comment"># Embedding Generation Pipeline</span>
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+embeddings = model.encode(content_chunks, show_progress_bar=True)
+
+<span class="code-comment"># Hybrid Retrieval with Pinecone</span>
+results = index.query(
+    vector=query_embedding,
+    top_k=5,
+    include_metadata=True,
+    filter={"client": "JPMorgan Chase"}  <span class="code-comment"># Optional filters</span>
+)
+
+<span class="code-comment"># RAG with GPT-4</span>
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": mattgpt_system_prompt},
+        {"role": "user", "content": augmented_query}
+    ]
+)
+                </div>
+            </div>
+
+            <div class="tech-details-grid">
+                <div class="tech-detail-card">
+                    <h4>📊 Data Pipeline</h4>
+                    <ul class="tech-detail-list">
+                        <li>Excel master sheet with 115+ STAR stories (Situation, Task, Action, Result)</li>
+                        <li>Python script converts to JSONL format with metadata (client, role, domain, tags)</li>
+                        <li>Automated tag generation using semantic clustering and keyword extraction</li>
+                        <li>Data validation ensures consistency before ingestion</li>
+                    </ul>
+                </div>
+
+                <div class="tech-detail-card">
+                    <h4>🧠 Embeddings & Vector Search</h4>
+                    <ul class="tech-detail-list">
+                        <li><strong>Model:</strong> all-MiniLM-L6-v2 (384 dimensions, optimized for semantic similarity)</li>
+                        <li><strong>Chunking Strategy:</strong> Full STAR story per vector to preserve context</li>
+                        <li><strong>Metadata Filtering:</strong> Client, role, domain, competencies, time period</li>
+                        <li><strong>Top-K Retrieval:</strong> Returns 3-5 most relevant stories per query</li>
+                    </ul>
+                </div>
+
+                <div class="tech-detail-card">
+                    <h4>🔍 Hybrid Retrieval Strategy</h4>
+                    <ul class="tech-detail-list">
+                        <li><strong>80% Semantic Search:</strong> Understands meaning, not just keywords (e.g., "resistance to change" matches "stakeholder buy-in")</li>
+                        <li><strong>20% Keyword Matching:</strong> Ensures specific terms like "Kafka" or "SAFe" are found</li>
+                        <li><strong>Re-ranking Algorithm:</strong> Scores results by relevance + recency + impact</li>
+                        <li><strong>Fallback Logic:</strong> If no matches above threshold, suggests similar queries</li>
+                    </ul>
+                </div>
+
+                <div class="tech-detail-card">
+                    <h4>💬 RAG with GPT-4</h4>
+                    <ul class="tech-detail-list">
+                        <li><strong>System Prompt:</strong> Defines MattGPT voice (trusted advisor, grounded in evidence)</li>
+                        <li><strong>Context Injection:</strong> Top 3-5 retrieved stories passed to GPT-4 as context</li>
+                        <li><strong>Response Structure:</strong> Direct answer → Specific example → Pattern/methodology → Invitation to go deeper</li>
+                        <li><strong>Source Citations:</strong> Every response includes links to full STAR stories</li>
+                    </ul>
+                </div>
+
+                <div class="tech-detail-card">
+                    <h4>🎨 Frontend (Streamlit)</h4>
+                    <ul class="tech-detail-list">
+                        <li>Conversational chat interface with message history persistence</li>
+                        <li>Multi-view data exploration: Table, Cards, Timeline layouts</li>
+                        <li>Real-time semantic search with <300ms response time</li>
+                        <li>Responsive design with mobile-first approach</li>
+                    </ul>
+                </div>
+
+                <div class="tech-detail-card">
+                    <h4>🚀 Deployment & DevOps</h4>
+                    <ul class="tech-detail-list">
+                        <li><strong>Containerization:</strong> Docker for consistent environments</li>
+                        <li><strong>Version Control:</strong> Git with feature branching strategy</li>
+                        <li><strong>Environment Management:</strong> .env files for API keys, secrets</li>
+                        <li><strong>Monitoring:</strong> Logging for query patterns, response quality, error tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Try Agy CTA Section -->
+        <div class="section" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(165, 180, 252, 0.05) 100%);">
+            <div style="max-width: 900px; margin: 0 auto; background: white; border-left: 4px solid #8B5CF6; border-radius: 12px; padding: 40px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+                <h3 style="font-size: 28px; color: #2c3e50; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+                    🎯 See It In Action
+                </h3>
+
+                <p style="font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 20px;">
+                    This isn't just a portfolio showcase — <strong>Agy 🐾 is a working AI assistant</strong> that can answer detailed questions about my 115+ projects, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time.
+                </p>
+
+                <p style="font-size: 15px; color: #7f8c8d; margin-bottom: 20px; font-weight: 600;">
+                    Try asking questions like:
+                </p>
+
+                <ul style="margin-bottom: 28px; font-size: 15px; line-height: 1.9; color: #555; padding-left: 24px;">
+                    <li>"How did Matt scale engineering teams from 4 to 150+ people?"</li>
+                    <li>"What were the biggest challenges at the Accenture Innovation Center?"</li>
+                    <li>"Show me examples of agile transformation with measurable outcomes"</li>
+                    <li>"How does Matt approach product-market fit validation?"</li>
+                </ul>
+
+                <div style="text-align: center;">
+                    <a href="ask_mattgpt_landing_wireframe.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; background: #8B5CF6; color: white; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 16px; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);">
+                        <span>Ask Agy About My Experience</span>
+                        <span style="font-size: 20px;">🐾</span>
+                    </a>
+                </div>
+
+                <p style="text-align: center; margin-top: 16px; font-size: 13px; color: #95a5a6;">
+                    Real AI assistant • 115+ projects • Instant answers • Available 24/7
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section contact-section">
+            <div class="section-header">
+                <h2>Let's Connect</h2>
+                <p style="color: rgba(255,255,255,0.9); font-size: 17px; margin-top: 12px;">
+                    Exploring Director/VP opportunities in <strong>Product Leadership</strong>, <strong>Platform Engineering</strong>, and <strong>Organizational Transformation</strong>
+                </p>
+                <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-top: 16px;">
+                    Available for immediate start • Remote or Atlanta-based • Open to consulting engagements
+                </p>
+            </div>
+            <div class="contact-buttons">
+                <a href="mailto:mcpugmire@gmail.com" class="contact-btn" style="background: white; color: #8B5CF6; border-color: white;">📧 mcpugmire@gmail.com</a>
+                <a href="https://www.linkedin.com/in/matt-pugmire/" class="contact-btn">💼 LinkedIn</a>
+                <a href="ask_mattgpt_landing_wireframe.html" class="contact-btn">🐾 Ask Agy</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

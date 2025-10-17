@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portfolio | Matt Pugmire | 115+ Digital Transformation Projects</title>
+    <meta name="description" content="Browse 115+ digital transformation projects across JPMorgan Chase, Accenture, Capital One, and Fortune 500 companies. Filter by industry, domain, client, and role. Director-level experience in product leadership, platform engineering, and agile delivery.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .page {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .nav-item.active {
+            background: #34495e;
+        }
+
+        /* Header */
+        .header {
+            padding: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .ask-agy-link {
+            color: #8B5CF6;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-color: rgba(139, 92, 246, 0.3);
+            text-underline-offset: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .ask-agy-link:hover {
+            text-decoration-color: #8B5CF6;
+            color: #7C3AED;
+        }
+
+        .search-helper {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .search-helper a {
+            color: #8B5CF6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .search-helper a:hover {
+            text-decoration: underline;
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 80px 40px;
+            text-align: center;
+            background: #fafafa;
+            border-radius: 12px;
+            margin: 30px;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 24px;
+        }
+
+        .empty-state-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: #8B5CF6;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .empty-state-btn:hover {
+            background: #7C3AED;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Filters Section */
+        .filters {
+            padding: 30px;
+            background: #fafafa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .search-bar {
+            margin-bottom: 8px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        .filter-group select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+
+        /* Results Header */
+        .results-header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .results-count {
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .results-count strong {
+            font-size: 16px;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .view-controls label {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .view-controls select {
+            padding: 6px 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            margin-left: 15px;
+        }
+
+        .view-toggle button {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .view-toggle button.active {
+            background: #8B5CF6;
+            color: white;
+            border-color: #8B5CF6;
+        }
+
+        /* Table */
+        .table-container {
+            padding: 0 30px 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background: #ecf0f1;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #2c3e50;
+            text-transform: uppercase;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .story-title {
+            color: #8B5CF6;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .story-title:hover {
+            text-decoration: underline;
+        }
+
+        .client-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .domain-tag {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        /* Selected Row */
+        tr.selected {
+            background: #F3E8FF !important;
+            border-left: 4px solid #8B5CF6;
+        }
+
+        tr.selected td {
+            font-weight: 500;
+        }
+
+        /* Story Detail Pane */
+        .story-detail-pane {
+            padding: 30px;
+            background: #fafafa;
+            border-top: 3px solid #8B5CF6;
+            margin-top: 0;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .detail-title-section {
+            flex: 1;
+        }
+
+        .detail-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .detail-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .detail-meta-item strong {
+            color: #2c3e50;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .detail-action-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .detail-action-btn:hover {
+            border-color: #8B5CF6;
+            color: #8B5CF6;
+        }
+
+        .detail-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .detail-main {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .detail-sidebar {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .star-section {
+            margin-bottom: 24px;
+        }
+
+        .star-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .star-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #8B5CF6;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .star-content {
+            font-size: 14px;
+            color: #2c3e50;
+            line-height: 1.7;
+        }
+
+        .star-content ul {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .star-content li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sidebar-tag {
+            background: #ecf0f1;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            padding: 8px 0;
+            font-size: 13px;
+            color: #555;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .sidebar-list li:last-child {
+            border-bottom: none;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .metric-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #27ae60;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+
+        /* Pagination */
+        .pagination {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .pagination button {
+            padding: 8px 14px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .pagination button:hover {
+            background: #f5f5f5;
+        }
+
+        .pagination button.active {
+            background: #8B5CF6;
+            color: white;
+            border-color: #8B5CF6;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            padding: 0 15px;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        /* Toast Notification (for Share action) */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #27ae60;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                bottom: -50px;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        /* Print Dialog Overlay (for Export action) */
+        .print-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .print-dialog {
+            background: white;
+            width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .print-dialog-header {
+            background: #f5f5f5;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .print-dialog-body {
+            padding: 24px;
+        }
+
+        .print-preview {
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            background: #fafafa;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .print-preview-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .print-preview-text {
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        .print-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .print-setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .print-setting-row select {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .print-dialog-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            padding-top: 16px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .print-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .print-btn-cancel {
+            background: white;
+            border: 2px solid #e0e0e0;
+            color: #555;
+        }
+
+        .print-btn-cancel:hover {
+            background: #f5f5f5;
+        }
+
+        .print-btn-print {
+            background: #8B5CF6;
+            border: 2px solid #8B5CF6;
+            color: white;
+        }
+
+        .print-btn-print:hover {
+            background: #7C3AED;
+            border-color: #7C3AED;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="index.html" class="nav-item">Homepage</a>
+            <a href="explore_stories_cards_wireframe.html" class="nav-item active">Explore Stories</a>
+            <a href="ask_mattgpt_landing_wireframe.html" class="nav-item">Ask MattGPT</a>
+            <a href="about_matt_wireframe.html" class="nav-item">About Matt</a>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Explore Stories</h1>
+            <p>Browse Matt's 115+ transformation projects by industry, client, or domain — or <a href="ask_mattgpt_landing_wireframe.html" class="ask-agy-link">ask Agy 🐾</a> to help you find what you're looking for</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="search-bar">
+                <input type="text" placeholder="Search by title, client, or keywords...">
+            </div>
+            <div class="search-helper">
+                Can't find what you're looking for? <a href="ask_mattgpt_landing_wireframe.html">Ask Agy 🐾 →</a>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Industry</label>
+                    <select>
+                        <option>All Industries</option>
+                        <option>Financial Services / Banking</option>
+                        <option>Cross-Industry</option>
+                        <option>Healthcare</option>
+                        <option>Technology</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Domain Category</label>
+                    <select>
+                        <option>All Domains</option>
+                        <option>Agile Transformation</option>
+                        <option>Modern Engineering</option>
+                        <option>Payments & Treasury</option>
+                        <option>Product Innovation</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Client</label>
+                    <select>
+                        <option>All Clients</option>
+                        <option>JPMorgan Chase (33)</option>
+                        <option>RBC (11)</option>
+                        <option>Accenture (13)</option>
+                        <option>Fiserv (7)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Role</label>
+                    <select>
+                        <option>All Roles</option>
+                        <option>Director</option>
+                        <option>Senior Manager</option>
+                        <option>Manager</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Header -->
+        <div class="results-header">
+            <div class="results-count">
+                Showing <strong>1-10</strong> of <strong>115</strong> projects
+            </div>
+
+            <div class="view-controls">
+                <label>SHOW:</label>
+                <select>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                </select>
+
+                <div class="view-toggle">
+                    <button class="active">Table</button>
+                    <button onclick="window.location.href='explore_stories_cards_wireframe.html'">Cards</button>
+                    <button onclick="window.location.href='explore_stories_timeline_wireframe.html'">Timeline</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Project Title</th>
+                        <th style="width: 20%;">Client</th>
+                        <th style="width: 15%;">Role</th>
+                        <th style="width: 25%;">Domain</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="story-title">Accelerating Digital Transformation for a Global Bank</span></td>
+                        <td><span class="client-badge">JP Morgan Chase</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Application Modernization</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Agile Transformation & Business Agility</span></td>
+                        <td><span class="client-badge">JP Morgan Chase</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Agile Transformation & Leadership Enablement</span></td>
+                    </tr>
+                    <tr class="selected">
+                        <td><span class="story-title">Accelerating Digital Transformation for a Global Bank</span></td>
+                        <td><span class="client-badge">JP Morgan Chase</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Application Modernization</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Accelerating Modernization with IBM Power Agile Sprints</span></td>
+                        <td><span class="client-badge">Multiple Clients</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Application Modernization</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Application Modernization and Client Transformative Experiences</span></td>
+                        <td><span class="client-badge">Multiple Clients</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Process Optimization/Automation</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Accelerating Product Delivery Through Lean Innovation at Capital One</span></td>
+                        <td><span class="client-badge">Capital One</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Strategy-Client Partnerships</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Achieving Product-Market Fit with Hypothesis Testing and Iterative Prototyping</span></td>
+                        <td><span class="client-badge">Movant</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Product Management</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Agile Adoption & Process Improvements Across Programs</span></td>
+                        <td><span class="client-badge">JP Morgan Chase</span></td>
+                        <td>Senior Manager</td>
+                        <td><span class="domain-tag">Agile Transformation & Leadership Enablement</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">API Management and Process Improvements Through Targeted Training</span></td>
+                        <td><span class="client-badge">Multiple Clients</span></td>
+                        <td>Director</td>
+                        <td><span class="domain-tag">Technology Strategy & Advisory Services</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="story-title">Application Infrastructure Simplification Program</span></td>
+                        <td><span class="client-badge">HSBC</span></td>
+                        <td>Senior Manager</td>
+                        <td><span class="domain-tag">Technology Strategy & Advisory Services</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Story Detail Pane
+             UX Behavior:
+             - Close: Click another row to update content, or click same row again to collapse
+             - Share (MVP): Copies link to clipboard (toast notification)
+             - Export (MVP): Opens browser print dialog (Cmd+P)
+        -->
+        <div class="story-detail-pane">
+            <div class="detail-header">
+                <div class="detail-title-section">
+                    <h2 class="detail-title">Accelerating Digital Transformation for a Global Bank</h2>
+                    <div class="detail-meta">
+                        <div class="detail-meta-item">
+                            <span>🏢</span>
+                            <strong>JP Morgan Chase</strong>
+                        </div>
+                        <div class="detail-meta-item">
+                            <span>👤</span>
+                            <strong>Director</strong>
+                        </div>
+                        <div class="detail-meta-item">
+                            <span>📅</span>
+                            <span>2023-2025</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <span>🏷️</span>
+                            <span>Application Modernization</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-actions">
+                    <button class="detail-action-btn" onclick="toggleToast()" title="MVP: Copy link to clipboard">🔗 Share</button>
+                    <button class="detail-action-btn" onclick="togglePrintDialog()" title="MVP: Open browser print dialog">📄 Export</button>
+                </div>
+            </div>
+
+            <div class="detail-content">
+                <div class="detail-main">
+                    <!-- Situation -->
+                    <div class="star-section">
+                        <div class="star-label">
+                            <span>📍</span>
+                            <span>Situation</span>
+                        </div>
+                        <div class="star-content">
+                            JPMorgan Chase sought to modernize its legacy banking platform to appeal to a more sophisticated, digitally-savvy customer base with a mobile-first, branchless banking experience. The organization aimed to redefine its brand through an innovative digital ecosystem.
+                        </div>
+                    </div>
+
+                    <!-- Task -->
+                    <div class="star-section">
+                        <div class="star-label">
+                            <span>🎯</span>
+                            <span>Task</span>
+                        </div>
+                        <div class="star-content">
+                            Develop a robust, responsive, multi-platform mobile application for Android and iOS, ensuring high-quality standards, scalability, effective remote collaboration, seamless client engagement, and test coverage twice as efficient as the client's existing teams.
+                        </div>
+                    </div>
+
+                    <!-- Action -->
+                    <div class="star-section">
+                        <div class="star-label">
+                            <span>⚡</span>
+                            <span>Action</span>
+                        </div>
+                        <div class="star-content">
+                            <ul>
+                                <li>Formed a cross-functional team focused on lean XP methodologies to drive rapid, iterative development</li>
+                                <li>Delivered 90%+ test coverage and achieved 100% Product Owner acceptance by implementing rigorous testing and validation processes</li>
+                                <li>Leveraged cloud-native microservices with an event-driven Kafka/MongoDB architecture to create a scalable and responsive solution</li>
+                                <li>Expanded collaboration with client teams, scaling from 4 to 11 integrated teams to support a growing development scope</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div class="star-section">
+                        <div class="star-label">
+                            <span>🏆</span>
+                            <span>Result</span>
+                        </div>
+                        <div class="star-content">
+                            <ul>
+                                <li>Successfully delivered a multi-platform mobile app with <strong>20+ screens in just 5 months</strong></li>
+                                <li><strong>Doubled development speed</strong> compared to the client's internal teams, meeting tight deadlines despite COVID-driven remote challenges</li>
+                                <li>Achieved <strong>100% Product Owner acceptance with 90%+ test coverage</strong></li>
+                                <li>Strengthened client relationships by demonstrating the value of modern methodologies such as Lean Product Management, Extreme Programming (XP), and iterative delivery practices</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-sidebar">
+                    <!-- Tags -->
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Technologies & Practices</div>
+                        <div class="sidebar-tags">
+                            <span class="sidebar-tag">Mobile Development</span>
+                            <span class="sidebar-tag">Lean XP</span>
+                            <span class="sidebar-tag">Microservices</span>
+                            <span class="sidebar-tag">Event-Driven</span>
+                            <span class="sidebar-tag">Kafka</span>
+                            <span class="sidebar-tag">MongoDB</span>
+                            <span class="sidebar-tag">Cloud-Native</span>
+                            <span class="sidebar-tag">Agile Delivery</span>
+                        </div>
+                    </div>
+
+                    <!-- Core Competencies -->
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Core Competencies</div>
+                        <ul class="sidebar-list">
+                            <li>Agile Delivery</li>
+                            <li>Lean XP Practices</li>
+                            <li>Multi-Platform Development</li>
+                            <li>Client Integration</li>
+                            <li>Cloud-Native Microservices Architecture</li>
+                            <li>Cross-Functional Collaboration</li>
+                        </ul>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Key Metrics</div>
+                        <div class="metrics-grid">
+                            <div class="metric-item">
+                                <div class="metric-value">5 mo</div>
+                                <div class="metric-label">Delivered 20+ Screens</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">2x</div>
+                                <div class="metric-label">Speed vs Internal Teams</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">100%</div>
+                                <div class="metric-label">Product Owner Acceptance</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">90%+</div>
+                                <div class="metric-label">Test Coverage</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ask Agy About This Project -->
+                <div style="grid-column: 1 / -1; text-align: center; padding: 24px; background: #f8f9fa; border-radius: 8px; border: 2px solid #e0e0e0; margin-top: 24px;">
+                    <p style="margin-bottom: 16px; color: #555; font-size: 14px;">💬 Want to know more about this project?</p>
+                    <a href="ask_mattgpt_landing_wireframe.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: #8B5CF6; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.2s ease;">
+                        <span>Ask Agy 🐾 About This</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button disabled>‹ Prev</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <span class="page-info">...</span>
+            <button>12</button>
+            <button>Next ›</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification (Share action) -->
+    <div id="shareToast" class="toast" style="display: none;">
+        <span style="font-size: 20px;">✓</span>
+        <span>Link copied to clipboard!</span>
+    </div>
+
+    <!-- Print Dialog Overlay (Export action) -->
+    <div id="printOverlay" class="print-overlay" style="display: none;">
+        <div class="print-dialog">
+            <div class="print-dialog-header">
+                Print
+            </div>
+            <div class="print-dialog-body">
+                <div class="print-preview">
+                    <div class="print-preview-icon">📄</div>
+                    <div class="print-preview-text">
+                        Accelerating Device Engagement and Advanced Digital Service Innovation
+                    </div>
+                </div>
+                <div class="print-settings">
+                    <div class="print-setting-row">
+                        <span>Destination</span>
+                        <select>
+                            <option>Save as PDF</option>
+                            <option>Microsoft Print to PDF</option>
+                        </select>
+                    </div>
+                    <div class="print-setting-row">
+                        <span>Pages</span>
+                        <select>
+                            <option>All</option>
+                            <option>Current page</option>
+                        </select>
+                    </div>
+                    <div class="print-setting-row">
+                        <span>Layout</span>
+                        <select>
+                            <option>Portrait</option>
+                            <option>Landscape</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="print-dialog-actions">
+                    <button class="print-btn print-btn-cancel" onclick="togglePrintDialog()">Cancel</button>
+                    <button class="print-btn print-btn-print">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleToast() {
+            const toast = document.getElementById('shareToast');
+            if (toast.style.display === 'none') {
+                toast.style.display = 'flex';
+                // Auto-hide after 3 seconds
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            } else {
+                toast.style.display = 'none';
+            }
+        }
+
+        function togglePrintDialog() {
+            const overlay = document.getElementById('printOverlay');
+            overlay.style.display = overlay.style.display === 'none' ? 'flex' : 'none';
+        }
+    </script>
+        <!-- Footer -->
+        <div style="background: #2c3e50; color: white; padding: 48px 40px; text-align: center;">
+            <h3 style="font-size: 28px; margin-bottom: 12px;">Let's Connect</h3>
+            <p style="font-size: 16px; margin-bottom: 8px; opacity: 0.9;">
+                Exploring Director/VP opportunities in <strong>Product Leadership</strong>, <strong>Platform Engineering</strong>, and <strong>Organizational Transformation</strong>
+            </p>
+            <p style="font-size: 14px; margin-bottom: 32px; opacity: 0.75;">
+                Available for immediate start • Remote or Atlanta-based • Open to consulting engagements
+            </p>
+
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:mcpugmire@gmail.com" style="padding: 12px 28px; background: #8B5CF6; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    📧 mcpugmire@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/matt-pugmire/" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    💼 LinkedIn
+                </a>
+                <a href="ask_mattgpt_landing_wireframe.html" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    🐾 Ask Agy
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

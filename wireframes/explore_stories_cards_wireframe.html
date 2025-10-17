@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portfolio | Matt Pugmire | 115+ Digital Transformation Projects</title>
+    <meta name="description" content="Browse 115+ digital transformation projects across JPMorgan Chase, Accenture, Capital One, and Fortune 500 companies. Filter by industry, domain, client, and role. Director-level experience in product leadership, platform engineering, and agile delivery.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .page {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .nav-item.active {
+            background: #34495e;
+        }
+
+        /* Header */
+        .header {
+            padding: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .ask-agy-link {
+            color: #8B5CF6;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-color: rgba(139, 92, 246, 0.3);
+            text-underline-offset: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .ask-agy-link:hover {
+            text-decoration-color: #8B5CF6;
+            color: #7C3AED;
+        }
+
+        /* Filters Section */
+        .filters {
+            padding: 30px;
+            background: #fafafa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .search-bar {
+            margin-bottom: 8px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-helper {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .search-helper a {
+            color: #8B5CF6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .search-helper a:hover {
+            text-decoration: underline;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        .filter-group select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+
+        /* Results Header */
+        .results-header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .results-count {
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .results-count strong {
+            font-size: 16px;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .view-controls label {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .view-controls select {
+            padding: 6px 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            margin-left: 15px;
+        }
+
+        .view-toggle button {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .view-toggle button.active {
+            background: #8B5CF6;
+            color: white;
+            border-color: #8B5CF6;
+        }
+
+        /* Cards Grid */
+        .cards-container {
+            padding: 30px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+
+        .story-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .story-card:hover {
+            border-color: #8B5CF6;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .client-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #7f8c8d;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #ecf0f1;
+            margin-top: auto;
+        }
+
+        .role-badge {
+            background: #ecf0f1;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        .domain-tag {
+            font-size: 11px;
+            color: #95a5a6;
+            text-align: right;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Pagination */
+        .pagination {
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .pagination button {
+            padding: 8px 14px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .pagination button:hover {
+            background: #f5f5f5;
+        }
+
+        .pagination button.active {
+            background: #8B5CF6;
+            color: white;
+            border-color: #8B5CF6;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            padding: 0 15px;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 80px 40px;
+            text-align: center;
+            background: #fafafa;
+            border-radius: 12px;
+            margin: 30px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 24px;
+        }
+
+        .empty-state-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: #8B5CF6;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .empty-state-btn:hover {
+            background: #7C3AED;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="index.html" class="nav-item">Homepage</a>
+            <a href="explore_stories_cards_wireframe.html" class="nav-item active">Explore Stories</a>
+            <a href="ask_mattgpt_landing_wireframe.html" class="nav-item">Ask MattGPT</a>
+            <a href="about_matt_wireframe.html" class="nav-item">About Matt</a>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Explore Stories</h1>
+            <p>Browse Matt's 115+ transformation projects by industry, client, or domain — or <a href="ask_mattgpt_landing_wireframe.html" class="ask-agy-link">ask Agy 🐾</a> to help you find what you're looking for</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="search-bar">
+                <input type="text" placeholder="Search by title, client, or keywords...">
+            </div>
+            <div class="search-helper">
+                Can't find what you're looking for? <a href="ask_mattgpt_landing_wireframe.html">Ask Agy 🐾 →</a>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Industry</label>
+                    <select>
+                        <option>All Industries</option>
+                        <option>Financial Services / Banking</option>
+                        <option>Cross-Industry</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Domain Category</label>
+                    <select>
+                        <option>All Domains</option>
+                        <option>Agile Transformation</option>
+                        <option>Modern Engineering</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Client</label>
+                    <select>
+                        <option>All Clients</option>
+                        <option>JPMorgan Chase (33)</option>
+                        <option>RBC (11)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Role</label>
+                    <select>
+                        <option>All Roles</option>
+                        <option>Director</option>
+                        <option>Senior Manager</option>
+                        <option>Manager</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Header -->
+        <div class="results-header">
+            <div class="results-count">
+                Showing <strong>1-10</strong> of <strong>115</strong> projects
+            </div>
+
+            <div class="view-controls">
+                <label>SHOW:</label>
+                <select>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                </select>
+
+                <div class="view-toggle">
+                    <button onclick="window.location.href='explore_stories_table_wireframe.html'">Table</button>
+                    <button class="active">Cards</button>
+                    <button onclick="window.location.href='explore_stories_timeline_wireframe.html'">Timeline</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="cards-container">
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Digital Transformation for a Global Bank</div>
+                        <span class="client-badge">JP Morgan Chase</span>
+                    </div>
+                    <div class="card-description">
+                        Led a comprehensive digital transformation initiative to modernize legacy banking systems and enhance customer experience through innovative technology solutions. Enhanced application deployment time by 40%.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Application Modernization</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Agile Transformation & Business Agility</div>
+                        <span class="client-badge">JP Morgan Chase</span>
+                    </div>
+                    <div class="card-description">
+                        Revolutionized device engagement strategies and digital service innovation to enhance user experience across multiple platforms and increase customer satisfaction scores.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Agile Transformation & Leadership</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Digital Transformation for a Global Bank</div>
+                        <span class="client-badge">JP Morgan Chase</span>
+                    </div>
+                    <div class="card-description">
+                        Modernized legacy banking platform into mobile-first, cloud-native digital ecosystem delivering 20+ screen app in 5 months, doubling development speed vs internal teams.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Application Modernization</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Modernization with IBM Power Agile Sprints</div>
+                        <span class="client-badge">Multiple Clients</span>
+                    </div>
+                    <div class="card-description">
+                        Implemented agile methodologies and IBM Power systems to accelerate application delivery and improve system reliability for enterprise clients.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Application Modernization</span>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Application Modernization and Client Transformative Experiences</div>
+                        <span class="client-badge">Multiple Clients</span>
+                    </div>
+                    <div class="card-description">
+                        Delivered transformative client experiences through strategic application modernization and process optimization initiatives.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Process Optimization/Automation</span>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Product Delivery Through Lean Innovation</div>
+                        <span class="client-badge">Capital One</span>
+                    </div>
+                    <div class="card-description">
+                        Applied lean innovation principles to accelerate product delivery cycles and strengthen strategic client partnerships.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Strategy-Client Partnerships</span>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Achieving Product-Market Fit with Hypothesis Testing</div>
+                        <span class="client-badge">Movant</span>
+                    </div>
+                    <div class="card-description">
+                        Utilized hypothesis-driven development and iterative prototyping to achieve product-market fit and validate business assumptions.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Product Management</span>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Agile Adoption & Process Improvements Across Programs</div>
+                        <span class="client-badge">JP Morgan Chase</span>
+                    </div>
+                    <div class="card-description">
+                        Led comprehensive agile adoption initiatives and process improvements across multiple programs to enhance delivery efficiency.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Senior Manager</span>
+                        <span class="domain-tag">Agile Transformation & Leadership</span>
+                    </div>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">API Management and Process Improvements Through Training</div>
+                        <span class="client-badge">Multiple Clients</span>
+                    </div>
+                    <div class="card-description">
+                        Delivered targeted training programs to improve API management practices and drive process optimization across client organizations.
+                    </div>
+                    <div class="card-meta">
+                        <span class="role-badge">Director</span>
+                        <span class="domain-tag">Technology Strategy & Advisory</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button disabled>‹ Prev</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <span class="page-info">...</span>
+            <button>12</button>
+            <button>Next ›</button>
+        </div>
+
+        <!-- Empty State (Hidden - shown when no results) -->
+        <!-- Uncomment to see empty state:
+        <div class="empty-state">
+            <div class="empty-state-icon">🔍</div>
+            <h3>No projects match your filters</h3>
+            <p>Try adjusting your search criteria, or ask Agy to find relevant projects for you</p>
+            <a href="ask_mattgpt_landing_wireframe.html" class="empty-state-btn">
+                <span>Ask Agy 🐾</span>
+            </a>
+        </div>
+        -->
+    </div>
+        <!-- Footer -->
+        <div style="background: #2c3e50; color: white; padding: 48px 40px; text-align: center;">
+            <h3 style="font-size: 28px; margin-bottom: 12px;">Let's Connect</h3>
+            <p style="font-size: 16px; margin-bottom: 8px; opacity: 0.9;">
+                Exploring Director/VP opportunities in <strong>Product Leadership</strong>, <strong>Platform Engineering</strong>, and <strong>Organizational Transformation</strong>
+            </p>
+            <p style="font-size: 14px; margin-bottom: 32px; opacity: 0.75;">
+                Available for immediate start • Remote or Atlanta-based • Open to consulting engagements
+            </p>
+
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:mcpugmire@gmail.com" style="padding: 12px 28px; background: #8B5CF6; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    📧 mcpugmire@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/matt-pugmire/" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    💼 LinkedIn
+                </a>
+                <a href="ask_mattgpt_landing_wireframe.html" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    🐾 Ask Agy
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

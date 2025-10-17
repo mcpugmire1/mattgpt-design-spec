@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tennis Ball Animations - Preview</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            text-align: center;
+        }
+        .animation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+        .animation-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .animation-box h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .animation-container {
+            width: 72px;
+            height: 72px;
+            margin: 20px auto;
+            position: relative;
+        }
+        .animation-container img {
+            width: 48px;
+            height: 48px;
+            image-rendering: auto;
+        }
+        .dark-bg {
+            background: #0D0D0D;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .label {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎾 Tennis Ball Thinking Indicators</h1>
+    <p>Animation previews at 3x size for visibility</p>
+
+    <div class="animation-grid">
+        <div class="animation-box">
+            <h3>Bounce</h3>
+            <div class="animation-container">
+                <img id="bounce" src="bounce_frame_1.png" alt="Bounce animation">
+            </div>
+            <div class="label">Vertical bounce</div>
+        </div>
+
+        <div class="animation-box">
+            <h3>Rotate</h3>
+            <div class="animation-container">
+                <img id="rotate" src="tennis_ball_rotate_1.png" alt="Rotate animation">
+            </div>
+            <div class="label">Spinning seam</div>
+        </div>
+
+        <div class="animation-box">
+            <h3>Chase (WWAC)</h3>
+            <div class="animation-container">
+                <img id="chase" src="tennis_ball_chase_1.png" alt="Chase animation">
+            </div>
+            <div class="label">Playful wave 🐕</div>
+        </div>
+    </div>
+
+    <div class="dark-bg">
+        <h2 style="color: white;">Dark Mode Preview</h2>
+        <div class="animation-grid">
+            <div class="animation-box" style="background: #1a1a1a;">
+                <h3 style="color: white;">Bounce</h3>
+                <div class="animation-container">
+                    <img id="bounce-dark" src="bounce_frame_1.png" alt="Bounce animation">
+                </div>
+            </div>
+
+            <div class="animation-box" style="background: #1a1a1a;">
+                <h3 style="color: white;">Rotate</h3>
+                <div class="animation-container">
+                    <img id="rotate-dark" src="tennis_ball_rotate_1.png" alt="Rotate animation">
+                </div>
+            </div>
+
+            <div class="animation-box" style="background: #1a1a1a;">
+                <h3 style="color: white;">Chase (WWAC)</h3>
+                <div class="animation-container">
+                    <img id="chase-dark" src="tennis_ball_chase_1.png" alt="Chase animation">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bounce animation - 48px crisp version
+        const bounceFrames = ['bounce_48px_1.png', 'bounce_48px_2.png', 'bounce_48px_3.png'];
+        let bounceIndex = 0;
+        setInterval(() => {
+            bounceIndex = (bounceIndex + 1) % bounceFrames.length;
+            document.getElementById('bounce').src = bounceFrames[bounceIndex];
+            document.getElementById('bounce-dark').src = bounceFrames[bounceIndex];
+        }, 300);
+
+        // Rotate animation - 48px crisp version
+        const rotateFrames = ['rotate_48px_1.png', 'rotate_48px_2.png', 'rotate_48px_3.png'];
+        let rotateIndex = 0;
+        setInterval(() => {
+            rotateIndex = (rotateIndex + 1) % rotateFrames.length;
+            document.getElementById('rotate').src = rotateFrames[rotateIndex];
+            document.getElementById('rotate-dark').src = rotateFrames[rotateIndex];
+        }, 300);
+
+        // Chase animation (WWAC) - 48px crisp version
+        const chaseFrames = ['chase_48px_1.png', 'chase_48px_2.png', 'chase_48px_3.png'];
+        let chaseIndex = 0;
+        setInterval(() => {
+            chaseIndex = (chaseIndex + 1) % chaseFrames.length;
+            document.getElementById('chase').src = chaseFrames[chaseIndex];
+            document.getElementById('chase-dark').src = chaseFrames[chaseIndex];
+        }, 300);
+    </script>
+</body>
+</html>

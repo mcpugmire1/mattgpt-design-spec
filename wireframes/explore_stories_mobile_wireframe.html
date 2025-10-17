@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Stories - Mobile Wireframe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 390px;
+            margin: 20px auto;
+            background: #16213e;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            min-height: 844px;
+        }
+
+        .mobile-screen {
+            background: #0f1729;
+            border-radius: 30px;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #1a1a2e;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .back-btn {
+            font-size: 20px;
+            color: #3498db;
+            cursor: pointer;
+        }
+
+        .top-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .menu-btn {
+            font-size: 20px;
+            color: #95a5a6;
+            cursor: pointer;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px;
+            background: #1a1a2e;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #95a5a6;
+        }
+
+        .results-count {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .view-toggle button {
+            flex: 1;
+            padding: 8px;
+            background: #2d3748;
+            border: 2px solid transparent;
+            color: #95a5a6;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .view-toggle button.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        /* Filters Button */
+        .filters-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 16px 20px;
+            margin-right: 40px;
+            background: #2d3748;
+            border: 2px solid #3498db;
+            color: #3498db;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 20px;
+            padding-top: 0;
+            overflow-y: auto;
+            height: calc(100vh - 280px);
+        }
+
+        /* Card */
+        .story-card {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #2d3748;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .story-card:active {
+            transform: scale(0.98);
+            background: #242a3e;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: white;
+            flex: 1;
+        }
+
+        .client-badge {
+            background: #1e3a5f;
+            color: #3498db;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #95a5a6;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .card-preview {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #bdc3c7;
+            margin-bottom: 16px;
+        }
+
+        .view-details-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2d3748;
+            border: 2px solid #3498db;
+            color: #3498db;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-details-btn:active {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            width: 100%;
+            height: 100%;
+            background: #0f1729;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: #1a1a2e;
+            padding: 16px 20px;
+            border-bottom: 1px solid #2d3748;
+            z-index: 10;
+        }
+
+        .modal-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            color: #95a5a6;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-action-btn {
+            padding: 6px 12px;
+            background: #2d3748;
+            border: 1px solid #3498db;
+            color: #3498db;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .modal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+            color: #95a5a6;
+        }
+
+        .modal-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+
+        /* STAR Sections */
+        .star-section {
+            margin-bottom: 24px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2d3748;
+        }
+
+        .star-header {
+            padding: 16px;
+            background: #242a3e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .star-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #3498db;
+            text-transform: uppercase;
+        }
+
+        .star-icon {
+            font-size: 20px;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            color: #95a5a6;
+            transition: transform 0.3s ease;
+        }
+
+        .star-section.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .star-content {
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #bdc3c7;
+            display: none;
+        }
+
+        .star-section.expanded .star-content {
+            display: block;
+        }
+
+        .star-content ul {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .star-content li {
+            margin-bottom: 10px;
+        }
+
+        .star-content strong {
+            color: #3498db;
+        }
+
+        /* Sidebar Info */
+        .sidebar-section {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #2d3748;
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #2d3748;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #bdc3c7;
+            font-weight: 500;
+        }
+
+        .competency-list {
+            list-style: none;
+        }
+
+        .competency-list li {
+            padding: 8px 0;
+            font-size: 13px;
+            color: #bdc3c7;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .competency-list li:last-child {
+            border-bottom: none;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .metric-card {
+            background: #242a3e;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #27ae60;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+
+        /* Desktop Notice */
+        .desktop-notice {
+            background: #1e3a5f;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #bdc3c7;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .desktop-notice-icon {
+            font-size: 18px;
+            color: #3498db;
+            flex-shrink: 0;
+        }
+
+        /* Demo Control */
+        .demo-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #3498db;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <div class="mobile-screen">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="back-btn">‹</div>
+                <div class="top-title">Explore Stories</div>
+                <div class="menu-btn">⋮</div>
+            </div>
+
+            <!-- Header -->
+            <div class="header">
+                <h1>Project Case Studies</h1>
+                <p>Browse digital transformation initiatives</p>
+
+                <div class="results-count">
+                    Showing <strong>1-10</strong> of <strong>115</strong> projects
+                </div>
+
+                <div class="view-toggle">
+                    <button>Table</button>
+                    <button class="active">Cards</button>
+                    <button>Timeline</button>
+                </div>
+
+                <button class="filters-btn">
+                    <span>🔍</span>
+                    <span>Filters & Search</span>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Card 1 -->
+                <div class="story-card" onclick="openModal()">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Digital Transformation for a Global Bank</div>
+                        <div class="client-badge">JP Morgan Chase</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Role:</span>
+                            <span>Director</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Period:</span>
+                            <span>2023-2025</span>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Domain:</span>
+                            <span>Application Modernization</span>
+                        </div>
+                    </div>
+                    <div class="card-preview">
+                        Modernized legacy banking platform into mobile-first, cloud-native digital ecosystem delivering 20+ screen app in 5 months, doubling development speed vs internal teams...
+                    </div>
+                    <button class="view-details-btn">View Full Story</button>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Digital Transformation for a Global Bank</div>
+                        <div class="client-badge">JP Morgan Chase</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Role:</span>
+                            <span>Director</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Period:</span>
+                            <span>2023-2025</span>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Domain:</span>
+                            <span>Application Modernization</span>
+                        </div>
+                    </div>
+                    <div class="card-preview">
+                        Modernized legacy banking platform into mobile-first, cloud-native digital ecosystem delivering 20+ screen app in 5 months, doubling development speed...
+                    </div>
+                    <button class="view-details-btn">View Full Story</button>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <div class="card-title">Accelerating Product Delivery Through Lean Innovation at Capital One</div>
+                        <div class="client-badge">Capital One</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Role:</span>
+                            <span>Director</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Period:</span>
+                            <span>2021-2023</span>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Domain:</span>
+                            <span>Strategy-Client Partnerships</span>
+                        </div>
+                    </div>
+                    <div class="card-preview">
+                        Established lean innovation practices enabling rapid product development and hypothesis-driven delivery across enterprise teams...
+                    </div>
+                    <button class="view-details-btn">View Full Story</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Story Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-header-top">
+                    <div class="close-btn" onclick="closeModal()">✕</div>
+                    <div class="modal-actions">
+                        <button class="modal-action-btn" onclick="alert('Link copied!')">🔗 Share</button>
+                        <button class="modal-action-btn" onclick="window.print()">📄 Export</button>
+                    </div>
+                </div>
+                <div class="modal-title">Accelerating Digital Transformation for a Global Bank</div>
+                <div class="modal-meta">
+                    <div class="modal-meta-item">
+                        <span>🏢</span>
+                        <span><strong>JP Morgan Chase</strong></span>
+                    </div>
+                    <div class="modal-meta-item">
+                        <span>👤</span>
+                        <span><strong>Director</strong></span>
+                    </div>
+                    <div class="modal-meta-item">
+                        <span>📅</span>
+                        <span>2023-2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="desktop-notice">
+                    <div class="desktop-notice-icon">💡</div>
+                    <div>
+                        For the best experience with filters, table views, and advanced search, visit the desktop version at <strong>mattgpt.com</strong>
+                    </div>
+                </div>
+
+                <!-- Situation -->
+                <div class="star-section expanded">
+                    <div class="star-header" onclick="toggleSection(this)">
+                        <div class="star-label">
+                            <span class="star-icon">📍</span>
+                            <span>Situation</span>
+                        </div>
+                        <div class="expand-icon">⌄</div>
+                    </div>
+                    <div class="star-content">
+                        JPMorgan Chase sought to modernize its legacy banking platform to appeal to a more sophisticated, digitally-savvy customer base with a mobile-first, branchless banking experience. The organization aimed to redefine its brand through an innovative digital ecosystem.
+                    </div>
+                </div>
+
+                <!-- Task -->
+                <div class="star-section expanded">
+                    <div class="star-header" onclick="toggleSection(this)">
+                        <div class="star-label">
+                            <span class="star-icon">🎯</span>
+                            <span>Task</span>
+                        </div>
+                        <div class="expand-icon">⌄</div>
+                    </div>
+                    <div class="star-content">
+                        Develop a robust, responsive, multi-platform mobile application for Android and iOS, ensuring high-quality standards, scalability, effective remote collaboration, seamless client engagement, and test coverage twice as efficient as the client's existing teams.
+                    </div>
+                </div>
+
+                <!-- Action -->
+                <div class="star-section expanded">
+                    <div class="star-header" onclick="toggleSection(this)">
+                        <div class="star-label">
+                            <span class="star-icon">⚡</span>
+                            <span>Action</span>
+                        </div>
+                        <div class="expand-icon">⌄</div>
+                    </div>
+                    <div class="star-content">
+                        <ul>
+                            <li>Formed a cross-functional team focused on lean XP methodologies to drive rapid, iterative development</li>
+                            <li>Delivered 90%+ test coverage and achieved 100% Product Owner acceptance by implementing rigorous testing and validation processes</li>
+                            <li>Leveraged cloud-native microservices with an event-driven Kafka/MongoDB architecture to create a scalable and responsive solution</li>
+                            <li>Expanded collaboration with client teams, scaling from 4 to 11 integrated teams to support a growing development scope</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div class="star-section expanded">
+                    <div class="star-header" onclick="toggleSection(this)">
+                        <div class="star-label">
+                            <span class="star-icon">🏆</span>
+                            <span>Result</span>
+                        </div>
+                        <div class="expand-icon">⌄</div>
+                    </div>
+                    <div class="star-content">
+                        <ul>
+                            <li>Successfully delivered a multi-platform mobile app with <strong>20+ screens in just 5 months</strong></li>
+                            <li><strong>Doubled development speed</strong> compared to the client's internal teams, meeting tight deadlines despite COVID-driven remote challenges</li>
+                            <li>Achieved <strong>100% Product Owner acceptance with 90%+ test coverage</strong></li>
+                            <li>Strengthened client relationships by demonstrating the value of modern methodologies such as Lean Product Management, Extreme Programming (XP), and iterative delivery practices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Technologies & Practices</div>
+                    <div class="tags">
+                        <span class="tag">Mobile Development</span>
+                        <span class="tag">Lean XP</span>
+                        <span class="tag">Microservices</span>
+                        <span class="tag">Event-Driven</span>
+                        <span class="tag">Kafka</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">Cloud-Native</span>
+                        <span class="tag">Agile Delivery</span>
+                    </div>
+                </div>
+
+                <!-- Core Competencies -->
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Core Competencies</div>
+                    <ul class="competency-list">
+                        <li>Agile Delivery</li>
+                        <li>Lean XP Practices</li>
+                        <li>Multi-Platform Development</li>
+                        <li>Client Integration</li>
+                        <li>Cloud-Native Microservices Architecture</li>
+                        <li>Cross-Functional Collaboration</li>
+                    </ul>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Key Metrics</div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">5 mo</div>
+                            <div class="metric-label">Delivered 20+ Screens</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">2x</div>
+                            <div class="metric-label">Speed vs Internal Teams</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">100%</div>
+                            <div class="metric-label">Product Owner Acceptance</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">90%+</div>
+                            <div class="metric-label">Test Coverage</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Control -->
+    <div class="demo-control" onclick="openModal()">
+        👆 Click Card to View Full Story
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        function toggleSection(header) {
+            header.parentElement.classList.toggle('expanded');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+        <!-- Footer -->
+        <div style="background: #2c3e50; color: white; padding: 48px 40px; text-align: center;">
+            <h3 style="font-size: 28px; margin-bottom: 12px;">Let's Connect</h3>
+            <p style="font-size: 16px; margin-bottom: 8px; opacity: 0.9;">
+                Exploring Director/VP opportunities in <strong>Product Leadership</strong>, <strong>Platform Engineering</strong>, and <strong>Organizational Transformation</strong>
+            </p>
+            <p style="font-size: 14px; margin-bottom: 32px; opacity: 0.75;">
+                Available for immediate start • Remote or Atlanta-based • Open to consulting engagements
+            </p>
+
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:mcpugmire@gmail.com" style="padding: 12px 28px; background: #8B5CF6; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    📧 mcpugmire@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/matt-pugmire/" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    💼 LinkedIn
+                </a>
+                <a href="ask_mattgpt_landing_wireframe.html" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    🐾 Ask Agy
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

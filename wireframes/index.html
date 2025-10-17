@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt Pugmire | Director of Technology Delivery | Digital Transformation Leader</title>
+    <meta name="description" content="20+ years leading digital transformation at Fortune 500 companies including JPMorgan Chase, Accenture, and Capital One. 115+ projects in product leadership, platform engineering, and agile delivery. Available for Director/VP opportunities.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .page {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .nav-item.active {
+            background: #34495e;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        /* Reduce spacing on shorter screens - AGGRESSIVE for 1368×768 */
+        @media (max-height: 800px) {
+            .hero {
+                padding: 30px 40px 40px;
+            }
+
+            .hero-image {
+                margin-bottom: 16px;
+            }
+
+            .hero-image img {
+                max-width: 300px !important;
+            }
+
+            .hero-greeting {
+                margin-bottom: 8px;
+                font-size: 16px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+                margin-bottom: 12px;
+            }
+
+            .hero .tagline {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Extra aggressive for very short screens */
+        @media (max-height: 700px) {
+            .hero {
+                padding: 20px 40px 30px;
+            }
+
+            .hero-image {
+                margin-bottom: 12px;
+            }
+
+            .hero-image img {
+                max-width: 260px !important;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+
+        .hero-greeting {
+            font-size: 18px;
+            margin-bottom: 12px;
+            opacity: 0.95;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .hero .tagline {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        /* Hero Buttons */
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-btn-primary {
+            background: white;
+            color: #667eea;
+            border: 2px solid white;
+        }
+
+        .hero-btn-primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .stat {
+            padding: 30px;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Content Section */
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Industry Cards (larger) */
+        .industry-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            text-decoration: none;
+            display: block;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-count {
+            font-size: 16px;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+        .card-description {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .card-cta:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* Capability Cards (smaller) */
+        .capability-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .capability-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .capability-card .card-icon {
+            font-size: 28px;
+        }
+
+        .capability-card .card-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .capability-card .card-description {
+            font-size: 13px;
+            color: #7f8c8d;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .capability-card .card-examples {
+            font-size: 12px;
+            color: #95a5a6;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .capability-card .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .capability-card .card-cta:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        /* Ask Agy Card */
+        .quick-question-card {
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            color: white;
+            grid-column: 1 / -1;
+            border: 2px solid transparent;
+        }
+
+        .quick-question-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+        }
+
+        .quick-question-card .card-title {
+            color: white;
+        }
+
+        .quick-question-card .card-description {
+            color: white;
+            opacity: 0.95;
+        }
+
+        .quick-question-card .card-examples {
+            color: white;
+            opacity: 0.9;
+        }
+
+        .quick-question-card .card-cta {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            color: white;
+        }
+
+        .quick-question-card .card-cta:hover {
+            background: white;
+            color: #8B5CF6;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="index.html" class="nav-item active">Homepage</a>
+            <a href="explore_stories_cards_wireframe.html" class="nav-item">Explore Stories</a>
+            <a href="ask_mattgpt_landing_wireframe.html" class="nav-item">Ask MattGPT</a>
+            <a href="about_matt_wireframe.html" class="nav-item">About Matt</a>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-image">
+                <img src="mattgpt_brand_kit/logos/MattGPT_Agy_Transparent.png" alt="MattGPT with Agy" style="max-width: 400px; height: auto; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));">
+            </div>
+            <div class="hero-greeting">
+                <span>👋</span>
+                <span>Hi, I'm Matt Pugmire</span>
+            </div>
+            <h1>Digital Transformation Leader</h1>
+            <p class="tagline">
+                20+ years driving innovation, agile delivery, and technology leadership across Fortune 500 companies.
+                Explore my portfolio of 115+ projects or chat with Agy 🐾 to learn about my experience.
+            </p>
+            <div class="hero-buttons">
+                <a href="explore_stories_cards_wireframe.html" class="hero-btn hero-btn-primary">
+                    Explore Stories
+                </a>
+                <a href="ask_mattgpt_landing_wireframe.html" class="hero-btn hero-btn-secondary">
+                    Ask Agy 🐾
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">115</div>
+                <div class="stat-label">Projects Delivered</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">300+</div>
+                <div class="stat-label">Professionals Trained</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Enterprise Clients</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2>
+                    <span>🎯</span>
+                    <span>What would you like to explore?</span>
+                </h2>
+            </div>
+
+            <!-- Industry Expertise Cards -->
+            <div class="cards-grid">
+                <!-- Financial Services Card -->
+                <a href="banking_landing_page.html" class="industry-card">
+                    <div class="card-icon">🏦</div>
+                    <div class="card-header">
+                        <div class="card-title">Financial Services / Banking</div>
+                        <div class="card-count">55 projects</div>
+                    </div>
+                    <div class="card-description">
+                        Banking modernization, payments, compliance, core banking systems
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">JPMorgan Chase (33)</span>
+                        <span class="tag">American Express (3)</span>
+                        <span class="tag">Capital One (2)</span>
+                        <span class="tag">Fiserv (7)</span>
+                        <span class="tag">HSBC (2)</span>
+                        <span class="tag">RBC (11)</span>
+                    </div>
+                    <div class="card-cta">
+                        <span>See Banking Projects</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- Cross-Industry Card -->
+                <a href="cross_industry_landing_page.html" class="industry-card">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-header">
+                        <div class="card-title">Cross-Industry Transformation</div>
+                        <div class="card-count">51 projects</div>
+                    </div>
+                    <div class="card-description">
+                        Multi-sector consulting, platform engineering, organizational transformation
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">Accenture (13)</span>
+                        <span class="tag">Multiple Clients (33)</span>
+                        <span class="tag">Healthcare (3)</span>
+                        <span class="tag">Transportation (5)</span>
+                    </div>
+                    <div class="card-cta">
+                        <span>Browse Transformations</span>
+                        <span>→</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Capability Cards -->
+            <div class="cards-grid">
+                <!-- Product Innovation -->
+                <a href="explore_stories_cards_wireframe.html" class="capability-card">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-title">Product Innovation & Strategy</div>
+                    <div class="card-description">
+                        Cloud-native products from zero. Lean, rapid prototyping, OKRs, MVPs
+                    </div>
+                    <div class="card-examples">
+                        "How do you do hypothesis-driven development?" • "How do you shift to product thinking?"
+                    </div>
+                    <div class="card-cta">
+                        <span>Explore Product Work</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- App Modernization -->
+                <a href="explore_stories_cards_wireframe.html" class="capability-card">
+                    <div class="card-icon">🔧</div>
+                    <div class="card-title">App Modernization</div>
+                    <div class="card-description">
+                        Modernizing legacy apps with event-driven design, microservices, and zero-defect delivery
+                    </div>
+                    <div class="card-examples">
+                        "How do you modernize monoliths into microservices?" • "How do you approach application rationalization?"
+                    </div>
+                    <div class="card-cta">
+                        <span>View Case Studies</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- Consulting & Transformation -->
+                <a href="explore_stories_cards_wireframe.html" class="capability-card">
+                    <div class="card-icon">💡</div>
+                    <div class="card-title">Consulting & Transformation</div>
+                    <div class="card-description">
+                        Fortune 500 advisory, operating models, 3-20x acceleration, New Ways of Working
+                    </div>
+                    <div class="card-examples">
+                        "How do you achieve 4x faster delivery?" • "How do you align cross-functional teams?"
+                    </div>
+                    <div class="card-cta">
+                        <span>Browse Transformations</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- Teams & Talent -->
+                <a href="explore_stories_cards_wireframe.html" class="capability-card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">Teams & Talent Development</div>
+                    <div class="card-count" style="color: #667eea; font-size: 14px; margin-bottom: 8px;">300+ professionals trained</div>
+                    <div class="card-description">
+                        Innovation centers, servant leadership, upskilling programs
+                    </div>
+                    <div class="card-examples">
+                        "How did you scale the innovation center to 150+ people?" • "How did you equip teams for New IT ways of working?"
+                    </div>
+                    <div class="card-cta">
+                        <span>Check Team Stories</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- Ask Agy -->
+                <a href="ask_mattgpt_landing_wireframe.html" class="capability-card quick-question-card">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                        <img src="mattgpt_brand_kit/chat_avatars/agy_avatar_64_dark.png" alt="Agy" style="width: 64px; height: 64px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                        <div>
+                            <div class="card-title" style="margin-bottom: 4px;">Quick Question</div>
+                            <div style="font-size: 14px; opacity: 0.95; font-weight: 600;">Ask Agy 🐾 anything</div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        From building MattGPT to leading global programs — Agy can help you explore 20+ years of transformation experience.
+                    </div>
+                    <div class="card-examples">
+                        "How did you build MattGPT?" • "How do you overcome the challenges of scaling to 150+ engineers?"
+                    </div>
+                    <div class="card-cta">
+                        <span>Ask Agy</span>
+                        <span>🐾</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="background: #2c3e50; color: white; padding: 48px 40px; text-align: center;">
+            <h3 style="font-size: 28px; margin-bottom: 12px;">Let's Connect</h3>
+            <p style="font-size: 16px; margin-bottom: 8px; opacity: 0.9;">
+                Exploring Director/VP opportunities in <strong>Product Leadership</strong>, <strong>Platform Engineering</strong>, and <strong>Organizational Transformation</strong>
+            </p>
+            <p style="font-size: 14px; margin-bottom: 32px; opacity: 0.75;">
+                Available for immediate start • Remote or Atlanta-based • Open to consulting engagements
+            </p>
+
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:mcpugmire@gmail.com" style="padding: 12px 28px; background: #8B5CF6; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    📧 mcpugmire@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/matt-pugmire/" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    💼 LinkedIn
+                </a>
+                <a href="ask_mattgpt_landing_wireframe.html" style="padding: 12px 28px; background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+                    🐾 Ask Agy
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
