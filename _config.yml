@@ -8,11 +8,10 @@ baseurl: "/mattgpt-design-spec"
 url: "https://matthewpugmire.github.io"
 
 # Theme
-theme: jekyll-theme-cayman
-# Alternative themes you can try:
-# theme: jekyll-theme-minimal
-# theme: jekyll-theme-architect
-# theme: jekyll-theme-slate
+theme: jekyll-theme-minimal
+
+# Logo (Agy the Plott Hound)
+logo: /mattgpt-design-spec/images/logos/agy_hero.png
 
 # Navigation
 header_pages:
@@ -71,10 +70,22 @@ author: Matt Pugmire
 email: mpugmire@gmail.com
 linkedin: https://www.linkedin.com/in/mattpugmire/
 
-# Exclude from processing
+# Exclude from processing (but still serve as static files)
 exclude:
   - README.md
   - .gitignore
   - vendor
   - Gemfile
   - Gemfile.lock
+
+# Keep these folders as static assets
+keep_files:
+  - wireframes
+  - images
+  - brand-kit
+
+# Include these file types
+include:
+  - wireframes/*.html
+  - components/*.html
+  - components/*.md
