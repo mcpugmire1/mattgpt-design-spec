@@ -154,9 +154,9 @@
         }
 
         @keyframes chaseAnimation {
-            0% { content: url('mattgpt_brand_kit/thinking_indicator/chase_48px_1.png'); }
-            33% { content: url('mattgpt_brand_kit/thinking_indicator/chase_48px_2.png'); }
-            66% { content: url('mattgpt_brand_kit/thinking_indicator/chase_48px_3.png'); }
+            0% { content: url('../brand-kit/thinking_indicator/chase_48px_1.png'); }
+            33% { content: url('../brand-kit/thinking_indicator/chase_48px_2.png'); }
+            66% { content: url('../brand-kit/thinking_indicator/chase_48px_3.png'); }
         }
 
         .action-buttons {
@@ -528,7 +528,7 @@
         <div class="header">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center; gap: 24px;">
-                    <img src="mattgpt_brand_kit/chat_avatars/agy_avatar_64_dark.png" alt="Agy - MattGPT" style="width: 64px; height: 64px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                    <img src="../brand-kit/chat_avatars/agy_avatar_64_dark.png" alt="Agy - MattGPT" style="width: 64px; height: 64px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                     <div>
                         <h1>Ask MattGPT</h1>
                         <p>Meet Agy 🐾 — Tracking down insights from 20+ years of transformation experience</p>
@@ -623,12 +623,12 @@
                 <!-- AI Response -->
                 <div class="message ai">
                     <div class="message-avatar ai-avatar">
-                        <img src="mattgpt_brand_kit/chat_avatars/agy_avatar_48_dark.png" alt="Agy">
+                        <img src="../brand-kit/chat_avatars/agy_avatar_48_dark.png" alt="Agy">
                     </div>
                     <div class="message-content">
                         <div class="thinking-indicator">
                             <div class="thinking-animation">
-                                <img id="thinkingFrame" src="mattgpt_brand_kit/thinking_indicator/chase_48px_1.png" alt="Tracking">
+                                <img id="thinkingFrame" src="../brand-kit/thinking_indicator/chase_48px_1.png" alt="Tracking">
                             </div>
                             <span>🐾 Tracking down insights...</span>
                         </div>
@@ -641,7 +641,7 @@
 
                             setInterval(() => {
                                 currentFrame = (currentFrame + 1) % 3;
-                                thinkingImg.src = `mattgpt_brand_kit/thinking_indicator/${frames[currentFrame]}`;
+                                thinkingImg.src = `../brand-kit/thinking_indicator/${frames[currentFrame]}`;
                             }, 300); // 300ms per frame = 0.9s full cycle
                         </script>
 
