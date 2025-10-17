@@ -79,13 +79,16 @@ Explore clickable HTML prototypes of the MattGPT interface:
 
 ---
 
-## Component Library
-
-**[📦 Component Inventory](/mattgpt-design-spec/components/component_inventory)**
-Complete catalog of reusable UI components with specifications.
+## Design System & Components
 
 **[🗺️ Sitemap & Navigation](/mattgpt-design-spec/components/sitemap_navigation)**
-Information architecture and navigation patterns.
+Complete information architecture, user flows, and navigation patterns.
+
+**[📦 Component Inventory](/mattgpt-design-spec/components/component_inventory)**
+Catalog of reusable UI components with specifications.
+
+**[🎨 Brand Guidelines](/mattgpt-design-spec/brand-kit/brand_kit_preview.html)**
+Complete brand kit with logos, colors, typography, and usage guidelines.
 
 ---
 
