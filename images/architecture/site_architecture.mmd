@@ -1,0 +1,69 @@
+graph TB
+    HomePage["Home Page"]
+    Nav["Navigation"]
+
+    %% Homepage Cards (Green - Entry Points)
+    ProductInnovation["Product<br/>Innovation"]
+    AppModernization["App<br/>Modernization"]
+    ConsultingTransformation["Consulting &<br/>Transformation"]
+    TeamsTalent["Teams & Talent"]
+    QuickQuestion["Quick question"]
+    FinancialServices["Financial<br/>Services"]
+    CrossIndustry["Cross-Industry<br/>Transformation"]
+
+    %% Landing Pages (Blue)
+    BankingLanding["Banking<br/>Landing Page"]
+    CrossLanding["Cross-Industry<br/>Landing Page"]
+
+    %% Capability Categories (Orange)
+    Agile1["Agile"]
+    ModernEng1["Modern<br/>Engineering"]
+    More1["..More"]
+
+    Agile2["Agile"]
+    ModernEng2["Modern<br/>Engineering"]
+    More2["... More"]
+
+    %% Main Navigation (Dark Navy)
+    ExploreStories["Explore Stories"]
+    AskMattGPT["Ask MattGPT"]
+    AboutMatt["AboutMatt"]
+
+    %% Connections from Home Page
+    HomePage --> ProductInnovation
+    HomePage --> AppModernization
+    HomePage --> ConsultingTransformation
+    HomePage --> TeamsTalent
+    HomePage --> QuickQuestion
+    HomePage --> FinancialServices
+    HomePage --> CrossIndustry
+
+    %% Landing Pages
+    FinancialServices --> BankingLanding
+    CrossIndustry --> CrossLanding
+
+    %% Banking Capabilities
+    BankingLanding --> Agile1
+    BankingLanding --> ModernEng1
+    BankingLanding --> More1
+
+    %% Cross-Industry Capabilities
+    CrossLanding --> Agile2
+    CrossLanding --> ModernEng2
+    CrossLanding --> More2
+
+    %% Main Navigation at Bottom
+    HomePage --> ExploreStories
+    HomePage --> AskMattGPT
+    HomePage --> AboutMatt
+
+    %% Styling - Brand Colors
+    classDef blueBox fill:#6bb6ff,stroke:#4a90e2,stroke-width:2px,color:#fff
+    classDef greenBox fill:#82c97a,stroke:#66a060,stroke-width:2px,color:#fff
+    classDef orangeBox fill:#ff9966,stroke:#e67e50,stroke-width:2px,color:#fff
+    classDef navyBox fill:#34495e,stroke:#2c3e50,stroke-width:2px,color:#fff
+
+    class HomePage,Nav,BankingLanding,CrossLanding blueBox
+    class ProductInnovation,AppModernization,ConsultingTransformation,TeamsTalent,QuickQuestion,FinancialServices,CrossIndustry greenBox
+    class Agile1,ModernEng1,More1,Agile2,ModernEng2,More2 orangeBox
+    class ExploreStories,AskMattGPT,AboutMatt navyBox

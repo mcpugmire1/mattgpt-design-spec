@@ -1,0 +1,45 @@
+graph TB
+    subgraph BuildTime["Figure 1: Build Time (Indexing)"]
+        ContentOwner["👤 Content<br/>Owner"]
+        SourceData["📄 Source Data"]
+        DataGov["🔒 Data<br/>Governance<br/>Layer"]
+        AIIndex1["🗄️ AI Data Index<br/>(Pinecone)"]
+
+        ContentOwner --> SourceData
+        SourceData --> DataGov
+        DataGov --> AIIndex1
+    end
+
+    subgraph RunTime["Figure 2: Run Time (Query)"]
+        Recruiter["👔 Recruiter"]
+        HiringMgr["👨‍💼 Hiring<br/>Manager"]
+        UserQuery["❓ User Query"]
+        ReactMFE["⚛️ React Micro-<br/>Frontend"]
+        AIIndex2["🗄️ AI Data Index<br/>(Pinecone)"]
+        RAGOrch["🤖 RAG<br/>Orchestrator<br/>(LLM)"]
+        SemanticEngine["🔍 Semantic<br/>Retrieval<br/>Engine"]
+        Response["💬 Human-like<br/>Response"]
+        Citations["📋 Mandatory<br/>Source Citation"]
+
+        Recruiter --> UserQuery
+        HiringMgr --> UserQuery
+        UserQuery --> ReactMFE
+        ReactMFE --> RAGOrch
+        RAGOrch --> AIIndex2
+        AIIndex2 --> SemanticEngine
+        SemanticEngine --> Response
+        Response --> Citations
+    end
+
+    %% Apply colors matching PDF
+    classDef userNode fill:#4a90e2,stroke:#2c5f8d,stroke-width:2px,color:#fff
+    classDef dataNode fill:#7C3AED,stroke:#5b21b6,stroke-width:2px,color:#fff
+    classDef processNode fill:#2d2d2d,stroke:#444,stroke-width:2px,color:#fff
+    classDef responseNode fill:#059669,stroke:#047857,stroke-width:2px,color:#fff
+    classDef govNode fill:#D97706,stroke:#b45309,stroke-width:2px,color:#fff
+
+    class ContentOwner,Recruiter,HiringMgr,UserQuery userNode
+    class AIIndex1,AIIndex2 dataNode
+    class SourceData,ReactMFE,RAGOrch,SemanticEngine processNode
+    class Response,Citations responseNode
+    class DataGov govNode
