@@ -29,7 +29,7 @@ MattGPT's architecture follows a three-phase evolution strategy:
 | 🐍 **Frontend/Backend** | Streamlit (Monolith) | Rapid prototyping framework |
 | 🤖 **LLM** | OpenAI GPT-4 | Natural language processing |
 | 🌲 **Vector Database** | Pinecone | Semantic search and embeddings |
-| 🐳 **Containerization** | Docker (Local) | Local development environment |
+| 📦 **Dependencies** | Python venv + pip | Local development environment |
 
 ### Accepted Trade-offs
 

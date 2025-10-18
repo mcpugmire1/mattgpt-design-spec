@@ -97,8 +97,8 @@ This isn't just a portfolio showcase — it's a **functional AI application demo
 | **Sentence Transformers** | Embedding generation | all-MiniLM-L6-v2 (384-dim, fast) |
 | **Pandas** | Data manipulation | JSONL processing and metadata handling |
 | **NumPy** | Numerical operations | Vector math and similarity scoring |
-| 🐳 **Docker** | Containerization | Local dev environment consistency |
-| **Netlify** | Deployment (MVP) | Simple static hosting for Streamlit |
+| 📦 **Python venv** | Dependency management | Local dev environment with requirements.txt |
+| ☁️ **Streamlit Cloud** | Deployment (MVP) | Free hosting for Streamlit apps |
 
 ### System Architecture
 
