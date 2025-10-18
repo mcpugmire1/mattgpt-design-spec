@@ -53,6 +53,9 @@ Complete site architecture, user flows, and detailed wireframe specifications fo
 **[🔨 Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt)**
 The development journey, technical challenges, hybrid search algorithm, and product roadmap.
 
+**[🐾 Agy Voice Guide](/mattgpt-design-spec/docs/05-agy-voice-guide)**
+Complete brand voice documentation for Agy, the Plott Hound AI assistant — personality traits, response templates, and tone guidelines.
+
 ---
 
 ## Interactive Wireframes

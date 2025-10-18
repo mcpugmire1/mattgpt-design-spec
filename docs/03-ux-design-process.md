@@ -579,7 +579,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 - **Status Strip:** "Semantic search active | Pinecone index: ready | 115 stories indexed"
 
 **Intro Section:**
-- **Headline:** "Hi, I'm Agy 🐝" (with dog avatar)
+- **Headline:** "Hi, I'm Agy 🐾" (with dog avatar)
 - **Description:** "I'm a Plott Hound — a breed known for tracking skills and determination. Perfect mascot for helping you hunt down insights from Matt's 115+ transformation projects."
 - **Capability Statement:** "Ask me about specific methodologies, leadership approaches, or project outcomes. I understand context, not just keywords."
 
@@ -654,7 +654,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 
 **AI Thinking Indicator:**
 - Temporary placeholder
-- "🐝 Thinking down thoughts..." with animated dots
+- "🐾 Tracking..." with animated dots
 - Appears before answer renders
 
 **Related Projects Tag Row:**
@@ -877,10 +877,10 @@ def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
 
 #### Try Agy CTA
 
-**Section:** "🐝 See It In Action"
+**Section:** "🎯 See It In Action"
 
 **Content:**
-"This isn't just a portfolio showcase — Agy 🐝 is a working AI assistant that can answer detailed questions about my 115+ projects, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
+"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my 115+ projects, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
 
 **Try asking questions like:**
 - "How did Matt scale engineering teams from 4 to 150+ people?"

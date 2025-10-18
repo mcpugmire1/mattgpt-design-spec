@@ -23,14 +23,14 @@ Homepage (index.html)
 
 ### Global Navigation (All Pages)
 ```
-[Logo/Name] | About Matt | Explore Stories | Ask Agy 🐾
+Homepage | Explore Stories | Ask MattGPT | About Matt
 ```
 
 **Links:**
-- Logo/Name → `index.html`
-- About Matt → `about_matt_wireframe.html`
+- Homepage → `index.html`
 - Explore Stories → `explore_stories_cards_wireframe.html` (default to Cards view)
-- Ask Agy 🐾 → `ask_mattgpt_landing_wireframe.html`
+- Ask MattGPT → `ask_mattgpt_landing_wireframe.html`
+- About Matt → `about_matt_wireframe.html`
 
 ### Footer Navigation (All Pages)
 ```

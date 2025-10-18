@@ -24,6 +24,7 @@ A **multi-purpose design specification** for MattGPT that serves as:
 - `/docs/02-technical-architecture.md` - 3-phase evolution (MVP → Production → Enterprise)
 - `/docs/03-ux-design-process.md` - Site architecture, user flows, wireframe specs
 - `/docs/04-building-mattgpt.md` - Technical implementation, roadmap (has PLACEHOLDERS for personal story)
+- `/docs/05-agy-voice-guide.md` - Complete brand voice documentation for Agy (Plott Hound AI assistant)
 
 ### ✅ Design Artifacts (Complete)
 - 9 interactive HTML wireframes in `/wireframes/`
