@@ -385,6 +385,10 @@ Both Banking and Cross-Industry landing pages follow a consistent pattern optimi
 
 MattGPT provides three distinct view modes for browsing project stories, each optimized for different user preferences and use cases.
 
+**Page Header & Subtitle:**
+- **H1 Heading:** "Explore Stories"
+- **Subtitle:** "Browse Matt's 115+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
+
 #### Shared Framework Elements
 
 All three views share:
@@ -393,6 +397,40 @@ All three views share:
 - **Results Summary:** "Browsing 1-10 of 115 projects"
 - **View Switcher:** Toggle buttons for Table / Cards / Timeline
 - **Ask Agy Link:** "Can't find what you're looking for? Ask Agy →"
+
+**Filter Dropdown Options (Implementation Details):**
+
+**Industry Filter:**
+- All Industries (default)
+- Financial Services / Banking
+- Cross-Industry
+- Healthcare
+- Technology
+
+**Domain Category Filter:**
+- All Domains (default)
+- Agile Transformation
+- Modern Engineering
+- Payments & Treasury
+- Product Innovation
+
+**Client Filter:**
+- All Clients (default)
+- JPMorgan Chase (33 projects)
+- RBC (11 projects)
+- Accenture (13 projects)
+- Fiserv (7 projects)
+
+**Role Filter:**
+- All Roles (default)
+- Director
+- Senior Manager
+- Manager
+
+**View Switcher Options:**
+- Table (data grid with sortable columns)
+- Cards (visual card layout, 3-column grid)
+- Timeline (chronological view by year/quarter)
 
 ---
 
