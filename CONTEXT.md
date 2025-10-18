@@ -41,8 +41,8 @@ A **multi-purpose design specification** for MattGPT that serves as:
 
 ## Current Work (What's In Progress)
 
-### ✅ Wireflow Diagrams (COMPLETED - October 18)
-**Status:** Complete! All 6 wireflow diagrams now render as SVG images
+### ✅ User Journey Diagrams (COMPLETED - October 18)
+**Status:** Complete! All 6 user journey diagrams now render as SVG images
 
 **Solution Implemented:**
 - Pre-rendered Mermaid diagrams to SVG using mermaid-cli
@@ -60,6 +60,7 @@ A **multi-purpose design specification** for MattGPT that serves as:
 **Location:** `/images/wireflows/` (source + rendered)
 **Format:** SVG images (reliable, fast, accessible)
 **Colors:** Branded with MattGPT palette (purple → indigo → blue → green)
+**Note:** These are high-level navigation flows, not true wireflows with screen-to-screen UI component mapping
 
 **Status:** ✅ **COMPLETE** - Diagrams render correctly on GitHub Pages
 
@@ -75,6 +76,33 @@ A **multi-purpose design specification** for MattGPT that serves as:
 - Improved responsive layout for diagrams
 
 **Status:** ✅ **COMPLETE** - Site has consistent branding
+
+---
+
+### ✅ Architecture Diagrams Aligned with PDF (COMPLETED - October 18)
+**Status:** Complete! All architecture diagrams now accurately match the original PDF design spec
+
+**Problem Identified:**
+- `site_architecture.svg` was mislabeled - showed RAG query pipeline instead of page hierarchy
+- PDF Slide 8 (RAG Build + Run architecture) had no visual diagram
+- Documentation references were inconsistent
+
+**Solution Implemented:**
+1. **Renamed:** `site_architecture.svg` → `ask_mattgpt_pipeline.svg` (Query processing flow from Slide 12)
+2. **Created New Diagrams:**
+   - `site_architecture.svg` - Page hierarchy from PDF Slide 9 ✅
+   - `rag_build_run.svg` - Build Time + Run Time from PDF Slide 8 ✅
+3. **Updated Documentation:**
+   - `index.md` - Corrected all diagram links with PDF slide references
+   - `docs/03-ux-design-process.md` - Relabeled "wireflows" to "user journey diagrams"
+
+**Current Architecture Diagrams:**
+- **Slide 8:** RAG Build + Run Architecture (`rag_build_run.svg`) - Data ingestion → indexing → query → response
+- **Slide 9:** Site Architecture (`site_architecture.svg`) - Page hierarchy & navigation structure
+- **Slide 12:** Ask MattGPT Pipeline (`ask_mattgpt_pipeline.svg`) - Query processing flow
+
+**Status:** ✅ **COMPLETE** - All diagrams match hours of work in PDF design spec
+**Commit:** da64528
 
 ---
 

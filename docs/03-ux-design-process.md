@@ -85,9 +85,9 @@ About Matt
 
 MattGPT supports six distinct user journey patterns, each optimized for different discovery behaviors.
 
-### Visual Wireflow Diagrams
+### User Journey Diagrams
 
-The following diagrams illustrate the screen-to-screen navigation paths for each user journey.
+The following diagrams illustrate the high-level navigation paths for each user journey.
 
 ### Flow 1: Banking Browse-First User
 
