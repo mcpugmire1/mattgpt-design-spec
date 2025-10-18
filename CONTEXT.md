@@ -185,6 +185,32 @@ Expect hyper-focus on:
 
 ---
 
+### 🔄 True Wireflows (OUTSTANDING - In Progress)
+**Status:** Matt creating in Miro, will integrate later
+
+**What's Needed:**
+True wireflows showing screen-to-screen UI interactions with wireframe mockups and tap/click annotations. Example:
+```
+[Wireframe: Home Page]
+  → [tap on "See Banking Projects" button]
+  → [Wireframe: Banking Landing Page showing 16 cards]
+  → [tap on "Agile Transformation" card]
+  → [Wireframe: Category page]
+```
+
+**Current State:**
+- ✅ User journey diagrams exist (high-level navigation paths)
+- 🔄 True wireflows in progress in Miro
+
+**Integration Plan (TBD):**
+- Option 1: Export Miro boards as SVG/PNG → Add to `/images/wireflows/`
+- Option 2: Embed Miro board links in documentation
+- Option 3: Screenshot key flows and annotate in markdown
+
+**File Location (when ready):** `/images/wireflows/true-wireflows/` or `/images/miro-exports/`
+
+---
+
 ### 🔄 Personal Narrative (OUTSTANDING)
 **File:** `/docs/04-building-mattgpt.md`
 
