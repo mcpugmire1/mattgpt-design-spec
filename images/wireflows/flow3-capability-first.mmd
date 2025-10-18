@@ -1,0 +1,16 @@
+graph TD
+    A[Home Page] -->|Clicks 'Product Innovation & Strategy'| B[Explore Stories]
+    B -->|Filtered by Capability| C[Stories Across All Industries]
+    C -->|Optional: Filter by Industry| D{Apply Industry Filter?}
+    D -->|Yes| E[Refined Results]
+    D -->|No| F[Browse All Capability Stories]
+    E -->|Browse| F
+    F -->|Clicks Story| G[Story Detail View]
+    G -->|Reads STAR| H[End: Capability Validated]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#3498DB,color:#fff
+    style F fill:#3498DB,color:#fff
+    style G fill:#2ECC71,color:#fff
+    style H fill:#27AE60,color:#fff

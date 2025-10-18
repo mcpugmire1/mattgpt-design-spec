@@ -1,0 +1,18 @@
+graph TD
+    A[Home Page] -->|Searches 'JPMorgan'| B[Explore Stories]
+    B -->|33 JPMorgan Results| C[Complete Results - No Banner]
+    C -->|Browse Results| D{User Action?}
+    D -->|Apply Filters| E[Refine by Role/Domain]
+    D -->|Sort Results| F[Sort by Date/Relevance]
+    D -->|Click Story| G[Story Detail View]
+    E -->|Browse Filtered| G
+    F -->|Browse Sorted| G
+    G -->|Read STAR| H{Explore More?}
+    H -->|Yes - View Another| D
+    H -->|No| I[End: Client Experience Confirmed]
+
+    style A fill:#8B5CF6,color:#fff
+    style B fill:#6366F1,color:#fff
+    style C fill:#3498DB,color:#fff
+    style G fill:#2ECC71,color:#fff
+    style I fill:#27AE60,color:#fff
