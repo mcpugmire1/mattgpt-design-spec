@@ -112,18 +112,42 @@ A **multi-purpose design specification** for MattGPT that serves as:
 - **Solution:** Added "Brand Guidelines" link to landing page
 - **Status:** Fixed, pushed to GitHub
 
+### Issue 4: Cross-Industry Landing Page 404 (RESOLVED - October 18)
+- **Problem:** Cross-industry landing page link returning 404 error
+- **Root cause:** File doesn't exist yet
+- **Solution:** Changed to disabled "Coming Soon" card with visual styling
+- **Status:** Fixed, pushed to GitHub
+- **Commit:** 5ba5b54
+
+### Issue 5: Footer Width Inconsistency in Wireframes (RESOLVED - October 18)
+- **Problem:** Footer in Explore Stories wireframes stretching full browser width, inconsistent with other pages
+- **Root cause:** Footer div missing width constraints
+- **Solution:** Added `max-width: 1400px; margin: 0 auto;` to all 4 Explore Stories wireframes
+- **Files fixed:**
+  - `explore_stories_table_wireframe.html`
+  - `explore_stories_cards_wireframe.html`
+  - `explore_stories_timeline_wireframe.html`
+  - `explore_stories_mobile_wireframe.html`
+- **Status:** Fixed, pushed to GitHub
+- **Commit:** 5ba5b54
+
 ---
 
 ## Next Steps (Immediate Priorities)
 
 1. **Test wireflow diagrams on live GitHub Pages** - Verify all 6 SVGs render correctly
-2. **Fill in placeholder sections** in `04-building-mattgpt.md` with personal narrative
+2. **Test wireframe fixes** - Verify cross-industry card and footer width on live site
+3. **Polish Streamlit app** (see `/STREAMLIT-POLISH-GUIDE.md`)
+   - Apply Agy brand colors
+   - Update system prompt to "Credibility Engine" approach
+   - Add logo and improve hero text
+   - Deploy polished version for job search
+4. **Fill in placeholder sections** in `04-building-mattgpt.md` with personal narrative (lower priority)
    - Why I Built This
    - Key Challenges & Solutions
    - Lessons Learned
    - Future Vision
    - Build Timeline
-3. **Final verification** of all links and assets on live site
 
 ---
 

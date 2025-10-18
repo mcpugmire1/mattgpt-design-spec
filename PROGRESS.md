@@ -245,6 +245,53 @@ mattgpt-design-spec/
 
 **Next session:** Work with Claude Code to create repo structure and extract PPT content
 
+### Session 2: October 17-18, 2024 - Documentation & Wireflow Diagrams
+**Tool:** Claude Code
+**Duration:** Multiple sessions
+**Goal:** Complete documentation site with working diagrams and brand styling
+
+**What was completed:**
+- Fixed Mermaid wireflow diagrams (6 diagrams pre-rendered to SVG)
+- Applied custom brand styling (`/assets/css/style.scss`)
+- Fixed 12+ broken documentation links
+- Created migration architecture guide (`/docs/05-migration-architecture.md`)
+- Created Streamlit polish guide (`/STREAMLIT-POLISH-GUIDE.md`)
+- Updated Jekyll configuration (logo, baseurl)
+
+**Key insights:**
+- Mermaid doesn't render natively on GitHub Pages - need to pre-render to SVG
+- User wants to ship Streamlit app quickly for job search, not wait for React rebuild
+- Microfrontends + FaaS architecture makes sense for future React version
+- "Ship now, perfect later" approach: polish Streamlit in 1-2 weeks, build React later
+
+**Decisions made:**
+- Pre-render all diagrams to SVG for reliability
+- Focus on Streamlit polish for immediate job search needs
+- Document React migration plan but execute later
+
+### Session 3: October 18, 2024 - Wireframe Bug Fixes
+**Tool:** Claude Code
+**Duration:** ~30 minutes
+**Goal:** Fix wireframe bugs reported by user
+
+**What was completed:**
+- Fixed cross-industry landing page 404 (changed to disabled "Coming Soon" card)
+- Fixed footer width inconsistency in all 4 Explore Stories wireframes
+- Added `max-width: 1400px; margin: 0 auto;` constraint to footers
+- Updated CONTEXT.md with issue documentation
+- Clarified that `site_architecture.svg` is actually RAG pipeline, not site navigation
+
+**Files modified:**
+- `wireframes/index.html` (line 635)
+- `wireframes/explore_stories_table_wireframe.html`
+- `wireframes/explore_stories_cards_wireframe.html`
+- `wireframes/explore_stories_timeline_wireframe.html`
+- `wireframes/explore_stories_mobile_wireframe.html`
+
+**Commit:** 5ba5b54
+
+**Next session:** Test all fixes on live GitHub Pages, then begin Streamlit app polish
+
 ---
 
 ## 🆘 CLAUDE SESSION HANDOFF
