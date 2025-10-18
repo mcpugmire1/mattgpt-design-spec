@@ -400,32 +400,34 @@ All three views share:
 
 **Filter Dropdown Options (Implementation Details):**
 
+> **⚠️ Architecture Note:** Filter dropdown values are **dynamically generated** at runtime from JSONL source data and Pinecone index queries (as implemented in current `app.py`). The examples below represent current data state but will update as project data changes. Only filter labels ("Industry", "Domain Category", etc.) are hardcoded UI elements.
+
 **Industry Filter:**
 - All Industries (default)
-- Financial Services / Banking
-- Cross-Industry
-- Healthcare
-- Technology
+- Financial Services / Banking *(dynamic)*
+- Cross-Industry *(dynamic)*
+- Healthcare *(dynamic)*
+- Technology *(dynamic)*
 
 **Domain Category Filter:**
 - All Domains (default)
-- Agile Transformation
-- Modern Engineering
-- Payments & Treasury
-- Product Innovation
+- Agile Transformation *(dynamic)*
+- Modern Engineering *(dynamic)*
+- Payments & Treasury *(dynamic)*
+- Product Innovation *(dynamic)*
 
 **Client Filter:**
 - All Clients (default)
-- JPMorgan Chase (33 projects)
-- RBC (11 projects)
-- Accenture (13 projects)
-- Fiserv (7 projects)
+- JPMorgan Chase (33 projects) *(dynamic - count updates with data)*
+- RBC (11 projects) *(dynamic - count updates with data)*
+- Accenture (13 projects) *(dynamic - count updates with data)*
+- Fiserv (7 projects) *(dynamic - count updates with data)*
 
 **Role Filter:**
 - All Roles (default)
-- Director
-- Senior Manager
-- Manager
+- Director *(dynamic)*
+- Senior Manager *(dynamic)*
+- Manager *(dynamic)*
 
 **View Switcher Options:**
 - Table (data grid with sortable columns)
