@@ -598,9 +598,9 @@ through proof, not claims.**
 ---
 
 **Related Documentation:**
-- [Product Vision](/docs/01-product-vision.md) - Strategic positioning and user personas
-- [Technical Architecture](/docs/02-technical-architecture.md) - RAG pipeline and system design
-- [UX Design Process](/docs/03-ux-design-process.md) - Wireframes and interaction design
+- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
+- [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Wireframes and interaction design
 
 ---
 

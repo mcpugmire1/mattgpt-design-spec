@@ -267,9 +267,9 @@ For visual representations of the architecture, see:
 ---
 
 **Related Documentation:**
-- [Product Vision](/docs/01-product-vision.md) - Strategic positioning
-- [UX Design Process](/docs/03-ux-design-process.md) - Design decisions
-- [Building MattGPT](/docs/04-building-mattgpt.md) - Development journey
+- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning
+- [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Design decisions
+- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
 
 ---
 

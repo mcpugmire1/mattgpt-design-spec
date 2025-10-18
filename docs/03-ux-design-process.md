@@ -1012,9 +1012,9 @@ def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
 ---
 
 **Related Documentation:**
-- [Product Vision](/docs/01-product-vision.md) - Strategic positioning and user personas
-- [Technical Architecture](/docs/02-technical-architecture.md) - RAG pipeline and system design
-- [Building MattGPT](/docs/04-building-mattgpt.md) - Development journey and lessons learned
+- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
+- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey and lessons learned
 
 ---
 
