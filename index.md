@@ -97,9 +97,8 @@ Complete brand kit with logos, colors, typography, and usage guidelines.
 ## Design Artifacts
 
 ### Architecture Diagrams
-- [RAG Build + Run Architecture](/mattgpt-design-spec/images/architecture/rag_build_run.svg) - Complete RAG lifecycle (Slide 8)
-- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.svg) - Page hierarchy & navigation structure (Slide 9)
-- [Ask MattGPT Pipeline](/mattgpt-design-spec/images/architecture/ask_mattgpt_pipeline.svg) - Query processing flow (Slide 12)
+- [RAG Build + Run Architecture](/mattgpt-design-spec/images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle with 4-phase implementation table (PDF Slide 8)
+- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.png) - Page hierarchy & navigation structure (PDF Slide 9)
 - [Architecture Evolution](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - MVP → Production → Enterprise roadmap
 
 ---

@@ -158,30 +158,30 @@ Expect hyper-focus on:
 
 ---
 
-### ✅ Architecture Diagrams Aligned with PDF (COMPLETED - October 18)
-**Status:** Complete! All architecture diagrams now accurately match the original PDF design spec
+### ✅ Architecture Diagrams Replaced with Original PDF Images (COMPLETED - October 19)
+**Status:** Complete! Replaced Mermaid-generated diagrams with original PDF screenshots
 
 **Problem Identified:**
-- `site_architecture.svg` was mislabeled - showed RAG query pipeline instead of page hierarchy
-- PDF Slide 8 (RAG Build + Run architecture) had no visual diagram
-- Documentation references were inconsistent
+- Mermaid diagrams were recreations that didn't match the quality and completeness of the original PDF
+- Lost the cohesive unit of flow diagram + table in Slide 8
+- Site architecture hierarchy was harder to read in Mermaid format
 
 **Solution Implemented:**
-1. **Renamed:** `site_architecture.svg` → `ask_mattgpt_pipeline.svg` (Query processing flow from Slide 12)
-2. **Created New Diagrams:**
-   - `site_architecture.svg` - Page hierarchy from PDF Slide 9 ✅
-   - `rag_build_run.svg` - Build Time + Run Time from PDF Slide 8 ✅
+1. **Replaced Mermaid with Original PDFs:**
+   - `tech_rag_architecture.png` - Direct screenshot from PDF Slide 8 (flow diagrams + 4-phase table)
+   - `site_architecture.png` - Direct screenshot from PDF Slide 9 (page hierarchy)
+2. **Removed Old Files:**
+   - Deleted `rag_build_run.svg`, `rag_build_run.mmd`
+   - Deleted `ask_mattgpt_pipeline.svg`, `ask_mattgpt_pipeline.mmd`
+   - Deleted `site_architecture.svg`, `site_architecture.mmd`
 3. **Updated Documentation:**
-   - `index.md` - Corrected all diagram links with PDF slide references
-   - `docs/03-ux-design-process.md` - Relabeled "wireflows" to "user journey diagrams"
+   - `index.md` - Updated diagram links to reference PNG images
 
 **Current Architecture Diagrams:**
-- **Slide 8:** RAG Build + Run Architecture (`rag_build_run.svg`) - Data ingestion → indexing → query → response
-- **Slide 9:** Site Architecture (`site_architecture.svg`) - Page hierarchy & navigation structure
-- **Slide 12:** Ask MattGPT Pipeline (`ask_mattgpt_pipeline.svg`) - Query processing flow
+- **Slide 8:** RAG Build + Run Architecture (`tech_rag_architecture.png`) - Flow diagrams + 4-phase implementation table
+- **Slide 9:** Site Architecture (`site_architecture.png`) - Page hierarchy & navigation structure
 
-**Status:** ✅ **COMPLETE** - All diagrams match hours of work in PDF design spec
-**Commit:** da64528
+**Status:** ✅ **COMPLETE** - Using original PDF diagrams that represent hours of design work
 
 ---
 
