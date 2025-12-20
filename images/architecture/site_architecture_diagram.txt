@@ -1,0 +1,168 @@
+╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                          MattGPT Site Architecture                                 ║
+║                            Phase 1 MVP (December 2025)                             ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                             GLOBAL NAVIGATION                                    │
+│  [Homepage]  [Explore Stories]  [Ask MattGPT]  [About Matt]                     │
+└─────────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                                 HOMEPAGE (/)                                     │
+│                                                                                  │
+│  Hero: "Matt doesn't claim credibility — he proves it in real time"            │
+│                                                                                  │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                │
+│  │ Product         │  │ App             │  │ Financial       │                │
+│  │ Innovation      │  │ Modernization   │  │ Services (55)   │                │
+│  │ → Explore       │  │ → Explore       │  │ → Banking       │                │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘                │
+│                                                                                  │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                │
+│  │ Cross-Industry  │  │ Consulting      │  │ Teams &         │                │
+│  │ Transform (51)  │  │ Transform       │  │ Talent (300+)   │                │
+│  │ → Cross-Ind     │  │ → Explore       │  │ → Explore       │                │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘                │
+│                                                                                  │
+│  ┌─────────────────────────────────────────────────────┐                       │
+│  │          Quick Question → Ask MattGPT                │                       │
+│  └─────────────────────────────────────────────────────┘                       │
+└─────────────────────────────────────────────────────────────────────────────────┘
+           │                    │                    │
+           ▼                    ▼                    ▼
+    ┌──────────┐        ┌──────────┐        ┌──────────┐
+    │ Banking  │        │  Cross   │        │ Explore  │
+    │ Landing  │        │ Industry │        │ Stories  │
+    └──────────┘        │ Landing  │        └──────────┘
+           │            └──────────┘               │
+           │                   │                   │
+           └───────────────────┴───────────────────┘
+                               ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                          EXPLORE STORIES (/explore)                              │
+│                                                                                  │
+│  Filters: [Industry ▼] [Domain ▼] [Client ▼] [Capability ▼] [Outcome ▼]       │
+│  Advanced: [Role ▼] [Date Range] [Technologies]                                │
+│                                                                                  │
+│  View Modes:  [📊 Table] [📇 Card] [📅 Timeline]                               │
+│  ────────────────────────────────────────────────────────────────────────────  │
+│                                                                                  │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │ TABLE VIEW (default)                                                     │   │
+│  │ ─────────────────────────────────────────────────────────────────────   │   │
+│  │ Project Title  │ Client   │ Capability │ Outcome      │ Timeline        │   │
+│  │ ───────────────┼──────────┼────────────┼──────────────┼─────────        │   │
+│  │ Story 1        │ JPMorgan │ Agile      │ 4x faster    │ 2019-2021       │   │
+│  │ Story 2        │ RBC      │ Platform   │ 150 eng      │ 2021-2023       │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                  │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │ CARD VIEW                                                                │   │
+│  │ ─────────────────────────────────────────────────────────────────────   │   │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐                              │   │
+│  │  │ Story 1  │  │ Story 2  │  │ Story 3  │                              │   │
+│  │  │ JPMorgan │  │   RBC    │  │ Capital  │                              │   │
+│  │  │ 2019-21  │  │ 2021-23  │  │ 2022-24  │                              │   │
+│  │  └──────────┘  └──────────┘  └──────────┘                              │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                  │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │ TIMELINE VIEW (5 Eras)                                                   │   │
+│  │ ─────────────────────────────────────────────────────────────────────   │   │
+│  │ 📅 Era 1: Early Career (2003-2007) [6 projects] ▼                       │   │
+│  │ 📅 Era 2: Banking Foundation (2008-2013) [25 projects] ▼                │   │
+│  │ 📅 Era 3: Platform Leadership (2014-2018) [35 projects] ▼               │   │
+│  │ 📅 Era 4: Innovation Center (2019-2023) [55 projects] ▼                 │   │
+│  │ 📅 Era 5: Current Work (2024-2025) [9 projects] ▼                       │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                  │
+│  Click any story → Detail View (inline expansion)                               │
+│                                                                                  │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │ DETAIL VIEW (inline)                                                     │   │
+│  │ ─────────────────────────────────────────────────────────────────────   │   │
+│  │ [← Back to List] [Export PDF]                                           │   │
+│  │                                                                          │   │
+│  │ 📋 STAR Format:                                                         │   │
+│  │   • Situation: [business context]                                       │   │
+│  │   • Task: [specific objective]                                          │   │
+│  │   • Action: [methodology & execution]                                   │   │
+│  │   • Result: [measurable outcomes]                                       │   │
+│  │                                                                          │   │
+│  │ 📊 Key Metrics: [4x faster] [150 eng] [$2M saved] [60% quality]        │   │
+│  │                                                                          │   │
+│  │ 🔗 Related Projects: [Story A] [Story B] [Story C]                     │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                            ASK MATTGPT (/ask)                                    │
+│                                                                                  │
+│  Landing Page:                                                                   │
+│  ┌──────────────────────────────────────────────────────────────────────────┐  │
+│  │ Hi, I'm Agy 🐾                                                            │  │
+│  │ Ask me about specific methodologies, leadership approaches, or project    │  │
+│  │ outcomes. I understand context, not just keywords.                        │  │
+│  │                                                                            │  │
+│  │ Starter Prompts:                                                           │  │
+│  │ • "Tell me about leading a global payments transformation"                │  │
+│  │ • "How did you scale engineering teams from 4 to 150?"                    │  │
+│  │ • "Show me your platform engineering experience"                          │  │
+│  │ • "What's your approach to stakeholder management?"                       │  │
+│  │                                                                            │  │
+│  │ [How Agy Searches →]                                                      │  │
+│  └──────────────────────────────────────────────────────────────────────────┘  │
+│                                                                                  │
+│  Conversation View:                                                              │
+│  ┌──────────────────────────────────────────────────────────────────────────┐  │
+│  │ 💬 User: "How do you scale agile at Fortune 500 companies?"              │  │
+│  │                                                                            │  │
+│  │ 🐾 Agy: "Matt consistently achieves 3-4x delivery acceleration...        │  │
+│  │         At JPMorgan, RBC, and Capital One, the pattern that works is..." │  │
+│  │                                                                            │  │
+│  │         📎 Sources:                                                       │  │
+│  │         • [Agile Transformation at JPMorgan] (Match: 0.87)               │  │
+│  │         • [Scaling Teams at RBC] (Match: 0.82)                           │  │
+│  │         • [Platform Engineering at Capital One] (Match: 0.78)            │  │
+│  │                                                                            │  │
+│  │         🔗 Related Projects: [Story A] [Story B]                         │  │
+│  │                                                                            │  │
+│  │ [Ask a follow-up question...]                                            │  │
+│  └──────────────────────────────────────────────────────────────────────────┘  │
+│                                                                                  │
+│  Query Validation:                                                               │
+│  • Semantic Router: 0.80 hard accept, 0.72 soft accept                          │
+│  • Pattern Filters: 10+ nonsense categories (weather, sports, trivia, etc.)    │
+│  • Graceful rejection with suggestion chips                                     │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                            ABOUT MATT (/about)                                   │
+│                                                                                  │
+│  • Professional summary (2-3 sentences)                                          │
+│  • Career journey timeline (20+ years)                                           │
+│  • Core competencies (technical & leadership)                                    │
+│  • Leadership philosophy                                                         │
+│  • Contact information                                                           │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                          TECHNICAL ARCHITECTURE                                    ║
+╠═══════════════════════════════════════════════════════════════════════════════════╣
+║ Frontend:  Streamlit (Python) - ui/pages/ directory                               ║
+║ Backend:   services/ - rag_service, semantic_router, embedding_service            ║
+║ Vector DB: Pinecone (semantic search)                                             ║
+║ LLM:       OpenAI GPT-4o-mini                                                     ║
+║ Embeddings: OpenAI text-embedding-3-small (1536 dims)                             ║
+║ Stories:   130+ STAR-formatted projects (JSONL)                                   ║
+║ Mobile:    Responsive breakpoints (767px, 1024px)                                 ║
+║ Design:    Purple brand (#8B5CF6), dark mode, CSS variables                       ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
+
+Last Updated: December 20, 2025
+Status: Phase 1 MVP Complete
+Next: Phase 2 React Rebuild (Q1 2025)
