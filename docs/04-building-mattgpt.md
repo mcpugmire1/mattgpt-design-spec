@@ -451,9 +451,12 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 ---
 
-### LATER (Maybe Someday)
+### LATER (Phase 3)
 
-🔮 **Job Fit & Matching** - Paste job description → generate tailored response (if this ever becomes more than a portfolio)
+🎯 **Job Fit & Matching**
+- Paste job description → generate tailored response
+- Auto-extract requirements and match to relevant stories
+- Export as formatted cover letter or talking points
 
 ---
 
