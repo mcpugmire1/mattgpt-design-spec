@@ -118,20 +118,19 @@ The following diagrams illustrate the high-level navigation paths for each user 
 
 ---
 
-### Flow 2: Search-First User
+### Flow 2: Explore Stories First
 
 **Journey:**
 1. Lands on Home
-2. Searches "banking transformation"
-3. Goes to Explore Stories page
-4. Sees 11 semantic matches
-5. Sees transparency banner: "11 of 55 banking projects - View all"
-6. Clicks "View all"
-7. Arrives at Banking Landing Page
-8. Browses all 55 stories or categories
+2. Clicks "Explore Stories" in navigation
+3. Arrives at Explore Stories page (Table View default)
+4. Uses filters (Industry, Domain, Client, Capability)
+5. Switches between Table, Card, or Timeline views
+6. Clicks story → Detail View expands inline
+7. Can pivot to Banking Landing or Ask MattGPT
 
-**Persona:** Recruiter with keyword checklist
-**Goal:** Quick keyword validation with option to explore depth
+**Persona:** Recruiter doing comprehensive candidate review
+**Goal:** Browse all stories with filtering and multiple view modes
 
 ![Flow 2: Search-First User](/mattgpt-design-spec/images/wireflows/flow2-search-first.svg)
 
@@ -154,19 +153,20 @@ The following diagrams illustrate the high-level navigation paths for each user 
 
 ---
 
-### Flow 4: Conversational User
+### Flow 4: Conversational User (Ask MattGPT)
 
 **Journey:**
 1. Lands on Home
-2. Clicks "Quick Question"
-3. Goes to Ask MattGPT
-4. Types question
-5. Gets conversational response + sources
-6. Clicks source → sees story detail
-7. Can pivot to Industry/Category browsing
+2. Clicks "Quick Question" or "Ask MattGPT" in navigation
+3. Arrives at Ask MattGPT Landing Page (Agy introduction, starter prompts)
+4. Types question or clicks starter prompt
+5. Semantic router validates query (accepts/rejects with suggestions)
+6. Gets Agy response with confidence-scored sources
+7. Clicks source chip → navigates to full story in Explore Stories
+8. Can ask follow-up questions with conversation context
 
-**Persona:** Time-constrained decision-maker
-**Goal:** Fast, natural language query with verifiable sources
+**Persona:** Time-constrained decision-maker or interview prep
+**Goal:** Fast, natural language query with verifiable sources and context retention
 
 ![Flow 4: Conversational User](/mattgpt-design-spec/images/wireflows/flow4-conversational.svg)
 
@@ -190,18 +190,18 @@ The following diagrams illustrate the high-level navigation paths for each user 
 
 ---
 
-### Flow 6: Direct Search
+### Flow 6: Client-Specific Filtering
 
 **Journey:**
 1. Lands on Home
-2. Searches "JPMorgan"
-3. Goes to Explore Stories
-4. Sees 33 JPMorgan stories
-5. No transparency banner (complete results)
-6. Browses, filters, or clicks stories
+2. Clicks "Explore Stories" or Banking Landing Page
+3. Uses Client filter dropdown → selects "JPMorgan Chase"
+4. Sees 33+ JPMorgan stories filtered
+5. Can switch between Table, Card, Timeline views
+6. Clicks story → Detail View with STAR format and metrics
 
 **Persona:** Recruiter validating specific client experience
-**Goal:** Confirm breadth of work with target organization
+**Goal:** Confirm breadth and depth of work with target organization
 
 ![Flow 6: Direct Search](/mattgpt-design-spec/images/wireflows/flow6-direct-search.svg)
 
