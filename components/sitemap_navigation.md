@@ -73,7 +73,7 @@ All three views include view switcher in top-right:
 ### Journey 1: Recruiter First Visit (Most Common)
 ```
 1. Land on Homepage (index.html)
-   ↓ See hero stats + value prop
+   ↓ See hero stats (130+ projects) + value prop
 
 2. Click "About Matt" to understand background
    ↓ Read career timeline + technical depth
@@ -106,7 +106,7 @@ All three views include view switcher in top-right:
 ### Journey 2: Technical Deep Dive
 ```
 1. Land on Homepage
-   ↓ Notice "115+ transformation projects"
+   ↓ Notice "130+ transformation projects"
 
 2. Click "Explore Stories" immediately
    ↓ Land on Cards view

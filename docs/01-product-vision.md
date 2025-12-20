@@ -38,7 +38,7 @@ Traditional portfolios rely on self-promotion and unverifiable claims. Recruiter
 
 ### HOW: Act as a Credibility Engine
 
-**Automatically mining 115+ real projects to surface the right evidence instantly.**
+**Automatically mining 130+ real projects to surface the right evidence instantly.**
 
 MattGPT functions as an intelligent search and retrieval system that:
 
@@ -89,6 +89,8 @@ They need to know: *"Does Matt meet the basic keyword and experience threshold?"
 - **Table View** - High data density, sortable columns
 - **Timeline View** - Quick check for tenure and career evolution
 - **Advanced Search** - Filter by technology, industry, and outcome
+- **Mobile-Responsive Design** - Screen candidates on mobile devices
+- **Touch-Optimized Controls** - Easy filtering and navigation on tablets
 
 **Focus:** Breadth and Comparison
 
@@ -113,6 +115,8 @@ They need to confirm: *"How did Matt achieve that result, and can I trust the pr
 - **Detail View** - Full STAR Method breakdown
 - **Key Metrics Sidebar** - Immutable, quantifiable proof
 - **Related Projects** - Pattern recognition across similar work
+- **Match Confidence Indicators** - Visual bars showing search relevance
+- **Source Verification** - Clickable source chips for audit trail
 
 **Focus:** Depth and Verifiability
 
@@ -137,6 +141,8 @@ They need to find: *"Specific stories and themes based on interview questions"*
 - **Ask MattGPT** - Fast story retrieval via conversational AI
 - **Pattern Recognition** - Show related projects and connecting skills
 - **Export/Share** - Quick reference materials for prep
+- **Timeline View** - Chronological career progression by Era
+- **Era Grouping** - Stories organized by career phase for context
 
 **Focus:** Efficiency and Synthesis
 
@@ -214,11 +220,13 @@ To enable sophisticated search and pattern recognition, every project is enriche
 
 **System Prompt & Integrity Mandate**
 
+> **Implementation Note:** The "system prompt" is implemented as a distributed architecture across multiple services (semantic_router.py, rag_service.py, backend_service.py) rather than a single prompt file. The documented principles guide routing logic, query validation, and response formatting.
+
 ### The Operational Mandate
 
 **Your Purpose: The Credibility Engine**
 
-The system exists to surface relevant STAR stories and connect patterns across 115+ projects, driving the user to the core thought:
+The system exists to surface relevant STAR stories and connect patterns across 130+ projects, driving the user to the core thought:
 
 > *"Matt consistently delivers measurable transformation results — and here's the specific proof."*
 
@@ -259,7 +267,7 @@ The voice blends:
 - Avoid jargon without context
 
 ❌ **Never pretend to know things outside Matt's portfolio**
-- If a query falls outside the 115+ projects, acknowledge limitations
+- If a query falls outside the 130+ projects, acknowledge limitations
 - Suggest alternative search terms or clarify scope
 
 ---
@@ -323,7 +331,7 @@ The voice blends:
 ### OUT OF SCOPE: Must Never Do (Focus & Anti-Chatbot)
 
 #### 1. Generative AI Scope
-**Guardrail:** The system MUST NEVER generate generic career advice, synthesize opinions, or answer questions outside the scope of the **115+ verified projects (tbc)**.
+**Guardrail:** The system MUST NEVER generate generic career advice, synthesize opinions, or answer questions outside the scope of the **130+ verified STAR-formatted stories**.
 
 **Rationale:** Prevents hallucination and maintains credibility.
 
@@ -398,5 +406,5 @@ The voice blends:
 
 ---
 
-*Last Updated: October 2024*
-*Version: 1.0 (Initial Product Vision Documentation)*
+*Last Updated: December 2024 (Post-Audit Refresh)*
+*Version: 1.1 (Updated with Implementation Details)*
