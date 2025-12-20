@@ -447,52 +447,26 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 🎯 **React + FastAPI Migration**
 - Decouple frontend from Streamlit
 - Implement micro-frontend architecture
-- Horizontal scalability for 10K+ concurrent users
-
-**Success Metrics:**
-- Improved search relevance through query optimization
-- Mobile user engagement: +40%
-- Lead qualification rate: >20%
+- Better performance and maintainability
 
 ---
 
 ### LATER (Phase 3: Productization and Disruption)
 
-**Goal:** Unlock high-value use cases through deep AI integration, matching, and platform scalability.
+**Goal:** Unlock high-value use cases through deeper AI integration.
 
 **Timeline:** 2026+
 
 **Planned Features:**
 
-🔮 **Job Fit & Matching (Disruptive Feature)**
+🔮 **Job Fit & Matching**
 - Paste job description → generate tailored response
 - Auto-extract requirements and match to relevant stories
-- Synthesize custom "Why Matt is a fit" narrative
 - Export as formatted cover letter or talking points
 
 🔮 **Advanced RAG Infrastructure**
-- Upgrade to LangChain/LlamaIndex for orchestration
-- Implement agent-like assistant persona
 - Context-aware follow-up suggestions
 - Multi-project synthesis ("Connect these 3 stories")
-
-🔮 **Platform Scalability**
-- Local embedding storage option
-- Multi-region deployment for global users
-- Real-time collaboration (share sessions)
-- White-label SaaS offering for consulting firms
-
-🔮 **Governance & Stability**
-- Script version tagging and rollback capability
-- Automated JSONL backup routines
-- A/B testing infrastructure for prompt optimization
-- Cost optimization monitoring
-
-**Success Metrics:**
-- Support 100K+ monthly active users
-- 99.9% uptime SLA
-- Job Fit feature: >60% conversion to personalized outreach
-- White-label revenue: First 5 enterprise customers
 
 ---
 
