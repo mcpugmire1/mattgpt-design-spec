@@ -451,22 +451,9 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 ---
 
-### LATER (Phase 3: Productization and Disruption)
+### LATER (Maybe Someday)
 
-**Goal:** Unlock high-value use cases through deeper AI integration.
-
-**Timeline:** 2026+
-
-**Planned Features:**
-
-🔮 **Job Fit & Matching**
-- Paste job description → generate tailored response
-- Auto-extract requirements and match to relevant stories
-- Export as formatted cover letter or talking points
-
-🔮 **Advanced RAG Infrastructure**
-- Context-aware follow-up suggestions
-- Multi-project synthesis ("Connect these 3 stories")
+🔮 **Job Fit & Matching** - Paste job description → generate tailored response (if this ever becomes more than a portfolio)
 
 ---
 
