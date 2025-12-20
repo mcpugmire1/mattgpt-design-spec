@@ -295,7 +295,7 @@ User Question
 |---|---------|----------|-------------|
 | 1 | Navigation Links | Interaction | Static top navigation; no dropdowns; entire label is clickable. Links persist on all pages. |
 | 2 | Profile Headline/Copy | Content | Static introductory text. No animation or personalization. Center-aligned. |
-| 3 | Stats Callouts | Technical/Data | Four equal-width data tiles (20+ Years, 115 Projects, 300+ Professionals, 15+ Clients). Non-interactive. |
+| 3 | Stats Callouts | Technical/Data | Four equal-width data tiles (20+ Years, 130 Projects, 300+ Professionals, 15+ Clients). Non-interactive. |
 | 4 | Category Icon | Visual/Technical | Decorative icon positioned top-left of each category card. No functional behavior. |
 | 5 | Category Tags | Interaction/Logic | Non-clickable labels used to indicate subtopics. Displayed inline below description text. |
 | 6 | Primary CTA Button | Interaction | Primary call-to-action on each category card. Full button is clickable; right-arrow included. |
@@ -432,7 +432,7 @@ All three views share:
 **View Switcher Options:**
 - Table (data grid with sortable columns)
 - Cards (visual card layout, 3-column grid)
-- Timeline (chronological view by year/quarter)
+- Timeline (Era-based view with 5 career phases)
 
 ---
 
@@ -638,7 +638,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 - Send button (gradient, disabled until input is non-empty)
 
 **Footer:**
-- "Powered by OpenAI GPT-4 with semantic search across 115 project case studies"
+- "Powered by OpenAI GPT-4 with semantic search across 130 project case studies"
 
 ---
 
@@ -741,7 +741,7 @@ The About Matt page serves as both a professional introduction and a demonstrati
 
 **Metric Badges Row:**
 - **20+ Years** Experience
-- **115** Projects Delivered
+- **130** Projects Delivered
 - **300+** Professionals Trained
 - **15+** Enterprise Clients
 - **3-20x** Delivery Acceleration
@@ -1058,5 +1058,5 @@ def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
 
 ---
 
-*Last Updated: October 2024*
+*Last Updated: December 2025*
 *Version: 1.0 (Initial UX Design Documentation)*
