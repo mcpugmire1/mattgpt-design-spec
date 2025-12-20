@@ -178,7 +178,7 @@ This project showcases:
 
 See **[CONTEXT.md](CONTEXT.md)** for detailed project status, completed work, and next steps.
 
-**Completed Since October 2024:**
+**Completed Since October 2025:**
 - ✅ Timeline View with Era-based grouping
 - ✅ Mobile-responsive CSS (breakpoints at 767px, 1024px)
 - ✅ Modular Ask MattGPT architecture (9-file structure)
