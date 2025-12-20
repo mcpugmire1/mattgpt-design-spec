@@ -249,7 +249,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
 ✅ RAG pipeline with GPT-4 and Pinecone vector search
 ✅ 130+ STAR-structured project stories
-✅ Semantic + keyword hybrid search with confidence scoring
+✅ Semantic search with confidence scoring and metadata filtering
 ✅ **Timeline View** with Era-based career progression
 ✅ **Mobile-responsive design** (breakpoints: 767px, 1024px)
 ✅ **Dark mode support** via CSS variables

@@ -166,9 +166,8 @@ export default function Search() {
 ```
 AWS API Gateway (REST API)
 ├─ /api/search/*
-│   ├─ POST /semantic → lambda-search-semantic
-│   ├─ POST /keyword → lambda-search-keyword
-│   └─ POST /hybrid → lambda-search-hybrid
+│   ├─ POST /semantic → lambda-search-semantic (primary)
+│   └─ POST /advanced → lambda-search-advanced (metadata filters)
 │
 ├─ /api/ask/*
 │   ├─ POST /generate → lambda-ask-generate
@@ -385,9 +384,8 @@ Extract search logic from `app.py` → Lambda functions:
 
 ```
 Lambdas to Create:
-├─ lambda-search-semantic (Pinecone semantic search)
-├─ lambda-search-keyword (Text matching)
-└─ lambda-search-hybrid (Combine semantic + keyword)
+├─ lambda-search-semantic (Pinecone vector search with confidence scoring)
+└─ lambda-search-advanced (Semantic + metadata filtering)
 ```
 
 **Migration Pattern:**

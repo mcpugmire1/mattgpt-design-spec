@@ -131,9 +131,9 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
               │
               ▼
    ┌─────────────────────┐
-   │   Hybrid Search     │
-   │  (80% Semantic +    │
-   │   20% Keyword)      │
+   │  Semantic Search    │
+   │ (Vector Similarity  │
+   │ + Confidence Score) │
    └──────────┬──────────┘
               │
               ▼
@@ -150,51 +150,55 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
    └─────────────────────┘
 ```
 
-### The Secret Sauce: Hybrid Retrieval Strategy
+### The Secret Sauce: Semantic Search with Confidence Scoring
 
-One of the core technical innovations in MattGPT is the **hybrid search** approach that balances semantic understanding with keyword precision.
+One of the core technical innovations in MattGPT is the **semantic search** approach that combines vector-based meaning matching with confidence-based filtering.
 
 **The Algorithm:**
 
 ```python
-def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
+def semantic_search(query: str, top_k: int = 30) -> Dict:
     """
-    Blends semantic similarity (80%) with keyword matching (20%)
-    to balance conceptual understanding with exact-term precision.
+    Pure semantic retrieval with confidence-based filtering
+    to ensure high-quality, relevant results.
 
     Args:
         query: User's natural language question
-        alpha: Weight for semantic similarity (0.8 = 80%)
+        top_k: Number of candidate results to retrieve
 
     Returns:
-        List of ranked stories with blended relevance scores
+        Dict with results, confidence level, and top score
     """
-    # Semantic retrieval: Understanding meaning
-    semantic_results = pinecone_query(
+    # Vector similarity search via Pinecone
+    hits = pinecone_query(
         embed(query),
-        top_k=30
+        top_k=top_k
     )
 
-    # Keyword retrieval: Exact term matching
-    keyword_results = bm25(
-        query,
-        corpus,
-        top_k=30
-    )
+    # Calculate confidence from top score
+    top_score = max(h.get("pc_score", 0.0) for h in hits)
 
-    # Blend and re-rank
-    return blend_scores(
-        semantic_results,
-        keyword_results,
-        alpha=alpha
-    )
+    # Three-tier confidence system
+    if top_score >= 0.25:
+        confidence = "high"
+    elif top_score >= 0.15:
+        confidence = "low"
+    else:
+        confidence = "none"
+
+    return {
+        "results": hits,
+        "confidence": confidence,
+        "top_score": top_score
+    }
 ```
 
 **Why This Matters:**
 
-- **Semantic Search (80%):** Understands that "bootstrap it" and "start a new project" are conceptually similar
-- **Keyword Precision (20%):** Ensures exact matches for critical terms (client names, specific technologies, role titles)
-- **Re-ranking:** Boosts results by relevance + recency + credibility
+- **Semantic Understanding:** Recognizes that "bootstrap it" and "start a new project" are conceptually similar
+- **Confidence Scoring:** Three-tier system (high/low/none) ensures quality results
+- **Threshold Gating:** Prevents low-quality matches from appearing (minimum 0.15 similarity)
+- **Intent Recognition:** Understands user goals (interview prep, due diligence, pitch)
 
 This approach achieved **87% retrieval accuracy** with an average response time of **1.2 seconds**.
 
@@ -252,17 +256,22 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ---
 
-### 🔍 Hybrid Retrieval Strategy
+### 🔍 Semantic Search Strategy
 
-**80% Semantic Search:**
-- Understanding meaning, not just keywords
+**Vector-Based Meaning Matching:**
+- Understanding intent, not just keywords
 - Example: "bootstrap it" vs "start a new project" are semantically similar
 - Handles synonyms, related concepts, and contextual understanding
 
-**20% Keyword Precision:**
-- Ensures exact matches for critical terms
-- Client names, specific technologies, role titles
-- Prevents false positives from pure semantic matching
+**Confidence-Based Filtering:**
+- Three-tier system: high (≥0.25), low (≥0.15), none (<0.15)
+- Prevents low-quality matches from appearing
+- Ensures results are relevant and trustworthy
+
+**Metadata Enhancement:**
+- Client, industry, domain, and role filtering
+- Date range and outcome type filtering
+- Supports precise targeting for specific queries
 
 **Re-ranking Algorithm:**
 - Boosts results by relevance + recency + credibility
@@ -331,11 +340,11 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ## Key Challenges & Solutions
 
-### The Hybrid Search Problem
+### The Semantic Search Tuning Problem
 
-Pure semantic search was too fuzzy. Ask about "JPMorgan," and it might return stories about "banking transformation" that never mention the client. Pure keyword search was too rigid — "CI/CD pipelines" wouldn't match "continuous delivery automation."
+Early semantic search was too fuzzy. Ask about "JPMorgan," and it might return stories about "banking transformation" that never mention the client by name. The challenge was balancing broad conceptual understanding with precision.
 
-The solution was hybrid retrieval: 80% semantic similarity for conceptual understanding, 20% keyword matching for exact terms. Getting that balance right took three weeks of tuning.
+The solution was confidence-based filtering with metadata enhancement. By implementing a three-tier confidence system (high ≥ 0.25, low ≥ 0.15, none < 0.15) and combining vector similarity with client/industry/domain filters, the system now delivers both relevant and precise results. Getting the threshold values right took three weeks of tuning against real queries.
 
 ### The Hallucination Problem
 
@@ -425,10 +434,11 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - Enable discoverability through industry-standard skills
 - Power cross-portfolio pattern recognition
 
-🎯 **Hybrid Keyword + Semantic Search Optimization**
-- Fine-tune alpha weighting based on query intent
+🎯 **Semantic Search Enhancement**
+- Fine-tune confidence thresholds based on query intent
 - Implement query rewriting for common patterns
 - Add spell-check and autocomplete
+- Optimize embedding model performance
 
 🎯 **Enhanced UX**
 - Copy-to-clipboard for quick story sharing
@@ -493,7 +503,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 MattGPT started as a personal portfolio, but the underlying thesis is universal: professionals shouldn't have to choose between depth and discoverability.
 
-Every consultant has 10-20 years of stories they can't effectively communicate. Every recruiter spends hours doing manual keyword searches through resumes that all look the same. Every hiring manager wishes they could ask follow-up questions before deciding who to interview.
+Every consultant has 10-20 years of stories they can't effectively communicate. Every recruiter spends hours manually searching through resumes that all look the same. Every hiring manager wishes they could ask follow-up questions before deciding who to interview.
 
 I envision a future where:
 - Every professional has an AI that can articulate their unique value
@@ -528,8 +538,8 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 ### July-August 2025: Polish
 - User testing with recruiters and hiring managers
 - Refined system prompt based on feedback
-- Implemented hybrid search (semantic + keyword)
-- Added confidence scoring and source citations
+- Implemented semantic search with confidence scoring
+- Added three-tier confidence system and source citations
 
 ### September 2025: Fact-Check Sprint
 - Line-by-line audit of all stories
@@ -556,7 +566,7 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 
 Building MattGPT has been equal parts technical challenge and product discovery. What started as a
 solution to a personal problem — "How do I make 20 years of experience searchable?" — evolved into
-a demonstration of modern AI product development: RAG architecture, hybrid retrieval strategies,
+a demonstration of modern AI product development: RAG architecture, semantic search with confidence scoring,
 data governance, and user-centered design.
 
 **The core thesis remains:**

@@ -209,7 +209,7 @@ To enable sophisticated search and pattern recognition, every project is enriche
 - **LinkedIn Skills** - Common search terms
 
 **Why This Matters:**
-- ✅ Enables **hybrid search** (semantic + keyword)
+- ✅ Enables **semantic search** (vector-based meaning matching)
 - ✅ Powers **pattern recognition** ("Show me all payment modernization projects")
 - ✅ Supports **cross-project synthesis** (AI can connect related work)
 - ✅ Aligns with **industry-standard taxonomies** for discoverability

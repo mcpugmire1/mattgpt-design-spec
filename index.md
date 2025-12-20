@@ -28,7 +28,7 @@ MattGPT is an **AI-powered portfolio** that transforms 20 years of Fortune 500 t
 This isn't just a portfolio — it's a **demonstration of modern AI product development**:
 
 - 🧠 **RAG Architecture** (Retrieval-Augmented Generation)
-- 🔍 **Hybrid Search** (80% semantic + 20% keyword)
+- 🔍 **Semantic Search** (vector-based meaning matching)
 - 📊 **Data Governance** (Two-layer validation system)
 - 🎨 **User-Centered Design** (Three distinct personas)
 - ⚡ **Production Application** (Mobile-responsive Streamlit with Era-based timeline and advanced filtering)
@@ -51,7 +51,7 @@ Three-phase evolution from MVP to enterprise scale, tech stack decisions, and st
 Complete site architecture, user flows, and detailed wireframe specifications for every view.
 
 **[🔨 Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt)**
-The development journey, technical challenges, hybrid search algorithm, and product roadmap.
+The development journey, technical challenges, semantic search implementation, and product roadmap.
 
 **[🐾 Agy Voice Guide](/mattgpt-design-spec/docs/05-agy-voice-guide)**
 Complete brand voice documentation for Agy, the Plott Hound AI assistant — personality traits, response templates, and tone guidelines.
@@ -135,7 +135,7 @@ MattGPT replaces generic claims with **instant, quantifiable proof**:
 Every project includes Situation, Task, Action, Result with measurable metrics.
 
 **Layer 2: Intelligence (Tagging)**
-5P taxonomy + semantic tags enable hybrid search and pattern recognition.
+5P taxonomy + semantic tags enable semantic search and pattern recognition.
 
 ### User Personas
 
@@ -156,7 +156,7 @@ Every project includes Situation, Task, Action, Result with measurable metrics.
 ### Technical Execution
 - ✅ Modern AI architecture (RAG pipeline, vector search)
 - ✅ Data governance (mandatory STAR validation)
-- ✅ Performance optimization (hybrid search with semantic + keyword fallback)
+- ✅ Performance optimization (semantic search with confidence scoring)
 - ✅ Scalable design (modular architecture → microservices → enterprise)
 
 ### Design Thinking

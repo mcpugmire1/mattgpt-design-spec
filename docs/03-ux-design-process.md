@@ -230,9 +230,9 @@ User Question
     ↓
 [Embedding + Intent Analysis]
     ↓
-[Pinecone Vector Search + Keyword Matching]
+[Pinecone Vector Search]
     ↓
-[Hybrid Scoring & Ranking]
+[Confidence Scoring & Ranking]
     ↓
 [Top 3 Stories Retrieved]
     ↓
@@ -242,13 +242,13 @@ User Question
 ### Architecture Components
 
 **Semantic Search Pipeline:**
-- Sentence-BERT embeddings (all-MiniLM-L6-v2)
-- 384-dimensional vector space
+- OpenAI embeddings (text-embedding-3-small)
+- 1536-dimensional vector space
 - Pinecone vector database with metadata filtering
 
-**Hybrid Retrieval:**
-- 80% semantic similarity weight
-- 20% keyword matching weight
+**Semantic Retrieval:**
+- Vector similarity matching via Pinecone
+- Confidence scoring (high/low/none thresholds)
 - Intent recognition for query understanding
 
 **Data & Processing:**
@@ -264,13 +264,13 @@ User Question
 ### Search & Retrieval Details
 
 **Semantic Search:**
-- Pinecone cosine similarity (80% weight)
-- Keyword: BM25-style token overlap (20% weight)
+- Pinecone cosine similarity (vector matching)
 - Minimum similarity threshold: 0.15
 - Top-k pool: 30 candidates before ranking
+- Confidence-based result filtering
 
 **Response Synthesis:**
-- Rank top 3 stories by blended score
+- Rank top 3 stories by similarity score
 - Generate 3 views from same sources:
   - **Narrative:** 1-paragraph summary
   - **Key Points:** 3-4 bullets
@@ -278,7 +278,7 @@ User Question
 - Interactive source chips with confidence %
 
 **Key Differentiators:**
-- Hybrid retrieval ensures both semantic understanding and exact term matching
+- Semantic retrieval with confidence thresholds ensures high-quality matches
 - Multi-mode synthesis provides flexible presentation for different use cases
 - Context locking allows follow-up questions on specific stories
 - Off-domain gating with suggestion chips prevents poor matches
@@ -864,25 +864,28 @@ The About Matt page serves as both a professional introduction and a demonstrati
 **System Architecture Flow:**
 
 ```
-Data Ingestion → Embedding → Vector Store → Hybrid Search
+Data Ingestion → Embedding → Vector Store → Semantic Search
      ↓              ↓            ↓              ↓
 Source Data    AI Data Index  Pinecone    RAG Orchestrator
 (JSONL)        (Vectors)                  (LLM)
 ```
 
-**The Secret Sauce: Hybrid Retrieval Strategy**
+**The Secret Sauce: Semantic Search with Confidence Scoring**
 
 ```python
-def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
+def semantic_search(query: str, top_k: int = 30) -> dict:
     """
-    Blends semantic similarity (80%) with keyword matching (20%)
-    to balance conceptual understanding with exact-term precision.
+    Pure semantic retrieval with confidence-based filtering
+    to ensure high-quality, relevant results.
     """
-    semantic_results = pinecone_query(embed(query), top_k=30)
-    keyword_results = bm25(query, corpus, top_k=30)
+    # Vector similarity search via Pinecone
+    hits = pinecone_query(embed(query), top_k=top_k)
 
-    return blend_scores(semantic_results, keyword_results,
-                       alpha=alpha)
+    # Calculate confidence from top score
+    top_score = max(h.get("pc_score", 0.0) for h in hits)
+    confidence = "high" if top_score >= 0.25 else "low" if top_score >= 0.15 else "none"
+
+    return {"results": hits, "confidence": confidence, "top_score": top_score}
 ```
 
 **What MattGPT Can Do:**
@@ -893,11 +896,11 @@ def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
 - Embedded classification to discover similar or complementary projects
 - Ask for insights in plain English — no keyword guessing
 
-**🔍 Hybrid Retrieval Strategy**
-- 80% Semantic Search - Understanding meaning, not just keywords (eg. "bootstrap it" vs "start a new project")
-- 20% Keyword Precision - Ensuring exact matches for critical terms (client, tech stack, role)
-- Re-ranking Algorithm: Boosts results by relevance + recency + credibility
-- Fine-tuned using human-in-the-loop feedback for better results
+**🔍 Semantic Search Strategy**
+- Vector-based meaning matching - Understanding intent, not just keywords (eg. "bootstrap it" vs "start a new project")
+- Confidence scoring - Three-tier system (high/low/none) ensures quality results
+- Metadata filtering - Client, industry, domain, role filters for precise targeting
+- Threshold-based gating - Prevents low-quality matches from appearing
 
 **📊 Frontend (Streamlit)**
 - Conversational UI interface with context-aware history persistence
