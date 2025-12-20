@@ -108,8 +108,8 @@ Complete brand kit with logos, colors, typography, and usage guidelines.
 
 ### Architecture Diagrams
 - [RAG Build + Run Architecture](/mattgpt-design-spec/images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle with 4-phase implementation
-- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.png) - Page hierarchy & navigation structure
-- [Architecture Evolution](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - MVP → Production → Enterprise roadmap
+- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture_updated.md) - Page hierarchy & navigation structure (December 2025)
+- [Architecture Evolution](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - Streamlit MVP to React Rebuild roadmap
 
 ### New Components & Features
 - **How Agy Searches Modal** - 3-step RAG search flow visualization
