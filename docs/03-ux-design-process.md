@@ -410,7 +410,7 @@ All three views share:
 
 **Filter Dropdown Options (Implementation Details):**
 
-> **⚠️ Architecture Note:** Filter dropdown values are **dynamically generated** at runtime from JSONL source data and Pinecone index queries (as implemented in current `app.py`). The examples below represent current data state but will update as project data changes. Only filter labels ("Industry", "Domain Category", etc.) are hardcoded UI elements.
+> **⚠️ Architecture Note:** Filter dropdown values are **dynamically generated** at app startup by extracting unique values from the JSONL source data (see `build_facets()` in `app.py:240-263`). The examples below represent the current data state and will update automatically when the JSONL file changes. Filter labels ("Industry", "Domain Category", etc.) are hardcoded UI elements.
 
 **Industry Filter:**
 - All Industries (default)
