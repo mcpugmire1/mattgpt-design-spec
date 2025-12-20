@@ -448,7 +448,7 @@ flowchart TD
 ### Explore Stories Views
 
 ```mermaid
-flowchart LR
+flowchart TD
     Explore[Explore Stories Page]
 
     Explore --> Filters[Filters<br/>Industry, Client<br/>Capability, Domain]
