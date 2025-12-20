@@ -1,18 +1,17 @@
 # Technical Architecture
 
-**MattGPT: From MVP to Production-Scale Architecture**
+**MattGPT: From Streamlit MVP to React Rebuild**
 
-> This document outlines the technical architecture evolution of MattGPT, demonstrating intentional trade-off awareness and strategic technical planning from rapid prototyping to enterprise-grade scalability.
+> This document outlines the technical architecture evolution of MattGPT, demonstrating intentional trade-off awareness and strategic planning from rapid prototyping to production polish.
 
 ---
 
 ## Architecture Roadmap Overview
 
-MattGPT's architecture follows a three-phase evolution strategy:
+MattGPT's architecture follows a two-phase evolution:
 
-1. **Phase 1 (MVP):** Rapid validation with minimal investment
-2. **Phase 2 (Production):** Scalable architecture for 10K+ concurrent users
-3. **Phase 3 (Enterprise):** Enterprise resilience and observability at scale
+1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment
+2. **Phase 2 (React Rebuild):** Better performance and maintainability
 
 ---
 
