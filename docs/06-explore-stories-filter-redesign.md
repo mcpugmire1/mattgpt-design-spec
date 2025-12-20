@@ -193,14 +193,8 @@ Strategic/High-level
 
 ## Related Documentation
 
-### Design Spec Repo (This Repo)
 - [03-ux-design-process.md](03-ux-design-process.md) - Overall UX design and site architecture
 - [Interactive Wireframes](../wireframes/) - Explore Stories wireframes (table/card/timeline views)
-
-### Implementation Repo
-- **[EXPLORE_STORIES_UX_REDESIGN.md](../../llm_portfolio_assistant/EXPLORE_STORIES_UX_REDESIGN.md)** - Detailed implementation spec with code examples and testing plan
-- [ARCHITECTURE.md](../../llm_portfolio_assistant/ARCHITECTURE.md) - Phase 4 refactoring context
-- [SESSION_HANDOFF.md](../../llm_portfolio_assistant/SESSION_HANDOFF.md) - Current session context
 
 ---
 
@@ -245,15 +239,6 @@ Visual chips showing applied filters with individual removal:
 - Syncs with widget versions for clean updates
 
 See: explore_stories.py:273-354
-
----
-
-## Next Steps
-
-1. Review and approve this design doc
-2. Begin Phase 1 implementation (dumb loader refactor)
-3. Update interactive wireframes once UI is implemented
-4. Document final implementation in this design spec
 
 ---
 
