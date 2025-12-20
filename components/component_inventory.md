@@ -173,23 +173,37 @@ box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 
 ---
 
-### 6. Filter Bar
+### 6. Filter Bar (Redesigned - Phase 4)
 **Used on:** Explore Stories (all 3 views)
 
-**Specifications:**
-- Search input (top)
-- Filter row: 4 columns (Industry | Domain Category | Client | Role)
-- Grid: `grid-template-columns: repeat(4, 1fr)`
-- Gap: 15px
-- Margin: 15px top
+**Layout:**
+- **Primary Filters Row:** Search | Industry | Capability (always visible)
+- **Advanced Filters Section:** Client | Role | Domain (collapsed by default)
+- **Control Buttons:** "▸ Advanced Filters" toggle | "Reset Filters"
 
-**Filter Dropdowns:**
+**Primary Filters:**
 ```
-Industry: All Industries, Financial Services, Technology, Healthcare, Retail, Government
-Domain Category: All Domains, Platform Engineering, Product Leadership, Transformation, Delivery Acceleration
-Client: All Clients, JPMorgan Chase, Accenture, Capital One, [others]
-Role: All Roles, Director, Senior Manager, Manager
+┌────────────────────────────────────────────────────────────────┐
+│  [Search keywords...            ] [Industry ▼] [Capability ▼] │
+│  ▸ Advanced Filters                               [Reset]      │
+└────────────────────────────────────────────────────────────────┘
 ```
+
+**Expanded Advanced:**
+```
+┌────────────────────────────────────────────────────────────────┐
+│  [Search keywords...            ] [Industry ▼] [Capability ▼] │
+│  ▾ Advanced Filters                               [Reset]      │
+│    [Client ▼] [Role ▼] [Domain ▼]                              │
+└────────────────────────────────────────────────────────────────┘
+```
+
+**Filter Options:**
+- **Industry:** All, Financial Services / Banking, Cross Industry, Healthcare, etc.
+- **Capability:** All, Agile Transformation, Modern Engineering, Platform Engineering, etc.
+- **Client** (multi-select): JP Morgan Chase, RBC, Capital One, etc.
+- **Role** (multi-select): Director, Senior Manager, Architect, etc.
+- **Domain** (multi-select): Application Modernization, Security & Compliance, etc.
 
 **Search Helper Text:**
 ```
@@ -200,9 +214,13 @@ Role: All Roles, Director, Senior Manager, Manager
 - Color: `#7f8c8d`
 
 **Implementation Notes:**
-- Search input should be prominent
-- Filters should persist when switching views
-- Helper text uses `.search-helper` class with `.ask-agy-link` for link
+- Primary filters use st.selectbox (single-select)
+- Advanced filters use st.multiselect (multi-select)
+- State preserved via session_state["show_advanced_filters"]
+- Versioned widget keys prevent state collisions
+- Filter chips show active filters with individual removal
+
+**Implementation:** explore_stories.py:1486-1606
 
 **Files:**
 ```
@@ -609,6 +627,159 @@ border: 1px solid #e0e0e0;
 
 ---
 
+### 16. Timeline Era Group
+**Used on:** Explore Stories Timeline View
+
+**Specifications:**
+- **Era Badge:** Left-aligned, 190px width
+- **Timeline Dot:** 14px purple circle on center line
+- **Group Info Box:** Expandable card with story count
+- **Stories Container:** Hidden by default, shows 6 most recent
+- **Explore Link:** Dashed border button to view all stories in era
+
+**Era Structure:**
+```
+Era Badge                    [Dot]  Group Info
+─────────────────────────       ●   ┌─────────────────────┐
+Enterprise Innovation           │   │ ▶ 63 stories        │
+2019 – 2023                     │   │ Cloud Innovation... │
+                                │   └─────────────────────┘
+```
+
+**Expanded State:**
+```
+Era Badge                    [Dot]  Group Info
+─────────────────────────       ●   ┌─────────────────────┐
+Enterprise Innovation           │   │ ▼ 63 stories        │
+2019 – 2023                     │   │ Cloud Innovation... │
+                                │   └─────────────────────┘
+                                │
+                                ├── Story Card 1
+                                ├── Story Card 2
+                                ├── ...
+                                ├── Story Card 6
+                                └── [Explore all 63 stories →]
+```
+
+**Eras (in chronological order):**
+1. Independent Product Development
+2. Enterprise Innovation & Transformation
+3. Cloud-Native Prototyping & Product Shaping
+4. Financial Services Platform Modernization
+5. Integration & Platform Foundations
+
+**Implementation:** timeline_view.py:24-148
+
+---
+
+### 17. Match Confidence Indicator
+**Used on:** Ask MattGPT conversation cards
+
+**Specifications:**
+```css
+.confidence-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #7d8590;
+}
+
+.confidence-fill {
+    width: 60px;
+    height: 4px;
+    background: var(--bg-surface);
+    border-radius: 2px;
+}
+```
+
+**Color Thresholds:**
+- **70%+ (High):** Green (#238636)
+- **50-70% (Medium):** Orange (#ff8c00)
+- **<50% (Low):** Red (#f85149)
+
+**Visual:**
+```
+Match confidence  [████████████          ] 70%
+                  Green fill ───────────┘
+```
+
+**Implementation:** conversation_helpers.py:345-366
+
+---
+
+### 18. Related Projects Grid
+**Used on:** Ask MattGPT conversational responses
+
+**Specifications:**
+- **Layout:** 3-column grid
+- **Button Style:** Wireframe aesthetic (light background, purple border on hover)
+- **States:** Normal, Hover, Selected (expanded)
+- **Expand Behavior:** Click button to show story detail below grid
+
+**Visual:**
+```
+┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+│ 🔗 RBC - Cloud   │ │ 🔗 Chase - Agile │ │ 🔗 Capital One   │
+│    Modernization │ │    Transformation│ │    Platform      │
+└──────────────────┘ └──────────────────┘ └──────────────────┘
+```
+
+**Button Styling:**
+```css
+background: var(--bg-surface);
+border: 1px solid var(--border-color);
+color: var(--accent-purple);
+font-size: 14px;
+font-weight: 500;
+padding: 6px 12px;
+border-radius: 8px;
+transition: all 0.2s ease;
+```
+
+**Selected State:**
+```css
+background: #F3E8FF;
+border: 2px solid #8B5CF6;
+box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+```
+
+**Implementation:** conversation_helpers.py:495-673
+
+---
+
+### 19. Thinking Indicator
+**Used on:** Ask MattGPT during search/processing
+
+**Specifications:**
+- Animated spinner or pulsing indicator
+- Purple color (#8B5CF6)
+- Displayed during Pinecone searches and processing
+- Provides visual feedback during wait states
+
+**Implementation:** thinking_indicator.py
+
+---
+
+### 20. "How Agy Searches" Modal
+**Used on:** Ask MattGPT landing and conversation views
+
+**Specifications:**
+- **3-step flow visualization**
+- Modal overlay with centered content
+- Close button (X, top-right)
+- Purple accent colors throughout
+- Explains RAG search process to users
+
+**Content Structure:**
+1. Step 1: Query Processing
+2. Step 2: Semantic Search
+3. Step 3: Response Generation
+
+**Implementation:** how_agy_modal.py (28.6KB)
+
+---
+
 ## Component Reuse Matrix
 
 | Component | Homepage | About Matt | Cards | Table | Timeline | Ask Landing | Ask Chat |
@@ -629,6 +800,11 @@ border: 1px solid #e0e0e0;
 | Domain Badge | - | ✓ | ✓ | ✓ | ✓ | - | - |
 | Primary CTA | ✓ | ✓ | ✓ | ✓ | - | ✓ | - |
 | Ask Agy Link | - | - | ✓ | ✓ | ✓ | - | - |
+| Timeline Eras | - | - | - | - | ✓ | - | - |
+| Confidence Indicator | - | - | - | - | - | - | ✓ |
+| Related Projects | - | - | - | - | - | - | ✓ |
+| Thinking Indicator | - | - | - | - | - | ✓ | ✓ |
+| How Agy Modal | - | - | - | - | - | ✓ | ✓ |
 
 ## Component Library Structure
 
