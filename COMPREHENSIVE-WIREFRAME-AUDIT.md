@@ -76,7 +76,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 ### ✅ Homepage Content
 **Elements Checked:**
 - Hero headline: "Digital Transformation Leader"
-- Hero subtext: "Explore my portfolio of 115+ projects or chat with Agy 🐾"
+- Hero subtext: "Explore my portfolio of 130+ projects or chat with Agy 🐾"
 - Hero buttons: "Explore Stories" + "Ask Agy 🐾"
 - Stats bar: 20+ Years, 115 Projects, 300+ Professionals, 15+ Clients
 
@@ -107,7 +107,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 | Element | Wireframe Value | Doc Reference |
 |---------|----------------|---------------|
 | Page Header | "Explore Stories" | ✅ Documented |
-| Subtitle | "Browse Matt's 115+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for" | ⚠️ Not in docs (but consistent across all 4 views) |
+| Subtitle | "Browse Matt's 130+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for" | ⚠️ Not in docs (but consistent across all 4 views) |
 | Search Placeholder | "Search by title, client, or keywords..." | ✅ Documented (line 392) |
 | Filter 1 Label | "Industry" | ✅ Documented (line 391) |
 | Filter 1 Default | "All Industries" | Not documented (implementation detail) |
@@ -117,7 +117,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 | Filter 3 Default | "All Clients" | Not documented (implementation detail) |
 | Filter 4 Label | "Role" | ✅ Documented (line 391) |
 | Filter 4 Default | "All Roles" | Not documented (implementation detail) |
-| Results Count | "Showing 1-10 of 115 projects" | ✅ Documented (line 393) |
+| Results Count | "Showing 1-10 of 130 projects" | ✅ Documented (line 393) |
 | View Switcher | "SHOW: [dropdown]" + "Table | Cards | Timeline" buttons | ✅ Documented (line 394) |
 | Helper Link | "Can't find what you're looking for? Ask Agy 🐾 →" | ✅ Documented (line 395) |
 
@@ -179,9 +179,9 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 ### ⚠️ PDF vs. Wireframe Evolution
 **Finding:** PDF Slide 16 (Table View spec) originally specified:
 - **PDF:** "Browse Matt's 1,000+ curated modern practices..."
-- **Actual Wireframe:** "Browse Matt's 115+ transformation projects..."
+- **Actual Wireframe:** "Browse Matt's 130+ transformation projects..."
 
-**Analysis:** This appears to be **intentional evolution** from design spec to implementation. The wireframes (golden source) use "115+ transformation projects" consistently across ALL pages:
+**Analysis:** This appears to be **intentional evolution** from design spec to implementation. The wireframes (golden source) use "130+ transformation projects" consistently across ALL pages:
 - Homepage hero
 - Explore Stories (all 4 views)
 - Ask MattGPT landing
@@ -221,7 +221,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 - [x] "See It In Action" uses 🎯 (not 🐝)
 
 ### Content Accuracy ✅
-- [x] "115+ projects" used consistently (not "1,000+")
+- [x] "130+ projects" used consistently (not "1,000+")
 - [x] Homepage cards match Slide 11 intent
 - [x] Filter labels match actual implementation
 - [x] Button text matches across all instances
@@ -255,7 +255,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 ### 2. ✅ Add Subtitle Copy to Docs (COMPLETED)
 **Previous State:** "Explore Stories" page subtitle not documented
 
-**Actual Wireframe:** "Browse Matt's 115+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
+**Actual Wireframe:** "Browse Matt's 130+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
 
 **Resolution:** Added page header and subtitle to `/docs/03-ux-design-process.md` under "Explore Stories Views" section
 
@@ -266,7 +266,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 ### 3. Update PDF or Add "Wireframes Supersede" Note
 **Current State:** PDF design spec differs from implemented wireframes in:
 - Filter label names
-- Project count language (1,000+ vs 115+)
+- Project count language (1,000+ vs 130+)
 
 **Recommendation:** Either:
 - Option A: Update PDF to match wireframes

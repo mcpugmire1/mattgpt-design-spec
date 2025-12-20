@@ -21,7 +21,7 @@
 
 ## The Problem
 
-Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 115+ projects by methodology, outcome, or domain.
+Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 130+ projects by methodology, outcome, or domain.
 
 **The Core Issues:**
 
@@ -347,7 +347,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 >
 > *Suggested content to add:*
 > - What were the hardest technical problems you encountered?
-> - How did you handle data quality and consistency across 115+ projects?
+> - How did you handle data quality and consistency across 130+ projects?
 > - Performance optimization: What slowed you down? How did you fix it?
 > - Edge cases: What query types broke the system? How did you handle them?
 > - Trade-offs: What shortcuts did you take for MVP? What would you do differently?
@@ -419,7 +419,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - Core semantic search implementation
 - `echo_star_stories.jsonl` data structure finalized
 - Streamlit frontend deployed
-- 115+ stories curated and validated
+- 130+ stories curated and validated
 
 ✅ **Phase 3: Polish & Filtering**
 - Streamlit UI refinement (colors, spacing, gradients)
@@ -568,7 +568,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 > - Validated RAG pipeline with OpenAI GPT-4
 >
 > **Week 2: Polish & Launch**
-> - Expanded to 115+ curated stories
+> - Expanded to 130+ curated stories
 > - Added filters (client, role, domain)
 > - Designed Ask MattGPT conversational interface
 > - Deployed to Streamlit Community Cloud

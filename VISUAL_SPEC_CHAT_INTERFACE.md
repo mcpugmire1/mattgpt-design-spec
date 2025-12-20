@@ -18,7 +18,7 @@
 - [ ] Three status items horizontally
 - [ ] "Semantic search: active" with green pulse dot
 - [ ] "Pinecone index: ready"
-- [ ] "115 stories: indexed"
+- [ ] "130 stories: indexed"
 - [ ] Green dot pulse animation on active status
 
 ## Chat Container Layout
@@ -246,7 +246,7 @@
 
 ### Source Links
 - Should be generated dynamically from your semantic search results
-- Each link should map to a specific story in your 115+ story database
+- Each link should map to a specific story in your 130+ story database
 - On click, should navigate to full story detail or Explore Stories filtered view
 
 ### Action Buttons

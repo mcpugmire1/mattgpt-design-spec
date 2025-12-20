@@ -185,7 +185,7 @@ Every project in the MattGPT corpus follows the STAR framework:
 - ✅ Ensures **no generic claims** ("experienced in agile")
 - ✅ Forces **concrete examples** with business context
 - ✅ Creates **auditable source references** for every AI answer
-- ✅ Maintains **data integrity** across 115+ projects
+- ✅ Maintains **data integrity** across 130+ projects
 
 **Governance Rule:** No project can be indexed without completing all four STAR fields + at least one quantifiable metric.
 
@@ -370,7 +370,7 @@ The voice blends:
 **For Hiring Managers:**
 - Assess depth and process with STAR-formatted stories
 - Verify claims through auditable source references
-- Understand patterns across 115+ real projects
+- Understand patterns across 130+ real projects
 
 **For Candidates (Matt):**
 - Retrieve relevant stories instantly for interview prep

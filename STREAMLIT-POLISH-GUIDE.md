@@ -173,7 +173,7 @@ response = openai.ChatCompletion.create(
 st.markdown("""
     <div class='matt-hero'>
         <h1>MattGPT</h1>
-        <p>AI-powered portfolio assistant showcasing 115+ enterprise transformation projects through structured STAR stories and intelligent search.</p>
+        <p>AI-powered portfolio assistant showcasing 130+ enterprise transformation projects through structured STAR stories and intelligent search.</p>
     </div>
 """, unsafe_allow_html=True)
 ```
@@ -214,7 +214,7 @@ with st.expander("ℹ️ About MattGPT"):
 
     MattGPT is an AI-powered portfolio assistant that showcases Matt Pugmire's professional experience through:
 
-    - 📊 **115+ Enterprise Projects** - Banking, healthcare, retail transformations
+    - 📊 **130+ Enterprise Projects** - Banking, healthcare, retail transformations
     - 📖 **STAR-Formatted Stories** - Situation, Task, Action, Result methodology
     - 🤖 **Intelligent Search** - Semantic + keyword hybrid search via Pinecone
     - 💬 **Conversational AI** - Ask questions, get answers with specific project citations
@@ -299,7 +299,7 @@ Subject: Portfolio Demo: MattGPT - AI-Powered Career Assistant
 
 Hi [Name],
 
-I've built an AI-powered portfolio assistant that showcases my experience through 115+ enterprise transformation projects. Rather than a static resume, you can:
+I've built an AI-powered portfolio assistant that showcases my experience through 130+ enterprise transformation projects. Rather than a static resume, you can:
 
 🔍 **Explore Projects:** Filter by industry, capability, or client
 💬 **Ask Questions:** Natural language Q&A with specific project citations

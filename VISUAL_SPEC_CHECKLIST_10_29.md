@@ -18,7 +18,7 @@
 - [ ] Three status items centered horizontally
 - [ ] "Semantic search: active" with green pulse dot animation
 - [ ] "Pinecone index: ready"
-- [ ] "115 stories: indexed"
+- [ ] "130 stories: indexed"
 - [ ] Pulse animation on the active indicator:
   ```css
   @keyframes pulse {

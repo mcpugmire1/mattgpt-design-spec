@@ -218,7 +218,7 @@ The homepage uses strategic entry point cards that route users to the most relev
 ### How MattGPT Search Works
 
 **System Metrics:**
-- Stories Indexed: 115+
+- Stories Indexed: 130+
 - Avg Response Time: 1.2s
 - Retrieval Accuracy: 87%
 - Vector Dimensions: 384
@@ -252,7 +252,7 @@ User Question
 - Intent recognition for query understanding
 
 **Data & Processing:**
-- **Story Corpus:** 115+ structured narratives from Fortune 500 projects
+- **Story Corpus:** 130+ structured narratives from Fortune 500 projects
 - **Framework:** STAR/5P framework encoding
 - **Metadata:** Rich tagging (client, domain, outcomes, metrics)
 
@@ -387,14 +387,14 @@ MattGPT provides three distinct view modes for browsing project stories, each op
 
 **Page Header & Subtitle:**
 - **H1 Heading:** "Explore Stories"
-- **Subtitle:** "Browse Matt's 115+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
+- **Subtitle:** "Browse Matt's 130+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
 
 #### Shared Framework Elements
 
 All three views share:
 - **Filter Controls:** Industry, Domain Category, Client, Role dropdowns
 - **Search Bar:** Full-width input with placeholder "Search by title, client, or keywords"
-- **Results Summary:** "Browsing 1-10 of 115 projects"
+- **Results Summary:** "Browsing 1-10 of 130 projects"
 - **View Switcher:** Toggle buttons for Table / Cards / Timeline
 - **Ask Agy Link:** "Can't find what you're looking for? Ask Agy →"
 
@@ -616,11 +616,11 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 - **Title:** "Ask MattGPT"
 - **Subtitle:** "Your AI-powered guide — Tracking down insights from 20+ years of transformation experience"
 - **"How It Works" Button:** Top-right CTA, toggles expanded info panel
-- **Status Strip:** "Semantic search active | Pinecone index: ready | 115 stories indexed"
+- **Status Strip:** "Semantic search active | Pinecone index: ready | 130 stories indexed"
 
 **Intro Section:**
 - **Headline:** "Hi, I'm Agy 🐾" (with dog avatar)
-- **Description:** "I'm a Plott Hound — a breed known for tracking skills and determination. Perfect mascot for helping you hunt down insights from Matt's 115+ transformation projects."
+- **Description:** "I'm a Plott Hound — a breed known for tracking skills and determination. Perfect mascot for helping you hunt down insights from Matt's 130+ transformation projects."
 - **Capability Statement:** "Ask me about specific methodologies, leadership approaches, or project outcomes. I understand context, not just keywords."
 
 **Suggestion Cards (6 Examples):**
@@ -646,7 +646,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 
 **Content:**
 - **Title:** "How Agy Works"
-- **Description:** "115+ Real Project Stories - Every answer is grounded in Matt's actual work across Fortune 500 companies — JPMorgan Chase, RBC, Capital One, and more."
+- **Description:** "130+ Real Project Stories - Every answer is grounded in Matt's actual work across Fortune 500 companies — JPMorgan Chase, RBC, Capital One, and more."
 
 **Three Core Capabilities:**
 
@@ -849,7 +849,7 @@ The About Matt page serves as both a professional introduction and a demonstrati
 **Section Title:** "How I Built MattGPT"
 
 **The Problem:**
-"Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 115+ projects by methodology, outcome, or domain. I wanted to create an intelligent, conversational interface that understands intent and surfaces verifiable proof."
+"Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 130+ projects by methodology, outcome, or domain. I wanted to create an intelligent, conversational interface that understands intent and surfaces verifiable proof."
 
 **Tech Stack (Icon Pills):**
 - Python 3.11
@@ -920,7 +920,7 @@ def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
 **Section:** "🎯 See It In Action"
 
 **Content:**
-"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my 115+ projects, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
+"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my 130+ projects, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
 
 **Try asking questions like:**
 - "How did Matt scale engineering teams from 4 to 150+ people?"
@@ -930,7 +930,7 @@ def hybrid_search(query: str, alpha: float = 0.8) -> List[Dict]:
 
 **CTA Button:** "Ask Agy About My Experience →"
 
-**Footer Note:** "Real AI assistant • 115+ projects • Instant answers • Available 24/7"
+**Footer Note:** "Real AI assistant • 130+ projects • Instant answers • Available 24/7"
 
 ---
 

@@ -15,7 +15,7 @@ nav_order: 0
 MattGPT is an **AI-powered portfolio** that transforms 20 years of Fortune 500 transformation experience into an intelligent, searchable interface. Instead of static resume bullets, it provides:
 
 ✅ **Verifiable proof** through structured STAR stories
-✅ **Semantic search** across 115+ real projects
+✅ **Semantic search** across 130+ real projects
 ✅ **Pattern recognition** to surface relevant examples
 ✅ **Auditable sources** for every AI-generated response
 
@@ -165,7 +165,7 @@ Digital Transformation Leader | Director of Technology Delivery
 
 📧 [mpugmire@gmail.com](mailto:mpugmire@gmail.com)
 💼 [LinkedIn](https://www.linkedin.com/in/mattpugmire/)
-🤖 [Ask Agy](https://askmattgpt.streamlit.app) - AI assistant powered by 115+ project stories
+🤖 [Ask Agy](https://askmattgpt.streamlit.app) - AI assistant powered by 130+ project stories
 
 ---
 

@@ -83,14 +83,14 @@
 **Page-Specific Variations:**
 | Page | Title Focus | Description Focus |
 |------|-------------|-------------------|
-| Homepage | Director of Technology Delivery | 20+ years, 115+ projects, availability |
+| Homepage | Director of Technology Delivery | 20+ years, 130+ projects, availability |
 | About Matt | Director-level experience | Team scaling, Fortune 500, transformation |
-| Explore Stories (all) | Interactive Portfolio | 115+ projects, STAR methodology, AI search |
-| Ask MattGPT | AI-Powered Portfolio Assistant | Chat with Agy, 115+ projects, GPT-4 powered |
+| Explore Stories (all) | Interactive Portfolio | 130+ projects, STAR methodology, AI search |
+| Ask MattGPT | AI-Powered Portfolio Assistant | Chat with Agy, 130+ projects, GPT-4 powered |
 
 **Implementation Notes:**
 - All titles include "Matt Pugmire" and role level (Director/VP)
-- All descriptions mention key numbers (20+ years, 115+ projects)
+- All descriptions mention key numbers (20+ years, 130+ projects)
 - All descriptions include "available" or "exploring opportunities"
 - Optimized for recruiter searches
 
