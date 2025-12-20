@@ -295,7 +295,7 @@ What would you like to know about Matt's experience?
 
 ## Phase 2: React Rebuild
 
-**Status:** 🎯 Planned (Q1 2025)
+**Status:** 🎯 Planned (Q1 2026)
 **Purpose:** Better performance and maintainability
 
 The Streamlit MVP validated the RAG architecture and UX patterns. React will make it production-quality with modern tooling and mobile-first design.
@@ -386,7 +386,7 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - **Stack:** Streamlit monolith - fast to build, sufficient for use case
 - **Result:** Validated RAG architecture and UX in 2 weeks vs 3+ months
 
-**Phase 2: Production Polish (January 2025)**
+**Phase 2: Production Polish (Q1 2026)**
 - **Purpose:** Better performance and maintainability
 - **Stack:** React + FastAPI - modern tooling, mobile-first
 - **Benefit:** Preserve core IP (RAG pipeline), improve presentation layer
@@ -410,7 +410,7 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern
 
-### What's Next (Phase 2 - Q1 2025)
+### What's Next (Phase 2 - Q1 2026)
 
 - 🎯 React + Next.js frontend rebuild
 - 🎯 FastAPI backend
