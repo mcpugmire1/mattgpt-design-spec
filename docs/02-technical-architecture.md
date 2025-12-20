@@ -293,89 +293,36 @@ What would you like to know about Matt's experience?
 
 ---
 
-## Phase 2: Production Scale
+## Phase 2: React Rebuild
 
-**Status:** 🎯 Planned (Q2 2025)
-**Timeline:** Target State
-**Primary Goal:** Scalable architecture for 10K+ concurrent users
+**Status:** 🎯 Planned (Q1 2025)
+**Purpose:** Better performance and maintainability
+
+The Streamlit MVP validated the RAG architecture and UX patterns. React will make it production-quality with modern tooling and mobile-first design.
 
 ### Tech Stack
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
 | ⚛️ **Frontend** | React + Next.js | Modern, performant UI framework |
-| 🚀 **API Layer** | FastAPI Gateway | High-performance async API |
-| 🦜 **RAG Framework** | LangChain/LlamaIndex | Orchestration and tooling |
-| ☁️ **Infrastructure** | AWS/Azure | Cloud deployment and scaling |
+| 🚀 **Backend** | FastAPI | High-performance async API |
+| 🔍 **RAG Pipeline** | Same as Phase 1 | Proven architecture, no changes needed |
 
-### Architecture Improvements
+### What Changes
 
-**Micro-Frontend Approach:**
-- Component-based architecture
-- Independent deployment pipelines
-- Shared design system
-- Progressive enhancement
+- **UI Framework:** Streamlit → React (better performance, component reusability)
+- **API Layer:** Monolithic app.py → FastAPI microservices
+- **Mobile:** Responsive CSS → Mobile-first from the start
 
-**API Gateway Pattern:**
-- Service isolation
-- Rate limiting and throttling
-- Authentication/authorization layer
-- API versioning support
+### What Stays the Same
 
-**Scalability Features:**
-- Horizontal auto-scaling
-- Load balancing
-- CDN for static assets
-- Database connection pooling
+- Semantic search with confidence scoring
+- Semantic router and nonsense detection
+- STAR data model and 5P taxonomy
+- Pinecone vector database
+- OpenAI embeddings and LLM
 
-**Mobile-First Design:**
-- Responsive layouts
-- Touch-optimized interactions
-- Progressive web app (PWA) support
-- Offline capabilities
-
----
-
-## Phase 3: Enterprise-Grade
-
-**Status:** 🔮 Future Vision (2026+)
-**Timeline:** Aspirational State
-**Primary Goal:** Enterprise resilience and observability at scale
-
-### Tech Stack
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| 🌐 **CDN** | CloudFlare | Global content delivery |
-| 💾 **Caching** | Redis | Response caching layer |
-| 📊 **Monitoring** | DataDog/New Relic | APM and observability |
-| 🔄 **Orchestration** | Airflow | ETL and workflow management |
-
-### Enterprise Capabilities
-
-**High Availability:**
-- Multi-region deployment
-- 99.9% uptime SLA
-- Automated failover
-- Disaster recovery planning
-
-**Observability:**
-- Real-time monitoring and alerting
-- Distributed tracing
-- Log aggregation and analysis
-- Performance metrics dashboard
-
-**Optimization:**
-- A/B testing infrastructure
-- Feature flagging system
-- Performance profiling
-- Cost optimization monitoring
-
-**Data Pipeline:**
-- Automated ETL workflows
-- Data quality validation
-- Incremental updates
-- Version control for embeddings
+**Why React?** Modern component architecture, better mobile experience, easier to maintain long-term.
 
 ---
 
@@ -434,22 +381,17 @@ What would you like to know about Matt's experience?
 
 ### 4. Align Architecture to Business Goals
 
-**Phase 1: Portfolio Showcase**
-- **Target:** 100 concurrent users
+**Phase 1: Portfolio Showcase (Current)**
 - **Purpose:** Demonstrate technical capability to employers
-- **Stack:** Streamlit monolith (appropriate for scale)
+- **Stack:** Streamlit monolith - fast to build, sufficient for use case
+- **Result:** Validated RAG architecture and UX in 2 weeks vs 3+ months
 
-**Phase 2: Public Product**
-- **Target:** 10K concurrent users
-- **Purpose:** Viable product for public use
-- **Stack:** React + FastAPI (horizontally scalable)
+**Phase 2: Production Polish (January 2025)**
+- **Purpose:** Better performance and maintainability
+- **Stack:** React + FastAPI - modern tooling, mobile-first
+- **Benefit:** Preserve core IP (RAG pipeline), improve presentation layer
 
-**Phase 3: Revenue-Generating SaaS**
-- **Target:** Enterprise customers
-- **Purpose:** White-label credibility platform
-- **Stack:** Enterprise observability and multi-tenancy
-
-**Principle:** Stack complexity matches business maturity
+**Principle:** Start simple, evolve intentionally
 
 ---
 
@@ -468,21 +410,12 @@ What would you like to know about Matt's experience?
 ✅ Conversation history and context management
 ✅ Related Projects UX pattern
 
-### What's Next (Phase 2 - Q2 2025)
+### What's Next (Phase 2 - Q1 2025)
 
-🎯 React + Next.js frontend refactor
-🎯 FastAPI backend with microservices architecture
-🎯 Enhanced mobile PWA capabilities
-🎯 Cloud deployment (AWS/Azure)
-🎯 CI/CD pipeline automation
-
-### Future Vision (Phase 3 - 2026+)
-
-🔮 Multi-region global deployment
-🔮 Enterprise observability platform
-🔮 Real-time performance monitoring
-🔮 A/B testing infrastructure
-🔮 White-label SaaS offering
+🎯 React + Next.js frontend rebuild
+🎯 FastAPI backend
+🎯 Mobile-first design from the start
+🎯 Same RAG pipeline, better UI
 
 ---
 
@@ -498,11 +431,10 @@ For visual representations of the architecture, see:
 
 ## Key Takeaways
 
-1. **MVP-first approach** validated product concept before infrastructure investment
-2. **Core IP preservation** ensures data pipeline remains stable across phases
-3. **Conscious trade-offs** demonstrate strategic thinking vs accidental debt
-4. **Business-aligned evolution** scales complexity with business needs
-5. **Production-ready roadmap** shows clear path to enterprise scale
+1. **MVP-first approach** validated RAG architecture in weeks instead of months
+2. **Core IP preservation** - RAG pipeline remains unchanged, only UI evolves
+3. **Conscious trade-offs** - Streamlit limitations were intentional, not accidental
+4. **Honest roadmap** - Phase 2 React rebuild for better UX, not fantasy enterprise features
 
 ---
 
