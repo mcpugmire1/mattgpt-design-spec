@@ -399,23 +399,23 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 
 ### What's Live Today (Phase 1 - December 2025)
 
-✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-✅ RAG pipeline with GPT-4 and Pinecone vector search
-✅ 130+ STAR-structured project stories
-✅ Semantic search with confidence scoring and metadata filtering
-✅ **Timeline View** with Era-based career progression
-✅ **Mobile-responsive design** (breakpoints: 767px, 1024px)
-✅ **Dark mode support** via CSS variables
-✅ **Modular architecture** (9-file ask_mattgpt/ structure)
-✅ Conversation history and context management
-✅ Related Projects UX pattern
+- ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
+- ✅ RAG pipeline with GPT-4 and Pinecone vector search
+- ✅ 130+ STAR-structured project stories
+- ✅ Semantic search with confidence scoring and metadata filtering
+- ✅ **Timeline View** with Era-based career progression
+- ✅ **Mobile-responsive design** (breakpoints: 767px, 1024px)
+- ✅ **Dark mode support** via CSS variables
+- ✅ **Modular architecture** (9-file ask_mattgpt/ structure)
+- ✅ Conversation history and context management
+- ✅ Related Projects UX pattern
 
 ### What's Next (Phase 2 - Q1 2025)
 
-🎯 React + Next.js frontend rebuild
-🎯 FastAPI backend
-🎯 Mobile-first design from the start
-🎯 Same RAG pipeline, better UI
+- 🎯 React + Next.js frontend rebuild
+- 🎯 FastAPI backend
+- 🎯 Mobile-first design from the start
+- 🎯 Same RAG pipeline, better UI
 
 ---
 
