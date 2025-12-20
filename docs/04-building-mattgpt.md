@@ -56,29 +56,17 @@ This isn't just a portfolio showcase — it's a **functional AI application demo
 
 ## Why I Built This
 
-> **[PLACEHOLDER: Personal Narrative Section]**
->
-> *Suggested content to add:*
-> - What triggered the decision to build this?
-> - Previous attempts or frustrations with traditional portfolios
-> - Specific job search or client pitch scenarios that highlighted the need
-> - Personal motivation beyond professional need (learning, experimentation, etc.)
-> - Timeline: When did you start? What was the initial scope?
->
-> *Example structure:*
->
-> "In late 2023, I found myself in a familiar position: updating my resume for the hundredth time,
-> trying to compress 20 years of transformation work into two pages. The process felt fundamentally
-> broken. How do you convey the nuance of scaling engineering teams from 4 to 150+ people in a bullet
-> point? How do you demonstrate pattern recognition across 55 banking projects when most recruiters
-> will spend 30 seconds scanning your PDF?
->
-> I'd been experimenting with RAG architectures and LangChain for a client project, and it hit me:
-> What if I could build an AI that actually understood my work — not through generic keyword matching,
-> but through semantic understanding of outcomes, methodologies, and context?
->
-> I gave myself 2 weeks to build an MVP that could answer one question better than a resume:
-> 'Show me examples of Matt scaling agile transformations with measurable outcomes.'"
+In September 2023, I left Accenture after 18.5 years. I'd built their Cloud Innovation Center from scratch, scaled it to 150+ professionals, and helped Fortune 500 companies modernize platforms worth billions. But I was burned out, underwent a few surgeries, and I needed time to figure out what came next.
+
+Six months into my sabbatical, I started updating my resume. That's when it hit me: I had 20 years of transformation stories, and I was trying to squeeze them into two pages of bullet points. The format was fundamentally broken.
+
+Recruiters would spend 30 seconds scanning my PDF. How could they possibly understand the nuance of scaling engineering teams from 4 to 150? Or the pattern recognition I'd developed across 55 banking projects? They couldn't. Nobody could.
+
+I'd been experimenting with RAG architectures and vector search for a client POC, and the idea clicked: What if I could build an AI that actually understood my work — not through keyword matching, but through semantic understanding of outcomes, methodologies, and context?
+
+I gave myself two weeks to build an MVP. The goal was simple: answer one question better than a resume ever could — "Show me examples of Matt scaling agile transformations with measurable outcomes."
+
+I named it after Agy, my late Plott Hound — short for Agador Spartacus from "The Birdcage." He was a tracker — goofy yet patient, determined, excellent at finding exactly what you were looking for. That's what I wanted this AI to be.
 
 ---
 
@@ -343,59 +331,43 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ## Key Challenges & Solutions
 
-> **[PLACEHOLDER: Technical Challenges Section]**
->
-> *Suggested content to add:*
-> - What were the hardest technical problems you encountered?
-> - How did you handle data quality and consistency across 130+ projects?
-> - Performance optimization: What slowed you down? How did you fix it?
-> - Edge cases: What query types broke the system? How did you handle them?
-> - Trade-offs: What shortcuts did you take for MVP? What would you do differently?
->
-> *Example structure:*
->
-> **Challenge 1: Balancing Semantic Precision with Keyword Accuracy**
->
-> *Problem:* Pure semantic search returned too many false positives. A query for "JPMorgan payments"
-> would return stories about "Capital One banking modernization" because they're semantically similar.
->
-> *Solution:* Implemented hybrid search with 80/20 weighting. This preserved semantic understanding
-> while ensuring exact matches for critical terms (client names, specific technologies).
->
-> *Result:* Retrieval accuracy improved from 62% to 87%.
+### The Hybrid Search Problem
+
+Pure semantic search was too fuzzy. Ask about "JPMorgan," and it might return stories about "banking transformation" that never mention the client. Pure keyword search was too rigid — "CI/CD pipelines" wouldn't match "continuous delivery automation."
+
+The solution was hybrid retrieval: 80% semantic similarity for conceptual understanding, 20% keyword matching for exact terms. Getting that balance right took three weeks of tuning.
+
+### The Hallucination Problem
+
+Early versions of the system would confidently generate plausible-sounding details that never happened. "Matt led a team of 200 engineers," when the actual number was 150. "The project saved $50M" when I'd never quantified the savings.
+
+The fix was two-fold: mandatory STAR structure (every story needs verifiable Situation, Task, Action, Result) and aggressive fact-checking. I went through all 130+ stories line by line, deleting anything I couldn't defend in an interview. If I couldn't cite a specific metric or name a specific outcome, it got cut.
+
+### The Streamlit CSS Problem
+
+Streamlit is great for rapid prototyping. It's terrible for custom styling. Class names change between versions. CSS selectors that work on desktop break on mobile. The st-emotion-cache-* classes are generated dynamically and can't be targeted reliably.
+
+I learned to use data-testid attributes and container keys for CSS targeting. The global_styles.py file grew to 600+ lines of carefully scoped overrides. It's not pretty, but it works.
 
 ---
 
 ## Lessons Learned
 
-> **[PLACEHOLDER: Reflections & Insights Section]**
->
-> *Suggested content to add:*
-> - What surprised you most about building this?
-> - What would you tell someone starting a similar project?
-> - Technical lessons (libraries, patterns, anti-patterns)
-> - Product lessons (user feedback, feature prioritization)
-> - Business lessons (positioning, value prop, marketing)
->
-> *Example structure:*
->
-> **1. MVP-First Thinking Pays Off**
->
-> I originally planned to build a React + FastAPI stack. I'm glad I didn't. Streamlit let me validate
-> the core RAG architecture in 2 weeks vs 3+ months. The UI isn't perfect, but the search quality
-> and system prompt design are rock-solid — those are the hard parts.
->
-> **2. Data Quality > Fancy Algorithms**
->
-> I spent more time curating STAR stories and validating metadata than I did on the ML pipeline.
-> That discipline paid off: every AI response traces to auditable source data, and users trust the
-> system because it never hallucinates.
->
-> **3. User Testing Revealed Unexpected Personas**
->
-> I built this for recruiters and hiring managers. But the most engaged users were *candidates*
-> (like me) using it for interview prep. That insight shaped the roadmap: Job Fit & Matching is
-> now the #1 priority for Phase 3.
+### MVP-First Thinking Pays Off
+
+I originally planned to build a React + FastAPI stack. I'm glad I didn't. Streamlit let me validate the core RAG architecture in two weeks instead of three months. The UI isn't perfect, but the search quality and system prompt design are solid — those are the hard parts.
+
+### Data Quality > Fancy Algorithms
+
+I spent more time curating STAR stories and validating metadata than I did on the ML pipeline. That discipline paid off: every AI response traces to auditable source data, and users trust the system because it never makes things up.
+
+### The Strangler Fig Refactor
+
+By October 2025, the main app.py file had grown to over 5,000 lines. It was unmaintainable. I used the strangler fig pattern to extract components one by one — timeline_view.py, story_detail.py, landing_view.py — until the core file was under 1,000 lines. The architecture is now modular enough that I can hand off individual components to AI coding assistants without them needing to understand the whole system.
+
+### The "Can You Defend It?" Standard
+
+Every claim in this portfolio passes one test: Can I defend it in an interview? If someone asks, "How do you know it was 4x faster?" I have the answer. If someone asks, "What exactly did you do versus the team?" I can explain my specific contribution. This standard eliminated much of the impressive-sounding but unverifiable content.
 
 ---
 
@@ -517,67 +489,66 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 ## Future Vision
 
-> **[PLACEHOLDER: Long-Term Vision Section]**
->
-> *Suggested content to add:*
-> - Where do you see this in 3-5 years?
-> - Could this become a product for other consultants/professionals?
-> - What adjacent problems could this solve?
-> - How might AI/LLM evolution change the roadmap?
-> - Personal career goals: How does this project fit into your broader trajectory?
->
-> *Example structure:*
->
-> **The Bigger Picture: Credibility as a Service**
->
-> MattGPT started as a personal portfolio, but the underlying thesis is universal: *professionals
-> shouldn't have to choose between depth and discoverability*.
->
-> I envision a future where:
-> - Every consultant has an AI that can articulate their unique value
-> - Hiring managers can query multiple candidate portfolios simultaneously
-> - Career stories are structured, auditable, and composable
->
-> This isn't about replacing human judgment — it's about *augmenting trust at scale*.
->
-> **Next Steps:**
-> 1. Validate Job Fit & Matching with 10 beta testers
-> 2. Open-source the RAG architecture as a reference implementation
-> 3. Explore white-label offering for consulting firms
-> 4. Build community of practice around "Credibility Engineering"
+### The Bigger Picture: Credibility as a Service
+
+MattGPT started as a personal portfolio, but the underlying thesis is universal: professionals shouldn't have to choose between depth and discoverability.
+
+Every consultant has 10-20 years of stories they can't effectively communicate. Every recruiter spends hours doing manual keyword searches through resumes that all look the same. Every hiring manager wishes they could ask follow-up questions before deciding who to interview.
+
+I envision a future where:
+- Every professional has an AI that can articulate their unique value
+- Hiring managers can query candidate portfolios with natural language
+- Career stories are structured, auditable, and composable
+- The interview process starts with verified proof, not generic claims
+
+This isn't about replacing human judgment — it's about augmenting trust at scale.
+
+### What's Next
+
+The immediate roadmap is a React migration to improve performance and scalability. But the more interesting question is whether this becomes a product. Could consulting firms use this for their bench? Could job platforms integrate structured portfolios? Could this become the LinkedIn alternative that actually proves what people claim?
+
+I don't know yet. But the foundation is solid, and the thesis is validated.
 
 ---
 
 ## Appendix: Build Timeline
 
-> **[PLACEHOLDER: Project Timeline Section]**
->
-> *Suggested content to add:*
-> - Week-by-week breakdown of initial build
-> - Key milestones and pivot points
-> - Time spent on different phases (data curation vs coding vs testing)
-> - When did you get your first user feedback?
-> - Major version releases and feature additions
->
-> *Example:*
->
-> **Week 1: Foundation (Nov 2024)**
-> - Curated first 20 STAR stories in JSONL format
-> - Set up Pinecone vector database
-> - Implemented basic Streamlit UI with semantic search
-> - Validated RAG pipeline with OpenAI GPT-4
->
-> **Week 2: Polish & Launch**
-> - Expanded to 130+ curated stories
-> - Added filters (client, role, domain)
-> - Designed Ask MattGPT conversational interface
-> - Deployed to Streamlit Community Cloud
->
-> **Month 2-3: Iteration (Dec 2024 - Jan 2025)**
-> - User testing with 5 recruiters, 3 hiring managers
-> - Added Table/Card/Timeline view modes
-> - Implemented gated export for lead capture
-> - Fine-tuned system prompt based on feedback
+### April 2025: Foundation
+- Curated the first 50 STAR stories from Accenture tenure
+- Set up Pinecone vector database
+- Implemented basic Streamlit UI with semantic search
+- Validated RAG pipeline with OpenAI GPT-4
+
+### May-June 2025: Expansion
+- Grew corpus to 115+ stories covering full career
+- Added filters (client, role, domain, industry)
+- Designed three view modes: Table, Card, Timeline
+- Built "How Agy Searches" transparency modal
+
+### July-August 2025: Polish
+- User testing with recruiters and hiring managers
+- Refined system prompt based on feedback
+- Implemented hybrid search (semantic + keyword)
+- Added confidence scoring and source citations
+
+### September 2025: Fact-Check Sprint
+- Line-by-line audit of all stories
+- Removed AI-generated fabrications
+- Ensured 100% defensibility standard
+- Finalized 130+ verified stories
+
+### October 2025: Architecture Refactor
+- Strangler fig pattern: 5,000 → 1,000 lines in app.py
+- Extracted modular components
+- Created comprehensive design specification
+- Deployed to Streamlit Cloud
+
+### November-December 2025: Mobile & Polish
+- Complete mobile responsive implementation
+- Era-based Timeline view (5 career phases)
+- Filter redesign (Primary + Advanced)
+- Related Projects UX improvements
+- Design spec sync and documentation refresh
 
 ---
 
@@ -605,8 +576,4 @@ through proof, not claims.**
 ---
 
 *Last Updated: December 2025*
-*Version: 1.0 (Initial Development Journey Documentation)*
-
-**Note:** Sections marked with **[PLACEHOLDER]** are ready for your personal narrative and
-reflections. These sections intentionally leave space for the human story behind the technical
-implementation — the "why" and "how I felt" that only you can provide.
+*Version: 1.1 (Complete with Personal Narrative)*
