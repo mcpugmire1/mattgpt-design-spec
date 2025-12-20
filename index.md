@@ -31,7 +31,7 @@ This isn't just a portfolio — it's a **demonstration of modern AI product deve
 - 🔍 **Hybrid Search** (80% semantic + 20% keyword)
 - 📊 **Data Governance** (Two-layer validation system)
 - 🎨 **User-Centered Design** (Three distinct personas)
-- ⚡ **Production Application** (Streamlit with mobile-responsive CSS, Era timeline, advanced filters)
+- ⚡ **Production Application** (Mobile-responsive Streamlit with Era-based timeline and advanced filtering)
 
 ---
 
