@@ -43,7 +43,7 @@ This isn't just a portfolio — it's a **demonstration of modern AI product deve
 The Credibility Engine — WHY, HOW, WHAT framework, user personas, data governance model, and AI system prompt.
 
 **[🏗️ Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture)**
-Three-phase evolution from MVP to enterprise scale, tech stack decisions, and strategic trade-offs.
+Two-phase evolution from Streamlit MVP to React rebuild, tech stack decisions, and strategic trade-offs.
 
 ### Design & Implementation
 
