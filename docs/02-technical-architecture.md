@@ -423,9 +423,10 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 
 For visual representations of the architecture, see:
 
-- [RAG Architecture Diagrams](/images/architecture/) - System design and data flow
-- [Interactive Wireframes](/wireframes/) - UI/UX design decisions
-- [Architecture Evolution Slide](/wireframes/architecture_evolution_slide_wireframe.html) - Visual timeline
+- [RAG Architecture Diagram](../images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle
+- [Site Architecture](../images/architecture/site_architecture.png) - Page hierarchy and navigation
+- [Interactive Wireframes](../wireframes/) - Complete UI/UX wireframe set
+- [Architecture Evolution Slide](../wireframes/architecture_evolution_slide_wireframe.html) - Visual roadmap timeline
 
 ---
 
