@@ -527,17 +527,13 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 
 ## Conclusion
 
-Building MattGPT has been equal parts technical challenge and product discovery. What started as a
-solution to a personal problem — "How do I make 20 years of experience searchable?" — evolved into
-a demonstration of modern AI product development: RAG architecture, semantic search with confidence scoring,
-data governance, and user-centered design.
+Building MattGPT has been equal parts technical challenge and product discovery. What started as a personal problem — "How do I make 20 years of experience searchable?" — became a demonstration of modern AI product development: RAG architecture, semantic search, data governance, and user-centered design.
 
 **The core thesis remains:**
 
 > **Replace "I'm experienced" with "Here's exactly what I did, how I did it, and the measurable results."**
 
-Every line of code, every STAR story, and every design decision serves that mission: **credibility
-through proof, not claims.**
+Every line of code, every STAR story, every design decision serves that mission: **proof over claims.**
 
 ---
 
