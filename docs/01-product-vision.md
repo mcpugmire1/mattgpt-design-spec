@@ -406,5 +406,5 @@ The voice blends:
 
 ---
 
-*Last Updated: December 2024 (Post-Audit Refresh)*
+*Last Updated: December 2025 (Post-Audit Refresh)*
 *Version: 1.1 (Updated with Implementation Details)*

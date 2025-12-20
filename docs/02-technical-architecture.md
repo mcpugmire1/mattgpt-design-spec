@@ -18,7 +18,7 @@ MattGPT's architecture follows a three-phase evolution strategy:
 
 ## Phase 1: MVP - Rapid Validation
 
-**Status:** ✅ Complete (January 2025)
+**Status:** ✅ Complete (December 2025)
 **Timeline:** Current State
 **Primary Goal:** Validate product-market fit with minimal investment
 
@@ -35,19 +35,21 @@ MattGPT's architecture follows a three-phase evolution strategy:
 
 The MVP phase consciously accepted limitations to accelerate learning:
 
-- **Desktop-first UI:** Not mobile optimized
-- **Limited scalability:** ~100 concurrent users maximum
+- **Mobile-responsive implementation:** Production-quality mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
+- **Limited scalability:** Estimated ~100 concurrent users (not load-tested; Streamlit Community Cloud limits apply)
 - **No caching layer:** Direct database queries
-- **Monolithic architecture:** Single application layer
+- **Modular architecture:** Refactored from monolithic app.py to component-based structure
 - **Minimal observability:** Basic logging only
 
 ### Key Decisions
 
 **Why Streamlit?**
-- ✅ 2-week build time vs 3+ months for React
+- ✅ Initial MVP build time: 2 weeks vs 3+ months for React*
 - ✅ Python-native (matches ML/AI ecosystem)
 - ✅ Built-in state management
 - ✅ Rapid iteration without frontend complexity
+
+*Note: Continuous refinement and feature additions ongoing since launch.
 
 **What We Validated:**
 - RAG architecture effectiveness
@@ -55,6 +57,28 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - STAR methodology implementation
 - User experience patterns
 - Search relevance tuning
+
+### Architecture Evolutions Achieved (December 2025)
+
+**Modular Component Structure:**
+- Refactored monolithic ask_mattgpt.py (4,696 lines) into 9-file directory
+- Separated concerns: backend_service.py, conversation_view.py, conversation_helpers.py
+- Reusable component library (ui/components/)
+
+**Design System:**
+- CSS variables for light/dark mode support (global_styles.py:28-122)
+- Standardized breakpoints: 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
+- Consistent purple brand (#8B5CF6) across all views
+
+**Timeline View Innovation:**
+- Era-based project grouping (timeline_view.py)
+- 5 career eras with date range calculation
+- Progressive disclosure pattern (6 most recent per era)
+
+**Mobile Implementation:**
+- 200 lines of responsive CSS (global_styles.py:399-596)
+- Touch-optimized controls and stacking layouts
+- Horizontal scroll tables with preserved functionality
 
 ---
 
@@ -220,19 +244,24 @@ The MVP phase consciously accepted limitations to accelerate learning:
 
 ## Current State Summary
 
-### What's Live Today (Phase 1)
+### What's Live Today (Phase 1 - December 2025)
 
-✅ Working Streamlit application deployed at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
+✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
 ✅ RAG pipeline with GPT-4 and Pinecone vector search
-✅ STAR-structured content governance
-✅ Semantic + keyword hybrid search
+✅ 130+ STAR-structured project stories
+✅ Semantic + keyword hybrid search with confidence scoring
+✅ **Timeline View** with Era-based career progression
+✅ **Mobile-responsive design** (breakpoints: 767px, 1024px)
+✅ **Dark mode support** via CSS variables
+✅ **Modular architecture** (9-file ask_mattgpt/ structure)
 ✅ Conversation history and context management
+✅ Related Projects UX pattern
 
 ### What's Next (Phase 2 - Q2 2025)
 
 🎯 React + Next.js frontend refactor
 🎯 FastAPI backend with microservices architecture
-🎯 Mobile-responsive design
+🎯 Enhanced mobile PWA capabilities
 🎯 Cloud deployment (AWS/Azure)
 🎯 CI/CD pipeline automation
 
@@ -273,5 +302,5 @@ For visual representations of the architecture, see:
 
 ---
 
-*Last Updated: October 2024*
-*Version: 1.0 (Initial Architecture Documentation)*
+*Last Updated: December 2025 (Post-Audit Refresh)*
+*Version: 1.1 (Updated with Implementation Details)*

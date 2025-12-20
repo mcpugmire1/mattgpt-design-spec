@@ -1,7 +1,8 @@
 # Explore Stories Filter Redesign (Phase 4)
 
-**Status:** Design Complete - Implementation Pending
-**Date:** October 28, 2025
+**Status:** ✅ Implemented (December 2025)
+**Design Date:** October 28, 2024
+**Implementation Completed:** December 2025
 **Related Implementation Doc:** [llm_portfolio_assistant/EXPLORE_STORIES_UX_REDESIGN.md](../../llm_portfolio_assistant/EXPLORE_STORIES_UX_REDESIGN.md)
 
 ---
@@ -138,30 +139,30 @@ Strategic/High-level
 
 ---
 
-## Implementation Phases
+## Implementation Status
 
-### Phase 1: Data Layer
-- Refactor `load_star_stories()` to preserve all JSONL fields
-- Remove synthetic field creation
-- Update all consumers to use raw field names
+### ✅ Phase 1: Data Layer (Completed)
+- Refactored `load_star_stories()` to preserve all JSONL fields
+- Removed synthetic field creation
+- All consumers use raw field names
 
-### Phase 2: Filter Logic
-- Update `utils/filters.py` to support Industry, Capability, Sub-category filtering
-- Remove references to synthetic "domain" field
+### ✅ Phase 2: Filter Logic (Completed)
+- Updated `utils/filters.py` to support Industry, Capability, Sub-category
+- Removed synthetic "domain" field references
 
-### Phase 3: Explore Stories UI
-- Implement new filter layout (Primary + Advanced collapsed)
-- Add Industry and Capability dropdowns
-- Move Client, Role to Advanced section
-- Initialize filters from session state pre-filters
+### ✅ Phase 3: Explore Stories UI (Completed)
+- Implemented Primary + Advanced collapsed layout
+- Industry and Capability dropdowns functional
+- Client, Role, Domain in Advanced section
+- Session state pre-filters working
 
-### Phase 4: Landing Page Integration
-- Update Banking/Cross-Industry landing page button handlers
-- Test full flow: Landing → Filtered Explore Stories
+### ✅ Phase 4: Landing Page Integration (Completed)
+- Banking/Cross-Industry landing page button handlers implemented
+- Pre-filter state management works across page transitions
 
-### Phase 5: Other Pages
-- Update `ask_mattgpt.py`, `utils/scoring.py`, `services/pinecone_service.py`
-- Verify semantic search and context building still works
+### ✅ Phase 5: Other Pages (Completed)
+- ask_mattgpt.py, semantic_router.py, scoring.py updated
+- Semantic search and context building verified working
 
 ---
 
@@ -206,12 +207,47 @@ Strategic/High-level
 
 ---
 
-## Open Questions
+## Implementation Decisions (Resolved)
 
-- [ ] Industry filter: single-select or multi-select?
-- [ ] Capability filter: single-select or multi-select?
-- [ ] Advanced section: remember collapsed/expanded state?
-- [ ] Should we update the existing wireframes to reflect the new filter layout?
+- ✅ Industry filter: **Single-select** (st.selectbox)
+- ✅ Capability filter: **Single-select** (st.selectbox)
+- ✅ Advanced filters (Client, Role, Domain): **Multi-select** (st.multiselect)
+- ✅ Advanced section: **State preserved** via session_state["show_advanced_filters"]
+- ✅ Wireframes: **No update needed** - design intent captured
+
+### Implementation Details Not in Original Design
+
+#### 1. Versioned Widget State Management
+To prevent Streamlit widget key collisions and ensure clean filter resets:
+- Each filter type has version counter (`_widget_version_*`)
+- Incremented on filter removal to force widget recreation
+- Prevents stale state bugs
+
+See: explore_stories.py:1490-1554
+
+#### 2. Search Guarding
+Search only executes when user explicitly submits form:
+- `__search_triggered__` flag distinguishes intentional searches
+- Prevents accidental Pinecone API calls on every keystroke
+- Improves performance and reduces costs
+
+See: explore_stories.py:1621-1642
+
+#### 3. Confidence Banners
+Three-tier confidence system for search results:
+- **High:** "Found N matching stories for 'query'"
+- **Low:** "Showing closest matches. Relevance may be low."
+- **None:** "No strong matches. Matt may not have worked with this."
+
+See: explore_stories.py:241-270
+
+#### 4. Active Filter Chips
+Visual chips showing applied filters with individual removal:
+- Hash-based stable keys prevent button ID collisions
+- "Clear all" resets entire filter state
+- Syncs with widget versions for clean updates
+
+See: explore_stories.py:273-354
 
 ---
 
@@ -224,6 +260,6 @@ Strategic/High-level
 
 ---
 
-**Last Updated:** October 28, 2025
-**Version:** 1.0 (Design Phase)
-**Implementation Status:** Pending
+**Last Updated:** December 20, 2025 (Post-Implementation)
+**Version:** 1.1 (Implementation Complete)
+**Implementation Status:** ✅ Complete
