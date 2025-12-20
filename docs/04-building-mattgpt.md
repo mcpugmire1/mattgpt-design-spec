@@ -64,7 +64,7 @@ Recruiters would spend 30 seconds scanning my PDF. How could they possibly under
 
 I'd been experimenting with RAG architectures and vector search for a client POC, and the idea clicked: What if I could build an AI that actually understood my work — not through keyword matching, but through semantic understanding of outcomes, methodologies, and context?
 
-I gave myself two weeks to build an MVP. The goal was simple: answer one question better than a resume ever could — "Show me examples of Matt scaling agile transformations with measurable outcomes."
+I started with a two-week MVP sprint in April 2025. That initial prototype validated the concept, but the real work — 130+ stories, semantic search tuning, mobile design, the strangler fig refactor — took another eight months.
 
 I named it after Agy, my late Plott Hound — short for Agador Spartacus from "The Birdcage." He was a tracker — goofy yet patient, determined, excellent at finding exactly what you were looking for. That's what I wanted this AI to be.
 
