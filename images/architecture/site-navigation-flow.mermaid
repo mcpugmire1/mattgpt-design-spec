@@ -1,0 +1,22 @@
+```mermaid
+flowchart TD
+    Home[Homepage] --> Banking[Banking Landing<br/>55 Projects]
+    Home --> CrossInd[Cross-Industry Landing<br/>51 Projects]
+    Home --> Explore[Explore Stories]
+    Home --> Ask[Ask MattGPT]
+    Home --> About[About Matt]
+
+    Banking --> Explore
+    CrossInd --> Explore
+
+    Explore --> Detail[Story Detail View<br/>STAR Format]
+
+    Ask --> AskLanding[Landing Page<br/>Starter Prompts]
+    AskLanding --> Conversation[Conversation View<br/>AI Chat + Sources]
+
+    style Home fill:#8B5CF6,color:#fff
+    style Explore fill:#6366F1,color:#fff
+    style Ask fill:#6366F1,color:#fff
+    style Detail fill:#3498DB,color:#fff
+    style Conversation fill:#3498DB,color:#fff
+```

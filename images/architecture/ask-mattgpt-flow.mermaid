@@ -1,0 +1,25 @@
+```mermaid
+flowchart TD
+    User[User Question]
+
+    User --> Router{Semantic Router<br/>Query Validation}
+
+    Router -->|Accept 0.80+| Search[Semantic Search<br/>Pinecone Vector DB]
+    Router -->|Accept 0.72-0.79| Search
+    Router -->|Reject <0.72| Reject[Off-Domain Response<br/>Suggestion Chips]
+
+    Search --> RAG[RAG Pipeline<br/>Retrieve + Generate]
+
+    RAG --> Response[AI Response<br/>with Sources]
+
+    Response --> Sources[Source Citations<br/>Match Confidence]
+    Response --> RelatedProj[Related Projects]
+    Response --> FollowUp[Follow-up Question]
+
+    FollowUp --> User
+
+    style User fill:#8B5CF6,color:#fff
+    style Router fill:#6366F1,color:#fff
+    style Response fill:#3498DB,color:#fff
+    style Reject fill:#E74C3C,color:#fff
+```

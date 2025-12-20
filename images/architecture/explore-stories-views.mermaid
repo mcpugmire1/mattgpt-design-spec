@@ -1,0 +1,21 @@
+```mermaid
+flowchart LR
+    Explore[Explore Stories Page]
+
+    Explore --> Filters[Filters<br/>Industry, Client<br/>Capability, Domain]
+
+    Explore --> Table[Table View<br/>High-density browsing]
+    Explore --> Cards[Card View<br/>Visual previews]
+    Explore --> Timeline[Timeline View<br/>5 Career Eras]
+
+    Table --> Detail[Story Detail<br/>Inline Expansion]
+    Cards --> Detail
+    Timeline --> Detail
+
+    Detail --> STAR[STAR Format<br/>Situation, Task<br/>Action, Result]
+    Detail --> Metrics[Key Metrics]
+    Detail --> Related[Related Projects]
+
+    style Explore fill:#8B5CF6,color:#fff
+    style Detail fill:#6366F1,color:#fff
+```
