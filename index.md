@@ -31,7 +31,7 @@ This isn't just a portfolio — it's a **demonstration of modern AI product deve
 - 🔍 **Hybrid Search** (80% semantic + 20% keyword)
 - 📊 **Data Governance** (Two-layer validation system)
 - 🎨 **User-Centered Design** (Three distinct personas)
-- ⚡ **Rapid Prototyping** (MVP in 2 weeks with Streamlit)
+- ⚡ **Production Application** (Streamlit with mobile-responsive CSS, Era timeline, advanced filters)
 
 ---
 
@@ -56,6 +56,15 @@ The development journey, technical challenges, hybrid search algorithm, and prod
 **[🐾 Agy Voice Guide](/mattgpt-design-spec/docs/05-agy-voice-guide)**
 Complete brand voice documentation for Agy, the Plott Hound AI assistant — personality traits, response templates, and tone guidelines.
 
+**[🎯 Explore Stories Filter Redesign](/mattgpt-design-spec/docs/06-explore-stories-filter-redesign)**
+Phase 4 filter architecture with primary/advanced pattern, progressive disclosure, and landing page integration.
+
+**[🎨 CSS Architecture](/mattgpt-design-spec/docs/07-css-architecture)**
+Complete CSS design system with variables, breakpoints, dark mode support, and component conventions.
+
+**[📱 Mobile Implementation](/mattgpt-design-spec/docs/08-mobile-implementation)**
+Production mobile CSS with responsive breakpoints, touch optimization, and component-specific mobile behaviors.
+
 ---
 
 ## Interactive Wireframes
@@ -64,12 +73,13 @@ Explore clickable HTML prototypes of the MattGPT interface:
 
 ### Core Views
 - **[Homepage](/mattgpt-design-spec/wireframes/index.html)** - Entry point with starter cards
-- **[Banking Landing Page](/mattgpt-design-spec/wireframes/banking_landing_page.html)** - Industry-specific view (55 projects, 16 capabilities)
+- **[Banking Landing Page](/mattgpt-design-spec/wireframes/banking_landing_page.html)** - Financial Services projects with capability breakdown
+- **[Cross-Industry Landing Page](/mattgpt-design-spec/wireframes/cross_industry_landing_page.html)** - Non-banking projects across industries
 
 ### Explore Stories Interface
 - **[Table View](/mattgpt-design-spec/wireframes/explore_stories_table_wireframe.html)** - High-density browsing for recruiters
 - **[Card View](/mattgpt-design-spec/wireframes/explore_stories_cards_wireframe.html)** - Visual story previews
-- **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_wireframe.html)** - Chronological career progression
+- **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_wireframe.html)** - Era-based career progression (5 career phases)
 - **[Mobile View](/mattgpt-design-spec/wireframes/explore_stories_mobile_wireframe.html)** - Mobile-optimized story browsing
 
 ### Ask MattGPT (AI Interface)
@@ -97,9 +107,16 @@ Complete brand kit with logos, colors, typography, and usage guidelines.
 ## Design Artifacts
 
 ### Architecture Diagrams
-- [RAG Build + Run Architecture](/mattgpt-design-spec/images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle with 4-phase implementation table (PDF Slide 8)
-- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.png) - Page hierarchy & navigation structure (PDF Slide 9)
+- [RAG Build + Run Architecture](/mattgpt-design-spec/images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle with 4-phase implementation
+- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture.png) - Page hierarchy & navigation structure
 - [Architecture Evolution](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - MVP → Production → Enterprise roadmap
+
+### New Components & Features
+- **How Agy Searches Modal** - 3-step RAG search flow visualization
+- **Related Projects Grid** - 3-column context-aware project recommendations
+- **Match Confidence Indicators** - Visual confidence bars (green/orange/red thresholds)
+- **Timeline Era Groups** - 5 career phases with progressive disclosure
+- **Advanced Filter Pattern** - Primary + collapsible advanced filters
 
 ---
 
@@ -139,8 +156,8 @@ Every project includes Situation, Task, Action, Result with measurable metrics.
 ### Technical Execution
 - ✅ Modern AI architecture (RAG pipeline, vector search)
 - ✅ Data governance (mandatory STAR validation)
-- ✅ Performance optimization (hybrid search, 87% accuracy, 1.2s response time)
-- ✅ Scalable design (monolith → microservices → enterprise)
+- ✅ Performance optimization (hybrid search with semantic + keyword fallback)
+- ✅ Scalable design (modular architecture → microservices → enterprise)
 
 ### Design Thinking
 - ✅ Information architecture (6 user flows, 9 view specifications)
@@ -161,7 +178,7 @@ Every project includes Situation, Task, Action, Result with measurable metrics.
 ## Contact
 
 **Matt Pugmire**
-Digital Transformation Leader | Director of Technology Delivery
+Product & Platform Leader | Digital Transformation Director
 
 📧 [mpugmire@gmail.com](mailto:mpugmire@gmail.com)
 💼 [LinkedIn](https://www.linkedin.com/in/mattpugmire/)
@@ -171,4 +188,4 @@ Digital Transformation Leader | Director of Technology Delivery
 
 *This design specification represents the complete product blueprint from discovery through detailed technical and UX specifications. It demonstrates end-to-end product development: from strategic vision through user research, technical architecture, and meticulous execution.*
 
-**Last Updated:** January 2025
+**Last Updated:** December 2025
