@@ -3,13 +3,12 @@
 **Status:** ✅ Implemented (December 2025)
 **Design Date:** October 28, 2024
 **Implementation Completed:** December 2025
-**Related Implementation Doc:** [llm_portfolio_assistant/EXPLORE_STORIES_UX_REDESIGN.md](../../llm_portfolio_assistant/EXPLORE_STORIES_UX_REDESIGN.md)
 
 ---
 
 ## Overview
 
-This document provides a high-level summary of the Explore Stories filter redesign. For detailed implementation specifications, wireframes, testing plans, and technical details, see the **[full implementation spec](../../llm_portfolio_assistant/EXPLORE_STORIES_UX_REDESIGN.md)** in the implementation repository.
+This document summarizes the Explore Stories filter redesign, including the problem statement, design solution, and implementation approach.
 
 ---
 
