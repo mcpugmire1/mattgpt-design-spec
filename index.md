@@ -69,6 +69,8 @@ Production mobile CSS with responsive breakpoints, touch optimization, and compo
 
 ## Interactive Wireframes
 
+> **Note:** These wireframes represent the original design specification (October 2025). The live application includes additional features implemented since: Era-based Timeline View, mobile responsive design, and advanced filtering. See [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app) for current state.
+
 Explore clickable HTML prototypes of the MattGPT interface:
 
 ### Core Views
