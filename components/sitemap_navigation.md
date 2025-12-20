@@ -117,19 +117,24 @@ All three views include view switcher in top-right:
 4. Switch to Table view for detailed comparison
    ↓ Sort by Outcome Impact
 
-5. Click project to open detail pane
+5. Switch to Timeline view for chronological context
+   ↓ See career progression and era grouping
+   ↓ Expand "Enterprise Innovation & Transformation" era
+   ↓ Review 6 most recent projects in that era
+
+6. Click project to open detail pane
    ↓ Read STAR breakdown + metrics
 
-6. Click "Ask Agy About This Project"
+7. Click "Ask Agy About This Project"
    ↓ Ask technical implementation questions
 
-7. Navigate back to filter different domain
+8. Navigate back to filter different domain
    ↓ Compare approaches across projects
 
-8. Check About page for technical depth
+9. Check About page for technical depth
    ↓ Validate architecture understanding
 
-9. Contact via email
+10. Contact via email
 ```
 
 **Key Conversion Points:**
@@ -175,6 +180,17 @@ All three views include view switcher in top-right:
 - About Matt → "Ask Agy About My Experience" (contextual)
 - Explore Stories → "Ask Agy About This Project" (specific)
 - Search helpers → "Ask Agy" (alternative to filtering)
+
+### Related Projects Pattern (Ask MattGPT)
+**Rationale:** Enable story-to-story navigation within conversation context
+
+**Implementation:**
+- 3-column grid of related project buttons
+- Click to expand story detail inline
+- Each Related Project is a navigation opportunity
+- Keeps user engaged without leaving chat context
+
+**Files:** conversation_helpers.py:495-673
 
 ## Navigation UX Principles
 
@@ -242,9 +258,16 @@ Ask Agy Usage (active evaluation)
 Contact Click (conversion)
 ```
 
-## Mobile Navigation Considerations
+## Mobile Navigation Implementation
 
-### Hamburger Menu (< 768px)
+### Responsive Breakpoints
+- **Mobile:** < 767px
+- **Tablet:** 768px - 1024px
+- **Desktop:** > 1024px
+
+### Mobile-Specific Features
+
+**Hamburger Menu (< 768px):**
 ```
 ☰ Menu
 ├── About Matt
@@ -255,14 +278,29 @@ Contact Click (conversion)
 └── Ask Agy 🐾
 ```
 
-### Sticky Navigation
+**Responsive Filters:**
+- Filter bar stacks vertically
+- Search input full-width
+- Industry/Capability in 2-column grid
+- Advanced filters hidden on mobile by default
+
+**Timeline View:**
+- Era badges move above timeline (not left-aligned)
+- Single-column card layout
+- Left-aligned vertical timeline
+
+**Sticky Navigation:**
 - Nav bar sticks to top on scroll
 - Footer CTAs always accessible by scroll
 
-### Touch-Friendly Targets
+**Touch-Friendly Targets:**
 - Minimum 44px touch targets
 - Adequate spacing between links
 - Clear active states
+
+**Implementation Files:**
+- global_styles.py:399-596 (mobile media queries)
+- mobile_overrides.py (additional mobile-specific overrides)
 
 ## Implementation Checklist
 
