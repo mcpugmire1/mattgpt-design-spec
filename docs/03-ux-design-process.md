@@ -58,17 +58,27 @@ Cross-Industry Landing Page
 └── Individual Project Stories
 
 Explore Stories
-├── Filter Controls (Industry, Domain, Client, Role)
+├── Filter Controls
+│   ├── Primary: Industry, Domain Category, Client, Capability, Outcome Type
+│   └── Advanced: Role, Date Range, Technologies
 ├── View Modes
-│   ├── Table View
-│   ├── Card View
-│   └── Timeline View
-└── Detail View (expanded inline)
+│   ├── Table View (high-density browsing)
+│   ├── Card View (visual story previews)
+│   └── Timeline View (5 Era-based career progression)
+└── Detail View (inline expansion with STAR format, Key Metrics, Related Projects)
 
 Ask MattGPT
-├── Landing (with How It Works)
+├── Landing Page
+│   ├── Agy introduction and starter prompts
+│   └── "How Agy Searches" modal (3-step RAG flow)
 ├── Conversation View
-└── Related Projects Integration
+│   ├── Semantic search with confidence scoring
+│   ├── Source citations with match confidence
+│   ├── Related projects suggestions
+│   └── Conversation history with context management
+└── Query Validation
+    ├── Semantic router (dual-threshold 0.80/0.72)
+    └── Nonsense detection (10+ intent families)
 
 About Matt
 ├── Hero Header
