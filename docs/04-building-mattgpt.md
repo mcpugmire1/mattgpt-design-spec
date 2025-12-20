@@ -200,7 +200,7 @@ def semantic_search(query: str, top_k: int = 30) -> Dict:
 - **Threshold Gating:** Prevents low-quality matches from appearing (minimum 0.15 similarity)
 - **Intent Recognition:** Understands user goals (interview prep, due diligence, pitch)
 
-This approach achieved **87% retrieval accuracy** with an average response time of **1.2 seconds**.
+This approach was validated through manual testing of common query patterns, demonstrating effective semantic understanding and confidence-based filtering.
 
 ### Data Governance: The Two-Layer Model
 
@@ -414,8 +414,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - Email capture for high-intent leads
 
 **Key Outcomes:**
-- 87% retrieval accuracy
-- 1.2s average response time
+- Semantic search with confidence-based filtering validated through manual testing
 - 100% data compliance with STAR method
 - Deployed to production at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
 
@@ -451,7 +450,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - Horizontal scalability for 10K+ concurrent users
 
 **Success Metrics:**
-- Retrieval accuracy: 87% → 92%
+- Improved search relevance through query optimization
 - Mobile user engagement: +40%
 - Lead qualification rate: >20%
 

@@ -229,9 +229,8 @@ The homepage uses strategic entry point cards that route users to the most relev
 
 **System Metrics:**
 - Stories Indexed: 130+
-- Avg Response Time: 1.2s
-- Retrieval Accuracy: 87%
-- Vector Dimensions: 384
+- Search Method: Semantic search with confidence-based filtering
+- Vector Dimensions: 1536 (OpenAI text-embedding-3-small)
 
 ### Query Flow
 
