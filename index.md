@@ -14,10 +14,10 @@ nav_order: 0
 
 MattGPT is an **AI-powered portfolio** that transforms 20 years of Fortune 500 transformation experience into an intelligent, searchable interface. Instead of static resume bullets, it provides:
 
-✅ **Verifiable proof** through structured STAR stories
-✅ **Semantic search** across 130+ real projects
-✅ **Pattern recognition** to surface relevant examples
-✅ **Auditable sources** for every AI-generated response
+- ✅ **Verifiable proof** through structured STAR stories
+- ✅ **Semantic search** across 130+ real projects
+- ✅ **Pattern recognition** to surface relevant examples
+- ✅ **Auditable sources** for every AI-generated response
 
 **Tagline:** *"Matt doesn't claim credibility — he proves it in real time."*
 
