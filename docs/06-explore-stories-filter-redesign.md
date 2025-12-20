@@ -1,4 +1,4 @@
-# Explore Stories Filter Redesign (Phase 4)
+# Explore Stories Filter Redesign
 
 **Status:** ✅ Implemented (December 2025)
 **Design Date:** October 28, 2024
@@ -24,10 +24,10 @@ Current Explore Stories filters are misaligned with the data model:
 
 ### User Journey Alignment
 ```
-Home → Landing Page (Banking/Cross-Industry) → Explore Stories → Ask MattGPT
-         ↓                                           ↓               ↓
-      Overview/Viz                              Faceted Browse    Conversational
-      "47 projects"                             Filter & scan     Deep questions
+Home → Landing Page → Explore Stories → Ask MattGPT
+          ↓               ↓                ↓
+       Overview        Faceted          Conversational
+       47 projects     Browse           Deep questions
 ```
 
 Landing pages provide **data visualization** to show the big picture. Explore Stories provides **faceted browsing** to drill into specific project subsets. The redesign enables seamless navigation between these stages.
@@ -50,21 +50,19 @@ Landing pages provide **data visualization** to show the big picture. Explore St
 
 ### Visual Design
 ```
-┌────────────────────────────────────────────────────────────────────┐
-│  [Search keywords...                ] [Industry ▼] [Capability ▼] │
-│                                                                     │
-│  ▸ Advanced Filters                                      [Reset]   │
-└────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│  [Search...        ] [Industry ▼] [Capability ▼]    │
+│  ▸ Advanced Filters                     [Reset]     │
+└──────────────────────────────────────────────────────┘
 ```
 
 **Expanded State:**
 ```
-┌────────────────────────────────────────────────────────────────────┐
-│  [Search keywords...                ] [Industry ▼] [Capability ▼] │
-│                                                                     │
-│  ▾ Advanced Filters                                      [Reset]   │
-│    [Client ▼] [Role ▼] [Domain ▼]                                 │
-└────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│  [Search...        ] [Industry ▼] [Capability ▼]    │
+│  ▾ Advanced Filters                     [Reset]     │
+│    [Client ▼] [Role ▼] [Domain ▼]                   │
+└──────────────────────────────────────────────────────┘
 ```
 
 ---
