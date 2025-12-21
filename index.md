@@ -65,6 +65,12 @@ Complete CSS design system with variables, breakpoints, dark mode support, and c
 **[📱 Mobile Implementation](/mattgpt-design-spec/docs/08-mobile-implementation)**
 Production mobile CSS with responsive breakpoints, touch optimization, and component-specific mobile behaviors.
 
+**[📚 API Reference](/mattgpt-design-spec/docs/09-api-reference)**
+Technical reference for developers — module overview, key function signatures, data flow diagrams, and environment configuration.
+
+**[🗂️ Data Model](/mattgpt-design-spec/docs/10-data-model)**
+JSONL schema documentation — required fields, STAR framework structure, 5P taxonomy, filtering logic, and validation rules.
+
 ---
 
 ## Interactive Wireframes
