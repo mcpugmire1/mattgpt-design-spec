@@ -390,15 +390,22 @@ STORIES_JSONL=echo_star_stories_nlp.jsonl
 
 ## Testing
 
+**Test Coverage:** 8 test modules covering services and utilities (86KB total)
+
 Run tests from project root:
 
 ```bash
-# Unit tests
+# All unit tests
 pytest tests/unit/
 
 # Specific module tests
-pytest tests/unit/test_semantic_router.py
-pytest tests/unit/test_filters.py
+pytest tests/unit/test_semantic_router.py    # Intent classification tests (11KB)
+pytest tests/unit/test_filters.py            # Filter logic tests (9.9KB)
+pytest tests/unit/test_scoring.py            # Hybrid scoring tests (7.7KB)
+pytest tests/unit/test_formatting.py         # STAR formatting tests (14KB)
+pytest tests/unit/test_validation.py         # Input validation tests (12KB)
+pytest tests/unit/test_backend_service.py    # Ask MattGPT backend tests (15KB)
+pytest tests/unit/test_story_intelligence.py # Story analysis tests (9.5KB)
 
 # With coverage
 pytest --cov=services --cov=utils tests/
