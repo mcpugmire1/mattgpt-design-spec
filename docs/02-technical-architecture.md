@@ -422,80 +422,15 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 
 ### Site Navigation Flow
 
-```mermaid
-flowchart TD
-    Home[Homepage] --> Banking[Banking Landing<br/>55 Projects]
-    Home --> CrossInd[Cross-Industry Landing<br/>51 Projects]
-    Home --> Explore[Explore Stories]
-    Home --> Ask[Ask MattGPT]
-    Home --> About[About Matt]
-
-    Banking --> Explore
-    CrossInd --> Explore
-
-    Explore --> Detail[Story Detail View<br/>STAR Format]
-
-    Ask --> AskLanding[Landing Page<br/>Starter Prompts]
-    AskLanding --> Conversation[Conversation View<br/>AI Chat + Sources]
-
-    style Home fill:#8B5CF6,color:#fff
-    style Explore fill:#6366F1,color:#fff
-    style Ask fill:#6366F1,color:#fff
-    style Detail fill:#3498DB,color:#fff
-    style Conversation fill:#3498DB,color:#fff
-```
+![Site Navigation Diagram](../images/architecture/site-navigation-diagram.png)
 
 ### Explore Stories Views
 
-```mermaid
-flowchart TD
-    Explore[Explore Stories Page]
-
-    Explore --> Filters[Filters<br/>Industry, Client<br/>Capability, Domain]
-
-    Explore --> Table[Table View<br/>High-density browsing]
-    Explore --> Cards[Card View<br/>Visual previews]
-    Explore --> Timeline[Timeline View<br/>5 Career Eras]
-
-    Table --> Detail[Story Detail<br/>Inline Expansion]
-    Cards --> Detail
-    Timeline --> Detail
-
-    Detail --> STAR[STAR Format<br/>Situation, Task<br/>Action, Result]
-    Detail --> Metrics[Key Metrics]
-    Detail --> Related[Related Projects]
-
-    style Explore fill:#8B5CF6,color:#fff
-    style Detail fill:#6366F1,color:#fff
-```
+![Explore Stories Diagram](../images/architecture/explore-stories-diagram.png)
 
 ### Ask MattGPT Flow
 
-```mermaid
-flowchart TD
-    User[User Question]
-
-    User --> Router{Semantic Router<br/>Query Validation}
-
-    Router -->|Accept 0.80+| Search[Semantic Search<br/>Pinecone Vector DB]
-    Router -->|Accept 0.72-0.79| Search
-    Router -->|Reject <0.72| Reject[Off-Domain Response<br/>Suggestion Chips]
-
-    Search --> RAG[RAG Pipeline<br/>Retrieve + Generate]
-
-    RAG --> Response[AI Response<br/>with Sources]
-
-    Response --> Sources[Source Citations<br/>Match Confidence]
-    Response --> RelatedProj[Related Projects]
-    Response --> FollowUp[Follow-up Question]
-
-    FollowUp --> User
-
-    style User fill:#8B5CF6,color:#fff
-    style Router fill:#6366F1,color:#fff
-    style Response fill:#3498DB,color:#fff
-    style Reject fill:#E74C3C,color:#fff
-```
+![Ask MattGPT Diagram](../images/architecture/askmatt-flow-diagram.png)
 
 ### Additional Resources
 
