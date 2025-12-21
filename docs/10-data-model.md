@@ -104,6 +104,7 @@ Additional classification and context fields:
 | `Sub-category` | str | Domain/technical area | `"Platform Engineering"`, `"Agile Transformation"` |
 | `Solution / Offering` | str | Capability or service offered | `"Cloud Modernization"`, `"Innovation Leadership"` |
 | `Role` | str | Matt's role on the project | `"Director of Delivery"`, `"Platform Lead"` |
+| `Era` | str | Career phase for Timeline view grouping | `"Integration & Platform Foundations (2005-2008)"` |
 | `Use Case(s)` | list[str] | Business use cases addressed | `["Legacy migration", "Team scaling"]` |
 | `Competencies` | list[str] | Skills/competencies demonstrated | `["Platform Engineering", "Agile Coaching"]` |
 
@@ -147,6 +148,7 @@ Complete alphabetical field reference:
 | `Category` | str | No | Yes | No | No |
 | `Client` | str | Yes | Yes | ✅ Yes | No |
 | `Competencies` | list[str] | No | Yes | No | No |
+| `Era` | str | No | Yes | No | No |
 | `id` | str | **Yes** | No | No | No |
 | `Industry` | str | Yes | Yes | ✅ Yes | No |
 | `Performance` | list[str] | No | Yes | No | ✅ Outcome |
@@ -168,7 +170,7 @@ Complete alphabetical field reference:
 
 ## Data Validation Rules
 
-### At Load Time (`app.py:112-179`)
+### At Load Time
 
 **ID Validation:**
 ```python
@@ -316,7 +318,7 @@ Some fields have aliases for backward compatibility:
 ## Data Sources
 
 **Primary Source:**
-- Excel workbook (`projects_master.xlsx`) → JSONL conversion script
+- Excel workbook (`MPugmire - STAR Stories - 20DEC25.xlsx`) → JSONL conversion script
 - Script: `generate_jsonl_from_excel.py`
 - Output: `echo_star_stories_nlp.jsonl` (130+ stories)
 
