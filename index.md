@@ -45,6 +45,9 @@ The Credibility Engine — WHY, HOW, WHAT framework, user personas, data governa
 **[🏗️ Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture)**
 Two-phase evolution from Streamlit MVP to React rebuild, tech stack decisions, and strategic trade-offs.
 
+**[🚀 Migration Architecture](/mattgpt-design-spec/docs/05-migration-architecture)**
+Technical blueprint for Phase 2 React migration — microfrontends, serverless backend, and step-by-step implementation roadmap.
+
 ### Design & Implementation
 
 **[🎨 UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process)**
@@ -57,7 +60,7 @@ The development journey, technical challenges, semantic search implementation, a
 Complete brand voice documentation for Agy, the Plott Hound AI assistant — personality traits, response templates, and tone guidelines.
 
 **[🎯 Explore Stories Filter Redesign](/mattgpt-design-spec/docs/06-explore-stories-filter-redesign)**
-Phase 4 filter architecture with primary/advanced pattern, progressive disclosure, and landing page integration.
+Filter architecture with primary/advanced pattern, progressive disclosure, and landing page integration.
 
 **[🎨 CSS Architecture](/mattgpt-design-spec/docs/07-css-architecture)**
 Complete CSS design system with variables, breakpoints, dark mode support, and component conventions.

@@ -424,7 +424,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 **Goal:** Enhance search quality, streamline information delivery, and align content with industry standards.
 
-**Timeline:** Q2 2025
+**Timeline:** Q1 2026
 
 **Planned Features:**
 

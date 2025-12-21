@@ -295,7 +295,7 @@ if "public_tags" in story and isinstance(story["public_tags"], str):
 
 ## Field Evolution History
 
-### October 2025 - Filter Redesign (Phase 4)
+### October 2025 - Filter Redesign
 - Added primary filters: `Industry`, `Solution / Offering`
 - Renamed domains → `Sub-category` for clarity
 - Added `Category` for high-level grouping
