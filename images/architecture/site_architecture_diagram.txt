@@ -54,7 +54,7 @@
 │  │ ─────────────────────────────────────────────────────────────────────   │   │
 │  │ Project Title  │ Client   │ Capability │ Outcome      │ Timeline        │   │
 │  │ ───────────────┼──────────┼────────────┼──────────────┼─────────        │   │
-│  │ Story 1        │ JPMorgan │ Agile      │ 4x faster    │ 2019-2021       │   │
+│  │ Story 1        │ JP Morgan │ Agile      │ 4x faster    │ 2019-2021       │   │
 │  │ Story 2        │ RBC      │ Platform   │ 150 eng      │ 2021-2023       │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
 │                                                                                  │
@@ -63,7 +63,7 @@
 │  │ ─────────────────────────────────────────────────────────────────────   │   │
 │  │  ┌──────────┐  ┌──────────┐  ┌──────────┐                              │   │
 │  │  │ Story 1  │  │ Story 2  │  │ Story 3  │                              │   │
-│  │  │ JPMorgan │  │   RBC    │  │ Capital  │                              │   │
+│  │  │ JP Morgan │  │   RBC    │  │ Capital  │                              │   │
 │  │  │ 2019-21  │  │ 2021-23  │  │ 2022-24  │                              │   │
 │  │  └──────────┘  └──────────┘  └──────────┘                              │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
@@ -121,10 +121,10 @@
 │  │ 💬 User: "How do you scale agile at Fortune 500 companies?"              │  │
 │  │                                                                            │  │
 │  │ 🐾 Agy: "Matt consistently achieves 3-4x delivery acceleration...        │  │
-│  │         At JPMorgan, RBC, and Capital One, the pattern that works is..." │  │
+│  │         At JP Morgan, RBC, and Capital One, the pattern that works is..." │  │
 │  │                                                                            │  │
 │  │         📎 Sources:                                                       │  │
-│  │         • [Agile Transformation at JPMorgan] (Match: 0.87)               │  │
+│  │         • [Agile Transformation at JP Morgan] (Match: 0.87)               │  │
 │  │         • [Scaling Teams at RBC] (Match: 0.82)                           │  │
 │  │         • [Platform Engineering at Capital One] (Match: 0.78)            │  │
 │  │                                                                            │  │

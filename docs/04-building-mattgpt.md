@@ -350,7 +350,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ### The Semantic Search Tuning Problem
 
-Early semantic search was too fuzzy. Ask about "JPMorgan," and it might return stories about "banking transformation" that never mention the client by name. The challenge was balancing broad conceptual understanding with precision.
+Early semantic search was too fuzzy. Ask about "JP Morgan," and it might return stories about "banking transformation" that never mention the client by name. The challenge was balancing broad conceptual understanding with precision.
 
 The solution was confidence-based filtering with metadata enhancement. By implementing a three-tier confidence system (high ≥ 0.25, low ≥ 0.20, none < 0.20) and combining vector similarity with client/industry/domain filters, the system now delivers both relevant and precise results. Getting the threshold values right took three weeks of tuning against real queries.
 

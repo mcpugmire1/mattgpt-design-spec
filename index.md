@@ -144,7 +144,7 @@ Complete brand kit with logos, colors, typography, and usage guidelines.
 MattGPT replaces generic claims with **instant, quantifiable proof**:
 
 - ❌ NOT: "Matt is experienced in agile transformation"
-- ✅ YES: "Matt accelerated delivery 4x at JPMorgan Chase by implementing CI/CD pipelines and automated testing frameworks." [Source: Agile Transformation at JPMorgan Chase]
+- ✅ YES: "Matt accelerated delivery 4x at JP Morgan Chase by implementing CI/CD pipelines and automated testing frameworks." [Source: Agile Transformation at JP Morgan Chase]
 
 ### Two-Layer Governance
 

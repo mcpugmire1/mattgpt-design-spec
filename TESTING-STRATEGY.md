@@ -111,7 +111,7 @@ def test_retrieval_accuracy_for_known_queries():
 
     test_cases = [
         {
-            "query": "agile transformation at JPMorgan Chase",
+            "query": "agile transformation at JP Morgan Chase",
             "expected_stories": ["agile-jpmc-2019", "agile-jpmc-2020"],
             "min_similarity": 0.7
         },
@@ -205,7 +205,7 @@ def test_recruiter_vetting_query():
     assert_contains_source_citations(response, min_count=1)
 
     # Expectation 4: Response mentions specific client
-    assert_mentions_client(response, ["JPMorgan", "RBC", "Capital One"])
+    assert_mentions_client(response, ["JP Morgan", "RBC", "Capital One"])
 
     # Expectation 5: Response is NOT generic career advice
     assert_not_generic(response)
@@ -220,7 +220,7 @@ def test_recruiter_vetting_query():
 def test_technical_deep_dive_query():
     """Verify Agy responds appropriately to technical assessment queries"""
 
-    query = "How did Matt implement CI/CD pipelines at JPMorgan Chase?"
+    query = "How did Matt implement CI/CD pipelines at JP Morgan Chase?"
     response = ask_agy(query)
 
     # Expectation 1: Response includes STAR breakdown
@@ -333,7 +333,7 @@ class SystemPromptComplianceTest:
         """Every response must include source citations"""
         queries = [
             "Show me Matt's banking work",
-            "What did Matt do at JPMorgan?",
+            "What did Matt do at JP Morgan?",
             "Tell me about platform engineering projects"
         ]
 
@@ -563,7 +563,7 @@ if avg_response_time_ms > 2000:  # 2 second threshold
         "has_project_reference": true,
         "has_metrics": true,
         "has_source_citations": true,
-        "mentioned_clients": ["JPMorgan", "RBC", "Capital One"],
+        "mentioned_clients": ["JP Morgan", "RBC", "Capital One"],
         "min_word_count": 100,
         "max_word_count": 250,
         "must_not_be_generic": true

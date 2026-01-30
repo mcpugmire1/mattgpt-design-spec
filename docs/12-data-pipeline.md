@@ -386,7 +386,7 @@ healthcare_count = len([s for s in stories if s.get("Industry") == "Healthcare"]
 **❌ Hardcoded Lists:**
 ```python
 # BAD: Will drift out of sync with data
-CLIENTS = ["JPMorgan", "Capital One", "RBC", "Johnson & Johnson"]
+CLIENTS = ["JP Morgan", "Capital One", "RBC", "Johnson & Johnson"]
 ```
 
 **✅ Derived from Data:**

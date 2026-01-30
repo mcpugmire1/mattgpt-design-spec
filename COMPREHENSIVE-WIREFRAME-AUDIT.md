@@ -244,7 +244,7 @@ Homepage | Explore Stories | Ask MattGPT | About Matt
 **Resolution:** Added complete filter dropdown specifications to `/docs/03-ux-design-process.md`:
 - Industry options: All Industries, Financial Services / Banking, Cross-Industry, Healthcare, Technology
 - Domain options: All Domains, Agile Transformation, Modern Engineering, Payments & Treasury, Product Innovation
-- Client options: All Clients, JPMorgan Chase (33), RBC (11), Accenture (13), Fiserv (7)
+- Client options: All Clients, JP Morgan Chase (33), RBC (11), Accenture (13), Fiserv (7)
 - Role options: All Roles, Director, Senior Manager, Manager
 - View switcher options with descriptions
 

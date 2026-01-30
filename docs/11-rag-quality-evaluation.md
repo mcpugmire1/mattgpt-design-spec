@@ -47,7 +47,7 @@ Tests the system's ability to detect and pin stories based on named entities.
 
 **Example Queries:**
 - "Show me Accenture projects"
-- "What did Matt do at JPMorgan?"
+- "What did Matt do at JP Morgan?"
 - "Tell me about Cloud Innovation Center work"
 
 **Expected Behavior:**

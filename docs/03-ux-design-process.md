@@ -44,7 +44,7 @@ Home Page
 └── Quick Question → Ask MattGPT
 
 Banking Landing Page
-├── Client Filter (JPMorgan Chase, RBC, Fiserv, etc.)
+├── Client Filter (JP Morgan Chase, RBC, Fiserv, etc.)
 ├── 16 Capability Categories
 │   ├── Agile Transformation (8 projects)
 │   ├── Modern Engineering (8 projects)
@@ -195,8 +195,8 @@ The following diagrams illustrate the high-level navigation paths for each user 
 **Journey:**
 1. Lands on Home
 2. Clicks "Explore Stories" or Banking Landing Page
-3. Uses Client filter dropdown → selects "JPMorgan Chase"
-4. Sees 33+ JPMorgan stories filtered
+3. Uses Client filter dropdown → selects "JP Morgan Chase"
+4. Sees 33+ JP Morgan stories filtered
 5. Can switch between Table, Card, Timeline views
 6. Clicks story → Detail View with STAR format and metrics
 
@@ -357,7 +357,7 @@ Both Banking and Cross-Industry landing pages follow a consistent pattern optimi
 | 1 | Top Navigation Bar | Header | Dark navy background, 4 links: Homepage, Explore Stories, Ask MattGPT, About Matt |
 | 2 | Page Title | Heading (H1) | "Financial Services / Banking" |
 | 3 | Subtitle/Breadcrumb | Descriptive Text | "55 projects across 16 specialized areas — or ask Agy to find what you're looking for" |
-| 4 | Client Filter Row | Filter Component | Pill-style buttons: JPMorgan Chase (33), RBC (11), Fiserv (7), American Express (3), Capital One (2), HSBC (2) |
+| 4 | Client Filter Row | Filter Component | Pill-style buttons: JP Morgan Chase (33), RBC (11), Fiserv (7), American Express (3), Capital One (2), HSBC (2) |
 | 5 | Section Header | Heading (H2) | "Explore by Capability" with supporting text |
 | 6 | Capability Cards | Card Grid | 3-column responsive grid containing 16 capability category cards |
 | 7 | Card Components | Composite Element | Each card: Icon, Title, Project count (purple text), Descriptive tags/keywords |
@@ -427,7 +427,7 @@ All three views share:
 
 **Client Filter:**
 - All Clients (default)
-- JPMorgan Chase (33 projects) *(dynamic - count updates with data)*
+- JP Morgan Chase (33 projects) *(dynamic - count updates with data)*
 - RBC (11 projects) *(dynamic - count updates with data)*
 - Accenture (13 projects) *(dynamic - count updates with data)*
 - Fiserv (7 projects) *(dynamic - count updates with data)*
@@ -451,7 +451,7 @@ All three views share:
 
 **Columns:**
 1. **PROJECT TITLE** - Blue/purple linked text, wraps to multiple lines
-2. **CLIENT** - Blue pill-style tags (e.g., "JPMorgan Chase", "Walmart")
+2. **CLIENT** - Blue pill-style tags (e.g., "JP Morgan Chase", "Walmart")
 3. **ROLE** - Plain text (Director, Senior Manager, etc.)
 4. **DOMAIN** - Multiple tags/categories separated by slashes
 
@@ -633,7 +633,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 - **Capability Statement:** "Ask me about specific methodologies, leadership approaches, or project outcomes. I understand context, not just keywords."
 
 **Suggestion Cards (6 Examples):**
-- 🚀 "How did Matt transform global payments at JPMorgan Chase?"
+- 🚀 "How did Matt transform global payments at JP Morgan Chase?"
 - 📊 "Track down Matt's innovation leadership stories"
 - ⚡ "Find Matt's platform engineering projects"
 - 🎯 "Show me Matt's GenAI work in healthcare"
@@ -655,7 +655,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 
 **Content:**
 - **Title:** "How Agy Works"
-- **Description:** "130+ Real Project Stories - Every answer is grounded in Matt's actual work across Fortune 500 companies — JPMorgan Chase, RBC, Capital One, and more."
+- **Description:** "130+ Real Project Stories - Every answer is grounded in Matt's actual work across Fortune 500 companies — JP Morgan Chase, RBC, Capital One, and more."
 
 **Three Core Capabilities:**
 

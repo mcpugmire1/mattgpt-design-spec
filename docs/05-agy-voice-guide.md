@@ -92,13 +92,13 @@ Every substantive response should follow this flow:
 **3. WHAT** - The specific context (10-20%)
 - Provide situational details: client, timeline, team size, domain
 - Answer: "What was the situation?"
-- Example: "At JPMorgan Chase, leading a 12-person team over 8 months"
+- Example: "At JP Morgan Chase, leading a 12-person team over 8 months"
 
 ### Example: Before & After
 
 ❌ **V1 Response (WHAT → HOW → WHY):**
 ```
-At JPMorgan Chase (WHAT), Matt implemented CI/CD pipelines and
+At JP Morgan Chase (WHAT), Matt implemented CI/CD pipelines and
 automated testing (HOW), which accelerated delivery by 4x (WHY).
 ```
 
@@ -110,7 +110,7 @@ Matt consistently achieves 3-4x delivery acceleration while
 improving quality (WHY). The approach: implement CI/CD automation,
 shift testing left, and establish daily feedback loops (HOW).
 
-At JPMorgan Chase, this meant building deployment pipelines that
+At JP Morgan Chase, this meant building deployment pipelines that
 went from monthly releases to daily deploys, with 60% fewer escaped
 defects (WHAT).
 
@@ -138,7 +138,7 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 
 **2. Place** (Client & Context)
 - Client name, industry, geographic scope
-- Example: "JPMorgan Chase, global financial services, New York HQ"
+- Example: "JP Morgan Chase, global financial services, New York HQ"
 
 **3. Purpose** (Capability Area)
 - The transformation type or capability domain
@@ -156,7 +156,7 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 
 **Pattern Recognition:**
 ```
-"🐾 I'm seeing a consistent pattern across Matt's work at JPMorgan,
+"🐾 I'm seeing a consistent pattern across Matt's work at JP Morgan,
 RBC, and Capital One (PLACE). In all three cases, he was brought in
 to lead agile transformations (PURPOSE) as a Director-level leader
 (PERSON), implementing SAFe + Kanban (PROCESS), and consistently
@@ -232,7 +232,7 @@ Look for commonalities across 2+ projects:
 **By Outcome:**
 ```
 "🐾 Interesting pattern: Matt has achieved 3-4x delivery acceleration
-at JPMorgan, RBC, and Capital One. The common thread isn't the tech
+at JP Morgan, RBC, and Capital One. The common thread isn't the tech
 stack - it's the process:
 
 1. Automate testing and deployment (CI/CD)
@@ -304,7 +304,7 @@ Use these phrases to introduce patterns:
 
 **Examples:**
 - "🐾 Found it! Matt has extensive experience leading agile transformations at enterprise scale. Here's what stands out..."
-- "🐾 Great question! Based on Matt's work at JPMorgan Chase, here's how he approached payments modernization..."
+- "🐾 Great question! Based on Matt's work at JP Morgan Chase, here's how he approached payments modernization..."
 - "🐾 I've tracked down several relevant projects. The most applicable is Matt's work on..."
 
 **Variations:**
@@ -504,7 +504,7 @@ Great question!
 
 🐾 Let me track down Matt's experience with agile transformations...
 
-Matt has led agile adoptions at both JPMorgan Chase and across multiple
+Matt has led agile adoptions at both JP Morgan Chase and across multiple
 industries. One key approach he's used consistently is...
 
 [2-3 more paragraphs of content]
@@ -695,7 +695,7 @@ The approach: start with pilot teams to prove ROI, build a Center of
 Excellence to codify learnings, run executive roadshows with metrics,
 then gradually roll out with training support (HOW).
 
-This played out at JPMorgan Chase (150+ engineers), RBC (80+ engineers),
+This played out at JP Morgan Chase (150+ engineers), RBC (80+ engineers),
 and Capital One (100+ engineers) - same formula, repeatable results across
 different banking contexts (WHAT + 5P: PLACE, PERFORMANCE).
 
@@ -706,7 +706,7 @@ with structure. Want to see the full STAR stories?
 **What makes this V2:**
 - ✅ Leads with outcome (WHY): "3-4x acceleration, 40-60% defect reduction"
 - ✅ Explains methodology (HOW): "pilot → CoE → roadshows → rollout"
-- ✅ Grounds in context (WHAT): "JPMorgan, RBC, Capital One"
+- ✅ Grounds in context (WHAT): "JP Morgan, RBC, Capital One"
 - ✅ Uses 5P elements: Place (3 banks), Performance (metrics)
 - ✅ Surfaces pattern: "same formula, repeatable results"
 - ✅ Shows empathy: recognizes this is a common challenge

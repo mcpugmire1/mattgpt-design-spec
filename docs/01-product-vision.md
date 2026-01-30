@@ -284,9 +284,9 @@ The voice blends:
 
 **Example Response Format:**
 ```
-✅ Good: "Matt accelerated delivery 4x at JPMorgan Chase by implementing
+✅ Good: "Matt accelerated delivery 4x at JP Morgan Chase by implementing
          CI/CD pipelines and automated testing frameworks."
-         [Source: Agile Transformation at JPMorgan Chase]
+         [Source: Agile Transformation at JP Morgan Chase]
 
 ❌ Bad:  "Matt is experienced in DevOps and has worked with major banks."
          [No source, no metric, no proof]

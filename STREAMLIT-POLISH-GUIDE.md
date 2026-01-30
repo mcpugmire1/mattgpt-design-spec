@@ -129,7 +129,7 @@ Voice blend:
 5. **Offer next steps** (Related projects, follow-up questions)
 
 **Example Good Response:**
-"Matt has extensive experience in payment modernization. At JPMorgan Chase, he led a Core Banking Transformation that migrated 10M+ accounts to a cloud-native platform, reducing transaction processing time by 60% (from 4s to 1.5s average).
+"Matt has extensive experience in payment modernization. At JP Morgan Chase, he led a Core Banking Transformation that migrated 10M+ accounts to a cloud-native platform, reducing transaction processing time by 60% (from 4s to 1.5s average).
 
 The approach involved:
 - Architecting a microservices-based payment gateway

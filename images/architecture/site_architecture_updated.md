@@ -52,7 +52,7 @@ Homepage (/)
 
 ### Banking Landing Page
 - 16 capability categories
-- Client tags (JPMorgan, RBC, Capital One, etc.)
+- Client tags (JP Morgan, RBC, Capital One, etc.)
 - "View All 55 Stories" CTA → Explore Stories
 
 ### Cross-Industry Landing Page

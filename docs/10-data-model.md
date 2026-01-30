@@ -41,8 +41,8 @@ These fields are **required** for every story:
 | Field | Type | Purpose | Example |
 |-------|------|---------|---------|
 | `id` | str | Unique story identifier (must match Pinecone vector ID) | `"101"`, `"story_abc123"` |
-| `Title` | str | Project title / headline | `"Platform Modernization at JPMorgan Chase"` |
-| `Client` | str | Client/employer name | `"JPMorgan Chase"`, `"Johnson & Johnson"` |
+| `Title` | str | Project title / headline | `"Platform Modernization at JP Morgan"` |
+| `Client` | str | Client/employer name | `"JP Morgan"`, `"Johnson & Johnson"` |
 | `Industry` | str | Industry category | `"Financial Services"`, `"Healthcare"` |
 
 **Validation:**
@@ -179,7 +179,7 @@ Fields used for search, filtering, and semantic routing:
 | `public_tags` | list[str] | Searchable tags (comma-separated or array) | `["aws", "microservices", "kubernetes"]` |
 | `Industry` | str | Industry filter (single-select) | `"Financial Services"` |
 | `Solution / Offering` | str | Capability filter (single-select) | `"Platform Engineering"` |
-| `Client` | str | Client filter (multi-select in UI) | `"JPMorgan Chase"` |
+| `Client` | str | Client filter (multi-select in UI) | `"JP Morgan"` |
 | `Sub-category` | str | Domain filter (multi-select in UI) | `"Cloud Modernization"` |
 | `Role` | str | Role filter (multi-select in UI) | `"Platform Lead"` |
 
@@ -293,8 +293,8 @@ if "public_tags" in story and isinstance(story["public_tags"], str):
 ```json
 {
   "id": "101",
-  "Title": "Platform Modernization at JPMorgan Chase",
-  "Client": "JPMorgan Chase",
+  "Title": "Platform Modernization at JP Morgan",
+  "Client": "JP Morgan",
   "Employer": "Accenture",
   "Division": "Cloud Innovation Center",
   "Project": "Platform Modernization",
@@ -368,7 +368,7 @@ if "public_tags" in story and isinstance(story["public_tags"], str):
 
   "Interview Questions": [
     "Tell me about a time you modernized a legacy platform",
-    "How did you reduce deployment time at JPMorgan Chase?",
+    "How did you reduce deployment time at JP Morgan?",
     "Describe your experience with cloud migration and Kubernetes"
   ],
 

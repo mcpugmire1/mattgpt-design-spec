@@ -256,7 +256,7 @@ return named_first[:9]  # Max 9 stories for synthesis
 **Why Parallel Search:**
 - Single query might miss thematic breadth
 - Searching by themes ensures coverage across career
-- Named clients (JPMorgan, Johnson & Johnson) more credible than "Multiple Clients"
+- Named clients (JP Morgan, Johnson & Johnson) more credible than "Multiple Clients"
 
 ### Sacred Vocabulary Enforcement
 
@@ -431,7 +431,7 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 
 ```python
 # HARD_ACCEPT (score 0.85, above 0.80 threshold)
-"How did Matt scale agile at JPMorgan?" → intent_family: "delivery"
+"How did Matt scale agile at JP Morgan?" → intent_family: "delivery"
 
 # SOFT_ACCEPT (score 0.74, above 0.40 threshold)
 "What's Matt's approach to team growth?" → intent_family: "team_scaling"
@@ -528,7 +528,7 @@ experience—things like agile delivery, platform engineering,
 team scaling, and stakeholder management.
 
 Try asking about:
-• "How did Matt scale teams at JPMorgan?"
+• "How did Matt scale teams at JP Morgan?"
 • "Show me Matt's platform engineering work"
 • "What's Matt's approach to innovation leadership?"
 
@@ -709,7 +709,7 @@ clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Clie
 **❌ Hardcoded Lists:**
 ```python
 # BAD: Will drift out of sync with data
-CLIENTS = ["JPMorgan", "Capital One", "RBC"]
+CLIENTS = ["JP Morgan", "Capital One", "RBC"]
 ```
 
 **✅ Derived from Data:**
