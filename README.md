@@ -72,7 +72,7 @@ This repo organizes design documentation into four key areas:
   - Tone calibration and situational responses
 
 ### 6. RAG Quality Evaluation
-- **[06-rag-quality-evaluation.md](docs/06-rag-quality-evaluation.md)**
+- **[11-rag-quality-evaluation.md](docs/11-rag-quality-evaluation.md)**
   - Evaluation framework (98.1% pass rate, 60+ golden queries)
   - Query categories and evaluation criteria
   - Eval-driven development process

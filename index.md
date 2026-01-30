@@ -74,6 +74,9 @@ Technical reference for developers — module overview, key function signatures,
 **[🗂️ Data Model](/mattgpt-design-spec/docs/10-data-model)**
 JSONL schema documentation — required fields, STAR framework structure, 5P taxonomy, filtering logic, and validation rules.
 
+**[✅ RAG Quality Evaluation](/mattgpt-design-spec/docs/11-rag-quality-evaluation)**
+Evaluation framework with 98.1% pass rate (60+ golden queries) — query categories, evaluation criteria, and how evals drive architectural decisions.
+
 ---
 
 ## Interactive Wireframes
