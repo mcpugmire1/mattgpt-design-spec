@@ -60,7 +60,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ### Architecture Evolutions Achieved
 
 **January 2026 - RAG Pipeline Cleanup:**
-- ✅ 5-stage RAG pipeline with 98.1% eval pass rate (51/52)
+- ✅ 5-stage RAG pipeline with 98.1% eval pass rate (60/61)
 - ❌ Removed Entity Gate bouncer (was blocking legitimate queries)
 - ❌ Removed `classify_query_intent()` LLM call (redundant with router)
 - ✅ Semantic router now handles synthesis + out-of-scope + narrative detection
@@ -95,7 +95,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ## 5-Stage RAG Pipeline
 
 **Status:** ✅ Implemented (January 2026)
-**Quality:** 98.1% eval pass rate (51/52 queries)
+**Quality:** 98.1% eval pass rate (60/61 queries)
 
 MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
 
@@ -112,7 +112,7 @@ Query → Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 → LLM Respon
 - Blocks 60%+ of nonsense before semantic processing
 
 **Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
-- Embedding-based similarity matching against 13 intent families
+- Embedding-based similarity matching against 14 intent families
 - Dual-threshold system: HARD_ACCEPT (0.80), SOFT_ACCEPT (0.40)
 - Detects synthesis queries (no Pinecone search needed)
 - Flags out-of-scope industries gracefully
@@ -295,7 +295,7 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 
 **When a query is rejected:**
 
-1. **Semantic router** flags query as below 0.72 threshold
+1. **Semantic router** flags query as below 0.40 threshold
 2. **Pattern filter** (optional) confirms off-domain category
 3. **Agy responds** with helpful redirect:
 
@@ -345,13 +345,13 @@ What would you like to know about Matt's experience?
 | "Write me a poem about leadership" | 0.41 similarity + creative_writing pattern | Semantic + Pattern |
 | "What's Matt's favorite color?" | 0.35 similarity + personal_trivia pattern | Semantic + Pattern |
 
-**Borderline Cases (0.72-0.79):**
+**Borderline Cases (0.40-0.80):**
 
 | Query | Similarity | Action |
 |-------|-----------|--------|
 | "What's Matt's management philosophy?" | 0.74 | Accepted (soft), logged for review |
-| "How does someone become a platform engineer?" | 0.73 | Accepted (soft), may redirect to Matt's experience |
-| "Tell me about product-market fit" | 0.71 | Rejected, suggest Matt's product innovation work |
+| "How does someone become a platform engineer?" | 0.58 | Accepted (soft), may redirect to Matt's experience |
+| "Tell me about product-market fit" | 0.35 | Rejected, suggest Matt's product innovation work |
 
 ---
 
@@ -373,7 +373,7 @@ What would you like to know about Matt's experience?
 - Only ~5% of queries reach expensive LLM generation unnecessarily
 
 **Enables Learning:**
-- Soft accept threshold (0.72-0.79) logs borderline queries
+- Soft accept threshold (0.40-0.80) logs borderline queries
 - Manual review improves intent family coverage over time
 - Telemetry shows what users are actually asking
 
@@ -386,7 +386,7 @@ What would you like to know about Matt's experience?
 - **Dynamic intent expansion:** Use LLM to generate new canonical examples from accepted queries
 - **User feedback loop:** "Was this answer helpful?" → retrain router
 - **Intent routing:** Different response templates per intent family
-- **A/B testing:** Experiment with threshold values (0.72 vs 0.75)
+- **A/B testing:** Experiment with threshold values (e.g., 0.40 vs 0.45 for soft accept)
 - **Analytics dashboard:** Visualize rejection reasons, borderline cases, intent distribution
 
 **Phase 2 migration note:** The semantic router logic is framework-agnostic and will port directly to React/FastAPI architecture.
@@ -500,9 +500,9 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 ### What's Live Today (Phase 1 - January 2026)
 
 - ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- ✅ **5-stage RAG pipeline** with 98.1% eval pass rate
+- ✅ **5-stage RAG pipeline** with 98.1% eval pass rate (60/61)
 - ✅ **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
-- ✅ **Semantic router** with 13 intent families + out-of-scope detection
+- ✅ **Semantic router** with 14 intent families + out-of-scope detection
 - ✅ 130+ STAR-structured project stories
 - ✅ Semantic search with confidence scoring and metadata filtering
 - ✅ **Timeline View** with Era-based career progression
