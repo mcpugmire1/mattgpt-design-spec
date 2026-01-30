@@ -559,8 +559,9 @@ Every line of code, every STAR story, every design decision serves that mission:
 - [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
 - [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
 - [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Wireframes and interaction design
+- [RAG Quality Evaluation](/mattgpt-design-spec/docs/06-rag-quality-evaluation) - How evals validate quality (98.1% pass rate)
 
 ---
 
-*Last Updated: December 2025*
-*Version: 1.1 (Complete with Personal Narrative)*
+*Last Updated: January 30, 2026 (Tech Stack & January 2026 Updates)*
+*Version: 1.2 (Updated with 5-Stage Pipeline, Eval Framework)*

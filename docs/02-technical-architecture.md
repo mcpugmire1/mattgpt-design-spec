@@ -557,6 +557,7 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning
 - [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Design decisions
 - [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
+- [RAG Quality Evaluation](/mattgpt-design-spec/docs/06-rag-quality-evaluation) - Eval framework (98.1% pass rate)
 
 ---
 

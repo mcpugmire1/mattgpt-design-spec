@@ -61,9 +61,18 @@ SEARCH_TOP_K = 10       # Unified (was 100/7 conflict)
 - Shows synthesis bypass flow (no Pinecone search)
 - Updated threshold values throughout
 
+**New Documentation:**
+- Created `docs/06-rag-quality-evaluation.md`
+  - Eval framework overview (98.1% pass rate, 60+ golden queries)
+  - Query categories (6): entity, behavioral, technical, marketing, synthesis, edge cases
+  - Evaluation criteria: source relevance, entity pinning, meta-commentary, confidence thresholds
+  - Eval-driven development: How evals guided Jan 2026 cleanup
+  - Running evals, adding test cases, metrics & reporting
+
 **Version Updates:**
-- README.md: v2.0 → v2.1
+- README.md: v2.0 → v2.1 (added 6th doc)
 - 02-technical-architecture.md: v1.1 → v1.2
+- 04-building-mattgpt.md: v1.1 → v1.2
 
 ---
 

@@ -71,6 +71,13 @@ This repo organizes design documentation into four key areas:
   - Voice principles and response templates
   - Tone calibration and situational responses
 
+### 6. RAG Quality Evaluation
+- **[06-rag-quality-evaluation.md](docs/06-rag-quality-evaluation.md)**
+  - Evaluation framework (98.1% pass rate, 60+ golden queries)
+  - Query categories and evaluation criteria
+  - Eval-driven development process
+  - How evals guided January 2026 pipeline cleanup
+
 ---
 
 ## 🎨 Design Artifacts
@@ -192,7 +199,7 @@ See **[CONTEXT.md](CONTEXT.md)** for detailed project status, completed work, an
 - ✅ Dark mode support via CSS variables
 - ✅ Conversation history and context management
 - ✅ Filter redesign (Phase 4)
-- ✅ All 5 documentation files complete and published
+- ✅ All 6 documentation files complete and published
 - ✅ GitHub Pages live with custom brand styling
 - ✅ All 9 wireframes deployed and accessible
 - ✅ Architecture diagrams aligned with PDF design spec
