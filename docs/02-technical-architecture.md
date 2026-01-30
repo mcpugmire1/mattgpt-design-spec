@@ -138,6 +138,225 @@ Query → Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 → LLM Respon
 
 ---
 
+## Production RAG Flow (8-Layer Detail)
+
+**Complete query-to-response flow with all decision points:**
+
+```
+User Question: "How did Matt scale engineering teams?"
+      ↓
+[Layer 1: Validation]
+├─ is_nonsense() → reject if regex match (weather, sports, etc.)
+├─ Semantic router → reject if score < 0.40
+└─ Returns intent_family (14 families: narrative, synthesis, technical, etc.)
+      ↓
+[Layer 2: Fast Exit Checks]
+├─ Out-of-scope check: if intent_family == "out_of_scope" → graceful redirect
+├─ Synthesis check: if intent_family == "synthesis" → skip Pinecone, use theme filter
+└─ Entity detection → (field, value) for scoped retrieval
+      ↓
+[Layer 3: Semantic Search]
+├─ Embed query with text-embedding-3-small (1536 dims)
+├─ Vector search in Pinecone (top 10, similarity > 0.15)
+├─ Apply entity metadata filters (Client, Employer, Division, Project, Place)
+└─ NOTE: Title entities use SOFT filtering (no Pinecone filter, semantic ranks naturally)
+      ↓
+[Layer 4: Confidence Gate]
+├─ CONFIDENCE_HIGH (≥0.25) → proceed normally
+├─ CONFIDENCE_LOW (≥0.20, <0.25) → proceed with warning
+└─ Below 0.20 → "I couldn't find relevant stories" + suggestion chips
+      ↓
+[Layer 5: Retrieval Strategy (Intent-Based)]
+├─ STANDARD MODE: entity pin → diversify_results() → top 7 with client variety
+├─ NARRATIVE MODE: sort by Pinecone score (skip diversity, trust semantic ranking)
+└─ SYNTHESIS MODE: theme-filtered parallel search → named-clients-first (up to 9)
+      ↓
+[Layer 6: Context Assembly]
+├─ XML isolation: <primary_story> + <supporting_story> tags prevent cross-story bleed
+├─ Build prompt with STAR narratives + theme guidance
+├─ Include MATT_DNA ground truth (dynamic from JSONL)
+└─ Context window: ~2,000-4,000 tokens
+      ↓
+[Layer 7: LLM Generation (GPT-4o)]
+├─ STANDARD: Primary story focus → human stakes → methodology → outcomes
+├─ SYNTHESIS: Theme/pattern → evidence across projects → insight
+└─ Temperature: 0.4 (standard) / 0.2 (synthesis for consistency)
+      ↓
+[Layer 8: Response Formatting]
+├─ Extract answer + sources from LLM response
+├─ Render with citations (story titles, confidence scores)
+├─ Display Related Projects (3-5 semantically similar stories)
+└─ Generate follow-up question
+      ↓
+User receives cited, STAR-formatted answer with sources
+```
+
+### What Was Removed (January 2026)
+
+**Entity Gate:**
+- Was rejecting valid queries (e.g., "TICARA", narrative questions)
+- Blocked when: no entity detected + low semantic score
+- Removed because: Too aggressive, blocking 13% of legitimate queries
+
+**classify_query_intent() LLM:**
+- GPT-4o-mini call for intent classification
+- Expensive: $0.0001 per query
+- Brittle: Didn't recognize story titles
+- Redundant: Semantic router (embedding-based) achieved same accuracy at 1/10th cost
+
+**Title Hard Filtering:**
+- Was applying Pinecone metadata filter for title entities
+- Broke Related Projects UX: only 1 source returned
+- Changed to soft filtering: title detected but semantic search ranks naturally
+
+---
+
+## Synthesis Mode
+
+**Purpose:** Answer high-level narrative and thematic questions by synthesizing patterns across multiple stories.
+
+### When Synthesis Mode Triggers
+
+**Intent Family Detection:**
+- Semantic router classifies query as `intent_family == "synthesis"`
+- Examples: "What's Matt's professional narrative?", "Summarize Matt's career themes", "What patterns do you see across projects?"
+
+**Alternative Trigger:**
+- Explicitly requested: "Synthesize insights across banking projects"
+
+### How Synthesis Differs from Standard
+
+| Aspect | Standard Mode | Synthesis Mode |
+|--------|--------------|----------------|
+| **Search Strategy** | Pinecone vector search | Theme-filtered parallel search |
+| **Story Selection** | Top 7 with diversity | Up to 9, named-clients-first |
+| **Ranking** | Pinecone score + entity pinning | Named clients prioritized over generic |
+| **Temperature** | 0.4 | 0.2 (lower for consistency) |
+| **Focus** | Single story deep-dive | Patterns across stories |
+| **Sacred Vocabulary** | Optional | **Required** (builder, modernizer, etc.) |
+
+### Synthesis Search Strategy
+
+**Theme-Filtered Parallel Search:**
+
+```python
+# Don't rely on single query - search by themes
+themes = ["Platform Modernization", "Team Scaling", "Agile Transformation"]
+all_results = []
+
+for theme in themes:
+    results = semantic_search(theme, filters={})
+    all_results.extend(results[:3])  # Top 3 per theme
+
+# Prioritize named clients over generic
+named_first = sorted(all_results, key=lambda s: is_generic_client(s["Client"]))
+return named_first[:9]  # Max 9 stories for synthesis
+```
+
+**Why Parallel Search:**
+- Single query might miss thematic breadth
+- Searching by themes ensures coverage across career
+- Named clients (JPMorgan, Johnson & Johnson) more credible than "Multiple Clients"
+
+### Sacred Vocabulary Enforcement
+
+**Verbatim phrases required in synthesis responses:**
+
+- **Identity:** "builder", "modernizer"
+- **Philosophy:** "complexity to clarity", "proof over promises"
+- **Not looking for:** "maintenance role", "status quo preservation"
+
+**Why Strict:**
+- Professional narrative must be consistent across all synthesis queries
+- These phrases are Matt's actual language (from "About Matt" story)
+- Marketing/branding consistency
+
+**Example Synthesis Response:**
+
+```
+Matt is a **builder** and **modernizer** who transforms **complexity to clarity**.
+
+Across 20 years at Accenture, the pattern is consistent: he's brought to projects
+where organizations need to build something from nothing or modernize platforms
+stuck in technical debt.
+
+From scaling the Cloud Innovation Center to 150+ people to modernizing payments
+across 12 countries, his work demonstrates **proof over promises** — real outcomes,
+not just strategy decks.
+
+He's not looking for a **maintenance role**. He's energized by ambiguity, greenfield
+builds, and helping teams move from intention to delivered outcomes.
+```
+
+### MATT_DNA Ground Truth
+
+**Dynamic extraction from JSONL:**
+
+```python
+# Extracted at startup from "About Matt – My Leadership Journey" story
+MATT_DNA = {
+    "identity": [
+        "builder", "modernizer", "people-centered leader"
+    ],
+    "philosophy": [
+        "complexity to clarity",
+        "proof over promises",
+        "listen first, align around purpose, move intentionally"
+    ],
+    "focus_areas": [
+        "solving ambiguous problems",
+        "building high-trust engineering cultures",
+        "modernizing platforms",
+        "shifting how organizations think about technology"
+    ],
+    "not_looking_for": [
+        "maintenance role",
+        "status quo preservation"
+    ]
+}
+```
+
+**Why Dynamic:**
+- Single source of truth: "About Matt" story in JSONL
+- Update narrative in Excel → auto-updates everywhere
+- No hardcoded identity statements in code
+
+### Synthesis Prompt Structure
+
+**BASE_PROMPT:**
+- Establishes Agy as fact-relayer (not evaluator)
+- Sets voice guidelines (no meta-commentary)
+
+**SYNTHESIS_DELTA:**
+```python
++ """
+When answering synthesis/narrative queries:
+- Use MATT_DNA verbatim phrases: {sacred_vocab}
+- Synthesize patterns across projects (not individual deep-dives)
+- Focus on themes, career arc, professional identity
+- Ground in concrete examples (name clients, cite metrics)
+- Lower temperature (0.2) for consistency
+"""
+```
+
+### Synthesis vs Narrative Queries
+
+**Synthesis:** High-level patterns and themes
+- "What's Matt's professional identity?"
+- "Summarize Matt's approach to leadership"
+- "What makes Matt different from other platform leaders?"
+
+**Narrative:** Professional story arc (different intent family)
+- "What's Matt's career journey?"
+- "How did Matt's work evolve over 20 years?"
+- "Tell me Matt's background"
+
+**Both use synthesis mode, but:**
+- Synthesis → thematic patterns
+- Narrative → chronological career story
+
+---
+
 ## Query Validation & Nonsense Detection
 
 **Purpose:** Prevent off-domain queries and ensure Agy only answers questions grounded in Matt's portfolio
@@ -393,6 +612,149 @@ What would you like to know about Matt's experience?
 
 ---
 
+## Data Governance & Architecture Principles
+
+### Single Source of Truth
+
+**Excel is the master data source.** All story content, STAR fields, and metadata originate in the Excel workbook (`MPugmire - STAR Stories - [DATE].xlsx`).
+
+**Why Excel:**
+- Familiar editing environment (no JSON syntax errors)
+- Version control via OneDrive/Dropbox/Git
+- Easy bulk edits and data validation
+- Copy/paste from interview prep notes
+
+**Data Flow:**
+```
+Excel (Master) → JSONL (Runtime Format) → Pinecone (Search Index) → Application
+```
+
+### Hybrid Sovereignty Model
+
+**Excel Owns:**
+- All story content (STAR fields, titles, clients, metadata)
+- Structural changes (add/remove stories, field updates)
+- Business logic (what stories exist, their content)
+
+**JSONL Owns:**
+- Derived fields: `public_tags`, `Interview Questions`, `content`
+- Runtime state (enrichment artifacts)
+- Semantic metadata
+
+**Scripts Preserve:**
+- Merge strategy: Excel updates flow in, JSONL-only fields preserved
+- Backup on write: `.bak` files prevent data loss
+- No destructive overwrites
+
+### January 2026 Sovereignty Patterns
+
+**1. Dynamic Identity (MATT_DNA)**
+
+Professional narrative and sacred vocabulary derived from JSONL at startup:
+
+```python
+# Extracted from "About Matt" story in JSONL
+MATT_DNA = {
+    "identity": ["builder", "modernizer"],
+    "philosophy": ["complexity to clarity", "proof over promises"],
+    "not_looking_for": ["maintenance role", "status quo preservation"]
+}
+```
+
+**Why Dynamic:**
+- Single source of truth (JSONL "About Matt" story)
+- No hardcoded narrative in code
+- Update story → updates identity everywhere
+
+**2. Multi-Field Entity Search**
+
+Entity detection searches across 6 fields via Pinecone `$or` operator:
+
+```python
+# Query: "Show me Accenture projects"
+# Searches: Client OR Employer OR Division OR Project OR Place OR Title
+pinecone_filter = {
+    "$or": [
+        {"client": {"$eq": "Accenture"}},
+        {"employer": {"$eq": "Accenture"}},
+        {"division": {"$eq": "accenture"}},  # lowercase
+        {"project": {"$eq": "accenture"}},   # lowercase
+        {"place": {"$eq": "accenture"}},     # lowercase
+        {"title": {"$eq": "Accenture"}}      # PascalCase
+    ]
+}
+```
+
+**Field-Specific Casing (Pinecone Metadata):**
+- **Lowercase:** `division`, `employer`, `project`, `place`, `industry`, `complexity`
+- **PascalCase:** `client`, `role`, `title`, `domain`
+
+**3. UI Hydration**
+
+All landing page counts and lists derived dynamically from story data:
+
+```python
+# No hardcoded counts - derive from loaded stories
+banking_count = len([s for s in stories if s.get("Industry") == "Financial Services"])
+clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Client"))}
+```
+
+**Why Dynamic:**
+- Add story to Excel → counts update automatically
+- No stale "130 projects" text to maintain
+- Data-driven, self-documenting
+
+### Anti-Patterns (Don't Do This)
+
+**❌ Hardcoded Lists:**
+```python
+# BAD: Will drift out of sync with data
+CLIENTS = ["JPMorgan", "Capital One", "RBC"]
+```
+
+**✅ Derived from Data:**
+```python
+# GOOD: Always accurate
+clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Client"))}
+```
+
+**❌ Manual JSONL Editing for Content:**
+- Don't hand-edit JSONL files for story content changes
+- Content changes belong in Excel (master source)
+- JSONL editing allowed ONLY for derived fields: `public_tags`, `Interview Questions`, `content`
+
+**✅ Excel-First Workflow:**
+1. Edit story in Excel
+2. Run `generate_jsonl_from_excel.py`
+3. Review diff, commit if correct
+
+**❌ Hardcoded Story Titles in Tests:**
+```python
+# BAD: Titles change frequently
+expected_title = "Implementing Responsible AI Governance Framework"
+```
+
+**✅ Index-Based Test Selection:**
+```python
+# GOOD: Stable reference
+story_index = 0  # Select by index, build query from actual title
+```
+
+### Data Refresh Workflow
+
+**Full Refresh (Content Changes):**
+1. Edit Excel master sheet
+2. Run Stage 1: `generate_jsonl_from_excel.py`
+3. Run Stage 2: `generate_public_tags.py`
+4. Run Stage 3: `build_custom_embeddings.py`
+5. Restart app
+
+**Time:** ~2 minutes end-to-end
+
+**See:** [Data Pipeline Documentation](/mattgpt-design-spec/docs/12-data-pipeline) for complete ingestion workflow.
+
+---
+
 ## Phase 2: React Rebuild
 
 **Status:** 🎯 Planned (Q1 2026)
@@ -492,6 +854,59 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - **Benefit:** Preserve core IP (RAG pipeline), improve presentation layer
 
 **Principle:** Start simple, evolve intentionally
+
+---
+
+## Cost & Performance
+
+### Embedding Generation
+
+**OpenAI text-embedding-3-small:**
+- **Rate:** $0.02 per 1M tokens
+- **Story Size:** ~300 tokens average (after text composition)
+- **130 Stories:** ~39,000 tokens = $0.0008 per full re-index
+- **Time:** ~30 seconds
+
+**Annual Cost (4 full refreshes/month):**
+- 4 refreshes × 12 months × $0.0008 = **$0.038/year**
+- Effectively free
+
+### Pinecone Vector Database
+
+**matt-portfolio-v2 Index:**
+- **Tier:** Starter (free tier, 100K vectors)
+- **Usage:** 130 vectors (0.13% of quota)
+- **Dimensions:** 1536
+- **Cost:** $0/month
+
+### LLM Generation (GPT-4o)
+
+**Per Query:**
+- **Input tokens:** ~2,000-4,000 (context + prompt)
+- **Output tokens:** ~200-600 (response)
+- **Cost per query:** ~$0.01-0.03
+
+**Monthly Cost (100 queries/month):**
+- 100 queries × $0.02 avg = **$2/month**
+
+**Production Scale (1000 queries/month):**
+- 1000 queries × $0.02 avg = **$20/month**
+
+### Processing Performance
+
+**Full Pipeline (Excel → Production):**
+- Stage 1 (Excel → JSONL): ~5 seconds
+- Stage 2 (Enrichment): ~10 seconds
+- Stage 3 (Embeddings): ~30 seconds
+- **Total:** ~45 seconds
+
+**Semantic Search (Runtime):**
+- Query embedding: ~200ms
+- Pinecone vector search: ~300ms
+- LLM generation: ~3-5 seconds (GPT-4o)
+- **Total query latency:** ~4-6 seconds
+
+**Key Insight:** Cost-optimized architecture with negligible infrastructure costs. Primary expense is LLM generation at ~$0.02 per query. Full data refresh costs less than $0.001.
 
 ---
 

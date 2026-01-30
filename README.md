@@ -78,6 +78,15 @@ This repo organizes design documentation into four key areas:
   - Eval-driven development process
   - How evals guided January 2026 pipeline cleanup
 
+### 7. Data Pipeline & Ingestion
+- **[12-data-pipeline.md](docs/12-data-pipeline.md)**
+  - 3-stage data flow: Excel → JSONL → Embeddings → Pinecone
+  - Conversion scripts and enrichment process
+  - Embedding generation strategy
+  - Data governance principles (Excel as single source of truth)
+  - Cost & performance metrics ($0.0008 per re-index)
+  - Migration history (MiniLM → OpenAI embeddings)
+
 ---
 
 ## 🎨 Design Artifacts

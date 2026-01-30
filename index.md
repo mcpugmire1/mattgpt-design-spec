@@ -77,6 +77,9 @@ JSONL schema documentation — required fields, STAR framework structure, 5P tax
 **[✅ RAG Quality Evaluation](/mattgpt-design-spec/docs/11-rag-quality-evaluation)**
 Evaluation framework with 98.1% pass rate (60+ golden queries) — query categories, evaluation criteria, and how evals drive architectural decisions.
 
+**[🔄 Data Pipeline & Ingestion](/mattgpt-design-spec/docs/12-data-pipeline)**
+Complete 3-stage data flow from Excel to production RAG — conversion scripts, enrichment process, embedding generation, data governance principles, and cost/performance metrics.
+
 ---
 
 ## Interactive Wireframes
