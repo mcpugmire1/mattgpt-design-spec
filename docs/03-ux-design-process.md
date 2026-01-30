@@ -266,7 +266,7 @@ User Question
 - **Metadata:** Rich tagging (client, domain, outcomes, metrics)
 
 **Response Generation:**
-- Context-aware retrieval (top-k=30)
+- Context-aware retrieval (top-k=10)
 - Multi-mode synthesis (Narrative/Key Points/Deep Dive)
 - Source attribution with confidence scoring
 
@@ -274,8 +274,8 @@ User Question
 
 **Semantic Search:**
 - Pinecone cosine similarity (vector matching)
-- Minimum similarity threshold: 0.15
-- Top-k pool: 30 candidates before ranking
+- Minimum similarity threshold: 0.20
+- Top-k pool: 10 candidates before ranking
 - Confidence-based result filtering
 
 **Response Synthesis:**
@@ -647,7 +647,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 - Send button (gradient, disabled until input is non-empty)
 
 **Footer:**
-- "Powered by OpenAI GPT-4 with semantic search across 130 project case studies"
+- "Powered by OpenAI GPT-4o with semantic search across 130 project case studies"
 
 ---
 
@@ -882,7 +882,7 @@ Source Data    AI Data Index  Pinecone    RAG Orchestrator
 **The Secret Sauce: Semantic Search with Confidence Scoring**
 
 ```python
-def semantic_search(query: str, top_k: int = 30) -> dict:
+def semantic_search(query: str, top_k: int = 10) -> dict:
     """
     Pure semantic retrieval with confidence-based filtering
     to ensure high-quality, relevant results.
@@ -892,7 +892,7 @@ def semantic_search(query: str, top_k: int = 30) -> dict:
 
     # Calculate confidence from top score
     top_score = max(h.get("pc_score", 0.0) for h in hits)
-    confidence = "high" if top_score >= 0.25 else "low" if top_score >= 0.15 else "none"
+    confidence = "high" if top_score >= 0.25 else "low" if top_score >= 0.20 else "none"
 
     return {"results": hits, "confidence": confidence, "top_score": top_score}
 ```
