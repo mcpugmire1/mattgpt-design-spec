@@ -1,7 +1,69 @@
 # Current Project Context
 
-**Last Updated:** October 18, 2024 (Evening - Wireframe Audit Complete)
-**Session Status:** 🟢 Documentation 95% Complete - Wireflows outstanding (in progress in Miro)
+**Last Updated:** January 30, 2026 (RAG Pipeline Documentation Update)
+**Session Status:** 🟢 Documentation Complete - Aligned with Jan 2026 Implementation
+
+---
+
+## Latest Update: January 30, 2026 - RAG Pipeline Documentation
+
+**What Changed:**
+Updated design specification to reflect current RAG pipeline implementation from llm_portfolio_assistant codebase.
+
+### Documentation Updates
+
+**Files Updated:**
+- ✅ `docs/02-technical-architecture.md` - Added 5-stage RAG pipeline section
+- ✅ `docs/09-api-reference.md` - Updated threshold values
+- ✅ `docs/03-ux-design-process.md` - Updated query validation info
+- ✅ `README.md` - Added Jan 2026 achievements and updated status
+- ✅ `images/architecture/ask-mattgpt-flow.mermaid` - Complete flow rewrite showing all 5 stages
+
+### Key Changes Documented
+
+**1. 5-Stage RAG Pipeline (98.1% eval pass rate):**
+- Stage 1: Rules-based nonsense detection (regex patterns)
+- Stage 2: Semantic router (intent classification + out-of-scope detection)
+- Stage 3: Confidence gating (Pinecone results scoring)
+- Stage 4: Entity detection & story pinning
+- Stage 5: Intent-aware ranking with context isolation
+
+**2. Components Removed (Jan 2026):**
+- ❌ Entity Gate threshold bouncer (was blocking legitimate narrative queries)
+- ❌ `classify_query_intent()` LLM call (GPT-4o-mini redundant with semantic router)
+
+**3. Semantic Router Enhancements:**
+- Now handles: intent classification, synthesis detection, out-of-scope detection
+- Expanded: 10 intent families → 13 intent families
+- New families: `synthesis`, `out_of_scope`, `agile_transformation`
+
+**4. Updated Thresholds:**
+```python
+# Semantic Router
+HARD_ACCEPT = 0.80   # Clearly on-topic (unchanged)
+SOFT_ACCEPT = 0.40   # Lowered from 0.72 (less aggressive filtering)
+
+# RAG Confidence
+CONFIDENCE_HIGH = 0.25  # Strong match
+CONFIDENCE_LOW = 0.20   # Raised from 0.15
+
+# Pinecone
+PINECONE_MIN_SIM = 0.15
+SEARCH_TOP_K = 10       # Unified (was 100/7 conflict)
+```
+
+**5. Model Upgrades:**
+- Primary LLM: GPT-4o (upgraded from GPT-4o-mini)
+- Embedding model: text-embedding-3-small (1536 dims) - unchanged
+
+**6. Architecture Flow Diagram:**
+- Updated mermaid diagram to show all 5 stages explicitly
+- Shows synthesis bypass flow (no Pinecone search)
+- Updated threshold values throughout
+
+**Version Updates:**
+- README.md: v2.0 → v2.1
+- 02-technical-architecture.md: v1.1 → v1.2
 
 ---
 

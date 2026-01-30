@@ -45,7 +45,8 @@ This repo organizes design documentation into four key areas:
 
 ### 2. Technical Architecture
 - **[02-technical-architecture.md](docs/02-technical-architecture.md)**
-  - RAG (Retrieval-Augmented Generation) pipeline
+  - 5-stage RAG (Retrieval-Augmented Generation) pipeline (98.1% eval)
+  - Semantic router with 13 intent families + out-of-scope detection
   - 3-phase evolution: MVP → Production → Enterprise
   - Hybrid search architecture (semantic + keyword)
   - Technology stack decisions and migration plan
@@ -174,11 +175,16 @@ This project showcases:
 
 ## 📝 Project Status
 
-**Current Phase:** Streamlit Production Polish (December 2025)
+**Current Phase:** Streamlit Production Polish (January 2026)
 
 See **[CONTEXT.md](CONTEXT.md)** for detailed project status, completed work, and next steps.
 
 **Completed Since October 2025:**
+- ✅ **5-stage RAG pipeline** with 98.1% eval pass rate (Jan 2026)
+- ✅ **Semantic router** with 13 intent families + out-of-scope detection (Jan 2026)
+- ✅ **Model upgrade:** GPT-4o (from GPT-4o-mini) (Jan 2026)
+- ✅ **Removed:** Entity Gate bouncer, LLM intent classification (Jan 2026)
+- ✅ **Centralized thresholds** in config/constants.py (Jan 2026)
 - ✅ Timeline View with Era-based grouping
 - ✅ Mobile-responsive CSS (breakpoints at 767px, 1024px)
 - ✅ Modular Ask MattGPT architecture (9-file structure)
@@ -228,5 +234,5 @@ The result: **Credibility through demonstration, not declaration.**
 
 ---
 
-**Last Updated:** December 20, 2025 (Post-Audit Refresh)
-**Version:** 2.0 (Documentation Updated - Implementation Aligned)
+**Last Updated:** January 30, 2026 (RAG Pipeline Update)
+**Version:** 2.1 (5-Stage Pipeline, Semantic Router, Threshold Updates)

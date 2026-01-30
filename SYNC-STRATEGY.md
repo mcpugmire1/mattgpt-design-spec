@@ -34,15 +34,16 @@ SYSTEM_CONFIG = {
     },
     "semantic_router": {
         "hard_accept": 0.80,
-        "soft_accept": 0.72,
+        "soft_accept": 0.40,
         "intent_families": [
             "background", "behavioral", "delivery",
-            "team_scaling", "leadership", "technical"
+            "team_scaling", "leadership", "technical",
+            "synthesis", "out_of_scope", "agile_transformation"
         ]
     },
     "rag": {
-        "llm_model": "gpt-4o-mini",
-        "top_k": 30,
+        "llm_model": "gpt-4o",
+        "top_k": 10,
         "story_count": 130
     }
 }

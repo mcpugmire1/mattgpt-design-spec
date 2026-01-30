@@ -2,15 +2,22 @@
 flowchart TD
     User[User Question]
 
-    User --> Router{Semantic Router<br/>Query Validation}
+    User --> Stage1[Stage 1: Nonsense Filter<br/>Regex Patterns]
 
-    Router -->|Accept 0.80+| Search[Semantic Search<br/>Pinecone Vector DB]
-    Router -->|Accept 0.72-0.79| Search
-    Router -->|Reject <0.72| Reject[Off-Domain Response<br/>Suggestion Chips]
+    Stage1 -->|Pass| Stage2{Stage 2: Semantic Router<br/>Intent Classification}
+    Stage1 -->|Block| Reject[Off-Domain Response<br/>Suggestion Chips]
 
-    Search --> RAG[RAG Pipeline<br/>Retrieve + Generate]
+    Stage2 -->|Accept 0.80+<br/>HARD_ACCEPT| Stage3[Stage 3: Pinecone Search<br/>Confidence Gating]
+    Stage2 -->|Accept 0.40-0.79<br/>SOFT_ACCEPT| Stage3
+    Stage2 -->|Reject <0.40| Reject
+    Stage2 -->|Synthesis| SynthResponse[Generate Narrative<br/>No Search]
 
-    RAG --> Response[AI Response<br/>with Sources]
+    Stage3 -->|Score ≥0.25| Stage4[Stage 4: Entity Detection<br/>Story Pinning]
+    Stage3 -->|Score <0.20| NoResults[No Strong Matches<br/>Suggestion Chips]
+
+    Stage4 --> Stage5[Stage 5: Intent Ranking<br/>Context Isolation]
+
+    Stage5 --> Response[AI Response<br/>GPT-4o]
 
     Response --> Sources[Source Citations<br/>Match Confidence]
     Response --> RelatedProj[Related Projects]
@@ -19,7 +26,9 @@ flowchart TD
     FollowUp --> User
 
     style User fill:#8B5CF6,color:#fff
-    style Router fill:#6366F1,color:#fff
+    style Stage2 fill:#6366F1,color:#fff
     style Response fill:#3498DB,color:#fff
     style Reject fill:#E74C3C,color:#fff
+    style NoResults fill:#E74C3C,color:#fff
+    style SynthResponse fill:#10B981,color:#fff
 ```

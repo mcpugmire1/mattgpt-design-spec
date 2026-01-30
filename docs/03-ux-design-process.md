@@ -76,9 +76,9 @@ Ask MattGPT
 │   ├── Source citations with match confidence
 │   ├── Related projects suggestions
 │   └── Conversation history with context management
-└── Query Validation
-    ├── Semantic router (dual-threshold 0.80/0.72)
-    └── Nonsense detection (10+ intent families)
+└── Query Validation (5-Stage RAG Pipeline)
+    ├── Semantic router (dual-threshold 0.80/0.40, updated Jan 2026)
+    └── 13 intent families + out-of-scope detection
 
 About Matt
 ├── Hero Header

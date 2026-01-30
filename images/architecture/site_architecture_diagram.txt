@@ -133,8 +133,9 @@
 │  │ [Ask a follow-up question...]                                            │  │
 │  └──────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                  │
-│  Query Validation:                                                               │
-│  • Semantic Router: 0.80 hard accept, 0.72 soft accept                          │
+│  Query Validation (5-Stage RAG Pipeline):                                        │
+│  • Semantic Router: 0.80 hard accept, 0.40 soft accept (updated Jan 2026)      │
+│  • 13 intent families (expanded from 10)                                        │
 │  • Pattern Filters: 10+ nonsense categories (weather, sports, trivia, etc.)    │
 │  • Graceful rejection with suggestion chips                                     │
 └─────────────────────────────────────────────────────────────────────────────────┘

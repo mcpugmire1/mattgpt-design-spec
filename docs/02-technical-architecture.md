@@ -57,9 +57,20 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - User experience patterns
 - Search relevance tuning
 
-### Architecture Evolutions Achieved (December 2025)
+### Architecture Evolutions Achieved
 
-**Modular Component Structure:**
+**January 2026 - RAG Pipeline Cleanup:**
+- ✅ 5-stage RAG pipeline with 98.1% eval pass rate (51/52)
+- ❌ Removed Entity Gate bouncer (was blocking legitimate queries)
+- ❌ Removed `classify_query_intent()` LLM call (redundant with router)
+- ✅ Semantic router now handles synthesis + out-of-scope detection
+- ✅ Expanded to 13 intent families (was 10)
+- ✅ Centralized thresholds in `config/constants.py`
+- ✅ Unified SEARCH_TOP_K = 10 (was 100/7 conflict)
+- ✅ Title soft filtering (semantic search ranks naturally)
+- ✅ Model upgrade: GPT-4o-mini → GPT-4o
+
+**December 2025 - Modular Architecture:**
 - Refactored monolithic ask_mattgpt.py (4,696 lines) into 9-file directory
 - Separated concerns: backend_service.py, conversation_view.py, conversation_helpers.py
 - Reusable component library (ui/components/)
@@ -79,36 +90,76 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - Touch-optimized controls and stacking layouts
 - Horizontal scroll tables with preserved functionality
 
-**Query Validation & Nonsense Detection:**
-- Semantic router with dual-threshold intent classification
-- Pattern-based filtering for off-domain queries
-- 10+ intent families covering valid query types
-- Graceful handling with suggestion chips for rejected queries
+---
+
+## 5-Stage RAG Pipeline
+
+**Status:** ✅ Implemented (January 2026)
+**Quality:** 98.1% eval pass rate (51/52 queries)
+
+MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
+
+### Pipeline Overview
+
+```
+Query → Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 → LLM Response
+```
+
+**Stage 1: Rules-Based Nonsense Detection**
+- Fast regex matching against `nonsense_filters.jsonl` patterns
+- Catches obvious off-domain queries (weather, sports, stocks, etc.)
+- Zero embedding cost, executes in <5ms
+- Blocks 60%+ of nonsense before semantic processing
+
+**Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
+- Embedding-based similarity matching against 13 intent families
+- Dual-threshold system: HARD_ACCEPT (0.80), SOFT_ACCEPT (0.40)
+- Detects synthesis queries (no Pinecone search needed)
+- Flags out-of-scope industries gracefully
+- **Replaced:** Legacy LLM intent classification (removed Jan 2026)
+
+**Stage 3: Confidence Gating**
+- Pinecone semantic search with confidence scoring
+- Thresholds: HIGH (0.25), LOW (0.20)
+- Filters phantom similarity noise
+- Returns 0 results below minimum threshold
+
+**Stage 4: Entity Detection & Pinning**
+- Detects: Client, Employer, Division, Title
+- Hard filters: Client, Employer, Division, Project, Place
+- Soft filters: Title (semantic search ranks naturally)
+- **Removed:** Entity Gate threshold bouncer (was blocking valid queries)
+
+**Stage 5: Intent-Aware Ranking**
+- Narrative queries: Trust Pinecone semantic ranking
+- Entity queries: Pin matching story to #1
+- Context isolation via XML tags prevents cross-story bleed
+- Multi-field entity search across 6 fields
 
 ---
 
 ## Query Validation & Nonsense Detection
 
-**Status:** ✅ Implemented (October 2025)
 **Purpose:** Prevent off-domain queries and ensure Agy only answers questions grounded in Matt's portfolio
 
 ### Architecture Overview
 
-MattGPT uses a **two-layer defense** to filter nonsense queries before they reach the RAG pipeline:
+MattGPT uses a **two-layer defense** (Stages 1-2 of the RAG pipeline):
 
-**Layer 1: Semantic Router** (Intent Classification)
-- Embedding-based similarity matching against canonical intent examples
-- Dual-threshold system for confident classification
-- Returns best matching intent family for telemetry and debugging
-
-**Layer 2: Pattern-Based Filters** (Regex Matching)
+**Layer 1: Pattern-Based Filters** (Stage 1)
 - Fast regex patterns for common off-domain categories
-- Catches edge cases that slip through semantic routing
+- Catches edge cases before semantic routing
 - Zero-shot detection without embedding costs
 
+**Layer 2: Semantic Router** (Stage 2)
+- Embedding-based similarity matching against canonical intent examples
+- Dual-threshold system for confident classification
+- Handles intent classification, synthesis detection, and out-of-scope flagging
+- Returns best matching intent family for telemetry and debugging
+
 **Implementation Files:**
-- `services/semantic_router.py` - Intent classification logic
 - `nonsense_filters.jsonl` - Regex pattern definitions
+- `services/semantic_router.py` - Intent classification logic
 - `data/intent_embeddings.json` - Cached embeddings for intent families
 
 ---
@@ -122,15 +173,22 @@ MattGPT uses a **two-layer defense** to filter nonsense queries before they reac
 3. Cosine similarity computed against canonical intent examples
 4. Query classified based on similarity threshold
 
-**Thresholds:**
+**Thresholds (Updated January 2026):**
 
 ```python
 HARD_ACCEPT = 0.80  # Clearly on-topic, no question
-SOFT_ACCEPT = 0.72  # Accept but log as borderline for review
-# Below 0.72 = router rejects (search fallback may still attempt)
+SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72)
+# Below 0.40 = router rejects (search fallback may still attempt)
 ```
 
-**Intent Families (10 categories):**
+**What Changed (January 2026):**
+- ❌ **Removed:** Entity Gate threshold bouncer (was blocking legitimate narrative queries)
+- ❌ **Removed:** `classify_query_intent()` LLM call (GPT-4o-mini - redundant with router)
+- ✅ **Added:** Synthesis detection (intent_family == "synthesis")
+- ✅ **Added:** Out-of-scope industry detection (intent_family == "out_of_scope")
+- ✅ **Expanded:** 10 intent families → 13 intent families
+
+**Intent Families (13 categories):**
 
 | Family | Example Queries |
 |--------|----------------|
@@ -144,6 +202,9 @@ SOFT_ACCEPT = 0.72  # Accept but log as borderline for review
 | **domain_healthcare** | "Show me healthcare projects", "Life sciences experience?" |
 | **stakeholders** | "How does Matt handle difficult stakeholders?" |
 | **innovation** | "Tell me about the innovation center work" |
+| **agile_transformation** | "Tell me about agile transformation", "Scaling agile delivery" |
+| **synthesis** | "What's Matt's professional narrative?", "Summarize Matt's career themes" |
+| **out_of_scope** | Industry queries outside Matt's domain (graceful redirect) |
 
 **Example Classification:**
 
@@ -158,6 +219,44 @@ SOFT_ACCEPT = 0.72  # Accept but log as borderline for review
 # REJECTED (0.55 similarity)
 "What's the weather in New York?" → intent_family: None
 # Triggers off-domain response
+```
+
+---
+
+### RAG Pipeline Thresholds & Constants
+
+All thresholds are centralized in `config/constants.py` (single source of truth):
+
+**Semantic Router Thresholds:**
+```python
+HARD_ACCEPT = 0.80   # Clearly on-topic, no question
+SOFT_ACCEPT = 0.40   # Accept but log as borderline for review
+```
+
+**RAG Confidence Thresholds:**
+```python
+CONFIDENCE_HIGH = 0.25  # Strong match - show "Found X stories"
+CONFIDENCE_LOW = 0.20   # Raised from 0.15 to filter phantom similarity noise
+```
+
+**Pinecone Search Parameters:**
+```python
+PINECONE_MIN_SIM = 0.15   # Minimum similarity for Pinecone results
+SEARCH_TOP_K = 10         # Stories to fetch (headroom for reranking/filtering)
+                          # Centralized Jan 2026 - was 100/7 conflict
+```
+
+**Entity Detection:**
+```python
+ENTITY_GATE_THRESHOLD = 0.30  # Semantic scoring threshold (lowered from 0.55)
+                               # Note: Entity Gate as bouncer removed Jan 2026
+```
+
+**Model Configuration:**
+```python
+DEFAULT_CHAT_MODEL = "gpt-4o"              # Primary LLM (upgraded from gpt-4o-mini)
+DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"  # 1536 dimensions
+SEARCH_TOP_K = 10                          # Was 100 (explore) / 7 (ask) - now unified
 ```
 
 ---
@@ -396,10 +495,12 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 
 ## Current State Summary
 
-### What's Live Today (Phase 1 - December 2025)
+### What's Live Today (Phase 1 - January 2026)
 
 - ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- ✅ RAG pipeline with GPT-4 and Pinecone vector search
+- ✅ **5-stage RAG pipeline** with 98.1% eval pass rate
+- ✅ **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
+- ✅ **Semantic router** with 13 intent families + out-of-scope detection
 - ✅ 130+ STAR-structured project stories
 - ✅ Semantic search with confidence scoring and metadata filtering
 - ✅ **Timeline View** with Era-based career progression
@@ -457,5 +558,5 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 
 ---
 
-*Last Updated: December 2025 (Post-Audit Refresh)*
-*Version: 1.1 (Updated with Implementation Details)*
+*Last Updated: January 30, 2026 (RAG Pipeline Update)*
+*Version: 1.2 (5-Stage Pipeline, Thresholds, Entity Gate Removal)*

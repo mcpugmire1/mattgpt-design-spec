@@ -74,14 +74,14 @@
 is_portfolio_query_semantic(
     query: str,
     hard_threshold: float = 0.80,
-    soft_threshold: float = 0.72
+    soft_threshold: float = 0.40
 ) -> tuple[bool, float, str, str]
 ```
 
 **Parameters:**
 - `query` - User's query string
 - `hard_threshold` - Score above this = clearly valid (default 0.80)
-- `soft_threshold` - Score above this = valid but borderline (default 0.72)
+- `soft_threshold` - Score above this = valid but borderline (default 0.40, lowered from 0.72 in Jan 2026)
 
 **Returns:**
 - `is_valid` (bool) - True if query >= soft_threshold
@@ -247,8 +247,8 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 │  - Return (is_valid, score, family)     │
 └────────┬────────────────────────────────┘
          │
-         ├─ [score >= 0.72] → ACCEPT
-         └─ [score < 0.72]  → REJECT (show off-domain response)
+         ├─ [score >= 0.40] → ACCEPT
+         └─ [score < 0.40]  → REJECT (show off-domain response)
          │
          ▼
 ┌─────────────────────────────────────────┐
@@ -319,8 +319,8 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 **Query Classification (Semantic Router):**
 ```
 Score >= 0.80  → HARD_ACCEPT (clearly on-topic)
-Score >= 0.72  → SOFT_ACCEPT (borderline, log for review)
-Score <  0.72  → REJECT (off-domain, show suggestions)
+Score >= 0.40  → SOFT_ACCEPT (borderline, log for review - lowered from 0.72 in Jan 2026)
+Score <  0.40  → REJECT (off-domain, show suggestions)
 ```
 
 **Result Confidence (RAG Service):**

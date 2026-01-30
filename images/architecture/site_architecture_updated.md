@@ -117,10 +117,10 @@ Homepage (/)
 - **Embeddings:** OpenAI text-embedding-3-small (1536 dims)
 - **Stories:** 130+ STAR-formatted projects (JSONL)
 
-### Query Validation
-- **Semantic Router:** Dual-threshold (0.80/0.72)
+### Query Validation (5-Stage RAG Pipeline)
+- **Semantic Router:** Dual-threshold (0.80/0.40, updated Jan 2026)
 - **Pattern Filters:** 10+ regex categories (nonsense_filters.jsonl)
-- **Intent Families:** 10 categories (background, behavioral, technical, etc.)
+- **Intent Families:** 13 categories (background, behavioral, technical, synthesis, out_of_scope, etc.)
 
 ## Mobile Responsive
 - **Breakpoints:** 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
