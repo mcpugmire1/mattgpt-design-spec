@@ -80,9 +80,9 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
 |------------|---------|-----------------|
 | 🐍 **Python 3.11** | Primary language | Rich ML/AI ecosystem, rapid prototyping |
 | **Streamlit** | Frontend framework (MVP) | 2-week build time vs 3+ months for React |
-| 🤖 **OpenAI GPT-4** | LLM for response generation | State-of-the-art reasoning and synthesis |
+| 🤖 **OpenAI GPT-4o** | LLM for response generation | State-of-the-art reasoning and synthesis |
 | 🌲 **Pinecone** | Vector database | Managed solution, fast ANN search |
-| **Sentence Transformers** | Embedding generation | all-MiniLM-L6-v2 (384-dim, fast) |
+| **OpenAI Embeddings** | Embedding generation | text-embedding-3-small (1536-dim) |
 | **Pandas** | Data manipulation | JSONL processing and metadata handling |
 | **NumPy** | Numerical operations | Vector math and similarity scoring |
 | 📦 **Python venv** | Dependency management | Local dev environment with requirements.txt |
@@ -109,7 +109,7 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
               ▼
    ┌─────────────────────┐
    │  Embedding Model    │
-   │  (Sentence-BERT)    │
+   │  (OpenAI)           │
    └──────────┬──────────┘
               │
               ▼
@@ -311,14 +311,22 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ### 🔧 Backend & DevOps
 
+**5-Stage RAG Pipeline (January 2026):**
+- **Stage 1:** Rules-based nonsense detection (regex patterns)
+- **Stage 2:** Semantic router with 14 intent families (intent classification + out-of-scope detection)
+- **Stage 3:** Confidence gating on Pinecone results (HIGH ≥0.25, LOW ≥0.20)
+- **Stage 4:** Entity detection & story pinning (Client, Employer, Division, Title)
+- **Stage 5:** Intent-aware ranking with context isolation (narrative vs entity queries)
+- **Quality:** 98.1% eval pass rate (60/61 queries)
+
 **Conversational Workflow:**
 - Streamlit's stateful UI for session management
 - Context retention across multi-turn conversations
-- Intent classification for query routing
+- Semantic router handles synthesis, narrative, and out-of-scope queries
 
 **Semantic Embeddings:**
-- Sentence-BERT (all-MiniLM-L6-v2)
-- 384-dimensional vector space
+- OpenAI text-embedding-3-small
+- 1536-dimensional vector space
 - ~1.2s average embedding + retrieval time
 
 **Metadata Filtering:**
@@ -357,6 +365,16 @@ The fix was two-fold: mandatory STAR structure (every story needs verifiable Sit
 Streamlit is great for rapid prototyping. It's terrible for custom styling. Class names change between versions. CSS selectors that work on desktop break on mobile. The st-emotion-cache-* classes are generated dynamically and can't be targeted reliably.
 
 I learned to use data-testid attributes and container keys for CSS targeting. The global_styles.py file grew to 600+ lines of carefully scoped overrides. It's not pretty, but it works.
+
+### The January 2026 RAG Pipeline Cleanup
+
+Early versions had redundant gates that were blocking legitimate queries. An "Entity Gate" threshold bouncer would reject narrative queries like "What's Matt's professional identity?" because they didn't mention a specific client or employer. A separate LLM intent classification call (GPT-4o-mini) was duplicating work the semantic router already did.
+
+The cleanup removed both:
+- **Entity Gate removed:** Was rejecting valid narrative/synthesis queries
+- **LLM intent classification removed:** Redundant with semantic router (which uses embeddings, not LLM calls)
+
+The semantic router now handles everything: 14 intent families (including narrative, synthesis, out-of-scope), dual-threshold classification (0.80 hard accept / 0.40 soft accept), and graceful rejection with suggestion chips. Eval quality improved to 98.1% (60/61) while reducing costs and latency.
 
 ---
 
