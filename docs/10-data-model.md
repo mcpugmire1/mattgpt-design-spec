@@ -52,6 +52,27 @@ These fields are **required** for every story:
 
 ---
 
+## Entity Detection Fields
+
+**Critical for semantic router and query routing (used by detect_entity())**
+
+| Field | Type | Purpose | Example |
+|-------|------|---------|---------|
+| `Employer` | str | Employment org (Matt's employer) | `"Accenture"`, `"Independent"` |
+| `Division` | str | Organizational division/unit | `"Cloud Innovation Center"`, `"Technology"` |
+| `Project` | str | Project name | `"Career Narrative"`, `"Platform Modernization"` |
+
+**Entity Pinning Behavior:**
+- Query mentions "Accenture" → filters by `Employer = "Accenture"`, pins matching story to #1
+- Query mentions "Cloud Innovation Center" → filters by `Division = "Cloud Innovation Center"`
+- Multi-field search uses Pinecone `$or` operator across entity fields
+
+**Context Exclusion:**
+Prefixes like "after", "leaving", "before" prevent entity filtering:
+- "Career transition after Accenture" → broad search, NOT filtered to Accenture stories
+
+---
+
 ## STAR Framework Fields
 
 **STAR = Situation, Task, Action, Result**
@@ -105,13 +126,47 @@ Additional classification and context fields:
 | `Solution / Offering` | str | Capability or service offered | `"Cloud Modernization"`, `"Innovation Leadership"` |
 | `Role` | str | Matt's role on the project | `"Director of Delivery"`, `"Platform Lead"` |
 | `Era` | str | Career phase for Timeline view grouping | `"Integration & Platform Foundations (2005-2008)"` |
+| `Theme` | str | Thematic classification | `"Professional Narrative"`, `"Technical Leadership"` |
 | `Use Case(s)` | list[str] | Business use cases addressed | `["Legacy migration", "Team scaling"]` |
 | `Competencies` | list[str] | Skills/competencies demonstrated | `["Platform Engineering", "Agile Coaching"]` |
+| `Interview Questions` | list[str] | Sample interview questions this story answers | See Interview Questions section |
+| `Project Scope / Complexity` | str | Scope classification | `"Enterprise-scale transformation"`, `"Career Overview"` |
+| `Start_Date` | str | Project start date (YYYY-MM format) | `"2019-03"`, `"2015-06"` |
+| `End_Date` | str | Project end date (YYYY-MM format) | `"2023-09"`, `"2017-12"` |
 
 **Field Relationships:**
 - `Category` → Broad classification (e.g., "Digital Transformation")
 - `Sub-category` → Specific domain (e.g., "Platform Engineering")
 - `Solution / Offering` → Capability filter (e.g., "Cloud Modernization")
+- `Era` → Used by Timeline View for career phase grouping
+- `Theme` → High-level thematic tag for grouping related stories
+
+---
+
+## Interview Questions Field
+
+**Purpose:** Sample interview questions that this story can answer
+
+**Type:** list[str]
+
+**Example:**
+```json
+"Interview Questions": [
+  "How do you approach solving ambiguous problems at Accenture?",
+  "What strategies have you employed to build high-trust engineering cultures?",
+  "Walk me through your leadership journey at Accenture, focusing on transformation and innovation?"
+]
+```
+
+**Use Cases:**
+- Semantic search: Helps stories match queries phrased as questions
+- Eval framework: Golden queries for testing RAG quality
+- Interview prep: Quick reference for common behavioral questions
+
+**Format:**
+- Can be a single long string with comma-separated questions
+- Can be an array of individual question strings
+- Questions often include specific context (company names, metrics, domains)
 
 ---
 
@@ -141,30 +196,43 @@ Fields used for search, filtering, and semantic routing:
 
 Complete alphabetical field reference:
 
-| Field | Type | Required | Searchable | Filterable | Used in 5P Summary |
-|-------|------|----------|------------|------------|-------------------|
-| `5PSummary` | str | No | Yes | No | ✅ Primary |
-| `Action` | list[str] | No | Yes | No | Via `Process` |
-| `Category` | str | No | Yes | No | No |
-| `Client` | str | Yes | Yes | ✅ Yes | No |
-| `Competencies` | list[str] | No | Yes | No | No |
-| `Era` | str | No | Yes | No | No |
-| `id` | str | **Yes** | No | No | No |
-| `Industry` | str | Yes | Yes | ✅ Yes | No |
-| `Performance` | list[str] | No | Yes | No | ✅ Outcome |
-| `Person` | str | No | Yes | No | No |
-| `Place` | str | No | Yes | No | No |
-| `Process` | list[str] | No | Yes | No | ✅ Approach |
-| `public_tags` | list[str] | No | Yes | ✅ Yes | No |
-| `Purpose` | str | No | Yes | No | ✅ Goal |
-| `Result` | list[str] | No | Yes | No | Via `Performance` |
-| `Role` | str | No | Yes | ✅ Yes | No |
-| `Situation` | list[str] | No | Yes | No | No |
-| `Solution / Offering` | str | No | Yes | ✅ Yes | No |
-| `Sub-category` | str | No | Yes | ✅ Yes | No |
-| `Task` | list[str] | No | Yes | No | No |
-| `Title` | str | Yes | Yes | No | Via summary |
-| `Use Case(s)` | list[str] | No | Yes | No | No |
+| Field | Type | Required | Searchable | Filterable | Entity Detection | Used in 5P Summary |
+|-------|------|----------|------------|------------|-----------------|-------------------|
+| `5PSummary` | str | No | Yes | No | No | ✅ Primary |
+| `Action` | list[str] | No | Yes | No | No | Via `Process` |
+| `Category` | str | No | Yes | No | No | No |
+| `Client` | str | Yes | Yes | ✅ Yes | ✅ Yes | No |
+| `Competencies` | list[str] | No | Yes | No | No | No |
+| `Division` | str | No | Yes | No | ✅ Yes | No |
+| `Employer` | str | No | Yes | No | ✅ Yes | No |
+| `End_Date` | str | No | No | No | No | No |
+| `Era` | str | No | Yes | ✅ Yes | No | No |
+| `id` | str | **Yes** | No | No | No | No |
+| `Industry` | str | Yes | Yes | ✅ Yes | No | No |
+| `Interview Questions` | list[str] | No | Yes | No | No | No |
+| `Performance` | list[str] | No | Yes | No | No | ✅ Outcome |
+| `Person` | str | No | Yes | No | No | No |
+| `Place` | str | No | Yes | No | No | No |
+| `Process` | list[str] | No | Yes | No | No | ✅ Approach |
+| `Project` | str | No | Yes | No | ✅ Yes | No |
+| `Project Scope / Complexity` | str | No | No | No | No | No |
+| `public_tags` | list[str] | No | Yes | ✅ Yes | No | No |
+| `Purpose` | str | No | Yes | No | No | ✅ Goal |
+| `Result` | list[str] | No | Yes | No | No | Via `Performance` |
+| `Role` | str | No | Yes | ✅ Yes | No | No |
+| `Situation` | list[str] | No | Yes | No | No | No |
+| `Solution / Offering` | str | No | Yes | ✅ Yes | No | No |
+| `Start_Date` | str | No | No | No | No | No |
+| `Sub-category` | str | No | Yes | ✅ Yes | No | No |
+| `Task` | list[str] | No | Yes | No | No | No |
+| `Theme` | str | No | Yes | No | No | No |
+| `Title` | str | Yes | Yes | No | ✅ Soft | Via summary |
+| `Use Case(s)` | list[str] | No | Yes | No | No | No |
+
+**Notes:**
+- **Entity Detection** column shows fields used by `detect_entity()` for semantic router
+- **Soft** entity detection (Title) means detected but not used for hard Pinecone filtering
+- Date fields (`Start_Date`, `End_Date`) are primarily for Timeline View and chronological sorting
 
 ---
 
@@ -188,7 +256,8 @@ story["id"] = str(story_id).strip()  # Coerce to string
 # These fields accept strings or arrays
 list_fields = [
     "Situation", "Task", "Action", "Result",
-    "Process", "Performance", "Competencies", "Use Case(s)"
+    "Process", "Performance", "Competencies", "Use Case(s)",
+    "Interview Questions"
 ]
 
 for field in list_fields:
@@ -226,11 +295,19 @@ if "public_tags" in story and isinstance(story["public_tags"], str):
   "id": "101",
   "Title": "Platform Modernization at JPMorgan Chase",
   "Client": "JPMorgan Chase",
+  "Employer": "Accenture",
+  "Division": "Cloud Innovation Center",
+  "Project": "Platform Modernization",
   "Industry": "Financial Services",
   "Category": "Digital Transformation",
   "Sub-category": "Platform Engineering",
   "Solution / Offering": "Cloud Modernization",
   "Role": "Director of Platform Engineering",
+  "Theme": "Technical Leadership",
+  "Era": "Innovation Center (2019-2023)",
+  "Start_Date": "2019-03",
+  "End_Date": "2020-12",
+  "Project Scope / Complexity": "Enterprise-scale transformation",
 
   "Situation": [
     "Legacy monolithic architecture with 200+ microservice dependencies",
@@ -289,13 +366,27 @@ if "public_tags" in story and isinstance(story["public_tags"], str):
     "DevOps transformation"
   ],
 
-  "public_tags": ["kubernetes", "aws", "microservices", "cicd", "platform-engineering"]
+  "Interview Questions": [
+    "Tell me about a time you modernized a legacy platform",
+    "How did you reduce deployment time at JPMorgan Chase?",
+    "Describe your experience with cloud migration and Kubernetes"
+  ],
+
+  "public_tags": ["kubernetes", "aws", "microservices", "cicd", "platform-engineering"],
+  "content": ""
 }
 ```
 
 ---
 
 ## Field Evolution History
+
+### January 2026 - Entity Detection & Evaluation
+- Added entity fields: `Employer`, `Division`, `Project` (for semantic router)
+- Added `Interview Questions` field (for eval framework and semantic search)
+- Added date fields: `Start_Date`, `End_Date` (for Timeline View sorting)
+- Added classification: `Theme`, `Project Scope / Complexity`
+- Documented `content` field (reserved, currently unused)
 
 ### October 2025 - Filter Redesign
 - Added primary filters: `Industry`, `Solution / Offering`
@@ -425,5 +516,5 @@ if not all(query_token in story_tokens for query_token in query_tokens):
 
 ---
 
-*Last Updated: December 2025*
-*Version: 1.0*
+*Last Updated: January 30, 2026 (Entity Fields & Interview Questions)*
+*Version: 1.1 (Added Entity Detection Fields, Dates, Interview Questions)*
