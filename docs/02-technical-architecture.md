@@ -63,8 +63,8 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - ✅ 5-stage RAG pipeline with 98.1% eval pass rate (51/52)
 - ❌ Removed Entity Gate bouncer (was blocking legitimate queries)
 - ❌ Removed `classify_query_intent()` LLM call (redundant with router)
-- ✅ Semantic router now handles synthesis + out-of-scope detection
-- ✅ Expanded to 13 intent families (was 10)
+- ✅ Semantic router now handles synthesis + out-of-scope + narrative detection
+- ✅ Expanded to 14 intent families (was 10)
 - ✅ Centralized thresholds in `config/constants.py`
 - ✅ Unified SEARCH_TOP_K = 10 (was 100/7 conflict)
 - ✅ Title soft filtering (semantic search ranks naturally)
@@ -186,9 +186,10 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 - ❌ **Removed:** `classify_query_intent()` LLM call (GPT-4o-mini - redundant with router)
 - ✅ **Added:** Synthesis detection (intent_family == "synthesis")
 - ✅ **Added:** Out-of-scope industry detection (intent_family == "out_of_scope")
-- ✅ **Expanded:** 10 intent families → 13 intent families
+- ✅ **Added:** Narrative queries (intent_family == "narrative")
+- ✅ **Expanded:** 10 intent families → 14 intent families
 
-**Intent Families (13 categories):**
+**Intent Families (14 categories):**
 
 | Family | Example Queries |
 |--------|----------------|
@@ -203,20 +204,21 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 | **stakeholders** | "How does Matt handle difficult stakeholders?" |
 | **innovation** | "Tell me about the innovation center work" |
 | **agile_transformation** | "Tell me about agile transformation", "Scaling agile delivery" |
+| **narrative** | "What's Matt's professional identity?", "Builder vs maintainer?" |
 | **synthesis** | "What's Matt's professional narrative?", "Summarize Matt's career themes" |
 | **out_of_scope** | Industry queries outside Matt's domain (graceful redirect) |
 
 **Example Classification:**
 
 ```python
-# HARD_ACCEPT (0.85 similarity)
+# HARD_ACCEPT (score 0.85, above 0.80 threshold)
 "How did Matt scale agile at JPMorgan?" → intent_family: "delivery"
 
-# SOFT_ACCEPT (0.74 similarity)
+# SOFT_ACCEPT (score 0.74, above 0.40 threshold)
 "What's Matt's approach to team growth?" → intent_family: "team_scaling"
 # Logged for review, but accepted
 
-# REJECTED (0.55 similarity)
+# REJECTED (score 0.35, below 0.40 threshold)
 "What's the weather in New York?" → intent_family: None
 # Triggers off-domain response
 ```

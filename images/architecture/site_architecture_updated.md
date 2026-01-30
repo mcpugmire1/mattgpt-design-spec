@@ -120,7 +120,7 @@ Homepage (/)
 ### Query Validation (5-Stage RAG Pipeline)
 - **Semantic Router:** Dual-threshold (0.80/0.40, updated Jan 2026)
 - **Pattern Filters:** 10+ regex categories (nonsense_filters.jsonl)
-- **Intent Families:** 13 categories (background, behavioral, technical, synthesis, out_of_scope, etc.)
+- **Intent Families:** 14 categories (background, behavioral, technical, narrative, synthesis, out_of_scope, etc.)
 
 ## Mobile Responsive
 - **Breakpoints:** 767px (mobile), 768-1024px (tablet), 1024+ (desktop)

@@ -38,7 +38,7 @@ SYSTEM_CONFIG = {
         "intent_families": [
             "background", "behavioral", "delivery",
             "team_scaling", "leadership", "technical",
-            "synthesis", "out_of_scope", "agile_transformation"
+            "narrative", "synthesis", "out_of_scope", "agile_transformation"
         ]
     },
     "rag": {

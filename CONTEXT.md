@@ -33,9 +33,9 @@ Updated design specification to reflect current RAG pipeline implementation from
 - ❌ `classify_query_intent()` LLM call (GPT-4o-mini redundant with semantic router)
 
 **3. Semantic Router Enhancements:**
-- Now handles: intent classification, synthesis detection, out-of-scope detection
-- Expanded: 10 intent families → 13 intent families
-- New families: `synthesis`, `out_of_scope`, `agile_transformation`
+- Now handles: intent classification, synthesis detection, narrative detection, out-of-scope detection
+- Expanded: 10 intent families → 14 intent families
+- New families: `narrative`, `synthesis`, `out_of_scope`, `agile_transformation`
 
 **4. Updated Thresholds:**
 ```python
