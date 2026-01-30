@@ -157,7 +157,7 @@ One of the core technical innovations in MattGPT is the **semantic search** appr
 **The Algorithm:**
 
 ```python
-def semantic_search(query: str, top_k: int = 30) -> Dict:
+def semantic_search(query: str, top_k: int = 10) -> Dict:
     """
     Pure semantic retrieval with confidence-based filtering
     to ensure high-quality, relevant results.
@@ -181,7 +181,7 @@ def semantic_search(query: str, top_k: int = 30) -> Dict:
     # Three-tier confidence system
     if top_score >= 0.25:
         confidence = "high"
-    elif top_score >= 0.15:
+    elif top_score >= 0.20:
         confidence = "low"
     else:
         confidence = "none"
@@ -197,7 +197,7 @@ def semantic_search(query: str, top_k: int = 30) -> Dict:
 
 - **Semantic Understanding:** Recognizes that "bootstrap it" and "start a new project" are conceptually similar
 - **Confidence Scoring:** Three-tier system (high/low/none) ensures quality results
-- **Threshold Gating:** Prevents low-quality matches from appearing (minimum 0.15 similarity)
+- **Threshold Gating:** Prevents low-quality matches from appearing (minimum 0.20 similarity)
 - **Intent Recognition:** Understands user goals (interview prep, due diligence, pitch)
 
 This approach was validated through manual testing of common query patterns, demonstrating effective semantic understanding and confidence-based filtering.
@@ -264,7 +264,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Handles synonyms, related concepts, and contextual understanding
 
 **Confidence-Based Filtering:**
-- Three-tier system: high (≥0.25), low (≥0.15), none (<0.15)
+- Three-tier system: high (≥0.25), low (≥0.20), none (<0.20)
 - Prevents low-quality matches from appearing
 - Ensures results are relevant and trustworthy
 
@@ -344,7 +344,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 Early semantic search was too fuzzy. Ask about "JPMorgan," and it might return stories about "banking transformation" that never mention the client by name. The challenge was balancing broad conceptual understanding with precision.
 
-The solution was confidence-based filtering with metadata enhancement. By implementing a three-tier confidence system (high ≥ 0.25, low ≥ 0.15, none < 0.15) and combining vector similarity with client/industry/domain filters, the system now delivers both relevant and precise results. Getting the threshold values right took three weeks of tuning against real queries.
+The solution was confidence-based filtering with metadata enhancement. By implementing a three-tier confidence system (high ≥ 0.25, low ≥ 0.20, none < 0.20) and combining vector similarity with client/industry/domain filters, the system now delivers both relevant and precise results. Getting the threshold values right took three weeks of tuning against real queries.
 
 ### The Hallucination Problem
 
