@@ -570,7 +570,7 @@ Eval framework showed 15% improvement in query relevance (from 83% → 98% pass 
 **Related Documentation:**
 - [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
 - [Data Model](/mattgpt-design-spec/docs/10-data-model) - JSONL schema and field definitions
-- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-rag-quality-evaluation) - How evals validate pipeline changes
+- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - How evals validate pipeline changes
 
 ---
 

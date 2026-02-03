@@ -1,45 +1,142 @@
-# RAG Quality Evaluation Framework
+# Testing & Quality Assurance
 
-**How MattGPT maintains 98.1% accuracy through eval-driven development**
+**How MattGPT maintains quality through 3-layer testing strategy**
 
-> This document describes the evaluation framework that validates RAG pipeline quality, prevents regressions, and guides architectural decisions through systematic testing of 60+ golden queries.
+> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (98.1% pass rate), and BDD/E2E tests for UI workflows (43 scenarios).
 
 ---
 
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Query Categories](#query-categories)
-3. [Evaluation Criteria](#evaluation-criteria)
-4. [Running Evaluations](#running-evaluations)
-5. [Eval-Driven Development](#eval-driven-development)
-6. [Adding New Test Cases](#adding-new-test-cases)
-7. [Metrics & Reporting](#metrics--reporting)
+2. [Unit Tests](#unit-tests)
+3. [RAG Quality Evaluation](#rag-quality-evaluation)
+4. [BDD/E2E Tests](#bdde2e-tests-explore-stories)
+5. [Running Tests](#running-tests)
+6. [Quality Gates](#quality-gates)
 
 ---
 
 ## Overview
 
-**Purpose:** Prevent regressions, validate pipeline changes, and ensure consistent RAG quality
+**3-Layer Testing Strategy:**
 
-**Framework:** pytest-based golden query testing
-**Coverage:** 60+ queries across 6 categories
-**Current Pass Rate:** 98.1% (60/61)
-**Location:** `tests/eval_rag_quality.py`
+```
+┌─────────────────────────────────────────┐
+│ Layer 3: BDD/E2E Tests                  │
+│ - 43 Playwright scenarios               │
+│ - Full UI workflows                     │
+│ - ~25 minute runtime                    │
+├─────────────────────────────────────────┤
+│ Layer 2: RAG Quality Evaluation         │
+│ - 60+ golden queries                    │
+│ - 98.1% pass rate (60/61)               │
+│ - Eval-driven development               │
+├─────────────────────────────────────────┤
+│ Layer 1: Unit Tests                     │
+│ - 12 test files                         │
+│ - Component isolation                   │
+│ - Fast feedback (<1 min)                │
+└─────────────────────────────────────────┘
+```
 
-### Why This Matters
+**Quality Metrics:**
+- **Unit Test Coverage:** 12 files testing core components
+- **RAG Eval Pass Rate:** 98.1% (60/61 queries)
+- **E2E Test Pass Rate:** 100% (43/43 scenarios)
+- **Total Test Runtime:** ~30 minutes (full suite)
 
-RAG systems are notoriously hard to test. LLM outputs are non-deterministic, semantic similarity is fuzzy, and "good enough" is subjective. Without systematic evaluation, pipeline changes become high-risk guesswork.
+**Why This Matters:**
 
-MattGPT's eval framework provides:
-- **Regression prevention:** Catch breaking changes before deployment
-- **Threshold calibration:** Data-driven tuning of confidence scores
-- **Architecture validation:** Quantify impact of major refactors (e.g., Entity Gate removal)
-- **Quality gates:** Block merges if eval pass rate drops below 95%
+RAG systems are notoriously hard to test. LLM outputs are non-deterministic, semantic similarity is fuzzy, and "good enough" is subjective. Without systematic testing, pipeline changes become high-risk guesswork.
+
+MattGPT's testing strategy provides:
+- **Fast feedback:** Unit tests catch component issues immediately
+- **Regression prevention:** RAG evals catch breaking changes before deployment
+- **User experience validation:** E2E tests verify complete workflows
+- **Confidence in refactoring:** Architecture changes backed by data
 
 ---
 
-## Query Categories
+## Unit Tests
+
+**Location:** `tests/unit/`
+**Framework:** pytest
+**Runtime:** <1 minute
+
+### Test Files (12 total)
+
+```
+tests/unit/
+├── test_rag_service.py           # RAG pipeline orchestration
+├── test_backend_service.py       # Story loading, filtering
+├── test_semantic_router.py       # Intent classification
+├── test_filters.py               # Filter logic (Client, Theme, etc.)
+├── test_scoring.py               # Confidence scoring, ranking
+├── test_validation.py            # Input validation, nonsense detection
+├── test_formatting.py            # Response formatting, source citations
+├── test_story_intelligence.py    # Story analysis, metadata extraction
+└── ... (4 more files)
+```
+
+### What Unit Tests Cover
+
+**Component Isolation:**
+- RAG service methods (search, ranking, context assembly)
+- Semantic router intent detection
+- Filter logic (exact matches, multi-field entity search)
+- Confidence scoring calculations
+- Input validation (pattern matching, empty queries)
+- Response formatting (XML isolation, source extraction)
+
+**Example Test:**
+
+```python
+def test_semantic_router_intent_detection():
+    """Verify semantic router correctly classifies query intents"""
+    test_cases = [
+        ("Show me JP Morgan projects", "entity_detection"),
+        ("How did Matt scale teams?", "behavioral"),
+        ("Tell me about platform engineering", "technical"),
+        ("What's Matt's story?", "narrative"),
+    ]
+
+    for query, expected_intent in test_cases:
+        result = semantic_router.classify(query)
+        assert result["intent"] == expected_intent
+        assert result["score"] >= 0.40  # SOFT_ACCEPT threshold
+```
+
+**Running Unit Tests:**
+
+```bash
+pytest tests/unit/ -v
+```
+
+---
+
+## RAG Quality Evaluation
+
+**Location:** `tests/eval_rag_quality.py`
+**Framework:** pytest-based golden query testing
+**Coverage:** 60+ queries across 6 categories
+**Current Pass Rate:** 98.1% (60/61)
+
+### Why RAG Evals Matter
+
+RAG evals validate end-to-end pipeline quality, not just component behavior. They catch:
+- **Threshold calibration issues:** Queries that should pass but don't (or vice versa)
+- **Entity pinning failures:** Named entities not ranked #1
+- **Voice regressions:** Meta-commentary creeping back in
+- **Architecture changes:** Validate major refactors (e.g., Entity Gate removal)
+
+**Quality Gates:**
+- **Pre-Merge Requirement:** Eval pass rate ≥ 95%
+- **Production Deploy:** Eval pass rate ≥ 98%
+
+---
+
+### Query Categories
 
 ### 1. Entity Detection (Client, Division, Employer)
 
@@ -127,7 +224,7 @@ Tests query validation and graceful rejection.
 
 ---
 
-## Evaluation Criteria
+### Evaluation Criteria
 
 ### Source Relevance
 
@@ -176,7 +273,7 @@ Marketing and landing page queries fail HARD if meta-commentary slips through. "
 
 ---
 
-## Running Evaluations
+### Running RAG Evaluations
 
 ### Basic Usage
 
@@ -213,7 +310,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ---
 
-## Eval-Driven Development
+### Eval-Driven Development
 
 ### How Evals Guided the January 2026 Pipeline Cleanup
 
@@ -261,7 +358,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ---
 
-## Adding New Test Cases
+### Adding New Test Cases
 
 ### Test Case Format
 
@@ -304,7 +401,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ---
 
-## Metrics & Reporting
+### Metrics & Reporting
 
 ### Pass Rate Breakdown
 
@@ -344,7 +441,7 @@ By Category:
 
 ---
 
-## Future Enhancements
+### Future Enhancements
 
 **Planned Improvements:**
 
@@ -358,16 +455,93 @@ By Category:
 
 ---
 
+## BDD/E2E Tests (Explore Stories)
+
+**Location:** `tests/bdd/`
+**Framework:** pytest-bdd + Playwright
+**Runtime:** ~25 minutes
+
+```bash
+pytest tests/bdd -v
+```
+
+**Coverage (43 scenarios):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, responsive layout, edge cases.
+
+**Status:** 43 passed, 0 skipped
+
+**Rationale:** One doc, one truth. The old pyramid framework is conceptual fluff that doesn't reflect reality.
+
+---
+
+## Running Tests
+
+### Full Test Suite
+
+```bash
+# Run all tests (unit + RAG evals + E2E)
+pytest tests/ -v
+
+# Runtime: ~30 minutes
+```
+
+### Individual Test Layers
+
+```bash
+# Unit tests only (<1 minute)
+pytest tests/unit/ -v
+
+# RAG evaluations only (~3 minutes)
+pytest tests/eval_rag_quality.py -v
+
+# E2E tests only (~25 minutes)
+pytest tests/bdd/ -v
+```
+
+### CI/CD Integration
+
+```yaml
+# .github/workflows/test.yml (example)
+- name: Run Unit Tests
+  run: pytest tests/unit/ -v
+
+- name: Run RAG Evaluations
+  run: pytest tests/eval_rag_quality.py -v
+
+- name: Run E2E Tests
+  run: pytest tests/bdd/ -v
+```
+
+---
+
+## Quality Gates
+
+**Pre-Merge Requirements:**
+- ✅ All unit tests passing (12/12)
+- ✅ RAG eval pass rate ≥ 95% (57+/61)
+- ✅ E2E tests passing (43/43)
+
+**Production Deploy Requirements:**
+- ✅ All unit tests passing (12/12)
+- ✅ RAG eval pass rate ≥ 98% (60+/61)
+- ✅ E2E tests passing (43/43)
+- ✅ Manual smoke test (5 queries + 2 UI workflows)
+
+**Rationale:** 60 queries is small enough that 1-2 failures indicate real issues, not statistical noise. E2E tests validate complete user workflows work end-to-end.
+
+---
+
 ## Key Takeaways
 
-1. **Eval-driven development prevents regressions:** Entity Gate removal validated through evals
-2. **Threshold tuning requires data:** 0.72 → 0.40 was guided by query score analysis
-3. **Voice quality is measurable:** Meta-commentary detection is binary (no subjective "feels right")
-4. **Small test suites catch big issues:** 60 queries found 13% failure rate from Entity Gate
+1. **3-layer strategy catches everything:** Unit tests (components), RAG evals (pipeline), E2E (workflows)
+2. **Fast feedback loop:** Unit tests run in <1 minute, catch issues immediately
+3. **Eval-driven development prevents regressions:** Entity Gate removal validated through evals
+4. **Threshold tuning requires data:** 0.72 → 0.40 was guided by query score analysis
+5. **Voice quality is measurable:** Meta-commentary detection is binary (no subjective "feels right")
+6. **E2E validates reality:** 43 scenarios ensure complete user workflows work end-to-end
 
 **The Bottom Line:**
 
-> Without systematic evaluation, RAG quality is guesswork. With evals, architectural changes become low-risk, data-driven decisions.
+> Without systematic testing, quality is guesswork. With 3-layer testing, architectural changes become low-risk, data-driven decisions backed by 100+ test cases.
 
 ---
 

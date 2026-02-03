@@ -62,7 +62,7 @@ SEARCH_TOP_K = 10       # Unified (was 100/7 conflict)
 - Updated threshold values throughout
 
 **New Documentation:**
-- Created `docs/11-rag-quality-evaluation.md`
+- Created `docs/11-testing-and-quality.md`
   - Eval framework overview (98.1% pass rate, 60+ golden queries)
   - Query categories (6): entity, behavioral, technical, marketing, synthesis, edge cases
   - Evaluation criteria: source relevance, entity pinning, meta-commentary, confidence thresholds

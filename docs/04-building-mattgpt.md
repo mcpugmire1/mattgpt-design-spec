@@ -559,7 +559,7 @@ Every line of code, every STAR story, every design decision serves that mission:
 - [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
 - [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
 - [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Wireframes and interaction design
-- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-rag-quality-evaluation) - How evals validate quality (98.1% pass rate)
+- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - How evals validate quality (98.1% pass rate)
 
 ---
 

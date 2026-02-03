@@ -71,11 +71,13 @@ This repo organizes design documentation into four key areas:
   - Voice principles and response templates
   - Tone calibration and situational responses
 
-### 6. RAG Quality Evaluation
-- **[11-rag-quality-evaluation.md](docs/11-rag-quality-evaluation.md)**
-  - Evaluation framework (98.1% pass rate, 60+ golden queries)
-  - Query categories and evaluation criteria
-  - Eval-driven development process
+### 6. Testing & Quality Assurance
+- **[11-testing-and-quality.md](docs/11-testing-and-quality.md)**
+  - 3-layer testing strategy: unit tests, RAG evals, BDD/E2E
+  - 12 unit test files (component isolation, <1 min runtime)
+  - RAG evaluation framework (98.1% pass rate, 60+ golden queries)
+  - 43 BDD/E2E scenarios (Playwright + pytest-bdd, ~25 min runtime)
+  - Quality gates and eval-driven development
   - How evals guided January 2026 pipeline cleanup
 
 ### 7. Data Pipeline & Ingestion
