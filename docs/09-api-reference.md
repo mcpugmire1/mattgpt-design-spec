@@ -89,7 +89,7 @@ is_portfolio_query_semantic(
 - `best_intent` (str) - Best matching canonical intent
 - `intent_family` (str) - Intent category (e.g., "background", "behavioral")
 
-**Intent Families (11 categories):**
+**Intent Families (15 categories):**
 - `background` - Career overview questions
 - `behavioral` - STAR behavioral interview questions
 - `delivery` - Delivery transformation and results
@@ -101,6 +101,10 @@ is_portfolio_query_semantic(
 - `stakeholders` - Stakeholder management
 - `innovation` - Innovation center and innovation leadership
 - `agile_transformation` - Agile and digital transformation
+- `narrative` - Professional identity and career narrative
+- `synthesis` - Cross-cutting themes and patterns
+- `out_of_scope` - Off-domain queries (retail, sports, etc.)
+- `personal` - Personal questions (age, family, salary, identity)
 
 **Helper Functions:**
 
@@ -152,8 +156,8 @@ semantic_search(
 
 **Confidence Thresholds:**
 - `CONFIDENCE_HIGH = 0.25` - Strong match, show "Found X stories"
-- `CONFIDENCE_LOW = 0.15` - Borderline, show "Relevance may be low"
-- Below 0.15 = "none" - Show "No strong matches"
+- `CONFIDENCE_LOW = 0.20` - Borderline, show "Relevance may be low" (raised from 0.15 in Jan 2026)
+- Below 0.20 = "none" - Show "No strong matches"
 
 **Vocabulary Initialization:**
 
@@ -326,8 +330,8 @@ Score <  0.40  → REJECT (off-domain, show suggestions)
 **Result Confidence (RAG Service):**
 ```
 Top score >= 0.25  → HIGH confidence ("Found X stories")
-Top score >= 0.15  → LOW confidence ("Relevance may be low")
-Top score <  0.15  → NONE ("No strong matches")
+Top score >= 0.20  → LOW confidence ("Relevance may be low")
+Top score <  0.20  → NONE ("No strong matches")
 ```
 
 ---

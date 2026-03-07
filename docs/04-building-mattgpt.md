@@ -313,7 +313,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 **5-Stage RAG Pipeline (January 2026):**
 - **Stage 1:** Rules-based nonsense detection (regex patterns)
-- **Stage 2:** Semantic router with 14 intent families (intent classification + out-of-scope detection)
+- **Stage 2:** Semantic router with 15 intent families (intent classification + out-of-scope/personal detection)
 - **Stage 3:** Confidence gating on Pinecone results (HIGH ≥0.25, LOW ≥0.20)
 - **Stage 4:** Entity detection & story pinning (Client, Employer, Division, Title)
 - **Stage 5:** Intent-aware ranking with context isolation (narrative vs entity queries)
@@ -374,7 +374,7 @@ The cleanup removed both:
 - **Entity Gate removed:** Was rejecting valid narrative/synthesis queries
 - **LLM intent classification removed:** Redundant with semantic router (which uses embeddings, not LLM calls)
 
-The semantic router now handles everything: 14 intent families (including narrative, synthesis, out-of-scope), dual-threshold classification (0.80 hard accept / 0.40 soft accept), and graceful rejection with suggestion chips. Eval quality improved to 98.1% (60/61) while reducing costs and latency.
+The semantic router now handles everything: 15 intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification (0.80 hard accept / 0.40 soft accept), and graceful rejection with suggestion chips. Eval quality improved to 98.4% (60/61) while reducing costs and latency.
 
 ---
 

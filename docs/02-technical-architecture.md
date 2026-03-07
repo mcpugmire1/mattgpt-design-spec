@@ -112,7 +112,7 @@ Query → Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 → LLM Respon
 - Blocks 60%+ of nonsense before semantic processing
 
 **Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
-- Embedding-based similarity matching against 14 intent families
+- Embedding-based similarity matching against 15 intent families
 - Dual-threshold system: HARD_ACCEPT (0.80), SOFT_ACCEPT (0.40)
 - Detects synthesis queries (no Pinecone search needed)
 - Flags out-of-scope industries gracefully
@@ -148,7 +148,7 @@ User Question: "How did Matt scale engineering teams?"
 [Layer 1: Validation]
 ├─ is_nonsense() → reject if regex match (weather, sports, etc.)
 ├─ Semantic router → reject if score < 0.40
-└─ Returns intent_family (14 families: narrative, synthesis, technical, etc.)
+└─ Returns intent_family (15 families: narrative, synthesis, personal, technical, etc.)
       ↓
 [Layer 2: Fast Exit Checks]
 ├─ Out-of-scope check: if intent_family == "out_of_scope" → graceful redirect

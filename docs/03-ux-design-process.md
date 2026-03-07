@@ -78,7 +78,7 @@ Ask MattGPT
 │   └── Conversation history with context management
 └── Query Validation (5-Stage RAG Pipeline)
     ├── Semantic router (dual-threshold 0.80/0.40, updated Jan 2026)
-    └── 14 intent families + out-of-scope detection
+    └── 15 intent families + out-of-scope/personal detection
 
 About Matt
 ├── Hero Header
