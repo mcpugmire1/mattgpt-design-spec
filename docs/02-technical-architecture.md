@@ -64,7 +64,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - ❌ Removed Entity Gate bouncer (was blocking legitimate queries)
 - ❌ Removed `classify_query_intent()` LLM call (redundant with router)
 - ✅ Semantic router now handles synthesis + out-of-scope + narrative detection
-- ✅ Expanded to 14 intent families (was 10)
+- ✅ Expanded to 15 intent families (was 10)
 - ✅ Centralized thresholds in `config/constants.py`
 - ✅ Unified SEARCH_TOP_K = 10 (was 100/7 conflict)
 - ✅ Title soft filtering (semantic search ranks naturally)
@@ -406,9 +406,10 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 - ✅ **Added:** Synthesis detection (intent_family == "synthesis")
 - ✅ **Added:** Out-of-scope industry detection (intent_family == "out_of_scope")
 - ✅ **Added:** Narrative queries (intent_family == "narrative")
-- ✅ **Expanded:** 10 intent families → 14 intent families
+- ✅ **Added:** Personal query detection (intent_family == "personal")
+- ✅ **Expanded:** 10 intent families → 15 intent families
 
-**Intent Families (14 categories):**
+**Intent Families (15 categories):**
 
 | Family | Example Queries |
 |--------|----------------|
@@ -425,6 +426,7 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 | **agile_transformation** | "Tell me about agile transformation", "Scaling agile delivery" |
 | **narrative** | "What's Matt's professional identity?", "Builder vs maintainer?" |
 | **synthesis** | "What's Matt's professional narrative?", "Summarize Matt's career themes" |
+| **personal** | "How old is Matt?", "What's Matt's salary?", "Where does Matt live?" |
 | **out_of_scope** | Industry queries outside Matt's domain (graceful redirect) |
 
 **Example Classification:**
@@ -917,7 +919,7 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
 - ✅ **5-stage RAG pipeline** with 98.1% eval pass rate (60/61)
 - ✅ **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
-- ✅ **Semantic router** with 14 intent families + out-of-scope detection
+- ✅ **Semantic router** with 15 intent families + out-of-scope/personal detection
 - ✅ 130+ STAR-structured project stories
 - ✅ Semantic search with confidence scoring and metadata filtering
 - ✅ **Timeline View** with Era-based career progression
