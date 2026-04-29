@@ -1,8 +1,10 @@
 # Migration Architecture: Streamlit → Microfrontends + Serverless
 
-**Status:** 📋 Planning Document (Q1 2026)
-**Purpose:** Technical blueprint for migrating from Streamlit monolith to decoupled React architecture
+**Status:** Future consideration — not currently planned
+**Purpose:** Technical blueprint for a potential migration from Streamlit to decoupled React architecture
 **Target:** Production-ready, independently deployable, highly scalable system
+
+> **Context (April 2026):** MattGPT was originally scoped with a planned migration to React + FastAPI. The Streamlit MVP has continued to meet all functional requirements through ongoing development with AI-assisted tooling — absorbing Role Match, mobile responsive design, query analytics, and an expanded eval framework without hitting structural walls. The migration remains a future consideration but is not currently planned. The architecture below captures the approach if and when a forcing function emerges (scaling limit, specific design constraint that Streamlit can't meet, or external requirement).
 
 ---
 
@@ -10,7 +12,7 @@
 
 1. [Current State Analysis](#current-state-analysis)
 2. [Target Architecture](#target-architecture)
-3. [Migration Strategy](#migration-strategy)
+3. [Reference Migration Strategy](#reference-migration-strategy)
 4. [Technology Stack](#technology-stack)
 5. [Implementation Roadmap](#implementation-roadmap)
 6. [Cost Analysis](#cost-analysis)
@@ -32,6 +34,8 @@
 - **Development Velocity:** Slow - Changes ripple across codebase
 
 **Identified Pain Points:**
+*These were the concerns at original scoping (October 2025). Many have been substantially addressed through subsequent refactoring and modular extraction work — see [REFACTORING_HISTORY.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/REFACTORING_HISTORY.md) for the modular architecture transition.*
+
 1. ❌ **Brittle Codebase:** Change one feature → breaks unrelated features
 2. ❌ **Poor Separation of Concerns:** UI rendering mixed with RAG pipeline logic
 3. ❌ **Limited Scalability:** Can't scale components independently
@@ -313,7 +317,7 @@ Analytics Domain:
 
 ---
 
-## Migration Strategy
+## Reference Migration Strategy
 
 ### Phase 0: Preparation (Weeks 1-4)
 
@@ -815,21 +819,9 @@ Total (with Pinecone): $120-150/month
 
 ## Conclusion
 
-This migration strategy balances **ambition with pragmatism**:
+If a forcing function emerges, this document provides a phased approach that minimizes risk. The strategy is incremental — Streamlit runs throughout the migration, each phase ships independently, and the architecture itself is decoupled enough that domains can move at different rates.
 
-- **Demonstrates Enterprise Architecture:** Shows hiring managers you can design distributed systems
-- **Incremental Execution:** Doesn't require Big Bang rewrite, can ship in phases
-- **Risk Mitigation:** Keeps Streamlit running until React is ready
-- **Future-Proof:** Architecture scales to real production needs
-
-**Recommended Approach:**
-1. Ship polished Streamlit NOW (1-2 weeks) for job search
-2. Document this architecture (shows design thinking)
-3. Build one MFE + one Lambda (proves technical skill)
-4. Use in interviews to demonstrate strategic thinking
-5. Complete full migration when you have a job offer and time
-
-**Remember:** This document is as valuable as the code. It shows you can think architecturally, not just code tactically.
+Until then, it serves as portfolio content demonstrating distributed systems design thinking — microfrontend composition, domain-driven serverless backend, event-driven communication, and decoupled data ownership.
 
 ---
 
@@ -841,6 +833,6 @@ This migration strategy balances **ambition with pragmatism**:
 
 ---
 
-*Last Updated: October 2025*
+*Last Updated: April 29, 2026 (Reframed from planned Q1 2026 to future consideration)*
 *Status: Planning / Reference Architecture*
-*Author: Matt Pugmire with Claude Code assistance*
+*Author: Matt Pugmire*

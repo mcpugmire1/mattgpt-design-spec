@@ -451,7 +451,7 @@ By Category:
 4. **Eval Coverage Gaps:** Add "tell me more" follow-up queries (currently missing)
 5. **A/B Testing Framework:** Compare threshold changes with statistical significance
 
-**Phase 2 Integration:** Eval suite will port directly to React/FastAPI architecture (framework-agnostic pytest tests).
+**Migration note:** Eval suite is framework-agnostic (pure pytest) and would port directly to a React/FastAPI architecture if needed.
 
 ---
 

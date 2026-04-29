@@ -1,17 +1,18 @@
 # Technical Architecture
 
-**MattGPT: From Streamlit MVP to React Rebuild**
+**MattGPT: Architecture & Technical Evolution**
 
-> This document outlines the technical architecture evolution of MattGPT, demonstrating intentional trade-off awareness and strategic planning from rapid prototyping to production polish.
+> This document outlines the technical architecture of MattGPT, demonstrating intentional trade-off awareness from rapid prototyping through production feature delivery.
 
 ---
 
 ## Architecture Roadmap Overview
 
-MattGPT's architecture follows a two-phase evolution:
+MattGPT's architecture evolved through intentional phases:
 
-1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment
-2. **Phase 2 (React Rebuild):** Better performance and maintainability
+1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment — ✅ Complete
+2. **Production (Streamlit):** Ongoing feature delivery — Role Match, mobile responsive, eval framework, query analytics
+3. **Future consideration:** React + FastAPI migration if a forcing function emerges (see [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture))
 
 ---
 
@@ -610,7 +611,7 @@ What would you like to know about Matt's experience?
 - **A/B testing:** Experiment with threshold values (e.g., 0.40 vs 0.45 for soft accept)
 - **Analytics dashboard:** Visualize rejection reasons, borderline cases, intent distribution
 
-**Phase 2 migration note:** The semantic router logic is framework-agnostic and will port directly to React/FastAPI architecture.
+**Migration note:** The semantic router logic is framework-agnostic and would port directly to a React/FastAPI architecture if needed.
 
 ---
 
@@ -757,12 +758,12 @@ story_index = 0  # Select by index, build query from actual title
 
 ---
 
-## Phase 2: React Rebuild
+## Future Consideration: React Rebuild
 
-**Status:** 🎯 Planned (Q1 2026)
-**Purpose:** Better performance and maintainability
+**Status:** Deferred — no forcing function currently justifies a rewrite
+**Purpose:** Better performance and maintainability if scaling or design constraints emerge
 
-The Streamlit MVP validated the RAG architecture and UX patterns. React will make it production-quality with modern tooling and mobile-first design.
+The Streamlit MVP validated the RAG architecture and UX patterns, and has continued to absorb new features (Role Match, mobile responsive, query analytics, eval framework) without hitting structural walls. A React rebuild remains a future option if specific requirements arise that Streamlit can't meet. See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach.
 
 ### Tech Stack
 
@@ -850,12 +851,13 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - **Stack:** Streamlit monolith - fast to build, sufficient for use case
 - **Result:** Validated RAG architecture and UX in 2 weeks vs 3+ months
 
-**Phase 2: Production Polish (Q1 2026)**
-- **Purpose:** Better performance and maintainability
-- **Stack:** React + FastAPI - modern tooling, mobile-first
+**Future: React + FastAPI (if forcing function emerges)**
+- **Purpose:** Better performance and maintainability at scale
+- **Stack:** React + FastAPI — modern tooling, mobile-first
 - **Benefit:** Preserve core IP (RAG pipeline), improve presentation layer
+- **Current status:** Deferred — Streamlit continues to meet all functional requirements
 
-**Principle:** Start simple, evolve intentionally
+**Principle:** Start simple, evolve intentionally — and don't rewrite what's working
 
 ---
 
@@ -929,12 +931,16 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern
 
-### What's Next (Phase 2 - Q1 2026)
+### Future Consideration: React Migration
 
-- 🎯 React + Next.js frontend rebuild
-- 🎯 FastAPI backend
-- 🎯 Mobile-first design from the start
-- 🎯 Same RAG pipeline, better UI
+If a forcing function emerges (scaling limit, design constraint Streamlit can't meet, external requirement):
+
+- React + Next.js frontend rebuild
+- FastAPI backend
+- Mobile-first design from the start
+- Same RAG pipeline, better UI
+
+See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach.
 
 ---
 
@@ -978,5 +984,5 @@ The Streamlit MVP validated the RAG architecture and UX patterns. React will mak
 
 ---
 
-*Last Updated: January 30, 2026 (RAG Pipeline Update)*
-*Version: 1.2 (5-Stage Pipeline, Thresholds, Entity Gate Removal)*
+*Last Updated: April 29, 2026 (React migration reframe — deferred, no forcing function)*
+*Version: 1.3*

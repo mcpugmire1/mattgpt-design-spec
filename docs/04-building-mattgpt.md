@@ -438,13 +438,18 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 ---
 
-### NEXT (Phase 2: Efficiency and Search Intelligence)
+### NEXT (Ongoing: Feature Delivery on Streamlit)
 
-**Goal:** Enhance search quality, streamline information delivery, and align content with industry standards.
+**Goal:** Continue delivering features on the proven Streamlit platform. Enhance search quality, add capabilities, and align content with industry standards.
 
-**Timeline:** Q1 2026
+**Recent Deliveries (Q1–Q2 2026):**
+- ✅ Role Match — paste a JD, see how Matt's experience maps to requirements (Phases 1-3 shipped)
+- ✅ Mobile responsive design
+- ✅ Query analytics (Google Sheets logger, 21-column schema)
+- ✅ Eval framework expanded to 61 golden queries (98.1% pass rate)
+- ✅ Data quality pass across 85+ stories
 
-**Planned Features:**
+**Open Items:**
 
 🎯 **Public Tags Enrichment**
 - Complete SFIA / O\*NET / LinkedIn taxonomy mapping
@@ -455,17 +460,14 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - Fine-tune confidence thresholds based on query intent
 - Implement query rewriting for common patterns
 - Add spell-check and autocomplete
-- Optimize embedding model performance
 
 🎯 **Enhanced UX**
 - Copy-to-clipboard for quick story sharing
 - Portfolio integration (Notion, LinkedIn sync)
-- Improved mobile responsiveness
 
-🎯 **React + FastAPI Migration**
-- Decouple frontend from Streamlit
-- Implement micro-frontend architecture
-- Better performance and maintainability
+🎯 **React + FastAPI Migration (future consideration)**
+- Decouple frontend from Streamlit if a forcing function emerges
+- See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach
 
 ---
 
@@ -563,5 +565,5 @@ Every line of code, every STAR story, every design decision serves that mission:
 
 ---
 
-*Last Updated: January 30, 2026 (Tech Stack & January 2026 Updates)*
-*Version: 1.2 (Updated with 5-Stage Pipeline, Eval Framework)*
+*Last Updated: April 29, 2026 (React migration reframe, recent deliveries added)*
+*Version: 1.3*

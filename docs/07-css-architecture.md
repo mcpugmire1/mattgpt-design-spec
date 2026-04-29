@@ -401,7 +401,7 @@ Keep component-specific styles scoped to prevent conflicts:
 ✅ Component-scoped styling
 ⏳ Dark mode toggle UI
 
-### Phase 2: React Migration (Planned Q1 2026)
+### Future: React Migration (if forcing function emerges)
 - Convert to CSS Modules or Styled Components
 - Implement full dark mode with system preference detection
 - Add CSS-in-JS for dynamic theming
@@ -417,5 +417,5 @@ Keep component-specific styles scoped to prevent conflicts:
 
 ---
 
-*Last Updated: December 2025*
-*Version: 1.0 (Initial CSS Architecture Documentation)*
+*Last Updated: April 29, 2026 (React migration reframe)*
+*Version: 1.1*
