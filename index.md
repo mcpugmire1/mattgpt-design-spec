@@ -45,7 +45,7 @@ The Credibility Engine — WHY, HOW, WHAT framework, user personas, data governa
 **[🏗️ Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture)**
 Two-phase evolution from Streamlit MVP to React rebuild, tech stack decisions, and strategic trade-offs.
 
-**[🚀 Migration Architecture](/mattgpt-design-spec/docs/05-migration-architecture)**
+**[🚀 Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture)**
 Technical blueprint for Phase 2 React migration — microfrontends, serverless backend, and step-by-step implementation roadmap.
 
 ### Design & Implementation
