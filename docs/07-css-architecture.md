@@ -237,17 +237,8 @@ Dark mode is implemented by swapping CSS variable values:
 ```
 
 ### Implementation Status
-✅ CSS variable system in place (global_styles.py:28-122)
-⏳ Dark mode toggle UI - pending implementation
-
-### Future Enhancement
-```python
-# Planned dark mode toggle
-if st.toggle("Dark Mode", key="theme_toggle"):
-    st.session_state["theme"] = "dark"
-else:
-    st.session_state["theme"] = "light"
-```
+✅ CSS variable system in place (`global_styles.py:28-122`)
+✅ Dark mode toggle — implemented via Streamlit's native settings menu on desktop + custom mobile hamburger menu. Pragmatic reuse of platform capability rather than a custom-built toggle. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
 
 ---
 
@@ -397,9 +388,9 @@ Keep component-specific styles scoped to prevent conflicts:
 
 ### Phase 1: Streamlit (Current)
 ✅ CSS variables implemented
-✅ Mobile-responsive design
+✅ Mobile-responsive design (`ui/styles/mobile_overrides.py`, 1,520 lines)
 ✅ Component-scoped styling
-⏳ Dark mode toggle UI
+✅ Dark mode toggle (Streamlit native settings menu)
 
 ### Future: React Migration (if forcing function emerges)
 - Convert to CSS Modules or Styled Components

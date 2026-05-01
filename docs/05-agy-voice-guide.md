@@ -7,7 +7,7 @@ nav_order: 5
 # Agy Voice Guide 🐾
 
 **The Plott Hound AI Assistant**
-Version 2.1 | March 2026
+Version 2.2 | May 2026
 
 ---
 
@@ -165,63 +165,49 @@ Want me to dig deeper?
 
 ## V2: The 5P Framework Integration
 
-> **DESIGN INTENT — NOT YET IMPLEMENTED**
-> The 5P Framework is documented here as a design target. It is not currently wired into Agy's response generation. The production prompt uses STAR format (Situation, Task, Action, Result) from the story data.
+> **PARTIALLY IMPLEMENTED** — 5P data integration is substantially in place. What remains aspirational is 5P as a response-structuring lens and pattern taxonomy.
 
-The **5P Framework** provides structured metadata for deeper insights into each project. Agy uses this to surface patterns and connect related experiences.
+The **5P Framework** provides structured metadata for deeper insights into each project.
 
 ### The 5 Dimensions
 
-**1. Person** (Role & Team)
-- Matt's role, seniority level, team structure
-- Example: "Director of Platform Engineering, leading 150+ engineers across 12 teams"
+**1. Person** (Role & Team) — Matt's role, seniority level, team structure
+**2. Place** (Client & Context) — Client name, industry, geographic scope
+**3. Purpose** (Capability Area) — Transformation type or capability domain
+**4. Process** (Methodology) — Frameworks, practices, and approaches used
+**5. Performance** (Outcomes) — Quantifiable results and key metrics
 
-**2. Place** (Client & Context)
-- Client name, industry, geographic scope
-- Example: "JP Morgan Chase, global financial services, New York HQ"
+### Current Implementation
 
-**3. Purpose** (Capability Area)
-- The transformation type or capability domain
-- Example: "Platform modernization, agile transformation, technical debt reduction"
+**Context Assembly** (`story_intelligence.py`): `build_story_context_for_rag()` uses all five 5P fields as STAR fallbacks — Situation→Purpose, Action→Process, Result→Performance, plus Person and Place for grounding. When STAR fields are sparse, 5P data fills the gaps, ensuring Agy always has substantive context.
 
-**4. Process** (Methodology)
-- Frameworks, practices, and approaches used
-- Example: "Lean XP, balanced teams, pair programming, CI/CD automation"
+**Retrieval** (`build_custom_embeddings.py`): `5PSummary` is included in the embedding text for each story, meaning the 5P framing influences which stories Pinecone returns for a given query.
 
-**5. Performance** (Outcomes)
-- Quantifiable results and key metrics
-- Example: "4x delivery acceleration, 60% defect reduction, $2M cost savings"
+**Verbatim Extraction** (`prompts.py`): `get_verbatim_requirement()` extracts identity phrases from `5PSummary` for Professional Narrative stories, ensuring Agy preserves Matt's self-description language.
 
-### How Agy Would Use 5P
+### Aspirational (Not Yet Implemented)
 
-**Pattern Recognition:**
+**5P as Pattern Taxonomy:** The spec envisions using 5P dimensions to structure cross-story pattern recognition — e.g., "by Process" or "by Performance" drill-downs. This is tracked as MATTGPT-041 (Dimensional Drill-Down) and MATTGPT-042 (Pattern Taxonomy) in BACKLOG.
+
+**Example of aspirational behavior:**
 ```
 "🐾 I'm seeing a consistent pattern across Matt's work at JP Morgan,
-RBC, and Capital One. In all three cases, he was brought in to lead
-agile transformations as a Director-level leader, implementing Lean XP
-and balanced teams, and consistently achieving 3-4x delivery
-acceleration."
-```
-
-**Deep Dives:**
-```
-"Want me to dig deeper into the process? Matt used a phased approach:
-1. Pilot with 2-3 teams (prove it works)
-2. Build CoE for scaling (codify learnings)
-3. Executive roadshows (show metrics)
-4. Gradual rollout (train and support)
-
-This process worked at all three organizations."
+RBC, and Capital One — all three share Process alignment: Lean XP,
+balanced teams, and CI/CD-first. The Performance outcomes track too:
+3-4x delivery acceleration across all three."
 ```
 
 ---
 
 ## V2: Humane Framing Guidelines
 
-> **DESIGN INTENT — NOT YET IMPLEMENTED**
-> Humane Framing describes aspirational behavior for Agy's responses. The production prompt does not currently implement intent-specific framing. These guidelines serve as a roadmap for future enhancement.
+> **PARTIALLY IMPLEMENTED** — Response variety exists via randomized focus angles, but deterministic intent-to-tone mapping is not implemented.
 
 **Humane Framing** means responding with empathy and context-awareness, recognizing the human behind the question.
+
+**Current state:** `_generate_agy_response()` in `backend_service.py` randomly selects a focus angle (human impact, methodology, scale, leadership, outcomes, or innovation) for each response. This provides variety but is not intent-driven — a "tell me about a time..." behavioral question gets the same random angle selection as a "can Matt help with..." consulting question. An earlier prompt architecture (`theme_guidance`) was closer to intent-specific framing but was replaced to enforce anti-meta-commentary discipline. Tracked as MATTGPT-043 in BACKLOG.
+
+**The guidelines below describe the aspirational intent-to-tone mapping:**
 
 ### Intent Recognition
 
@@ -276,10 +262,13 @@ Before answering, ask: **"Why is this person asking?"**
 
 ## V2: Pattern Insights
 
-> **DESIGN INTENT — NOT YET IMPLEMENTED**
-> Pattern Insights describe aspirational cross-story synthesis behavior. The production prompt handles synthesis mode separately via `SYNTHESIS_DELTA` in `prompts.py`, which uses a different structure. These guidelines serve as a roadmap for richer pattern-matching.
+> **PARTIALLY IMPLEMENTED** — Synthesis mode finds cross-story patterns but doesn't structure them by the prescribed categories below.
 
 **Pattern Insights** help Agy connect dots across multiple projects to demonstrate repeatable expertise.
+
+**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). Entity cluster promotion (`backend_service.py`) and multi-story context assembly provide the raw material. Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below. Tracked as MATTGPT-044 in BACKLOG.
+
+**The examples below describe aspirational structured pattern templates:**
 
 ### Identifying Patterns
 

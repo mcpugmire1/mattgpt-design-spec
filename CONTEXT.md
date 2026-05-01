@@ -1,11 +1,23 @@
 # Current Project Context
 
-**Last Updated:** January 30, 2026 (RAG Pipeline Documentation Update)
-**Session Status:** 🟢 Documentation Complete - Aligned with Jan 2026 Implementation
+**Last Updated:** May 1, 2026 (Design spec drift cleanup + April 2026 reframe)
+**Session Status:** 🟢 Documentation Complete - Aligned with May 2026 Implementation
 
 ---
 
-## Latest Update: January 30, 2026 - RAG Pipeline Documentation
+## Latest Update: May 2026 - Design Spec Drift Cleanup
+
+**What Changed:**
+Resolved 9 drift items between design spec and codebase. Key updates: React migration reframe applied across 6 spec docs (future consideration, not committed Phase 2), voice guide implementation status corrected (5P/Humane Framing/Pattern Insights partially implemented, not "NOT YET IMPLEMENTED"), public tags moved from planned to shipped, 3 Phase 2 enhancements marked Decided Against, intent family count corrected to 15, personal narrative placeholders marked complete.
+
+**January-April 2026 changes not previously reflected:**
+- Role Match Phases 1-3 shipped (JD assessment, story chips, action buttons)
+- `personal` intent family added to semantic router (warm redirect for age/salary/identity questions)
+- Query logger expanded to 30-column schema (Google Sheets)
+- Mobile responsive design shipped (`mobile_overrides.py`, 1,520 lines)
+- Eval suite expanded from 31 to 61 golden queries (98.1% pass rate)
+
+## Previous Update: January 30, 2026 - RAG Pipeline Documentation
 
 **What Changed:**
 Updated design specification to reflect current RAG pipeline implementation from llm_portfolio_assistant codebase.
@@ -34,8 +46,8 @@ Updated design specification to reflect current RAG pipeline implementation from
 
 **3. Semantic Router Enhancements:**
 - Now handles: intent classification, synthesis detection, narrative detection, out-of-scope detection
-- Expanded: 10 intent families → 14 intent families
-- New families: `narrative`, `synthesis`, `out_of_scope`, `agile_transformation`
+- Expanded: 10 intent families → 15 intent families
+- New families: `narrative`, `synthesis`, `out_of_scope`, `agile_transformation`, `personal`
 
 **4. Updated Thresholds:**
 ```python
@@ -282,17 +294,10 @@ True wireflows showing screen-to-screen UI interactions with wireframe mockups a
 
 ---
 
-### 🔄 Personal Narrative (OUTSTANDING)
+### ✅ Personal Narrative (COMPLETE)
 **File:** `/docs/04-building-mattgpt.md`
 
-**Placeholder sections needing Matt's input:**
-1. **Why I Built This** - Personal motivation, triggering scenarios, timeline
-2. **Key Challenges & Solutions** - Technical problems faced, how solved
-3. **Lessons Learned** - Insights, surprises, advice for others
-4. **Build Timeline** - Week-by-week breakdown of development
-5. **Future Vision** - 3-5 year outlook, adjacent problems, career alignment
-
-**Status:** Technical content written, personal story sections marked with `[PLACEHOLDER]`
+All 5 sections fully written with substantive personal content: Why I Built This, Key Challenges & Solutions, Lessons Learned, Build Timeline, Future Vision. No `[PLACEHOLDER]` markers remain.
 
 ---
 

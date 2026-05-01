@@ -601,17 +601,17 @@ What would you like to know about Matt's experience?
 
 ---
 
-### Future Enhancements (Phase 2)
+### Previously Considered Enhancements
 
-**Planned improvements for React migration:**
+The following were evaluated and **decided against** on architectural grounds. The data pipeline (Excel → JSONL → embeddings → Pinecone) is one-directional by design with no write-back path. This constraint makes closed-loop approaches impractical at current scale.
 
-- **Dynamic intent expansion:** Use LLM to generate new canonical examples from accepted queries
-- **User feedback loop:** "Was this answer helpful?" → retrain router
-- **Intent routing:** Different response templates per intent family
-- **A/B testing:** Experiment with threshold values (e.g., 0.40 vs 0.45 for soft accept)
-- **Analytics dashboard:** Visualize rejection reasons, borderline cases, intent distribution
+- **~~Dynamic intent expansion~~** — Would require a write-back path to update intent embeddings from accepted queries. Eval-driven manual iteration serves this purpose at current traffic volume. (MATTGPT-050, Decided Against)
+- **~~User feedback loop retraining~~** — No write-back path for closed-loop retraining. Google Sheets logger captures feedback for manual analysis instead. (MATTGPT-051, Decided Against)
+- **~~A/B testing on thresholds~~** — Traffic volume insufficient for statistical significance. Eval suite with 61 golden queries provides deterministic threshold validation. (MATTGPT-052, Decided Against)
+- **Intent routing** — Different response templates per intent family. Spirit partially exists via random focus angles; deterministic mapping tracked as MATTGPT-043.
+- **Analytics dashboard** — Tracked as MATTGPT-045 (Open, Low priority). Query logger captures the data; visualization is a separate effort.
 
-**Migration note:** The semantic router logic is framework-agnostic and would port directly to a React/FastAPI architecture if needed.
+**Architecture note:** The semantic router logic is framework-agnostic and would port directly to a React/FastAPI architecture if a forcing function emerges.
 
 ---
 

@@ -449,24 +449,11 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - ✅ Eval framework expanded to 61 golden queries (98.1% pass rate)
 - ✅ Data quality pass across 85+ stories
 
+**Recent Deliveries (continued):**
+- ✅ Public tags enrichment — `generate_public_tags.py` uses GPT-4 with SFIA/O*NET/LinkedIn taxonomy alignment. `public_tags` flows through the entire pipeline: JSONL generation, embedding construction, Pinecone metadata, app startup, filtering, scoring, and UI display.
+
 **Open Items:**
-
-🎯 **Public Tags Enrichment**
-- Complete SFIA / O\*NET / LinkedIn taxonomy mapping
-- Enable discoverability through industry-standard skills
-- Power cross-portfolio pattern recognition
-
-🎯 **Semantic Search Enhancement**
-- Fine-tune confidence thresholds based on query intent
-- Implement query rewriting for common patterns
-- Add spell-check and autocomplete
-
-🎯 **Enhanced UX**
-- Copy-to-clipboard for quick story sharing
-- Portfolio integration (Notion, LinkedIn sync)
-
-🎯 **React + FastAPI Migration (future consideration)**
-- Decouple frontend from Streamlit if a forcing function emerges
+See [BACKLOG.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/BACKLOG.md) in the MattGPT repo for current open work. Key areas include Role Match Phase 4, semantic router improvements, and analytics dashboard.
 - See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach
 
 ---
