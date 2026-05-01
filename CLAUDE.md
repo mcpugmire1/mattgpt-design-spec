@@ -15,6 +15,11 @@ Design specification and documentation repository for MattGPT - an AI-powered po
 - Don't use `--no-verify` or skip hooks
 - Don't force push to main
 
+### Commit and Push Are Separate Gates
+**Commit and push are two separate gates requiring two separate approvals.** A commit approval ("commit", "yes commit") is not a push approval. After committing, stop and wait. Do not run `git push` until the user explicitly types "push", "go ahead and push", or similar. Combining `git commit && git push` in a single command is not acceptable. This rule exists because pushing to `origin/main` deploys to GitHub Pages — it is irreversible without a force push.
+
+April 2026 incident (in the MattGPT repo): a commit-then-push chain executed when only the commit had been approved. The push triggered an unauthorized production deploy. The fix is procedural — separate gates, separate words. The same rule applies here.
+
 ### Commit Message Format
 ```
 Short summary (50 chars max)
@@ -41,6 +46,16 @@ Files Updated:
 - Update `CONTEXT.md` when making significant changes
 - Update version numbers in documentation files
 - Update "Last Updated" dates
+
+### Documentation Restraint
+Default to **not** creating new markdown files. Most analysis, investigation results, and intermediate findings belong in commit messages, inline updates to existing docs, or CONTEXT.md entries — not in standalone files.
+
+Before creating a new `.md` file, justify why it can't go into:
+- An existing doc (CONTEXT.md, or the numbered docs under `docs/`)
+- A commit message
+- An inline update to the relevant spec section
+
+If a new file is genuinely needed and is transitory, it goes in `docs/working/` with a lifecycle declaration and a defined deletion target. Permanent new docs at the top level require explicit user approval.
 
 ### Sync with Implementation
 When implementation changes in `llm_portfolio_assistant`:
