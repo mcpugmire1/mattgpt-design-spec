@@ -85,7 +85,7 @@ Complete 3-stage data flow from Excel to production RAG — conversion scripts, 
 
 ## Interactive Wireframes
 
-> **Note:** These wireframes represent the original design specification (October 2025). The live application includes additional features implemented since: Era-based Timeline View, mobile responsive design, and advanced filtering. See [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app) for current state.
+> **Note:** These wireframes represent the original design specification (October 2025). The live application includes additional features implemented since: Era-based Timeline View, mobile responsive design, advanced filtering, and Role Match (JD-to-experience fit assessment). See [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app) for current state.
 
 Explore clickable HTML prototypes of the MattGPT interface:
 
@@ -100,7 +100,7 @@ Explore clickable HTML prototypes of the MattGPT interface:
 - **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_wireframe.html)** - Era-based career progression (5 career phases)
 - **[Mobile View](/mattgpt-design-spec/wireframes/explore_stories_mobile_wireframe.html)** - Mobile-optimized story browsing
 
-### Ask MattGPT (AI Interface)
+### Ask Agy (AI Interface)
 - **[Landing Page](/mattgpt-design-spec/wireframes/ask_mattgpt_landing_wireframe.html)** - Conversational search entry
 - **[Conversation View](/mattgpt-design-spec/wireframes/ask_mattgpt_wireframe.html)** - Live chat with source citations
 
@@ -205,10 +205,10 @@ Product & Platform Leader | Digital Transformation Director
 
 📧 [mpugmire@gmail.com](mailto:mpugmire@gmail.com)
 💼 [LinkedIn](https://www.linkedin.com/in/mattpugmire/)
-🤖 [Ask Agy](https://askmattgpt.streamlit.app) - AI assistant powered by 130+ project stories
+🤖 [Ask Agy](https://askmattgpt.streamlit.app) - AI assistant powered by 100+ project stories
 
 ---
 
 *This design specification represents the complete product blueprint from discovery through detailed technical and UX specifications. It demonstrates end-to-end product development: from strategic vision through user research, technical architecture, and meticulous execution.*
 
-**Last Updated:** May 2026
+**Last Updated:** June 2026
