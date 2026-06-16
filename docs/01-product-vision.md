@@ -38,7 +38,7 @@ Traditional portfolios rely on self-promotion and unverifiable claims. Recruiter
 
 ### HOW: Act as a Credibility Engine
 
-**Automatically mining 130+ real projects to surface the right evidence instantly.**
+**Automatically mining 100+ real projects to surface the right evidence instantly.**
 
 MattGPT functions as an intelligent search and retrieval system that:
 
@@ -125,7 +125,7 @@ They need to confirm: *"How did Matt achieve that result, and can I trust the pr
 2. Browse capability categories
 3. Open 4-6 detailed stories
 4. Cross-reference outcomes and methodologies
-5. Ask follow-up questions via Ask MattGPT
+5. Ask follow-up questions via Ask Agy
 
 ---
 
@@ -138,7 +138,7 @@ They need to confirm: *"How did Matt achieve that result, and can I trust the pr
 They need to find: *"Specific stories and themes based on interview questions"*
 
 **Feature Drivers:**
-- **Ask MattGPT** - Fast story retrieval via conversational AI
+- **Ask Agy** - Fast story retrieval via conversational AI
 - **Pattern Recognition** - Show related projects and connecting skills
 - **Export/Share** - Quick reference materials for prep
 - **Timeline View** - Chronological career progression by Era
@@ -148,7 +148,7 @@ They need to find: *"Specific stories and themes based on interview questions"*
 
 **Typical Journey:**
 1. Receive interview question or client inquiry
-2. Ask MattGPT conversational question
+2. Ask Agy conversational question
 3. Review synthesized response + sources
 4. Drill into specific stories for detail
 5. Export relevant stories for review
@@ -185,7 +185,7 @@ Every project in the MattGPT corpus follows the STAR framework:
 - ✅ Ensures **no generic claims** ("experienced in agile")
 - ✅ Forces **concrete examples** with business context
 - ✅ Creates **auditable source references** for every AI answer
-- ✅ Maintains **data integrity** across 130+ projects
+- ✅ Maintains **data integrity** across 100+ projects
 
 **Governance Rule:** No project can be indexed without completing all four STAR fields + at least one quantifiable metric.
 
@@ -226,7 +226,7 @@ To enable sophisticated search and pattern recognition, every project is enriche
 
 **Your Purpose: The Credibility Engine**
 
-The system exists to surface relevant STAR stories and connect patterns across 130+ projects, driving the user to the core thought:
+The system exists to surface relevant STAR stories and connect patterns across 100+ projects, driving the user to the core thought:
 
 > *"Matt consistently delivers measurable transformation results — and here's the specific proof."*
 
@@ -267,7 +267,7 @@ The voice blends:
 - Avoid jargon without context
 
 ❌ **Never pretend to know things outside Matt's portfolio**
-- If a query falls outside the 130+ projects, acknowledge limitations
+- If a query falls outside the 100+ projects, acknowledge limitations
 - Suggest alternative search terms or clarify scope
 
 ---
@@ -331,7 +331,7 @@ The voice blends:
 ### OUT OF SCOPE: Must Never Do (Focus & Anti-Chatbot)
 
 #### 1. Generative AI Scope
-**Guardrail:** The system MUST NEVER generate generic career advice, synthesize opinions, or answer questions outside the scope of the **130+ verified STAR-formatted stories**.
+**Guardrail:** The system MUST NEVER generate generic career advice, synthesize opinions, or answer questions outside the scope of the **100+ verified STAR-formatted stories**.
 
 **Rationale:** Prevents hallucination and maintains credibility.
 
@@ -370,7 +370,7 @@ The voice blends:
 **For Hiring Managers:**
 - Assess depth and process with STAR-formatted stories
 - Verify claims through auditable source references
-- Understand patterns across 130+ real projects
+- Understand patterns across 100+ real projects
 
 **For Candidates (Matt):**
 - Retrieve relevant stories instantly for interview prep
@@ -406,5 +406,5 @@ The voice blends:
 
 ---
 
-*Last Updated: December 2025 (Post-Audit Refresh)*
-*Version: 1.1 (Updated with Implementation Details)*
+*Last Updated: June 2026 (Staleness Audit Refresh)*
+*Version: 1.2 (Updated with Implementation Details)*

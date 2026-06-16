@@ -35,11 +35,11 @@ MattGPT's architecture evolved through intentional phases:
 
 The MVP phase consciously accepted limitations to accelerate learning:
 
-- **Mobile-responsive implementation:** Production-quality mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
+- ~~**Mobile-responsive implementation:**~~ ✅ Shipped — 1,520 lines of production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
 - **Limited scalability:** Estimated ~100 concurrent users (not load-tested; Streamlit Community Cloud limits apply)
 - **No caching layer:** Direct database queries
-- **Modular architecture:** Refactored from monolithic app.py to component-based structure
-- **Minimal observability:** Basic logging only
+- ~~**Modular architecture:**~~ ✅ Shipped — refactored from monolithic app.py to component-based structure (118 Python files)
+- ~~**Minimal observability:**~~ ✅ Shipped — 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
 
 ### Key Decisions
 
@@ -61,7 +61,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ### Architecture Evolutions Achieved
 
 **January 2026 - RAG Pipeline Cleanup:**
-- ✅ 5-stage RAG pipeline with 98.1% eval pass rate (60/61)
+- ✅ 5-stage RAG pipeline with 100% eval pass rate (64/64)
 - ❌ Removed Entity Gate bouncer (was blocking legitimate queries)
 - ❌ Removed `classify_query_intent()` LLM call (redundant with router)
 - ✅ Semantic router now handles synthesis + out-of-scope + narrative detection
@@ -96,7 +96,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ## 5-Stage RAG Pipeline
 
 **Status:** ✅ Implemented (January 2026)
-**Quality:** 98.1% eval pass rate (60/61 queries)
+**Quality:** 100% eval pass rate (64/64 queries)
 
 MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
 
@@ -192,23 +192,7 @@ User Question: "How did Matt scale engineering teams?"
 User receives cited, STAR-formatted answer with sources
 ```
 
-### What Was Removed (January 2026)
-
-**Entity Gate:**
-- Was rejecting valid queries (e.g., "TICARA", narrative questions)
-- Blocked when: no entity detected + low semantic score
-- Removed because: Too aggressive, blocking 13% of legitimate queries
-
-**classify_query_intent() LLM:**
-- GPT-4o-mini call for intent classification
-- Expensive: $0.0001 per query
-- Brittle: Didn't recognize story titles
-- Redundant: Semantic router (embedding-based) achieved same accuracy at 1/10th cost
-
-**Title Hard Filtering:**
-- Was applying Pinecone metadata filter for title entities
-- Broke Related Projects UX: only 1 source returned
-- Changed to soft filtering: title detected but semantic search ranks naturally
+*Components removed during the January 2026 RAG pipeline cleanup (Entity Gate, classify_query_intent LLM call, Title Hard Filtering) are documented in [HISTORY.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/HISTORY.md) in the codebase repo.*
 
 ---
 
@@ -234,7 +218,7 @@ User receives cited, STAR-formatted answer with sources
 | **Ranking** | Pinecone score + entity pinning | Named clients prioritized over generic |
 | **Temperature** | 0.4 | 0.2 (lower for consistency) |
 | **Focus** | Single story deep-dive | Patterns across stories |
-| **Sacred Vocabulary** | Optional | **Required** (builder, modernizer, etc.) |
+| **Sacred Vocabulary** | Optional | **Required** ("builder") |
 
 ### Synthesis Search Strategy
 
@@ -261,32 +245,28 @@ return named_first[:9]  # Max 9 stories for synthesis
 
 ### Sacred Vocabulary Enforcement
 
-**Verbatim phrases required in synthesis responses:**
+**Verbatim phrase required in synthesis responses:**
 
-- **Identity:** "builder", "modernizer"
-- **Philosophy:** "complexity to clarity", "proof over promises"
-- **Not looking for:** "maintenance role", "status quo preservation"
+- **"builder"** — the one term that must appear verbatim
+
+Other vocabulary (modernizer, complexity to clarity, proof over promises, maintenance role) was removed from story data during March 2026 data quality cleanup. Only "builder" remains as a verbatim requirement.
 
 **Why Strict:**
 - Professional narrative must be consistent across all synthesis queries
-- These phrases are Matt's actual language (from "About Matt" story)
+- "Builder" is Matt's actual language (from "About Matt" story in JSONL)
 - Marketing/branding consistency
 
 **Example Synthesis Response:**
 
 ```
-Matt is a **builder** and **modernizer** who transforms **complexity to clarity**.
+Matt is a **builder** — someone brought in to create what doesn't exist yet,
+whether that's a team, a platform, or a capability.
 
 Across 20 years at Accenture, the pattern is consistent: he's brought to projects
 where organizations need to build something from nothing or modernize platforms
-stuck in technical debt.
-
-From scaling the Cloud Innovation Center to 150+ people to modernizing payments
-across 12 countries, his work demonstrates **proof over promises** — real outcomes,
-not just strategy decks.
-
-He's not looking for a **maintenance role**. He's energized by ambiguity, greenfield
-builds, and helping teams move from intention to delivered outcomes.
+stuck in technical debt. From scaling the Cloud Innovation Center to 150+ people
+to modernizing payments across 12 countries, his work comes with evidence —
+real outcomes, not just strategy decks.
 ```
 
 ### MATT_DNA Ground Truth
@@ -297,22 +277,13 @@ builds, and helping teams move from intention to delivered outcomes.
 # Extracted at startup from "About Matt – My Leadership Journey" story
 MATT_DNA = {
     "identity": [
-        "builder", "modernizer", "people-centered leader"
-    ],
-    "philosophy": [
-        "complexity to clarity",
-        "proof over promises",
-        "listen first, align around purpose, move intentionally"
+        "builder"  # Only verbatim-required term (March 2026 cleanup)
     ],
     "focus_areas": [
         "solving ambiguous problems",
         "building high-trust engineering cultures",
         "modernizing platforms",
         "shifting how organizations think about technology"
-    ],
-    "not_looking_for": [
-        "maintenance role",
-        "status quo preservation"
     ]
 }
 ```
@@ -607,7 +578,7 @@ The following were evaluated and **decided against** on architectural grounds. T
 
 - **~~Dynamic intent expansion~~** — Would require a write-back path to update intent embeddings from accepted queries. Eval-driven manual iteration serves this purpose at current traffic volume. (MATTGPT-050, Decided Against)
 - **~~User feedback loop retraining~~** — No write-back path for closed-loop retraining. Google Sheets logger captures feedback for manual analysis instead. (MATTGPT-051, Decided Against)
-- **~~A/B testing on thresholds~~** — Traffic volume insufficient for statistical significance. Eval suite with 61 golden queries provides deterministic threshold validation. (MATTGPT-052, Decided Against)
+- **~~A/B testing on thresholds~~** — Traffic volume insufficient for statistical significance. Eval suite with 64 golden queries provides deterministic threshold validation. (MATTGPT-052, Decided Against)
 - **Intent routing** — Different response templates per intent family. Spirit partially exists via random focus angles; deterministic mapping tracked as MATTGPT-043.
 - **Analytics dashboard** — Tracked as MATTGPT-045 (Open, Low priority). Query logger captures the data; visualization is a separate effort.
 
@@ -658,9 +629,7 @@ Professional narrative and sacred vocabulary derived from JSONL at startup:
 ```python
 # Extracted from "About Matt" story in JSONL
 MATT_DNA = {
-    "identity": ["builder", "modernizer"],
-    "philosophy": ["complexity to clarity", "proof over promises"],
-    "not_looking_for": ["maintenance role", "status quo preservation"]
+    "identity": ["builder"]  # Only verbatim-required term (March 2026 cleanup)
 }
 ```
 
@@ -868,18 +837,18 @@ The Streamlit MVP validated the RAG architecture and UX patterns, and has contin
 **OpenAI text-embedding-3-small:**
 - **Rate:** $0.02 per 1M tokens
 - **Story Size:** ~300 tokens average (after text composition)
-- **130 Stories:** ~39,000 tokens = $0.0008 per full re-index
+- **100+ Stories:** ~30,000 tokens = $0.0006 per full re-index
 - **Time:** ~30 seconds
 
 **Annual Cost (4 full refreshes/month):**
-- 4 refreshes × 12 months × $0.0008 = **$0.038/year**
+- 4 refreshes × 12 months × $0.0006 = **$0.029/year**
 - Effectively free
 
 ### Pinecone Vector Database
 
 **matt-portfolio-v2 Index:**
 - **Tier:** Starter (free tier, 100K vectors)
-- **Usage:** 130 vectors (0.13% of quota)
+- **Usage:** 100+ vectors (<0.1% of quota)
 - **Dimensions:** 1536
 - **Cost:** $0/month
 
@@ -916,18 +885,22 @@ The Streamlit MVP validated the RAG architecture and UX patterns, and has contin
 
 ## Current State Summary
 
-### What's Live Today (Phase 1 - January 2026)
+### What's Live Today (June 2026)
 
 - ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- ✅ **5-stage RAG pipeline** with 98.1% eval pass rate (60/61)
+- ✅ **5-stage RAG pipeline** with 100% eval pass rate (64/64)
 - ✅ **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
 - ✅ **Semantic router** with 15 intent families + out-of-scope/personal detection
-- ✅ 130+ STAR-structured project stories
+- ✅ **Role Match** — JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
+- ✅ **Query analytics** — 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
+- ✅ **Triage agent surface** — `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
+- ✅ 100+ STAR-structured project stories
 - ✅ Semantic search with confidence scoring and metadata filtering
 - ✅ **Timeline View** with Era-based career progression
-- ✅ **Mobile-responsive design** (breakpoints: 767px, 1024px)
+- ✅ **Mobile-responsive design** (1,520 lines in `mobile_overrides.py`; breakpoints: 767px, 1024px)
 - ✅ **Dark mode support** via CSS variables
 - ✅ **Modular architecture** (9-file ask_mattgpt/ structure)
+- ✅ **BDD test suite** — 219 Playwright scenarios across 30 feature files
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern
 
@@ -980,9 +953,9 @@ See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture
 - [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning
 - [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Design decisions
 - [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
-- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - Eval framework (98.1% pass rate)
+- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - Eval framework (64/64, 100%)
 
 ---
 
-*Last Updated: April 29, 2026 (React migration reframe — deferred, no forcing function)*
-*Version: 1.3*
+*Last Updated: June 2026 (Staleness audit: eval 100%/64q, sacred vocab builder-only, MATT_DNA, BDD 219/30, story count 100+)*
+*Version: 1.5*

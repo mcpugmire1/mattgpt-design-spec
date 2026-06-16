@@ -1,24 +1,24 @@
 # UX Design Process
 
-**MattGPT: From Information Architecture to Detailed Wireframe Specifications**
+**MattGPT: Audience Journeys, Site Architecture, and Component Specifications**
 
-> This document outlines the complete user experience design process, from site architecture and user flows through detailed component specifications for every view in the MattGPT application.
+> This document describes the four audience journeys that shaped MattGPT's design, the site architecture derived from them, and detailed component specifications for every surface in the application.
 
 ---
 
 ## Table of Contents
 
 1. [Site Architecture & Information Hierarchy](#site-architecture--information-hierarchy)
-2. [User Navigation Flows](#user-navigation-flows)
+2. [Audience Journeys](#audience-journeys)
 3. [Homepage Starter Cards](#homepage-starter-cards)
 4. [Search Pipeline Architecture](#search-pipeline-architecture)
 5. [View Specifications](#view-specifications)
    - [Homepage](#homepage-uiux-specification)
    - [Industry Landing Pages](#industry-landing-pages)
-   - [Explore Stories (Table/Card/Timeline)](#explore-stories-views)
+   - [My Work (Table/Card/Timeline)](#my-work-views)
    - [Detail View](#detail-view-specification)
-   - [Ask MattGPT](#ask-mattgpt-experience)
-   - [About Matt](#about-matt-page)
+   - [Ask Agy](#ask-agy-experience)
+   - [My Profile](#my-profile-page)
 
 ---
 
@@ -29,26 +29,27 @@
 ```
 Home Page
 ├── Navigation (Persistent)
-│   ├── Explore Stories
-│   ├── Ask MattGPT
-│   └── About Matt
+│   ├── My Work
+│   ├── Ask Agy
+│   ├── Role Match
+│   └── My Profile
 │
 ├── Industry/Domain Entry Points
 │   ├── Product Innovation
 │   ├── App Modernization
-│   ├── Financial Services (55 projects) → Banking Landing Page
-│   ├── Cross-Industry Transformation (51 projects) → Cross-Industry Landing
+│   ├── Financial Services → Banking Landing Page
+│   ├── Cross-Industry Transformation → Cross-Industry Landing
 │   ├── Consulting & Transformation
 │   └── Teams & Talent Development
 │
-└── Quick Question → Ask MattGPT
+└── Quick Question → Ask Agy
 
 Banking Landing Page
 ├── Client Filter (JP Morgan Chase, RBC, Fiserv, etc.)
 ├── 16 Capability Categories
-│   ├── Agile Transformation (8 projects)
-│   ├── Modern Engineering (8 projects)
-│   ├── Global Payments (7 projects)
+│   ├── Agile Transformation
+│   ├── Modern Engineering
+│   ├── Global Payments
 │   └── [13 more categories]
 └── Individual Project Stories
 
@@ -57,17 +58,17 @@ Cross-Industry Landing Page
 ├── 15+ Transformation Capabilities
 └── Individual Project Stories
 
-Explore Stories
+My Work
 ├── Filter Controls
-│   ├── Primary: Industry, Domain Category, Client, Capability, Outcome Type
-│   └── Advanced: Role, Date Range, Technologies
+│   ├── Primary: Industry, Capability
+│   └── Advanced: Client, Role, Domain
 ├── View Modes
 │   ├── Table View (high-density browsing)
 │   ├── Card View (visual story previews)
 │   └── Timeline View (5 Era-based career progression)
 └── Detail View (inline expansion with STAR format, Key Metrics, Related Projects)
 
-Ask MattGPT
+Ask Agy
 ├── Landing Page
 │   ├── Agy introduction and starter prompts
 │   └── "How Agy Searches" modal (3-step RAG flow)
@@ -80,7 +81,14 @@ Ask MattGPT
     ├── Semantic router (dual-threshold 0.80/0.40, updated Jan 2026)
     └── 15 intent families + out-of-scope/personal detection
 
-About Matt
+Role Match
+├── JD Input (paste or try sample)
+├── Fit Assessment with evidence-backed ratings
+├── Matched Experience (source chips to stories)
+├── Gap Assessment
+└── Export candidate brief
+
+My Profile
 ├── Hero Header
 ├── Career Evolution Timeline
 ├── Core Competencies Grid
@@ -91,119 +99,84 @@ About Matt
 
 ---
 
-## User Navigation Flows
+## Audience Journeys
 
-MattGPT supports six distinct user journey patterns, each optimized for different discovery behaviors.
-
-### User Journey Diagrams
-
-The following diagrams illustrate the high-level navigation paths for each user journey.
-
-### Flow 1: Banking Browse-First User
-
-**Journey:**
-1. Lands on Home
-2. Sees "Financial Services - 55 projects" card
-3. Clicks "See Banking Projects →"
-4. Arrives at Banking Landing Page
-5. Sees 16 capability categories
-6. Clicks "Agile Transformation (8)"
-7. Sees 8 specific stories
-8. Clicks story → reads full detail
-
-**Persona:** Recruiter or hiring manager with specific industry focus
-**Goal:** Validate industry-specific experience depth
-
-![Flow 1: Banking Browse-First User](/mattgpt-design-spec/images/wireflows/flow1-banking-browse.svg)
+MattGPT is designed around four audience journeys, not surfaces. The navigation order and page surfaces fall out of these journeys — not from a feature wishlist.
 
 ---
 
-### Flow 2: Explore Stories First
+### Journey 1: Cold Recruiter, JD in Hand
 
-**Journey:**
-1. Lands on Home
-2. Clicks "Explore Stories" in navigation
-3. Arrives at Explore Stories page (Table View default)
-4. Uses filters (Industry, Domain, Client, Capability)
-5. Switches between Table, Card, or Timeline views
-6. Clicks story → Detail View expands inline
-7. Can pivot to Banking Landing or Ask MattGPT
+**Who:** High-volume recruiter triaging candidates for a specific open role. Paid on placements. 90-second decision window.
 
-**Persona:** Recruiter doing comprehensive candidate review
-**Goal:** Browse all stories with filtering and multiple view modes
+**Trigger:** Has a JD and needs to validate fit fast.
 
-![Flow 2: Search-First User](/mattgpt-design-spec/images/wireflows/flow2-search-first.svg)
+**Path:**
+1. Lands on Home, passes 3-second test
+2. Locates Role Match in navigation (fourth item)
+3. Pastes JD → receives fit assessment with evidence-backed ratings
+4. Reviews matched experience, gap assessment, and logistics (location, work model, availability)
+5. Exports candidate brief → forwards to hiring manager in under 30 seconds
 
----
+**Goal:** Answer "Can he do the job?" and "Can we hire him?" in under 90 seconds. Export artifact must be self-contained, honest, and hiring-manager-readable.
 
-### Flow 3: Capability-First User
-
-**Journey:**
-1. Lands on Home
-2. Clicks "Product Innovation & Strategy"
-3. Goes to Explore Stories (filtered by capability)
-4. Sees stories across all industries
-5. Can filter by industry if needed
-6. Clicks story → reads full detail
-
-**Persona:** Hiring manager seeking specific skill evidence
-**Goal:** Find proof of capability regardless of industry
-
-![Flow 3: Capability-First User](/mattgpt-design-spec/images/wireflows/flow3-capability-first.svg)
+**Failure modes:** Hero loses the 3-second test with no adjacent substance signal. Role Match buried or hard to find. Scorer over-claims relative to actual experience. Logistics not surfaced.
 
 ---
 
-### Flow 4: Conversational User (Ask MattGPT)
+### Journey 2: Cold Recruiter, Inbound Triage
 
-**Journey:**
-1. Lands on Home
-2. Clicks "Quick Question" or "Ask MattGPT" in navigation
-3. Arrives at Ask MattGPT Landing Page (Agy introduction, starter prompts)
-4. Types question or clicks starter prompt
-5. Semantic router validates query (accepts/rejects with suggestions)
-6. Gets Agy response with confidence-scored sources
-7. Clicks source chip → navigates to full story in Explore Stories
-8. Can ask follow-up questions with conversation context
+**Who:** Recruiter doing inbound triage — Matt's name surfaced via DM, referral, or past contact. No JD in hand.
 
-**Persona:** Time-constrained decision-maker or interview prep
-**Goal:** Fast, natural language query with verifiable sources and context retention
+**Trigger:** Needs six facts in 30 seconds: level, last company, last team size, geo/relocation, current status, target titles.
 
-![Flow 4: Conversational User](/mattgpt-design-spec/images/wireflows/flow4-conversational.svg)
+**Path:**
+1. Lands on Home or navigates directly to My Profile
+2. Scans signals panel and professional summary
+3. Either saves URL for a future req or moves on
+
+**Goal:** Six facts, 30 seconds. No digging required.
+
+**Failure modes:** My Profile uses pitch-register prose instead of scannable specifics. Signals panel missing target titles or availability status. Home doesn't telegraph "30-second answer here."
 
 ---
 
-### Flow 5: Cross-Industry User
+### Journey 3: Warm-Intro Decision-Maker
 
-**Journey:**
-1. Lands on Home
-2. Clicks "Cross-Industry"
-3. Arrives at Cross-Industry Landing Page
-4. Sees 51 cross-industry projects
-5. Clicks "Digital Product Development (3)"
-6. Sees 3 specific stories
-7. Clicks story → reads full detail
+**Who:** Hiring CTO, VP Engineering, or Head of Platform. Got the link from a trusted contact with a framing line. Has 5-10 minutes and genuine intent.
 
-**Persona:** Hiring manager seeking transferable patterns
-**Goal:** Find methodology consistency across contexts
+**Trigger:** A mutual contact forwarded the site with context.
 
-![Flow 5: Cross-Industry User](/mattgpt-design-spec/images/wireflows/flow5-cross-industry.svg)
+**Path:**
+1. Lands on Home, passes 3-second composition test
+2. Scans past the stats row (registers as deck claims)
+3. Browses one or two stories in My Work to form a question
+4. Navigates to Ask Agy with a specific, possibly hard question
+5. Evaluates whether the answer is honest — this is the make-or-break moment
+6. Optionally cross-checks Role Match against their own opening
+7. Commits to a screening call or forwards the link internally
+
+**Goal:** Commit to a 30-minute screening call with a sharp agenda, or amplify as a secondary referrer.
+
+**Failure modes (by severity):** Methodology context absent — reads as sales/consulting figure, not engineering leader; CTO disqualifies without articulating why. Role Match vs Ask Agy inconsistency (credibility hit). Brand-identity-first hero with no adjacent substance signal.
+
+**Design principle:** Ask Agy is not just a feature for this audience — it's the test. How it handles the hard question shapes the hiring decision more than the corpus content does.
 
 ---
 
-### Flow 6: Client-Specific Filtering
+### Journey 4: Referrer
 
-**Journey:**
-1. Lands on Home
-2. Clicks "Explore Stories" or Banking Landing Page
-3. Uses Client filter dropdown → selects "JP Morgan Chase"
-4. Sees 33+ JP Morgan stories filtered
-5. Can switch between Table, Card, Timeline views
-6. Clicks story → Detail View with STAR format and metrics
+**Who:** Someone in Matt's network making a deliberate outbound intro. Three flavors: primary referrer (former colleague), secondary referrer (the warm-intro CTO who decided to amplify), and the two-degree-away referrer who doesn't have specific Matt language.
 
-**Persona:** Recruiter validating specific client experience
-**Goal:** Confirm breadth and depth of work with target organization
+**Trigger:** They've decided to make the intro. The question is how to compose it.
 
-![Flow 6: Direct Search](/mattgpt-design-spec/images/wireflows/flow6-direct-search.svg)
+**What they need:**
+- One-sentence positioning they can lead with
+- Two or three substantiating facts
+- A clean URL to embed
+- Confidence that what the recipient sees matches what the intro promised
+
+**Failure modes:** No clear "this is the language about Matt" surface. Voice block uses pitch-register or consulting-deck language the referrer can't reuse in a Slack DM. No copy-intro-language affordance — PDF export and URL copy exist, but pre-composed third-person text formatted for pasting does not.
 
 ---
 
@@ -213,13 +186,13 @@ The homepage uses strategic entry point cards that route users to the most relev
 
 | Homepage Starter Card | Destination | What User Sees |
 |----------------------|-------------|----------------|
-| **Product Innovation & Strategy** | Explore Stories (capability filter) | Stories filtered by Product Innovation capability, across all industries |
-| **App Modernization** | Explore Stories (capability filter) | Stories filtered by App Modernization capability, across all industries |
-| **Financial Services & Payments** (55 projects) | Banking Landing Page | 16 capability categories, client tags, option to view all 55 stories |
-| **Cross-Industry Transformation** (51 projects) | Cross-Industry Landing Page | 51 projects across 15+ transformation capabilities — delivery patterns that work across any industry |
-| **Consulting & Transformation** (51 projects) | Explore Stories (cross-industry filter) | 51 cross-industry transformation stories, no industry landing needed |
-| **Teams & Talent Development** (300+ professionals) | Explore Stories (outcome filter) | Stories focused on team development, upskilling, leadership |
-| **Quick Question** | Ask MattGPT | Chat interface, conversational AI, semantic search |
+| **Product Innovation & Strategy** | My Work (capability filter) | Stories filtered by Product Innovation capability, across all industries |
+| **App Modernization** | My Work (capability filter) | Stories filtered by App Modernization capability, across all industries |
+| **Financial Services & Payments** | Banking Landing Page | 16 capability categories, client tags, option to browse all banking stories |
+| **Cross-Industry Transformation** | Cross-Industry Landing Page | 15+ transformation capabilities — delivery patterns that work across any industry |
+| **Consulting & Transformation** | My Work (cross-industry filter) | Cross-industry transformation stories |
+| **Teams & Talent Development** | My Work (outcome filter) | Stories focused on team development, upskilling, leadership |
+| **Quick Question** | Ask Agy | Chat interface, conversational AI, semantic search |
 
 ---
 
@@ -228,7 +201,7 @@ The homepage uses strategic entry point cards that route users to the most relev
 ### How MattGPT Search Works
 
 **System Metrics:**
-- Stories Indexed: 130+
+- Stories Indexed: 100+
 - Search Method: Semantic search with confidence-based filtering
 - Vector Dimensions: 1536 (OpenAI text-embedding-3-small)
 
@@ -261,7 +234,7 @@ User Question
 - Intent recognition for query understanding
 
 **Data & Processing:**
-- **Story Corpus:** 130+ structured narratives from Fortune 500 projects
+- **Story Corpus:** 100+ structured narratives from Fortune 500 projects
 - **Framework:** STAR/5P framework encoding
 - **Metadata:** Rich tagging (client, domain, outcomes, metrics)
 
@@ -304,7 +277,7 @@ User Question
 |---|---------|----------|-------------|
 | 1 | Navigation Links | Interaction | Static top navigation; no dropdowns; entire label is clickable. Links persist on all pages. |
 | 2 | Profile Headline/Copy | Content | Static introductory text. No animation or personalization. Center-aligned. |
-| 3 | Stats Callouts | Technical/Data | Four equal-width data tiles (20+ Years, 130 Projects, 300+ Professionals, 15+ Clients). Non-interactive. |
+| 3 | Stats Callouts | Technical/Data | Four equal-width data tiles (20+ Years, 100+ Projects, 300+ Professionals, 15+ Clients). Non-interactive. |
 | 4 | Category Icon | Visual/Technical | Decorative icon positioned top-left of each category card. No functional behavior. |
 | 5 | Category Tags | Interaction/Logic | Non-clickable labels used to indicate subtopics. Displayed inline below description text. |
 | 6 | Primary CTA Button | Interaction | Primary call-to-action on each category card. Full button is clickable; right-arrow included. |
@@ -354,9 +327,9 @@ Both Banking and Cross-Industry landing pages follow a consistent pattern optimi
 
 | # | Element | Category | Details |
 |---|---------|----------|---------|
-| 1 | Top Navigation Bar | Header | Dark navy background, 4 links: Homepage, Explore Stories, Ask MattGPT, About Matt |
+| 1 | Top Navigation Bar | Header | Dark navy background: Homepage, My Work, Ask Agy, Role Match, My Profile |
 | 2 | Page Title | Heading (H1) | "Financial Services / Banking" |
-| 3 | Subtitle/Breadcrumb | Descriptive Text | "55 projects across 16 specialized areas — or ask Agy to find what you're looking for" |
+| 3 | Subtitle/Breadcrumb | Descriptive Text | "Banking and financial services experience across 16 specialized areas — or ask Agy to find what you're looking for" |
 | 4 | Client Filter Row | Filter Component | Pill-style buttons: JP Morgan Chase (33), RBC (11), Fiserv (7), American Express (3), Capital One (2), HSBC (2) |
 | 5 | Section Header | Heading (H2) | "Explore by Capability" with supporting text |
 | 6 | Capability Cards | Card Grid | 3-column responsive grid containing 16 capability category cards |
@@ -390,20 +363,20 @@ Both Banking and Cross-Industry landing pages follow a consistent pattern optimi
 
 ---
 
-### Explore Stories Views
+### My Work Views
 
 MattGPT provides three distinct view modes for browsing project stories, each optimized for different user preferences and use cases.
 
 **Page Header & Subtitle:**
-- **H1 Heading:** "Explore Stories"
-- **Subtitle:** "Browse Matt's 130+ transformation projects by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
+- **H1 Heading:** "My Work"
+- **Subtitle:** "Browse Matt's 100+ transformation stories by industry, client, or domain — or ask Agy 🐾 to help you find what you're looking for"
 
 #### Shared Framework Elements
 
 All three views share:
-- **Filter Controls:** Industry, Domain Category, Client, Role dropdowns
+- **Filter Controls:** Industry, Capability (primary); Client, Role, Domain (advanced)
 - **Search Bar:** Full-width input with placeholder "Search by title, client, or keywords"
-- **Results Summary:** "Browsing 1-10 of 130 projects"
+- **Results Summary:** Dynamic count based on active filters
 - **View Switcher:** Toggle buttons for Table / Cards / Timeline
 - **Ask Agy Link:** "Can't find what you're looking for? Ask Agy →"
 
@@ -615,21 +588,21 @@ The Detail View expands inline below the selected story in any Explore Stories v
 
 ---
 
-### Ask MattGPT Experience
+### Ask Agy Experience
 
-The Ask MattGPT feature provides a conversational interface for exploring Matt's project portfolio through natural language queries.
+The Ask Agy feature provides a conversational interface for exploring Matt's project portfolio through natural language queries.
 
 #### Landing Page
 
 **Hero Section:**
-- **Title:** "Ask MattGPT"
+- **Title:** "Ask Agy"
 - **Subtitle:** "Your AI-powered guide — Tracking down insights from 20+ years of transformation experience"
 - **"How It Works" Button:** Top-right CTA, toggles expanded info panel
-- **Status Strip:** "Semantic search active | Pinecone index: ready | 130 stories indexed"
+- **Status Strip:** "Semantic search active | Pinecone index: ready | 100+ stories indexed"
 
 **Intro Section:**
 - **Headline:** "Hi, I'm Agy 🐾" (with dog avatar)
-- **Description:** "I'm a Plott Hound — a breed known for tracking skills and determination. Perfect mascot for helping you hunt down insights from Matt's 130+ transformation projects."
+- **Description:** "I'm a Plott Hound — a breed known for tracking skills and determination. Perfect mascot for helping you hunt down insights from Matt's 100+ transformation stories."
 - **Capability Statement:** "Ask me about specific methodologies, leadership approaches, or project outcomes. I understand context, not just keywords."
 
 **Suggestion Cards (6 Examples):**
@@ -647,7 +620,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 - Send button (gradient, disabled until input is non-empty)
 
 **Footer:**
-- "Powered by OpenAI GPT-4o with semantic search across 130 project case studies"
+- "Powered by OpenAI GPT-4o with semantic search across 100+ project case studies"
 
 ---
 
@@ -655,7 +628,7 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 
 **Content:**
 - **Title:** "How Agy Works"
-- **Description:** "130+ Real Project Stories - Every answer is grounded in Matt's actual work across Fortune 500 companies — JP Morgan Chase, RBC, Capital One, and more."
+- **Description:** "100+ Real Project Stories - Every answer is grounded in Matt's actual work across Fortune 500 companies — JP Morgan Chase, RBC, Capital One, and more."
 
 **Three Core Capabilities:**
 
@@ -735,9 +708,9 @@ The Ask MattGPT feature provides a conversational interface for exploring Matt's
 
 ---
 
-### About Matt Page
+### My Profile Page
 
-The About Matt page serves as both a professional introduction and a demonstration of the product's construction.
+The My Profile page serves as both a professional introduction and a demonstration of the product's construction.
 
 #### Header (Hero Band)
 
@@ -750,7 +723,7 @@ The About Matt page serves as both a professional introduction and a demonstrati
 
 **Metric Badges Row:**
 - **20+ Years** Experience
-- **130** Projects Delivered
+- **100+** Projects Delivered
 - **300+** Professionals Trained
 - **15+** Enterprise Clients
 - **3-20x** Delivery Acceleration
@@ -858,7 +831,7 @@ The About Matt page serves as both a professional introduction and a demonstrati
 **Section Title:** "How I Built MattGPT"
 
 **The Problem:**
-"Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 130+ projects by methodology, outcome, or domain. I wanted to create an intelligent, conversational interface that understands intent and surfaces verifiable proof."
+"Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 100+ stories by methodology, outcome, or domain. I wanted to create an intelligent, conversational interface that understands intent and surfaces verifiable proof."
 
 **Tech Stack (Icon Pills):**
 - Python 3.11
@@ -932,7 +905,7 @@ def semantic_search(query: str, top_k: int = 10) -> dict:
 **Section:** "🎯 See It In Action"
 
 **Content:**
-"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my 130+ projects, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
+"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my 100+ stories, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
 
 **Try asking questions like:**
 - "How did Matt scale engineering teams from 4 to 150+ people?"
@@ -942,7 +915,7 @@ def semantic_search(query: str, top_k: int = 10) -> dict:
 
 **CTA Button:** "Ask Agy About My Experience →"
 
-**Footer Note:** "Real AI assistant • 130+ projects • Instant answers • Available 24/7"
+**Footer Note:** "Real AI assistant • 100+ stories • Instant answers • Available 24/7"
 
 ---
 
@@ -1070,5 +1043,5 @@ def semantic_search(query: str, top_k: int = 10) -> dict:
 
 ---
 
-*Last Updated: December 2025*
-*Version: 1.0 (Initial UX Design Documentation)*
+*Last Updated: June 2026 (Audience-journey redesign: 4 journeys replace 6 surface-first flows; nav labels, story counts, site structure updated)*
+*Version: 2.0*

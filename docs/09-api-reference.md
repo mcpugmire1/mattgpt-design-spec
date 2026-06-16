@@ -12,6 +12,8 @@
 
 | Module | Purpose |
 |--------|---------|
+| `jd_assessor.py` | Role Match engine — JD extraction, requirement retrieval, assessment, `compute_recommendation()` |
+| `query_logger.py` | 32-column event logger to Google Sheets (query, feedback, Role Match, UTM) |
 | `semantic_router.py` | Query intent classification using embedding similarity |
 | `rag_service.py` | Semantic search orchestration and confidence gating |
 | `pinecone_service.py` | Vector database integration for semantic search |
@@ -31,13 +33,15 @@
 
 | Component | Purpose | Size |
 |-----------|---------|------|
-| `ask_mattgpt_header.py` | Ask MattGPT header with branding | 57 KB |
+| `ask_mattgpt_header.py` | Ask Agy header with branding | 57 KB |
 | `story_detail.py` | Story detail modal with STAR format | 32 KB |
-| `how_agy_modal.py` | "How Agy Searches" modal dialog | 29 KB |
+| `how_agy_dialog.py` | "How Agy Searches" dialog | 29 KB |
+| `why_agy_dialog.py` | "Why Agy?" dialog | — |
 | `timeline_view.py` | Era-based timeline visualization | 22 KB |
 | `category_cards.py` | Industry/capability card displays | 21 KB |
 | `hero.py` | Homepage hero section | 12 KB |
 | `navbar.py` | Top navigation bar | 10 KB |
+| `lock_icon.py` | Role Match private-view lock indicator | — |
 | `thinking_indicator.py` | AI thinking/loading indicator | 4 KB |
 | `footer.py` | Footer component | 4 KB |
 
@@ -45,14 +49,16 @@
 
 | Page | Purpose | Size |
 |------|---------|------|
-| `explore_stories.py` | Story browsing with table/card/timeline views | 73 KB |
-| `ask_mattgpt/` | Conversational AI interface (8-file module) | 186 KB |
-| `about_matt.py` | About/profile page | 38 KB |
+| `explore_stories.py` | My Work — story browsing with table/card/timeline views | 73 KB |
+| `ask_mattgpt/` | Ask Agy — conversational AI interface (9-file module) | 186 KB |
+| `about_matt.py` | My Profile page | 38 KB |
+| `role_match.py` | Role Match — JD-to-experience fit assessment | — |
 | `banking_landing.py` | Banking industry landing page | 21 KB |
 | `cross_industry_landing.py` | Cross-industry landing page | 21 KB |
 | `home.py` | Homepage router | 1 KB |
 
-**Ask MattGPT Submodules:**
+**Ask Agy Submodules (ask_mattgpt/):**
+- `__init__.py` - Module router
 - `backend_service.py` (43 KB) - Chat backend and LLM orchestration
 - `styles.py` (57 KB) - Chat-specific CSS
 - `conversation_helpers.py` (30 KB) - Conversation logic
@@ -342,7 +348,7 @@ Key session state variables used throughout the application:
 
 | Key | Type | Purpose |
 |-----|------|---------|
-| `active_tab` | str | Current page ("Home", "Explore Stories", "Ask MattGPT", "About Matt") |
+| `active_tab` | str | Current page ("Home", "My Work", "Ask Agy", "Role Match", "My Profile") |
 | `filters` | dict | Active filters (industry, capability, clients, domains, etc.) |
 | `__pc_last_ids__` | dict | Story ID → Pinecone score mapping |
 | `__pc_snippets__` | dict | Story ID → snippet text mapping |
@@ -366,7 +372,7 @@ OPENAI_ORG_ID=org-...
 
 # Pinecone Configuration
 PINECONE_API_KEY=...
-PINECONE_INDEX=mattgpt-stories
+PINECONE_INDEX_NAME=matt-portfolio-v2
 
 # Data File (optional, defaults to echo_star_stories_nlp.jsonl)
 STORIES_JSONL=echo_star_stories_nlp.jsonl
@@ -430,7 +436,7 @@ pytest --cov=services --cov=utils tests/
 - Local fallback for offline/error scenarios
 
 **Filters:**
-- O(n) where n = number of stories (~130)
+- O(n) where n = number of stories (100+)
 - Token-based matching faster than regex for keyword search
 - All filters applied in single pass
 
@@ -444,5 +450,5 @@ pytest --cov=services --cov=utils tests/
 
 ---
 
-*Last Updated: December 2025*
-*Version: 1.0*
+*Last Updated: June 2026 (Staleness Audit Refresh)*
+*Version: 1.1*

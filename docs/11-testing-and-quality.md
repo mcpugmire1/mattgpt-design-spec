@@ -2,7 +2,7 @@
 
 **How MattGPT maintains quality through 3-layer testing strategy**
 
-> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (98.1% pass rate), and BDD/E2E tests for UI workflows (43 scenarios).
+> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (100% pass rate, 64/64), and BDD/E2E tests for UI workflows (219 scenarios across 30 feature files).
 
 ---
 
@@ -24,13 +24,13 @@
 ```
 ┌─────────────────────────────────────────┐
 │ Layer 3: BDD/E2E Tests                  │
-│ - 43 Playwright scenarios               │
+│ - 219 Playwright scenarios              │
+│ - 30 feature files                      │
 │ - Full UI workflows                     │
-│ - ~25 minute runtime                    │
 ├─────────────────────────────────────────┤
 │ Layer 2: RAG Quality Evaluation         │
-│ - 60+ golden queries                    │
-│ - 98.1% pass rate (60/61)               │
+│ - 64 golden queries                     │
+│ - 100% pass rate (64/64)                │
 │ - Eval-driven development               │
 ├─────────────────────────────────────────┤
 │ Layer 1: Unit Tests                     │
@@ -42,8 +42,8 @@
 
 **Quality Metrics:**
 - **Unit Test Coverage:** 12 files testing core components
-- **RAG Eval Pass Rate:** 98.1% (60/61 queries)
-- **E2E Test Pass Rate:** 100% (43/43 scenarios)
+- **RAG Eval Pass Rate:** 100% (64/64 queries)
+- **BDD/E2E Pass Rate:** 219 scenarios across 30 feature files
 - **Total Test Runtime:** ~30 minutes (full suite)
 
 **Why This Matters:**
@@ -119,8 +119,8 @@ pytest tests/unit/ -v
 
 **Location:** `tests/eval_rag_quality.py`
 **Framework:** pytest-based golden query testing
-**Coverage:** 60+ queries across 6 categories
-**Current Pass Rate:** 98.1% (60/61)
+**Coverage:** 64 queries across 8 categories
+**Current Pass Rate:** 100% (64/64)
 
 ### Why RAG Evals Matter
 
@@ -131,8 +131,8 @@ RAG evals validate end-to-end pipeline quality, not just component behavior. The
 - **Architecture changes:** Validate major refactors (e.g., Entity Gate removal)
 
 **Quality Gates:**
-- **Pre-Merge Requirement:** Eval pass rate ≥ 95%
-- **Production Deploy:** Eval pass rate ≥ 98%
+- **Pre-Merge Requirement:** Eval pass rate ≥ 95% (61+/64)
+- **Production Deploy:** Eval pass rate ≥ 98% (63+/64)
 
 ---
 
@@ -205,7 +205,7 @@ High-level questions about professional identity and career themes.
 
 **Expected Behavior:**
 - Triggers synthesis mode (no Pinecone search needed for some)
-- Uses verbatim sacred vocabulary ("builder," "modernizer," "complexity to clarity")
+- Uses verbatim sacred vocabulary ("builder" — the only required verbatim term as of March 2026)
 - Broad thematic response, not story-specific details
 
 ### 6. Edge Cases (Nonsense, Out-of-Scope)
@@ -314,7 +314,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ### How Evals Guided the January 2026 Pipeline Cleanup
 
-**Problem Identified:** 8/60 queries failing due to Entity Gate false rejections
+**Problem Identified:** 8/60 queries failing due to Entity Gate false rejections (January 2026)
 
 **Example Failures:**
 - "What's Matt's professional identity?" → Rejected (no entity detected, low semantic score)
@@ -323,7 +323,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 **Eval-Driven Solution:**
 1. Ran eval suite → 52/60 pass rate (86.7%)
 2. Analyzed failures → Entity Gate blocking narrative queries
-3. Removed Entity Gate → 60/61 pass rate (98.1%)
+3. Removed Entity Gate → 60/61 pass rate (98.1%), then expanded to 64/64 (100%) through suite growth
 4. Validated with regression suite → No new failures introduced
 
 **Key Insight:** Without evals, the Entity Gate would have stayed in place, silently degrading UX for 13% of queries.
@@ -406,17 +406,19 @@ python -m pytest tests/eval_rag_quality.py -v -s
 ### Pass Rate Breakdown
 
 ```
-Total Queries: 61
-PASS: 60 (98.1%)
-FAIL: 1 (1.6%)
+Total Queries: 64
+PASS: 64 (100%)
+FAIL: 0
 
 By Category:
-- Entity Detection: 16/16 (100%)
-- Behavioral: 10/10 (100%)
-- Technical/Delivery: 12/12 (100%)
-- Marketing: 8/8 (100%)
-- Synthesis/Narrative: 10/10 (100%)
-- Edge Cases: 4/5 (80%)  ← Only failure: Q29 out-of-scope detection
+- Narrative:        13/13 (100%)
+- Client:            6/6  (100%)
+- Intent:            9/9  (100%)
+- Edge:              4/4  (100%)
+- Surgical:         11/11 (100%)
+- Entity Detection: 11/11 (100%)
+- Marketing:         7/7  (100%)
+- Context Story:     3/3  (100%)
 ```
 
 ### Flaky Test Handling
@@ -437,7 +439,7 @@ By Category:
 **Pre-Merge Requirement:** Eval pass rate ≥ 95%
 **Production Deploy:** Eval pass rate ≥ 98%
 
-**Rationale:** 60 queries is small enough that 1-2 failures indicate real issues, not statistical noise.
+**Rationale:** 64 queries is small enough that 1-2 failures indicate real issues, not statistical noise.
 
 ---
 
@@ -465,9 +467,9 @@ By Category:
 pytest tests/bdd -v
 ```
 
-**Coverage (43 scenarios):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, responsive layout, edge cases.
+**Coverage (219 scenarios across 30 feature files):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, Role Match, responsive layout, edge cases, and more.
 
-**Status:** 43 passed, 0 skipped
+**Status:** Red → Green → Refactor cycle enforced per feature. Scenarios written and committed before implementation code.
 
 **Rationale:** One doc, one truth. The old pyramid framework is conceptual fluff that doesn't reflect reality.
 
@@ -517,16 +519,16 @@ pytest tests/bdd/ -v
 
 **Pre-Merge Requirements:**
 - ✅ All unit tests passing (12/12)
-- ✅ RAG eval pass rate ≥ 95% (57+/61)
-- ✅ E2E tests passing (43/43)
+- ✅ RAG eval pass rate ≥ 95% (61+/64)
+- ✅ BDD scenarios passing
 
 **Production Deploy Requirements:**
 - ✅ All unit tests passing (12/12)
-- ✅ RAG eval pass rate ≥ 98% (60+/61)
-- ✅ E2E tests passing (43/43)
+- ✅ RAG eval pass rate ≥ 98% (63+/64)
+- ✅ BDD scenarios passing
 - ✅ Manual smoke test (5 queries + 2 UI workflows)
 
-**Rationale:** 60 queries is small enough that 1-2 failures indicate real issues, not statistical noise. E2E tests validate complete user workflows work end-to-end.
+**Rationale:** 64 queries is small enough that 1-2 failures indicate real issues, not statistical noise. BDD scenarios validate complete user workflows end-to-end.
 
 ---
 
@@ -537,7 +539,7 @@ pytest tests/bdd/ -v
 3. **Eval-driven development prevents regressions:** Entity Gate removal validated through evals
 4. **Threshold tuning requires data:** 0.72 → 0.40 was guided by query score analysis
 5. **Voice quality is measurable:** Meta-commentary detection is binary (no subjective "feels right")
-6. **E2E validates reality:** 43 scenarios ensure complete user workflows work end-to-end
+6. **E2E validates reality:** 219 scenarios across 30 feature files ensure complete user workflows work end-to-end
 
 **The Bottom Line:**
 
@@ -552,5 +554,5 @@ pytest tests/bdd/ -v
 
 ---
 
-*Last Updated: January 30, 2026*
-*Version: 1.0 (Initial Documentation)*
+*Last Updated: June 2026 (Staleness Audit Refresh)*
+*Version: 1.1*

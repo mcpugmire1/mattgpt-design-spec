@@ -48,7 +48,7 @@ Convert Excel master sheet to structured JSONL format while preserving existing 
 - Sheet: `"STAR Stories - Interview Ready"`
 
 **Output:**
-- `echo_star_stories.jsonl` (130+ records)
+- `echo_star_stories.jsonl` (100+ records)
 
 ### Key Features
 
@@ -282,9 +282,9 @@ Added Title to embedding text after observing that users often search for story 
 
 ### Processing Stats
 
-- **Stories:** ~130 stories
+- **Stories:** 100+
 - **Time:** ~30 seconds for full re-index
-- **Cost:** $0.0008 per full re-index (130 stories × ~300 tokens avg)
+- **Cost:** ~$0.0006 per full re-index (100+ stories × ~300 tokens avg)
 - **API:** OpenAI text-embedding-3-small @ $0.02 per 1M tokens
 
 ### Environment Configuration
@@ -332,13 +332,11 @@ PINECONE_NAMESPACE=default
 
 **1. Dynamic Identity (MATT_DNA)**
 
-Sacred vocabulary and professional narrative derived from JSONL at startup:
+Professional narrative derived from JSONL at startup:
 ```python
 # Extracted from "About Matt" story in JSONL
 MATT_DNA = {
-    "identity": ["builder", "modernizer"],
-    "philosophy": ["complexity to clarity", "proof over promises"],
-    "not_looking_for": ["maintenance role", "status quo preservation"]
+    "identity": ["builder"]  # Only verbatim-required term (March 2026 cleanup)
 }
 ```
 
@@ -459,18 +457,18 @@ clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Clie
 **OpenAI text-embedding-3-small:**
 - **Rate:** $0.02 per 1M tokens
 - **Story Size:** ~300 tokens average (after text composition)
-- **130 Stories:** ~39,000 tokens = $0.0008 per full re-index
+- **100+ Stories:** ~30,000 tokens = $0.0006 per full re-index
 - **Time:** ~30 seconds
 
 **Annual Cost (4 full refreshes/month):**
-- 4 refreshes × 12 months × $0.0008 = **$0.038/year**
+- 4 refreshes × 12 months × $0.0006 = **$0.029/year**
 - Effectively free
 
 ### Pinecone Vector Database
 
 **matt-portfolio-v2 Index:**
 - **Tier:** Starter (free tier, 100K vectors)
-- **Usage:** 130 vectors (0.13% of quota)
+- **Usage:** 100+ vectors (<0.1% of quota)
 - **Dimensions:** 1536
 - **Cost:** $0/month
 
@@ -574,5 +572,5 @@ Eval framework showed 15% improvement in query relevance (from 83% → 98% pass 
 
 ---
 
-*Last Updated: January 30, 2026*
-*Version: 1.0 (Initial Documentation)*
+*Last Updated: June 2026 (Staleness Audit Refresh)*
+*Version: 1.1*
