@@ -1,21 +1,27 @@
 # Current Project Context
 
-**Last Updated:** May 1, 2026 (Design spec drift cleanup + April 2026 reframe)
-**Session Status:** 🟢 Documentation Complete - Aligned with May 2026 Implementation
+**Last Updated:** June 2026 (Staleness audit: eval 100%/64q, BDD 219/30, 6 priority docs corrected)
+**Session Status:** 🟢 Documentation Complete - Aligned with June 2026 Implementation
 
 ---
 
-## Latest Update: May 2026 - Design Spec Drift Cleanup
+## Latest Update: May 2026 - Feature Catch-Up + Design Spec Alignment
 
-**What Changed:**
-Resolved 9 drift items between design spec and codebase. Key updates: React migration reframe applied across 6 spec docs (future consideration, not committed Phase 2), voice guide implementation status corrected (5P/Humane Framing/Pattern Insights partially implemented, not "NOT YET IMPLEMENTED"), public tags moved from planned to shipped, 3 Phase 2 enhancements marked Decided Against, intent family count corrected to 15, personal narrative placeholders marked complete.
+**What Changed (May 11):**
+Brought design spec current with shipped codebase work: Role Match Phase 4 slice 1 (lock icon + password gate), triage agent surface (`scripts/assess_jd.py` wrapping `jd_assessor.py` for external orchestration), Role Match wireframes added to `/wireframes/`, BDD scenario count updated to 246 across 13 feature files, query logger column count corrected to 32, historical narrative extracted from 02-technical-architecture to codebase HISTORY.md, stale "LATER" roadmap entry replaced (Role Match shipped, not aspirational), index.md landing page updated with Role Match links.
 
-**January-April 2026 changes not previously reflected:**
-- Role Match Phases 1-3 shipped (JD assessment, story chips, action buttons)
+**What Changed (May 1):**
+Resolved 9 drift items between design spec and codebase. React migration reframe applied across 6 spec docs, voice guide implementation status corrected, public tags moved from planned to shipped, 3 Phase 2 enhancements marked Decided Against, intent family count corrected to 15, personal narrative placeholders marked complete.
+
+**January-May 2026 changes reflected:**
+- Role Match Phases 1-3 shipped April (JD assessment, story chips, action buttons)
+- Role Match Phase 4 slice 1 shipped May (lock icon + password gate UI shell)
+- Triage agent scaffold shipped May (`scripts/assess_jd.py` + `agent/` tree)
 - `personal` intent family added to semantic router (warm redirect for age/salary/identity questions)
-- Query logger expanded to 30-column schema (Google Sheets)
+- Query logger expanded to 32-column schema (Google Sheets)
 - Mobile responsive design shipped (`mobile_overrides.py`, 1,520 lines)
-- Eval suite expanded from 31 to 61 golden queries (98.1% pass rate)
+- BDD test suite expanded to 219 scenarios across 30 feature files
+- Eval suite expanded from 31 to 64 golden queries (100% pass rate)
 
 ## Previous Update: January 30, 2026 - RAG Pipeline Documentation
 

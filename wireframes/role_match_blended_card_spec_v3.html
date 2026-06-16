@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role Match Blended Card Spec v3</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #F9FAFB; padding: 24px; }
+
+  :root {
+    --accent-purple: #8B5CF6;
+    --accent-purple-hover: #7C3AED;
+    --bg-card: #FFFFFF;
+    --bg-surface: #F9FAFB;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --border-color: #E5E7EB;
+    --border-secondary: rgba(0,0,0,0.2);
+    --success-bg: #D1FAE5;
+    --success-text: #065F46;
+    --warning-bg: #FEF3C7;
+    --warning-text: #92400E;
+    --error-bg: #FEE2E2;
+    --error-text: #991B1B;
+    --verified-green: #10B981;
+  }
+
+  .panel {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Legend */
+  .role-match-legend {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .legend-divider {
+    width: 0.5px;
+    height: 16px;
+    background: var(--border-color);
+  }
+  .legend-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--verified-green);
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 4px 2px 2px;
+  }
+
+  /* Requirement card */
+  .role-match-req-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Title row */
+  .role-match-req-title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Status badge */
+  .role-match-status-badge {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .role-match-status-badge.strong { background: var(--success-bg); color: var(--success-text); }
+  .role-match-status-badge.partial { background: var(--warning-bg); color: var(--warning-text); }
+  .role-match-status-badge.gap { background: var(--error-bg); color: var(--error-text); }
+
+  .role-match-req-title {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+
+  /* Evidence row */
+  .role-match-evidence-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-left: 32px;
+  }
+
+  /* Story chip — clickable */
+  .role-match-chip-story {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 0.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--accent-purple);
+    cursor: pointer;
+    background: var(--bg-card);
+    font-family: inherit;
+    transition: border-color 0.15s ease;
+  }
+  .role-match-chip-story:hover { border-color: var(--accent-purple); }
+
+  /* Verified chip — non-clickable */
+  .role-match-chip-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 0.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+  }
+  .role-match-verified-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--verified-green);
+    flex-shrink: 0;
+  }
+
+  /* Gap text */
+  .role-match-gap-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+    padding-left: 32px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+<div class="panel">
+
+  <!-- Legend -->
+  <div class="role-match-legend">
+    <div class="legend-item">
+      <div class="role-match-status-badge strong" style="width:16px;height:16px;font-size:9px;">✓</div>
+      <span>Strong match</span>
+    </div>
+    <div class="legend-item">
+      <div class="role-match-status-badge partial" style="width:16px;height:16px;font-size:9px;">~</div>
+      <span>Partial match</span>
+    </div>
+    <div class="legend-item">
+      <div class="role-match-status-badge gap" style="width:16px;height:16px;font-size:9px;">✗</div>
+      <span>Gap</span>
+    </div>
+    <div class="legend-divider"></div>
+    <div class="legend-item">
+      <span style="font-size:10px;">🔗</span><span>= clickable story</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot"></div>
+      <span>= profile evidence</span>
+    </div>
+  </div>
+
+  <div class="section-label">Required Qualifications (12)</div>
+
+  <!-- Strong match — profile + story chips -->
+  <div class="role-match-req-card">
+    <div class="role-match-req-title-row">
+      <div class="role-match-status-badge strong">✓</div>
+      <span class="role-match-req-title">10+ years of professional software development experience</span>
+    </div>
+    <div class="role-match-evidence-row">
+      <div class="role-match-chip-verified"><div class="role-match-verified-dot"></div> Verified profile · 18+ years at Accenture</div>
+      <button class="role-match-chip-story">🔗 Scaling Development Capacity · Capital One</button>
+    </div>
+  </div>
+
+  <!-- Strong match — profile + story chips -->
+  <div class="role-match-req-card">
+    <div class="role-match-req-title-row">
+      <div class="role-match-status-badge strong">✓</div>
+      <span class="role-match-req-title">5+ years managing managers and senior engineering leaders</span>
+    </div>
+    <div class="role-match-evidence-row">
+      <div class="role-match-chip-verified"><div class="role-match-verified-dot"></div> Verified profile · Director, CIC, 150+ practitioners</div>
+      <button class="role-match-chip-story">🔗 My Leadership Journey · Accenture</button>
+    </div>
+  </div>
+
+  <!-- Partial match — profile + story chip + gap text -->
+  <div class="role-match-req-card">
+    <div class="role-match-req-title-row">
+      <div class="role-match-status-badge partial">~</div>
+      <span class="role-match-req-title">Experience with a modern backend framework such as Node.js, Python/FastAPI, or Go</span>
+    </div>
+    <div class="role-match-evidence-row">
+      <div class="role-match-chip-verified"><div class="role-match-verified-dot"></div> Verified profile · Python, JavaScript</div>
+      <button class="role-match-chip-story">🔗 AmEx Virtual Payments Platform · American Express</button>
+    </div>
+    <div class="role-match-gap-text">Python confirmed, but FastAPI, Node.js, or Go not specifically evidenced.</div>
+  </div>
+
+  <!-- Gap — gap text only -->
+  <div class="role-match-req-card">
+    <div class="role-match-req-title-row">
+      <div class="role-match-status-badge gap">✗</div>
+      <span class="role-match-req-title">Experience building mobile applications using React Native</span>
+    </div>
+    <div class="role-match-gap-text">No matching stories or profile evidence for React Native specifically.</div>
+  </div>
+
+  <div class="section-label" style="margin-top:4px;">Preferred Qualifications (4)</div>
+
+  <!-- Strong match — story chips only -->
+  <div class="role-match-req-card">
+    <div class="role-match-req-title-row">
+      <div class="role-match-status-badge strong">✓</div>
+      <span class="role-match-req-title">Agile/Scrum experience</span>
+    </div>
+    <div class="role-match-evidence-row">
+      <button class="role-match-chip-story">🔗 Agile Transformation · Fiserv</button>
+      <button class="role-match-chip-story">🔗 Agile Transformation · Norfolk Southern</button>
+    </div>
+  </div>
+
+  <!-- Partial match — story chip + gap text -->
+  <div class="role-match-req-card">
+    <div class="role-match-req-title-row">
+      <div class="role-match-status-badge partial">~</div>
+      <span class="role-match-req-title">Insurance or risk management domain knowledge</span>
+    </div>
+    <div class="role-match-evidence-row">
+      <button class="role-match-chip-story">🔗 What I Learned About Assumptions · Fortune 500</button>
+    </div>
+    <div class="role-match-gap-text">Risk management practices demonstrated, but insurance domain not specifically addressed.</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -18,7 +18,7 @@ Version 2.2 | May 2026
 **Key Changes from V2.0:**
 - 🎯 Merged Voice DNA, Boundaries, User Intent Recognition, Success Metrics from system prompt
 - 🔧 WHY → HOW → WHAT reconciled with production: WHY = tension/stakes (30-40%), HOW = approach + metrics as evidence (40-50%), WHAT = proof/outcomes (10-20%)
-- 🏷️ Unimplemented sections labeled "DESIGN INTENT — NOT YET IMPLEMENTED"
+- 🏷️ Aspirational sections labeled with implementation status (updated May 2026: 5P Framework, Humane Framing, and Pattern Insights marked PARTIALLY IMPLEMENTED)
 - ❌ Removed inline scaffolding labels (WHY — tension) from examples — production prompt prohibits them
 
 **What Stays the Same:**

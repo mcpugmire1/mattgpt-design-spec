@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MattGPT Wireframes — Implementation Reference</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f7f6f3;
+  --color-bg-tertiary: #ecebe6;
+  --color-bg-info: #f1ecf8;
+  --color-bg-success: #e7f4e8;
+  --color-bg-warning: #fef0db;
+  --color-bg-danger: #fce8e8;
+  --color-border-tertiary: #dfdcd5;
+  --color-border-secondary: #c9c5bd;
+  --color-border-info: #c8b8e2;
+  --color-border-warning: #efb872;
+  --color-border-danger: #e89d9d;
+  --color-text-primary: #2b2a27;
+  --color-text-secondary: #6a6862;
+  --color-text-tertiary: #9b9892;
+  --color-text-info: #6d4cc4;
+  --color-text-success: #2e7d32;
+  --color-text-warning: #b5670a;
+  --color-text-danger: #b53636;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+}
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--color-text-primary); background: #f3f2ee; margin: 0; padding: 40px 20px; line-height: 1.5; }
+.doc { max-width: 1280px; margin: 0 auto; }
+.doc-header { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 24px; }
+.doc-header h1 { font-size: 26px; margin: 0 0 6px; font-weight: 500; }
+.doc-header p { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 4px; }
+.toc { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); padding: 18px 24px; margin-bottom: 24px; }
+.toc h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--color-text-tertiary); margin: 0 0 10px; font-weight: 500; }
+.toc ol { margin: 0; padding-left: 22px; font-size: 13px; }
+.toc ol li { margin-bottom: 4px; }
+.toc a { color: var(--color-text-info); text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.section { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; }
+.section h2 { font-size: 20px; margin: 0 0 4px; font-weight: 500; }
+.section .section-sub { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 18px; }
+.wf-label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.6px; margin: 16px 0 8px; font-weight: 500; }
+.wf-frame { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-bg-primary); }
+.wf-nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.wf-brand { font-weight: 500; font-size: 14px; }
+.wf-nav-links { display: flex; gap: 16px; }
+.wf-nav-links span { font-size: 12px; color: var(--color-text-secondary); cursor: pointer; }
+.wf-nav-links span.active { color: var(--color-text-primary); font-weight: 500; }
+.wf-mobile-wrap { display: flex; justify-content: center; }
+.wf-mobile { width: 360px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-bg-primary); }
+.wf-m-nav { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.wf-act-btn { font-size: 11px; padding: 5px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); background: var(--color-bg-primary); display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.wf-annot { background: var(--color-bg-info); border-radius: var(--radius-md); padding: 10px 14px; margin: 12px 0; font-size: 12px; color: var(--color-text-info); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
+.wf-annot i { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.wf-annot strong { font-weight: 500; }
+
+/* Home */
+.home-hero { padding: 35px 24px 35px; text-align: center; background: linear-gradient(135deg, #7c6fb8 0%, #6a59a8 50%, #5e4d9c 100%); color: #ffffff; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.home-avatar { position: relative; width: 180px; height: 200px; border-radius: 16px; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 80px; color: rgba(255,255,255,0.85); margin: 0 auto 16px; }
+.home-greeting { font-size: 18px; color: rgba(255,255,255,0.85); margin: 0 0 4px; font-weight: 400; }
+.home-hook { font-size: 40px; font-weight: 600; margin: 0 0 12px; line-height: 1.15; color: #ffffff; }
+.home-subtitle { font-size: 17px; color: rgba(255,255,255,0.92); margin: 0 0 14px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.55; }
+.home-ctas { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+.cta-primary { padding: 10px 18px; background: #ffffff; color: var(--color-text-info); border: 0.5px solid #ffffff; border-radius: var(--radius-md); font-size: 13px; font-weight: 500; }
+.cta-secondary { padding: 10px 18px; background: transparent; color: #ffffff; border: 0.5px solid rgba(255,255,255,0.85); border-radius: var(--radius-md); font-size: 13px; font-weight: 500; }
+.home-seniority { font-size: 12px; color: var(--color-text-secondary); padding: 14px 24px; text-align: center; border-bottom: 0.5px solid var(--color-border-tertiary); line-height: 1.55; }
+.home-seniority strong { color: var(--color-text-primary); font-weight: 500; }
+.home-stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: 14px 24px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.home-stat { text-align: center; }
+.home-stat-num { font-size: 18px; font-weight: 500; color: var(--color-text-info); margin: 0; }
+.home-stat-lbl { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin: 2px 0 0; }
+.home-cat-h { text-align: center; font-size: 14px; font-weight: 500; margin: 18px 0 12px; padding: 0 24px; }
+.home-cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 24px 18px; }
+.home-cat-card { background: var(--color-bg-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 14px; cursor: pointer; }
+.home-cat-icon { font-size: 18px; margin-bottom: 6px; }
+.home-cat-title { font-size: 12px; font-weight: 500; margin: 0 0 3px; }
+.home-cat-meta { font-size: 11px; color: var(--color-text-secondary); margin: 0; }
+.home-quick { padding: 22px 24px; background: var(--color-bg-info); border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.home-quick-h { font-size: 14px; font-weight: 500; margin: 0 0 6px; display: flex; align-items: center; gap: 6px; }
+.home-quick-sub { font-size: 11px; color: var(--color-text-secondary); margin: 0 0 12px; line-height: 1.5; }
+.home-quick-lbl { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 8px; }
+.home-quick-chip { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-info); border-radius: var(--radius-md); padding: 8px 11px; font-size: 11px; margin-bottom: 6px; color: var(--color-text-info); cursor: pointer; }
+.home-footer { padding: 22px 24px; text-align: center; border-top: 0.5px solid var(--color-border-tertiary); }
+.home-footer-h { font-size: 15px; font-weight: 500; margin: 0 0 4px; }
+.home-footer-sub { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 10px; line-height: 1.5; }
+.home-footer-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+/* Profile */
+.prof-header { padding: 24px; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: flex-start; gap: 18px; }
+.prof-avatar { width: 84px; height: 84px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 38px; color: var(--color-text-secondary); flex-shrink: 0; }
+.prof-name { font-size: 22px; font-weight: 500; margin: 0; }
+.prof-status-badge { display: inline-block; font-size: 10px; padding: 3px 9px; background: var(--color-bg-success); color: var(--color-text-success); border-radius: 12px; margin-bottom: 6px; font-weight: 500; }
+.prof-headline { font-size: 13px; color: var(--color-text-secondary); margin: 6px 0 0; line-height: 1.5; }
+.prof-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 22px; }
+.prof-section-h { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-secondary); margin: 0 0 8px; }
+.prof-signals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.prof-signal-tile { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 10px 12px; }
+.prof-signal-lbl { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.4px; margin: 0 0 2px; }
+.prof-signal-val { font-size: 12px; font-weight: 500; margin: 0; }
+.prof-voice-p { font-size: 13px; line-height: 1.65; margin: 0 0 10px; }
+.prof-voice-p:last-child { margin: 0; }
+.prof-copy-block { background: var(--color-bg-info); border-radius: var(--radius-md); padding: 14px 16px; border-left: 2px solid var(--color-border-info); }
+.prof-copy-h { font-size: 12px; font-weight: 500; margin: 0 0 6px; color: var(--color-text-info); }
+.prof-copy-snippet { font-size: 12px; padding: 9px 11px; background: var(--color-bg-primary); border-radius: var(--radius-md); margin: 6px 0; line-height: 1.5; font-style: italic; color: var(--color-text-secondary); }
+.prof-copy-actions { display: flex; gap: 6px; margin-top: 8px; }
+.prof-comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.prof-comp-card { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 11px 12px; }
+.prof-comp-name { font-size: 12px; font-weight: 500; margin: 0 0 3px; }
+.prof-comp-desc { font-size: 11px; color: var(--color-text-secondary); margin: 0; line-height: 1.4; }
+.prof-philosophy { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.prof-phil-card { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 11px 13px; }
+.prof-phil-h { font-size: 12px; font-weight: 500; margin: 0 0 3px; color: var(--color-text-info); }
+.prof-phil-p { font-size: 11px; color: var(--color-text-primary); margin: 0; line-height: 1.45; }
+.prof-timeline { padding-left: 6px; border-left: 2px solid var(--color-border-tertiary); }
+.prof-timeline-item { padding: 0 0 12px 16px; position: relative; }
+.prof-timeline-item:before { content: ""; position: absolute; left: -7px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--color-text-info); }
+.prof-timeline-period { font-size: 11px; color: var(--color-text-info); font-weight: 500; margin: 0; }
+.prof-timeline-role { font-size: 13px; font-weight: 500; margin: 2px 0 1px; }
+.prof-timeline-org { font-size: 11px; color: var(--color-text-secondary); margin: 0 0 3px; }
+.prof-timeline-desc { font-size: 11px; color: var(--color-text-primary); margin: 0; line-height: 1.45; }
+
+/* Role Match */
+.rm-page-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.rm-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--color-text-secondary); flex-shrink: 0; }
+.rm-page-title { font-size: 18px; font-weight: 500; margin: 0 0 2px; }
+.rm-page-sub { font-size: 12px; color: var(--color-text-secondary); margin: 0; }
+.rm-body { display: grid; grid-template-columns: 240px 1fr; gap: 14px; padding: 16px; }
+.rm-jd-area { font-size: 11px; line-height: 1.55; padding: 10px 11px; background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); height: 220px; overflow: auto; color: var(--color-text-primary); }
+.rm-jd-btn { background: var(--color-bg-info); color: var(--color-text-info); border: 0.5px solid var(--color-border-info); padding: 8px 12px; font-size: 12px; font-weight: 500; border-radius: var(--radius-md); margin-top: 8px; }
+.rm-results-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.rm-job-title { font-size: 14px; font-weight: 500; margin: 0; }
+.rm-job-co { font-size: 11px; color: var(--color-text-secondary); margin: 2px 0 0; }
+.rm-actions { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+.rm-lock-btn { width: 28px; height: 26px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); background: var(--color-bg-secondary); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; color: var(--color-text-secondary); }
+.rm-lock-btn.unlocked { background: rgba(120, 80, 220, 0.08); border-color: rgba(120, 80, 220, 0.4); color: #6d4cc4; }
+.rm-private-block { background: rgba(120, 80, 220, 0.05); border: 0.5px solid rgba(120, 80, 220, 0.3); border-left: 3px solid #7e5fd4; border-radius: var(--radius-md); padding: 12px 14px; margin: 10px 0; }
+.rm-private-head { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; }
+.rm-private-h { font-size: 13px; font-weight: 500; margin: 0; display: flex; align-items: center; gap: 6px; color: #6d4cc4; }
+.rm-private-badge { font-size: 10px; padding: 2px 8px; background: rgba(120, 80, 220, 0.15); color: #6d4cc4; border-radius: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; }
+.rm-eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 10px; }
+.rm-eval-tile { background: var(--color-bg-primary); border-radius: var(--radius-md); padding: 8px 10px; border: 0.5px solid rgba(120, 80, 220, 0.15); }
+.rm-eval-lbl { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+.rm-eval-val { font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+.rm-eval-val.high { color: var(--color-text-success); }
+.rm-eval-note { font-size: 11px; color: var(--color-text-secondary); margin: 3px 0 0; line-height: 1.4; }
+.rm-private-section-h { font-size: 11px; font-weight: 500; margin: 0 0 5px; }
+.rm-private-list { font-size: 11px; line-height: 1.55; margin: 0 0 8px; padding-left: 16px; }
+.rm-legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 10px; padding: 7px 10px; background: var(--color-bg-secondary); border-radius: var(--radius-md); margin: 10px 0; }
+.rm-legend-item { display: inline-flex; align-items: center; gap: 4px; color: var(--color-text-secondary); }
+.rm-legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; }
+.rm-dot-strong { background: var(--color-bg-success); color: var(--color-text-success); }
+.rm-dot-partial { background: var(--color-bg-warning); color: var(--color-text-warning); }
+.rm-dot-gap { background: var(--color-bg-danger); color: var(--color-text-danger); }
+.rm-summary { background: var(--color-bg-info); border-radius: var(--radius-md); padding: 12px 14px; border-left: 2px solid var(--color-border-info); margin: 10px 0; }
+.rm-summary-h { font-size: 11px; color: var(--color-text-info); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin: 0 0 6px; }
+.rm-summary-counts { font-size: 13px; font-weight: 500; margin: 0 0 8px; }
+.rm-count-strong { color: var(--color-text-success); }
+.rm-count-partial { color: var(--color-text-warning); }
+.rm-count-gap { color: var(--color-text-danger); }
+.rm-summary-wc-h { font-size: 11px; font-weight: 500; margin: 0 0 5px; }
+.rm-summary-wc-list { font-size: 11px; line-height: 1.55; margin: 0; padding-left: 16px; }
+.rm-summary-wc-tag { font-size: 10px; color: var(--color-text-tertiary); }
+.rm-section-h { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-secondary); margin: 6px 0 4px; padding: 6px 10px; border-radius: var(--radius-md); background: var(--color-bg-secondary); }
+.rm-req { padding: 10px 12px; border-radius: var(--radius-md); border: 0.5px solid var(--color-border-tertiary); display: flex; gap: 10px; margin-bottom: 6px; }
+.rm-req.partial { background: rgba(239, 184, 114, 0.06); border-left: 2px solid var(--color-border-warning); }
+.rm-req.gap { background: rgba(232, 157, 157, 0.08); border-left: 2px solid var(--color-border-danger); }
+.rm-req-icon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+.rm-req-icon.strong { background: var(--color-bg-success); color: var(--color-text-success); }
+.rm-req-icon.partial { background: var(--color-bg-warning); color: var(--color-text-warning); }
+.rm-req-icon.gap { background: var(--color-bg-danger); color: var(--color-text-danger); }
+.rm-req-title { font-size: 12px; font-weight: 500; margin: 0 0 4px; line-height: 1.4; }
+.rm-note { font-size: 11px; color: var(--color-text-warning); font-style: italic; margin: 5px 0 0; line-height: 1.45; }
+.rm-note.gap { color: var(--color-text-danger); }
+.rm-mobile-msg { padding: 50px 30px; text-align: center; }
+.rm-mobile-msg-h { font-size: 15px; font-weight: 500; margin: 0 0 8px; }
+.rm-mobile-msg-sub { font-size: 13px; line-height: 1.5; color: var(--color-text-secondary); margin: 0; }
+
+/* Ask Agy */
+.agy-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); gap: 14px; }
+.agy-id { display: flex; align-items: center; gap: 12px; }
+.agy-avatar { position: relative; width: 40px; height: 40px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--color-text-secondary); flex-shrink: 0; }
+.agy-info-badge { position: absolute; bottom: -3px; right: -3px; width: 16px; height: 16px; border-radius: 50%; background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); display: flex; align-items: center; justify-content: center; font-size: 9px; font-style: italic; font-weight: 500; color: var(--color-text-secondary); }
+.agy-title { font-size: 16px; font-weight: 500; margin: 0; }
+.agy-sub { font-size: 11px; color: var(--color-text-secondary); margin: 0; }
+.agy-status-strip { display: flex; gap: 18px; padding: 6px 18px; background: var(--color-bg-secondary); font-size: 10px; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); }
+.agy-status-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--color-text-success); margin-right: 4px; }
+.agy-landing-body { padding: 26px 24px; }
+.agy-welcome { text-align: center; max-width: 540px; margin: 0 auto; }
+.agy-welcome-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--color-text-secondary); margin: 0 auto 10px; }
+.agy-welcome-h { font-size: 20px; font-weight: 500; margin: 0 0 6px; }
+.agy-welcome-tagline { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 14px; line-height: 1.5; }
+
+.agy-try-label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin: 18px 0 10px; text-align: center; font-weight: 500; }
+.agy-starters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 auto 16px; max-width: 720px; }
+.agy-starter { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 10px 12px; font-size: 12px; line-height: 1.4; }
+.agy-input-row { display: flex; gap: 8px; max-width: 720px; margin: 0 auto; }
+.agy-input { flex: 1; padding: 9px 12px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); font-size: 12px; color: var(--color-text-tertiary); background: var(--color-bg-primary); }
+.agy-ask-btn { background: var(--color-bg-info); color: var(--color-text-info); border: 0.5px solid var(--color-border-info); padding: 9px 16px; font-size: 12px; font-weight: 500; border-radius: var(--radius-md); }
+.agy-powered { font-size: 10px; color: var(--color-text-tertiary); text-align: center; margin: 8px 0 0; }
+.agy-chat-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+.agy-msg { display: flex; gap: 10px; }
+.agy-msg-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--color-text-secondary); flex-shrink: 0; }
+.agy-msg-body { flex: 1; min-width: 0; }
+.agy-msg-user { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 10px 12px; font-size: 13px; line-height: 1.5; }
+.agy-msg-opener { font-size: 12px; color: var(--color-text-tertiary); font-style: italic; margin: 0 0 8px; }
+.agy-msg-p { font-size: 13px; line-height: 1.65; margin: 0 0 10px; }
+.agy-msg-p:last-of-type { margin: 0 0 10px; }
+.agy-msg-pivot-text { font-size: 13px; line-height: 1.5; margin: 0 0 10px; }
+.agy-sources-label { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin: 8px 0 6px; font-weight: 500; }
+.agy-source-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.agy-source-chip { font-size: 11px; padding: 5px 10px; background: var(--color-bg-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 14px; display: inline-flex; align-items: center; gap: 4px; }
+.agy-pivot-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.agy-pivot-btn { background: var(--color-bg-primary); border: 0.5px solid rgba(120, 80, 220, 0.3); border-radius: var(--radius-md); padding: 9px 10px; font-size: 12px; color: #6d4cc4; text-align: center; line-height: 1.35; }
+.agy-input-strip { padding: 14px 18px; border-top: 0.5px solid var(--color-border-tertiary); display: flex; gap: 8px; align-items: center; }
+
+/* Landings (Banking + Cross-Industry) */
+.land-header { display: flex; align-items: center; gap: 14px; padding: 18px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.land-avatar { position: relative; width: 52px; height: 52px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--color-text-secondary); flex-shrink: 0; }
+.land-title { font-size: 18px; font-weight: 500; margin: 0 0 3px; }
+.land-sub { font-size: 12px; color: var(--color-text-secondary); margin: 0; line-height: 1.45; }
+.land-stats-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 14px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.land-stat-tile { text-align: center; }
+.land-stat-num { font-size: 22px; font-weight: 500; color: #6d4cc4; margin: 0; }
+.land-stat-lbl { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin: 2px 0 0; }
+.land-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 18px; }
+.land-section-label { font-size: 13px; font-weight: 500; margin: 0 0 6px; }
+.land-filter-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.es-filter-primary { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.es-filter-secondary { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: center; padding-top: 8px; border-top: 0.5px solid var(--color-border-tertiary); }
+.es-filter-search { display: flex; align-items: center; gap: 8px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 7px 12px; background: var(--color-bg-primary); font-size: 13px; color: var(--color-text-tertiary); }
+.es-filter-placeholder { font-size: 13px; color: var(--color-text-tertiary); }
+.es-filter-icon { font-size: 13px; }
+.es-filter-drop { border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 7px 12px; background: var(--color-bg-primary); font-size: 13px; color: var(--color-text-secondary); display: flex; justify-content: space-between; align-items: center; }
+.es-filter-drop-sm { padding: 5px 10px; font-size: 12px; }
+.es-chevron { font-size: 10px; color: var(--color-text-tertiary); margin-left: 6px; }
+.es-reset { font-size: 12px; color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; text-align: right; }
+.es-view-toggle { display: flex; border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); overflow: hidden; }
+.es-view-btn { font-size: 12px; padding: 5px 12px; background: var(--color-bg-primary); color: var(--color-text-secondary); cursor: pointer; }
+.es-view-active { background: #6d4cc4; color: #fff; font-weight: 500; }
+.land-filter-chip { font-size: 11px; padding: 5px 11px; background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); border-radius: 14px; }
+.land-explore-h { font-size: 13px; font-weight: 500; margin: 0 0 4px; }
+.land-explore-sub { font-size: 11px; color: var(--color-text-secondary); margin: 0 0 10px; }
+.land-tier-h { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-secondary); margin: 0 0 8px; }
+.land-cap-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.land-cap-card { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 11px 12px; }
+.land-cap-card.core { padding: 12px 14px; }
+.land-cap-title { font-size: 12px; font-weight: 500; margin: 0 0 4px; line-height: 1.35; }
+.land-cap-card.core .land-cap-title { font-size: 13px; margin-bottom: 5px; }
+.land-cap-sub { font-size: 11px; color: var(--color-text-secondary); margin: 0 0 6px; font-style: italic; line-height: 1.4; }
+.land-cap-meta { font-size: 11px; color: var(--color-text-info); font-weight: 500; }
+.land-cap-meta .sep { color: var(--color-text-tertiary); font-weight: 400; margin: 0 4px; }
+.land-cap-meta .clients { color: var(--color-text-tertiary); font-weight: 400; }
+
+/* How I Built */
+.hib-page-header { padding: 22px 18px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); text-align: center; }
+.hib-page-title { font-size: 22px; font-weight: 500; margin: 0 0 4px; }
+.hib-page-sub { font-size: 12px; color: var(--color-text-secondary); margin: 0; }
+.hib-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+.hib-block { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 14px 16px; }
+.hib-block-h { font-size: 14px; font-weight: 500; margin: 0 0 8px; }
+.hib-block-p { font-size: 12px; line-height: 1.6; margin: 0 0 8px; }
+.hib-block-p:last-child { margin: 0; }
+.hib-whyagy-block { display: flex; gap: 14px; align-items: flex-start; }
+.hib-whyagy-text { flex: 1; }
+.hib-whyagy-img { width: 100px; height: 100px; flex-shrink: 0; background: var(--color-bg-tertiary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--color-text-secondary); }
+.hib-tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hib-tech-card { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 12px 8px; text-align: center; }
+.hib-tech-icon { font-size: 18px; margin-bottom: 4px; }
+.hib-tech-name { font-size: 11px; }
+.hib-pipeline-row { display: flex; gap: 6px; align-items: center; justify-content: space-between; }
+.hib-pipeline-step { flex: 1; background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 10px 6px; text-align: center; }
+.hib-pipeline-num { width: 18px; height: 18px; border-radius: 50%; background: rgba(120, 80, 220, 0.15); color: #6d4cc4; font-size: 10px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+.hib-pipeline-name { font-size: 11px; font-weight: 500; margin: 0 0 2px; }
+.hib-pipeline-desc { font-size: 9px; color: var(--color-text-tertiary); line-height: 1.3; margin: 0; }
+.hib-pipeline-arrow { color: var(--color-text-tertiary); font-size: 14px; }
+.hib-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hib-detail-list { font-size: 11px; line-height: 1.7; margin: 0; padding: 0; list-style: none; }
+.hib-detail-list li { margin-bottom: 4px; }
+.hib-detail-list .key { font-weight: 500; }
+.hib-detail-list .val { color: var(--color-text-secondary); }
+.hib-spec-block { padding: 14px; text-align: center; background: var(--color-bg-secondary); border-radius: var(--radius-md); border-left: 2px solid #7e5fd4; }
+.hib-cta-block { padding: 14px 16px; background: var(--color-bg-secondary); border-radius: var(--radius-md); border-left: 2px solid #7e5fd4; }
+.hib-cta-h { font-size: 14px; font-weight: 500; margin: 0 0 6px; }
+.hib-cta-sub { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 10px; line-height: 1.5; }
+.hib-cta-prompts { display: flex; flex-direction: column; gap: 6px; }
+.hib-cta-prompt { background: var(--color-bg-primary); border: 0.5px solid rgba(120, 80, 220, 0.3); border-radius: var(--radius-md); padding: 9px 12px; font-size: 11px; color: #6d4cc4; display: flex; align-items: center; justify-content: space-between; }
+.hib-block-sub { font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 12px; text-align: center; }
+.hib-runtime-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-secondary); margin: 0 0 3px; }
+.hib-runtime-sub { font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 12px; }
+.hib-runtime-step { display: flex; gap: 12px; }
+.hib-runtime-spine { display: flex; flex-direction: column; align-items: center; flex: 0 0 26px; }
+.hib-runtime-num { width: 26px; height: 26px; border-radius: 50%; background: #534ab7; color: #fff; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+.hib-runtime-line { flex: 1 1 auto; width: 2px; background: var(--color-border-tertiary); margin: 4px 0; min-height: 10px; }
+.hib-runtime-card { flex: 1; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 10px 14px; margin-bottom: 10px; }
+.hib-runtime-card-h { font-size: 13px; font-weight: 500; margin: 0 0 6px; }
+.hib-runtime-list { font-size: 11px; line-height: 1.6; margin: 0; padding: 0 0 0 14px; color: var(--color-text-secondary); }
+.hib-runtime-list li { margin-bottom: 2px; }
+.hib-runtime-list code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; background: var(--color-bg-secondary); padding: 1px 4px; border-radius: 3px; color: var(--color-text-primary); }
+.hib-godeeper-lead { font-size: 12px; color: var(--color-text-secondary); margin: 4px 0 10px; }
+.hib-godeeper-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hib-godeeper-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-md); padding: 14px 16px; }
+.hib-godeeper-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.hib-godeeper-top i { font-size: 16px; color: var(--color-text-primary); }
+.hib-godeeper-ttl { font-size: 13px; font-weight: 500; }
+.hib-godeeper-desc { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 8px; }
+.hib-godeeper-link { font-size: 11px; color: var(--color-text-info); font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+
+/* Why Agy Modal */
+.modal-stage { position: relative; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-bg-secondary); min-height: 380px; padding: 18px; }
+.modal-bg-ghost { position: relative; background: var(--color-bg-primary); border: 0.5px dashed var(--color-border-tertiary); border-radius: var(--radius-md); padding: 22px; min-height: 280px; opacity: 0.55; }
+.modal-bg-ghost-title { font-size: 16px; font-weight: 500; margin: 0 0 6px; color: var(--color-text-tertiary); }
+.modal-bg-ghost-line { height: 8px; background: var(--color-bg-tertiary); border-radius: 4px; margin: 8px 0; }
+.modal-bg-ghost-line.short { width: 60%; }
+.modal-bg-ghost-line.medium { width: 80%; }
+.modal-bg-ghost-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 14px; }
+.modal-bg-ghost-card { height: 50px; background: var(--color-bg-tertiary); border-radius: var(--radius-md); }
+.modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 460px; background: var(--color-bg-primary); border-radius: var(--radius-lg); border: 0.5px solid var(--color-border-tertiary); box-shadow: 0 8px 24px rgba(0,0,0,0.12); overflow: hidden; z-index: 2; }
+.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.modal-id { display: flex; align-items: center; gap: 10px; }
+.modal-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.modal-title { font-size: 14px; font-weight: 500; margin: 0; }
+.modal-close { width: 24px; height: 24px; border-radius: 50%; background: var(--color-bg-secondary); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.modal-body { padding: 16px 18px; }
+.modal-p { font-size: 13px; line-height: 1.6; margin: 0 0 10px; }
+.modal-p:last-of-type { margin-bottom: 0; }
+.modal-p em { font-style: italic; color: var(--color-text-secondary); }
+.modal-foot { padding: 12px 18px; border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-bg-secondary); }
+.modal-link { font-size: 12px; color: var(--color-text-info); font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+.modal-footer-btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; font-size: 12px; font-weight: 500; padding: 9px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); background: var(--color-bg-primary); color: var(--color-text-info); cursor: pointer; }
+.modal-step-lbl { font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 8px; margin: 8px 0 4px; }
+.modal-step-num { width: 20px; height: 20px; border-radius: 50%; background: #534AB7; color: #fff; font-size: 10px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.modal-step-arrow { text-align: center; color: var(--color-text-tertiary); font-size: 12px; padding: 2px 0; }
+.modal-step-body { font-size: 10px; color: var(--color-text-secondary); padding: 0 0 6px 28px; line-height: 1.5; }
+.modal-result-preview { background: var(--color-bg-info); border: 0.5px solid var(--color-border-info); border-radius: var(--radius-md); padding: 9px 12px; margin: 4px 0; }
+.modal-result-preview-h { font-size: 11px; font-weight: 500; color: var(--color-text-info); margin: 0 0 2px; }
+.modal-result-preview-sub { font-size: 10px; color: var(--color-text-secondary); margin: 0; }
+
+/* Back affordance for secondary surfaces */
+.back-affordance { padding: 10px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); background: var(--color-bg-secondary); }
+.back-link { font-size: 12px; color: var(--color-text-info); display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+
+.pending-note { font-size: 11px; color: var(--color-text-warning); background: rgba(239, 184, 114, 0.08); border-left: 2px solid var(--color-border-warning); padding: 8px 12px; border-radius: var(--radius-md); margin: 10px 0; }
+.pending-note strong { font-weight: 500; }
+
+.spacer { height: 12px; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+<header class="doc-header">
+<h1>MattGPT Wireframes — Implementation Reference</h1>
+<p>Generated May 29, 2026. Updated June 12, 2026. All surfaces shown at latest version state. Pending items annotated inline. Role Match copy and state machine finalized per MATTGPT-067-SPEC.md.</p>
+<p>IA locked. 5-item main nav: Home / My Work / Ask Agy / Role Match / My Profile. Secondary surfaces (Banking, Cross-Industry, How I Built) do not carry the top nav; they use context-aware back affordances. Modal surfaces (Why Agy, How Agy Searches) overlay in place via @st.dialog and dismiss with close / Escape / backdrop, no back affordance.</p>
+</header>
+
+<nav class="toc">
+<h2>Contents</h2>
+<ol>
+<li><a href="#home">Home</a></li>
+<li><a href="#profile">My Profile</a></li>
+<li><a href="#role-match">Role Match (public + private)</a></li>
+<li><a href="#ask-agy-landing">Ask Agy — Landing</a></li>
+<li><a href="#ask-agy-conversation">Ask Agy — Conversation</a></li>
+<li><a href="#banking">Banking Landing</a></li>
+<li><a href="#cross-industry">Cross-Industry Landing</a></li>
+<li><a href="#how-i-built">How I Built MattGPT</a></li>
+<li><a href="#why-agy-modal">Why Agy &amp; How Agy Searches modals</a></li>
+<li><a href="#my-work">My Work</a></li>
+<li><a href="#pending">Pending items reference</a></li>
+</ol>
+</nav>
+
+<section class="section" id="home">
+<h2>1. Home</h2>
+<p class="section-sub">Entry surface for all three audiences (cold recruiter, warm CTO, referrer). Hero, stats strip, 6 category cards (3-column grid, whole-tile click targets, unified treatment — MATTGPT-107 done), Ask Agy panel with sample questions, Let's Connect footer.</p>
+
+<p class="wf-label">Home — Desktop</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span class="active">Home</span>
+<span>My Work</span>
+<span>Ask Agy</span>
+<span>Role Match</span>
+<span>My Profile</span>
+</div>
+</div>
+<div class="home-hero">
+<div class="home-avatar"><i class="ti ti-user"></i><span class="agy-info-badge" style="width:20px;height:20px;font-size:10px;bottom:10px;right:10px;background:#fff;color:#534AB7;border-color:rgba(255,255,255,0.4);">i</span></div>
+<p class="home-greeting">Hi, I'm Matt Pugmire</p>
+<p class="home-hook">Interview me before you interview me.</p>
+<p class="home-subtitle">In active search for a role where building the product engineering organization, establishing the culture, and delivering results are part of the same job.</p>
+<p class="home-subtitle" style="font-size: 14px; margin-top: 6px; color: rgba(255,255,255,0.8);">That's Agy, my Plott Hound and AI assistant, ready to track down insights from 20+ years of work.</p>
+<div class="home-ctas">
+<button class="cta-primary">Recruiting for a role? Match it <i class="ti ti-arrow-right"></i></button>
+<button class="cta-secondary">Want to dig deeper? Ask Agy <i class="ti ti-paw"></i></button>
+</div>
+</div>
+<div class="home-stats">
+<div class="home-stat"><p class="home-stat-num">Product engineering</p><p class="home-stat-lbl">Leadership</p></div>
+<div class="home-stat"><p class="home-stat-num">100+</p><p class="home-stat-lbl">projects delivered</p></div>
+<div class="home-stat"><p class="home-stat-num">300+</p><p class="home-stat-lbl">Professionals trained</p></div>
+<div class="home-stat"><p class="home-stat-num">15+</p><p class="home-stat-lbl">Enterprise clients</p></div>
+</div>
+<p class="home-cat-h">What would you like to explore?</p>
+<div class="home-cat-grid">
+<div class="home-cat-card"><div class="home-cat-icon">🏦</div><p class="home-cat-title">Financial Services / Banking</p><p class="home-cat-meta">Payments modernization, regulatory compliance, and platform delivery across global banking</p></div>
+<div class="home-cat-card"><div class="home-cat-icon">🌐</div><p class="home-cat-title">Cross-Industry Transformation</p><p class="home-cat-meta">Enterprise-scale agile transformation, operating model design, and delivery acceleration</p></div>
+<div class="home-cat-card"><div class="home-cat-icon">🚀</div><p class="home-cat-title">Product Innovation & Strategy</p><p class="home-cat-meta">Cloud-native prototypes to enterprise platforms that transform businesses</p></div>
+<div class="home-cat-card"><div class="home-cat-icon">⚙️</div><p class="home-cat-title">Application Modernization</p><p class="home-cat-meta">Event-driven design, microservices, zero-defect delivery</p></div>
+<div class="home-cat-card"><div class="home-cat-icon">💡</div><p class="home-cat-title">Consulting & Transformation</p><p class="home-cat-meta">Fortune 500 advisory, operating models, 3-20x acceleration</p></div>
+<div class="home-cat-card"><div class="home-cat-icon">👥</div><p class="home-cat-title">Teams & Talent Development</p><p class="home-cat-meta">Innovation centers, servant leadership, upskilling programs</p></div>
+</div>
+<div class="home-quick">
+<div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+<div class="agy-avatar" style="width:36px;height:36px;font-size:18px;flex-shrink:0;"><i class="ti ti-dog"></i><span class="agy-info-badge">i</span></div>
+<p class="home-quick-h" style="margin:0;">Ask Agy <i class="ti ti-paw"></i> Anything</p>
+</div>
+<p class="home-quick-sub">From building MattGPT to leading global programs, Agy is trained on every project Matt has delivered. Ask him anything, he'll track it down.</p>
+<button class="cta-secondary">Ask Agy <i class="ti ti-paw"></i></button>
+</div>
+<div>
+<p class="home-quick-lbl">Try asking</p>
+<p class="home-quick-chip">How did Matt scale a Cloud Innovation Center from 0 to 150+ engineers?</p>
+<p class="home-quick-chip">How does Matt build teams that ship like startups in enterprise?</p>
+<p class="home-quick-chip">How does Matt manage resistance when leading enterprise transformation programs?</p>
+</div>
+</div>
+<div class="home-footer">
+<p class="home-footer-h">Let's connect.</p>
+<p class="home-footer-sub">I build what's next, modernize what's not, and grow teams along the way.<br>Open to Atlanta and beyond.</p>
+<div class="home-footer-actions">
+<span class="wf-act-btn"><i class="ti ti-mail"></i> Email Me</span>
+<span class="wf-act-btn"><i class="ti ti-brand-linkedin"></i> LinkedIn</span>
+<span class="wf-act-btn"><i class="ti ti-paw"></i> Ask Agy</span>
+</div>
+</div>
+</div>
+
+<div class="pending-note"><strong>Pending v2:</strong> Wireframe still shows generic avatar placeholder. Production avatar is locked: illustrated Matt + Agy with headphones. Badge (variant B — italic "i") appears on the home hero avatar as the 5th surface. Mobile: badge appears on body/hero avatars; no badge on the mobile nav avatar (it's a compact brand mark — make the nav avatar tappable silently).</div>
+</section>
+
+<section class="section" id="profile">
+<h2>2. My Profile</h2>
+<p class="section-sub">Matt's identity surface. Status badge, headline, signals panel, voice block, copy-intro affordance, competencies, How I Lead, Career Evolution timeline.</p>
+
+<p class="wf-label">My Profile — Desktop</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span>Home</span>
+<span>My Work</span>
+<span>Ask Agy</span>
+<span>Role Match</span>
+<span class="active">My Profile</span>
+</div>
+</div>
+<div class="prof-header">
+<div class="prof-avatar"><i class="ti ti-user"></i></div>
+<div>
+<span class="prof-status-badge">● In active conversations</span>
+<p class="prof-name">Matt Pugmire</p>
+<p class="prof-headline">Product engineering leader · built global payments infrastructure for JPMorgan · scaled Accenture's Cloud Innovation Center to 150+ practitioners · Atlanta · open to relocate</p>
+</div>
+</div>
+<div class="prof-body">
+
+<div>
+<p class="prof-section-h">Signals</p>
+<div class="prof-signals-grid">
+<div class="prof-signal-tile"><p class="prof-signal-lbl">Level</p><p class="prof-signal-val">Senior leader</p></div>
+<div class="prof-signal-tile"><p class="prof-signal-lbl">Most recent</p><p class="prof-signal-val">Director, Cloud Innovation Center</p></div>
+<div class="prof-signal-tile"><p class="prof-signal-lbl">Peak team</p><p class="prof-signal-val">150+ practitioners</p></div>
+<div class="prof-signal-tile"><p class="prof-signal-lbl">Geo</p><p class="prof-signal-val">Atlanta · relocate ok</p></div>
+<div class="prof-signal-tile"><p class="prof-signal-lbl">Status</p><p class="prof-signal-val">Active search</p></div>
+<div class="prof-signal-tile"><p class="prof-signal-lbl">Work mode</p><p class="prof-signal-val">Hybrid or in-person</p></div>
+</div>
+</div>
+
+<div>
+<p class="prof-section-h">In my own words</p>
+<p class="prof-voice-p">I build what's next, modernize what's not, and grow teams along the way. Before the Cloud Innovation Center I was the person JPMorgan called to build payments infrastructure across 12 countries with a 60-engineer team. The CIC was the same work at a different scale, bringing product culture into the enterprise: 150+ practitioners, 30+ products, $100M+ in repeat business.</p>
+<p class="prof-voice-p">Early in my career, we specified everything upfront and found out if it worked at the very end. I work the opposite way now: prototypes in days, a working MVP in weeks, quality built in from the first commit rather than tested in afterward, with modern engineering and AI tightening the loop. That is when a team becomes a system that delivers, and the people on it do work they are proud of.</p>
+<p class="prof-voice-p">Career built through networking and referrals, not cold applications. If you've found me, you've probably been told to.</p>
+</div>
+
+<div>
+<p class="prof-section-h">For a referrer</p>
+<div class="prof-copy-block">
+<p class="prof-copy-h">Copy this intro language</p>
+<p class="prof-copy-snippet">Matt Pugmire is a senior product engineering leader with a track record of building at scale across two eras. He built global payments infrastructure for JPMorgan across 12 countries with a 60-engineer team, then scaled Accenture's Cloud Innovation Center from zero to 150+ practitioners, 30+ products, and $100M+ in repeat business. In active conversations for Head of Engineering and senior leadership roles. Atlanta-based, open to relocate.</p>
+<div class="prof-copy-actions">
+<button class="wf-act-btn"><i class="ti ti-copy"></i> Copy snippet</button>
+<button class="wf-act-btn"><i class="ti ti-file-download"></i> Download PDF</button>
+</div>
+</div>
+</div>
+
+<div>
+<p class="prof-section-h">Core competencies</p>
+<div class="prof-comp-grid">
+<div class="prof-comp-card"><p class="prof-comp-name">Product & Innovation</p><p class="prof-comp-desc">From discovery and prototypes to enterprise platforms, built around outcomes.</p></div>
+<div class="prof-comp-card"><p class="prof-comp-name">Modern Engineering</p><p class="prof-comp-desc">Cloud-native and event-driven, with quality engineered in so defects stay out of production.</p></div>
+<div class="prof-comp-card"><p class="prof-comp-name">Product delivery at scale</p><p class="prof-comp-desc">Scaling product delivery across teams: SAFe, Team Topologies, and the operating model that keeps it fast.</p></div>
+<div class="prof-comp-card"><p class="prof-comp-name">Transformation Leadership</p><p class="prof-comp-desc">Moving organizations from IT delivery to product operating models, and making the shift stick.</p></div>
+<div class="prof-comp-card"><p class="prof-comp-name">Team Building</p><p class="prof-comp-desc">Building cross-functional product teams from zero, and the capability to keep them growing.</p></div>
+<div class="prof-comp-card"><p class="prof-comp-name">AI & Emerging Tech</p><p class="prof-comp-desc">RAG, vector search, and eval-driven development, built hands-on.</p></div>
+</div>
+</div>
+
+<div>
+<p class="prof-section-h">How I Lead</p>
+<div class="prof-philosophy">
+<div class="prof-phil-card"><p class="prof-phil-h">Outcomes over output</p><p class="prof-phil-p">I measure a team by what it changes, not how much it produces.</p></div>
+<div class="prof-phil-card"><p class="prof-phil-h">Experimentation over certainty</p><p class="prof-phil-p">I trust what a prototype teaches me over what a plan promises.</p></div>
+<div class="prof-phil-card"><p class="prof-phil-h">High-trust, sustainable teams</p><p class="prof-phil-p">I build teams where ten people do what twenty usually do, and can still do it next quarter.</p></div>
+<div class="prof-phil-card"><p class="prof-phil-h">Grow the people</p><p class="prof-phil-p">I develop people with the same discipline I bring to building systems.</p></div>
+</div>
+</div>
+
+<div>
+<p class="prof-section-h">Career evolution</p>
+<div class="prof-timeline">
+<div class="prof-timeline-item">
+<p class="prof-timeline-period">2023–Present</p>
+<p class="prof-timeline-role">Sabbatical | Innovation & Upskilling</p>
+<p class="prof-timeline-org">Independent</p>
+<p class="prof-timeline-desc">Sabbatical to recharge, refocus, and reskill, with MattGPT as tangible proof of the work.</p>
+</div>
+<div class="prof-timeline-item">
+<p class="prof-timeline-period">2019–2023</p>
+<p class="prof-timeline-role">Director, Cloud Innovation Center</p>
+<p class="prof-timeline-org">Accenture</p>
+<p class="prof-timeline-desc">Launched Innovation Centers (150+ engineers) · 30+ products · $100M+ in new and repeat business · 4x faster delivery.</p>
+</div>
+<div class="prof-timeline-item">
+<p class="prof-timeline-period">2016–2023</p>
+<p class="prof-timeline-role">Capability Development Lead, CloudFirst</p>
+<p class="prof-timeline-org">Accenture</p>
+<p class="prof-timeline-desc">Enterprise capability development, engineering enablement, and culture transformation.</p>
+</div>
+<div class="prof-timeline-item">
+<p class="prof-timeline-period">Earlier</p>
+<p class="prof-timeline-role">Cloud Native Architecture Lead · Sr. Technology Architecture Manager · Technology Manager · Startups & Consulting</p>
+<p class="prof-timeline-org">Accenture and earlier</p>
+<p class="prof-timeline-desc">JPMorgan, Fiserv, HSBC, AT&T, RBC. Payments platforms, enterprise CRM, telecom infrastructure. Builder and recovery work at scale before the CIC.</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="pending-note"><strong>Open:</strong> (1) "How I Built MattGPT" link not yet added to the signals panel. (2) How I Built relocation to a standalone surface not yet built. (3) Timeline still says "$100M+ in new and repeat business" while voice and referrer say "repeat business"; reconcile to one. <strong>Resolved this pass:</strong> Level tile is now "Senior leader" and the referrer drops the VP title; VP-scale is carried by the demonstrated scope, not the word.</div>
+</section>
+
+<section class="section" id="role-match">
+<h2>3. Role Match</h2>
+<p class="section-sub">Recruiter-facing JD assessment. Public state for recruiters; private overlay (lock-gated) for Matt's own evaluation. Mobile is "best on desktop."</p>
+
+<p class="wf-label">Role Match — Desktop empty state (public, pre-submission) — MATTGPT-066 + 067</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span>Home</span>
+<span>My Work</span>
+<span>Ask Agy</span>
+<span class="active">Role Match</span>
+<span>My Profile</span>
+</div>
+</div>
+<div class="rm-page-header">
+<div class="rm-avatar"><i class="ti ti-dog"></i></div>
+<div>
+<p class="rm-page-title">Role Match</p>
+<p class="rm-page-sub">Agy shows where Matt fits your role, and where he doesn't.</p>
+</div>
+</div>
+<div class="rm-body">
+<div>
+<p style="font-size: 11px; color: var(--color-text-secondary); margin: 0 0 8px;">Paste a job description below.</p>
+<div class="rm-jd-area" style="color: var(--color-text-tertiary); font-style: italic;"> </div>
+<button class="rm-jd-btn" style="opacity: 0.5; cursor: not-allowed; background: var(--color-bg-tertiary); color: var(--color-text-tertiary); border-color: var(--color-border-tertiary);">Match this role <i class="ti ti-paw"></i></button>
+<p style="font-size: 11px; color: var(--color-text-tertiary); margin: 8px 0 0;">Don't have a job description handy?</p>
+<button class="wf-act-btn" style="margin-top: 6px; font-size: 11px; color: var(--color-text-info); border-color: var(--color-border-info);">Try an example 🔍</button>
+</div>
+
+<div>
+<div style="display: flex; align-items: center; justify-content: center; min-height: 360px;">
+<p style="font-size: 13px; color: var(--color-text-tertiary); text-align: center; margin: 0;">Agy will map each requirement to Matt's real project experience.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="wf-annot"><i class="ti ti-info-circle"></i><p><strong>Empty state details (066 + 067):</strong> Button is disabled when textarea is empty. "Don't have a job description handy? Try an example →" text link below button pre-fills textarea with a composite demo JD via prefilter pattern (set session state + rerun). Tertiary text for the question, accent color for the clickable portion. Lock icon hidden in public view (ships with 012). No Clear button in empty state (nothing to clear).</p></div>
+
+<div class="spacer"></div>
+
+<p class="wf-label">Role Match — Desktop populated state (public, recruiter view) — MATTGPT-067</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span>Home</span>
+<span>My Work</span>
+<span>Ask Agy</span>
+<span class="active">Role Match</span>
+<span>My Profile</span>
+</div>
+</div>
+<div class="rm-page-header">
+<div class="rm-avatar"><i class="ti ti-dog"></i></div>
+<div>
+<p class="rm-page-title">Role Match</p>
+<p class="rm-page-sub">Agy shows where Matt fits your role, and where he doesn't.</p>
+</div>
+</div>
+<div class="rm-body">
+<div>
+<p style="font-size: 11px; color: var(--color-text-secondary); margin: 0 0 8px;">Paste a job description below.</p>
+<p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 6px; cursor: pointer;">✕ Clear</p>
+<div class="rm-jd-area">Director of Engineering, RiskTech Solutions
+
+Required:
+- 10+ years software dev
+- 5+ years managing managers
+- Modern backend + frontend
+- Cloud-native (AWS/Azure/GCP)
+- ...</div>
+<button class="rm-jd-btn">Update Match <i class="ti ti-paw"></i></button>
+</div>
+
+<div>
+<div class="rm-results-head">
+<div>
+<p class="rm-job-title">Director of Engineering</p>
+<p class="rm-job-co">RiskTech Solutions</p>
+</div>
+<div class="rm-actions">
+<span class="wf-act-btn"><i class="ti ti-thumb-up"></i></span>
+<span class="wf-act-btn"><i class="ti ti-flag"></i></span>
+<span class="wf-act-btn"><i class="ti ti-file-download"></i></span>
+</div>
+</div>
+
+<div class="rm-legend">
+<span class="rm-legend-item"><span class="rm-legend-dot rm-dot-strong">✓</span> Strong match</span>
+<span class="rm-legend-item"><span class="rm-legend-dot rm-dot-partial">~</span> Partial</span>
+<span class="rm-legend-item"><span class="rm-legend-dot rm-dot-gap">✗</span> Gap</span>
+<span class="rm-legend-item"><i class="ti ti-link" style="font-size:10px;"></i> project evidence</span>
+<span class="rm-legend-item"><i class="ti ti-circle-filled" style="font-size:8px;"></i> verified skill</span>
+</div>
+
+<div class="rm-summary">
+<p class="rm-summary-h">Summary</p>
+<p class="rm-summary-counts">
+Required: <span class="rm-count-strong">15 strong</span>, <span class="rm-count-partial">1 partial</span> · Preferred: <span class="rm-count-strong">2 strong</span>, <span class="rm-count-gap">2 gap</span>
+</p>
+<p class="rm-summary-wc-h">Discussion points (3):</p>
+<ul class="rm-summary-wc-list">
+<li>Frontend frameworks: no evidence of React or Vue <span class="rm-summary-wc-tag">(Required, Partial)</span></li>
+<li>Insurance/risk domain knowledge: no evidence <span class="rm-summary-wc-tag">(Preferred, Gap)</span></li>
+<li>React Native mobile development: no evidence <span class="rm-summary-wc-tag">(Preferred, Gap)</span></li>
+</ul>
+</div>
+
+<h3 class="rm-section-h">Required qualifications (15)</h3>
+<div class="rm-req partial">
+<div class="rm-req-icon partial">~</div>
+<div><p class="rm-req-title">Modern backend (Node.js/Python/Go) and frontend (React or Vue)</p><p class="rm-note">Note: no evidence of frontend framework experience like React or Vue.</p></div>
+</div>
+<p style="font-size: 11px; color: var(--color-text-tertiary); text-align: center; padding: 6px;">+ 14 more requirements, all Strong (collapsed for reference)</p>
+
+<h3 class="rm-section-h">Preferred qualifications (4)</h3>
+<div class="rm-req gap">
+<div class="rm-req-icon gap">✗</div>
+<div><p class="rm-req-title">Insurance or risk management domain knowledge</p><p class="rm-note gap">Note: no evidence of insurance or risk management domain knowledge.</p></div>
+</div>
+<p style="font-size: 11px; color: var(--color-text-tertiary); text-align: center; padding: 6px;">+ 3 more preferred (collapsed for reference)</p>
+
+<div style="margin-top: 14px; padding: 12px 14px; background: var(--color-bg-info); border-radius: var(--radius-md); border-left: 2px solid var(--color-border-info); display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+<p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">Explore Matt's experience in depth</p>
+<button class="wf-act-btn" style="font-size: 11px; color: var(--color-text-info); border-color: var(--color-border-info); flex-shrink: 0;">Ask Agy 🐾</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="wf-annot"><i class="ti ti-info-circle"></i><p><strong>Public populated state details (067):</strong> "Clear" link renders above textarea when content is present (pops session state + reruns). "Update Match" button is always primary accent (no secondary/demoted state, no edit detection). Lock icon hidden in public view (ships with 012). No "My evaluation" block. Post-result CTA: "Explore Matt's experience in depth" label + "Ask Agy 🐾" outlined button navigates to Ask Agy page with role context. Legend uses "project evidence" and "verified skill". "Discussion points" replaces "Worth conversation." Full state machine defined in MATTGPT-067-SPEC.md.</p></div>
+
+<div class="wf-annot"><i class="ti ti-info-circle"></i><p><strong>Button lifecycle (simplified):</strong> (1) Empty or below 30 words = disabled "Match this role" (visually muted). (2) 30+ words, no match yet = primary accent "Match this role". (3) Results rendered = primary accent "Update Match". (4) Clear clicked = resets to state 1. No secondary/demoted state. No edit detection.</p></div>
+
+<div class="spacer"></div>
+
+<p class="wf-label">Role Match — Desktop private state (lock unlocked, showing private overlay) — MATTGPT-012</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span>Home</span>
+<span>My Work</span>
+<span>Ask Agy</span>
+<span class="active">Role Match</span>
+<span>My Profile</span>
+</div>
+</div>
+<div class="rm-page-header">
+<div class="rm-avatar"><i class="ti ti-dog"></i></div>
+<div>
+<p class="rm-page-title">Role Match</p>
+<p class="rm-page-sub">Agy shows where Matt fits your role, and where he doesn't.</p>
+</div>
+</div>
+<div class="rm-body">
+<div>
+<p style="font-size: 11px; color: var(--color-text-secondary); margin: 0 0 8px;">Paste a job description below.</p>
+<div class="rm-jd-area">Director of Engineering, RiskTech Solutions
+
+Required:
+- 10+ years software dev
+- 5+ years managing managers
+- Modern backend + frontend
+- Cloud-native (AWS/Azure/GCP)
+- ...</div>
+<button class="rm-jd-btn">Update Match <i class="ti ti-paw"></i></button>
+</div>
+
+<div>
+<div class="rm-results-head">
+<div>
+<p class="rm-job-title">Director of Engineering</p>
+<p class="rm-job-co">RiskTech Solutions</p>
+</div>
+<div class="rm-actions">
+<span class="wf-act-btn"><i class="ti ti-thumb-up"></i></span>
+<span class="wf-act-btn"><i class="ti ti-flag"></i></span>
+<span class="wf-act-btn"><i class="ti ti-file-download"></i></span>
+<span class="rm-lock-btn unlocked"><i class="ti ti-lock-open"></i></span>
+</div>
+</div>
+
+<div class="rm-private-block">
+<div class="rm-private-head">
+<p class="rm-private-h"><i class="ti ti-eye"></i> My evaluation</p>
+<span class="rm-private-badge">Private · Matt only</span>
+</div>
+<div class="rm-eval-grid">
+<div class="rm-eval-tile"><div class="rm-eval-lbl">Overall fit</div><div class="rm-eval-val high"><i class="ti ti-trending-up"></i> High</div><p class="rm-eval-note">F500 fintech + platform mod + team scale align.</p></div>
+<div class="rm-eval-tile"><div class="rm-eval-lbl">Recommendation</div><div class="rm-eval-val high"><i class="ti ti-check"></i> Apply</div><p class="rm-eval-note">15/15 required; frontend gap non-blocking.</p></div>
+<div class="rm-eval-tile"><div class="rm-eval-lbl">Comp alignment</div><div class="rm-eval-val"><i class="ti ti-equal"></i> Within range</div><p class="rm-eval-note">Stated band aligns with expected.</p></div>
+<div class="rm-eval-tile"><div class="rm-eval-lbl">Work mode</div><div class="rm-eval-val"><i class="ti ti-check"></i> Aligned</div><p class="rm-eval-note">Hybrid 3 days, Atlanta-friendly.</p></div>
+</div>
+<p class="rm-private-section-h">Strategic fit notes</p>
+<ul class="rm-private-list">
+<li>Banking/payments domain depth is differentiating signal here</li>
+<li>CIC scale story (0 → 150) maps to "platform org leadership"</li>
+<li>Frontend framework gap explainable: leadership-role not IC</li>
+</ul>
+<p class="rm-private-section-h">Action items</p>
+<ul class="rm-private-list">
+<li>Apply directly; reference platform modernization stories</li>
+<li>Check network for RiskTech connections</li>
+<li>Prep 1-pager mapping CIC + JPM ACCESS to role requirements</li>
+</ul>
+</div>
+
+<div class="rm-legend">
+<span class="rm-legend-item"><span class="rm-legend-dot rm-dot-strong">✓</span> Strong match</span>
+<span class="rm-legend-item"><span class="rm-legend-dot rm-dot-partial">~</span> Partial</span>
+<span class="rm-legend-item"><span class="rm-legend-dot rm-dot-gap">✗</span> Gap</span>
+<span class="rm-legend-item"><i class="ti ti-link" style="font-size:10px;"></i> project evidence</span>
+<span class="rm-legend-item"><i class="ti ti-circle-filled" style="font-size:8px;"></i> verified skill</span>
+</div>
+
+<div class="rm-summary">
+<p class="rm-summary-h">Summary</p>
+<p class="rm-summary-counts">
+Required: <span class="rm-count-strong">15 strong</span>, <span class="rm-count-partial">1 partial</span> · Preferred: <span class="rm-count-strong">2 strong</span>, <span class="rm-count-gap">2 gap</span>
+</p>
+<p class="rm-summary-wc-h">Discussion points (3):</p>
+<ul class="rm-summary-wc-list">
+<li>Frontend frameworks: no evidence of React or Vue <span class="rm-summary-wc-tag">(Required, Partial)</span></li>
+<li>Insurance/risk domain knowledge: no evidence <span class="rm-summary-wc-tag">(Preferred, Gap)</span></li>
+<li>React Native mobile development: no evidence <span class="rm-summary-wc-tag">(Preferred, Gap)</span></li>
+</ul>
+</div>
+
+<h3 class="rm-section-h">Required qualifications (15)</h3>
+<div class="rm-req partial">
+<div class="rm-req-icon partial">~</div>
+<div><p class="rm-req-title">Modern backend (Node.js/Python/Go) and frontend (React or Vue)</p><p class="rm-note">Note: no evidence of frontend framework experience like React or Vue.</p></div>
+</div>
+<p style="font-size: 11px; color: var(--color-text-tertiary); text-align: center; padding: 6px;">+ 14 more requirements, all Strong (collapsed for reference)</p>
+
+<h3 class="rm-section-h">Preferred qualifications (4)</h3>
+<div class="rm-req gap">
+<div class="rm-req-icon gap">✗</div>
+<div><p class="rm-req-title">Insurance or risk management domain knowledge</p><p class="rm-note gap">Note: no evidence of insurance or risk management domain knowledge.</p></div>
+</div>
+<p style="font-size: 11px; color: var(--color-text-tertiary); text-align: center; padding: 6px;">+ 3 more preferred (collapsed for reference)</p>
+</div>
+</div>
+</div>
+
+<div class="wf-annot"><i class="ti ti-info-circle"></i><p><strong>Private state (012):</strong> Same as public view plus the "My evaluation" block above Summary. Lock icon shows open (ti-lock-open) with purple-tinted active state. Lock icon only visible in private view — hidden from public view entirely until 012 ships. Same legend and copy updates as public view apply here.</p></div>
+
+<p class="wf-label">Role Match — Mobile</p>
+<div class="wf-mobile-wrap">
+<div class="wf-mobile">
+<div class="wf-m-nav">
+<div class="wf-brand">MattGPT</div>
+<span class="wf-act-btn"><i class="ti ti-menu-2"></i></span>
+</div>
+<div class="rm-page-header" style="padding: 12px 14px;">
+<div class="rm-avatar" style="width: 36px; height: 36px; font-size: 18px;"><i class="ti ti-dog"></i></div>
+<div><p class="rm-page-title" style="font-size: 16px;">Role Match</p><p class="rm-page-sub">Evidence where Matt fits, and where he doesn't.</p></div>
+</div>
+<div class="rm-mobile-msg">
+<p class="rm-mobile-msg-h">Best experienced on desktop</p>
+<p class="rm-mobile-msg-sub">Role Match requires a wider screen to display the two-column layout.</p>
+</div>
+<div class="home-footer">
+<p class="home-footer-h">Let's connect.</p>
+<p class="home-footer-sub">I build what's next, modernize what's not, and grow teams along the way.<br>Open to Atlanta and beyond.</p>
+<div class="home-footer-actions">
+<span class="wf-act-btn"><i class="ti ti-mail"></i> Email Me</span>
+<span class="wf-act-btn"><i class="ti ti-brand-linkedin"></i> LinkedIn</span>
+<span class="wf-act-btn"><i class="ti ti-paw"></i> Ask Agy</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="pending-note"><strong>Pending (012):</strong> Evaluation grid: 4 tiles or 3 tiles + logistics row (Work mode + Comp alignment partly overlap as logistical-fit signals). Strategic fit notes and Action items logic needs spec: data sources (match results, Opportunity Filter, positioning docs, network/Notion), output shape, LLM-generated vs rule-based, corrective actions connection.</div>
+<div class="pending-note" style="background: var(--color-bg-success); border-left-color: var(--color-border-success, #a5d6a7);"><strong>Done (066):</strong> Sample JD content written and shipped. Composite senior product engineering leader role: modern stack, AI/ML exposure, regulated industry.</div>
+</section>
+
+<section class="section" id="ask-agy-landing">
+<h2>4. Ask Agy — Landing</h2>
+<p class="section-sub">Chat entry surface. Badge (variant B — italic "i", 16px circle, bottom-right) on header avatar triggers Why Agy modal. Same badge on Banking and Cross-Industry landing avatars. Mobile: badge on body/hero avatars only; mobile nav avatar is tappable but has no visible badge. 6 starter prompts from production.</p>
+
+<p class="wf-label">Ask Agy Landing — Desktop (badge on header avatar)</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span>Home</span>
+<span>My Work</span>
+<span class="active">Ask Agy</span>
+<span>Role Match</span>
+<span>My Profile</span>
+</div>
+</div>
+<div class="agy-header">
+<div class="agy-id">
+<div class="agy-avatar"><i class="ti ti-dog"></i><span class="agy-info-badge">i</span></div>
+<div><p class="agy-title">Ask Agy</p><p class="agy-sub">Tracking down insights from 20+ years of transformation work.</p></div>
+</div>
+<button class="wf-act-btn"><i class="ti ti-search"></i> How Agy searches</button>
+</div>
+<div class="agy-status-strip">
+<span><span class="agy-status-dot"></span>Semantic search active</span>
+<span><span class="agy-status-dot"></span>Pinecone index ready</span>
+<span><span class="agy-status-dot"></span>100+ stories indexed</span>
+</div>
+<div class="agy-landing-body">
+<div class="agy-welcome">
+<div class="agy-welcome-avatar"><i class="ti ti-dog"></i></div>
+<p class="agy-welcome-h">Hi, I'm Agy 🐾</p>
+<p class="agy-welcome-tagline">Go deeper than a resume. Ask me anything about Matt's 100+ stories and I'll connect the dots.</p>
+
+<p class="agy-try-label">Try asking</p>
+<div class="agy-starters">
+<div class="agy-starter">💳 How did Matt modernize payments across 12+ countries at JP Morgan?</div>
+<div class="agy-starter">🧪 Tell me about Matt's early failure and experimentation approach</div>
+<div class="agy-starter">🚀 How does Matt build teams that ship like startups in enterprise?</div>
+<div class="agy-starter">🏗️ How did Matt establish and expand the Cloud Innovation Center in Atlanta?</div>
+<div class="agy-starter">🌱 How did Matt scale learning and talent development at Accenture?</div>
+<div class="agy-starter">💪 How does Matt handle resistance and failure in transformations?</div>
+</div>
+<div class="agy-input-row">
+<input class="agy-input" placeholder="Ask about projects, methods, or outcomes...">
+<button class="agy-ask-btn">Ask Agy <i class="ti ti-paw"></i></button>
+</div>
+<p class="agy-powered">Powered by OpenAI + semantic search across 100+ case studies</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="ask-agy-conversation">
+<h2>5. Ask Agy — Conversation</h2>
+<p class="section-sub">Chat surface. Personal Intent Family pivot pattern (production-correct) for comp/personal questions: brief redirect + 4 character-pivot question buttons. Source citation chips per response. "Tracking this down..." opener.</p>
+
+<p class="wf-label">Ask Agy Conversation — Desktop (routing links removed; pivot pattern preserved)</p>
+<div class="wf-frame">
+<div class="wf-nav">
+<div class="wf-brand">MattGPT</div>
+<div class="wf-nav-links">
+<span>Home</span>
+<span>My Work</span>
+<span class="active">Ask Agy</span>
+<span>Role Match</span>
+<span>My Profile</span>
+</div>
+</div>
+<div class="agy-header">
+<div class="agy-id">
+<div class="agy-avatar"><i class="ti ti-dog"></i><span class="agy-info-badge">i</span></div>
+<div><p class="agy-title">Ask Agy</p><p class="agy-sub">Tracking down insights from 20+ years of transformation work.</p></div>
+</div>
+<button class="wf-act-btn"><i class="ti ti-search"></i> How Agy searches</button>
+</div>
+<div class="agy-status-strip">
+<span><span class="agy-status-dot"></span>Semantic search active</span>
+<span><span class="agy-status-dot"></span>Pinecone index ready</span>
+<span><span class="agy-status-dot"></span>100+ stories indexed</span>
+</div>
+<div class="agy-chat-body">
+
+<div class="agy-msg">
+<div class="agy-msg-avatar"><i class="ti ti-user"></i></div>
+<div class="agy-msg-body"><div class="agy-msg-user">How does Matt build teams that ship like startups in enterprise?</div></div>
+</div>
+
+<div class="agy-msg">
+<div class="agy-msg-avatar"><i class="ti ti-dog"></i></div>
+<div class="agy-msg-body">
+<p class="agy-msg-opener">🐾 Tracking this down...</p>
+<p class="agy-msg-p">At Accenture, Matt built the Cloud Innovation Center from the ground up, scaling it to over 150 professionals. His approach focused on creating high-trust teams grounded in servant leadership and psychological safety, enabling them to deliver at 4x velocity with zero production defects.</p>
+<p class="agy-msg-p">Matt's strategy involved embedding modern engineering practices like Lean XP, pair programming, and continuous integration.</p>
+<p class="agy-sources-label">Sources</p>
+<div class="agy-source-row">
+<span class="agy-source-chip"><i class="ti ti-link" style="font-size:10px;"></i> Accenture · Why Hire Matt</span>
+<span class="agy-source-chip"><i class="ti ti-link" style="font-size:10px;"></i> Capital One · Scaling Development Capacity</span>
+<span class="agy-source-chip"><i class="ti ti-link" style="font-size:10px;"></i> Fortune 500 · Lean XP and Balanced Teams</span>
+</div>
+</div>
+</div>
+
+<div class="agy-msg">
+<div class="agy-msg-avatar"><i class="ti ti-user"></i></div>
+<div class="agy-msg-body"><div class="agy-msg-user">What are Matt's compensation requirements?</div></div>
+</div>
+
+<div class="agy-msg">
+<div class="agy-msg-avatar"><i class="ti ti-dog"></i></div>
+<div class="agy-msg-body">
+<p class="agy-msg-pivot-text">🐾 I'm focused on Matt's professional experience.</p>
+<div class="agy-pivot-row">
+<button class="agy-pivot-btn">What kind of leader is Matt?</button>
+<button class="agy-pivot-btn">How does Matt handle pressure?</button>
+<button class="agy-pivot-btn">Why does Matt do this work?</button>
+<button class="agy-pivot-btn">What do former colleagues say?</button>
+</div>
+</div>
+</div>
+
+</div>
+<div class="agy-input-strip">
+<input class="agy-input" placeholder="Ask a follow-up...">
+<button class="agy-ask-btn">Ask Agy <i class="ti ti-paw"></i></button>
+</div>
+</div>
+
+<div class="wf-annot"><i class="ti ti-info-circle"></i><p><strong>Personal Intent Family</strong> pivot pattern matches production. Same Agy message bubble as other responses, no visual flag as "decline." 4 pivot questions are character-test redirects.</p></div>
+</section>
+
+<section class="section" id="banking">
+<h2>6. Banking Landing</h2>
+<p class="section-sub">Secondary surface (no top nav). Curated theme entry from Home category card. "Matt's Financial Services Expertise" framing: depth-in-vertical, Clients filter dimension. Pending v2: ← Back affordance.</p>
+
+<p class="wf-label">Banking Landing — Desktop (v1 shown; v2 strips top nav + adds back affordance)</p>
+<div class="wf-frame">
+<div class="back-affordance"><a class="back-link"><i class="ti ti-arrow-left"></i> Back to Home</a></div>
+<div class="land-header">
+<div class="land-avatar"><i class="ti ti-dog"></i><span class="agy-info-badge">i</span></div>
+<div><p class="land-title">Matt's Financial Services Expertise</p><p class="land-sub">33 projects across 15 specialized areas. Trust Agy 🐾 to surface what's relevant to your role.</p></div>
+</div>
+<div class="land-stats-strip">
+<div class="land-stat-tile"><p class="land-stat-num">33</p><p class="land-stat-lbl">Projects delivered</p></div>
+<div class="land-stat-tile"><p class="land-stat-num">15</p><p class="land-stat-lbl">Capability areas</p></div>
+<div class="land-stat-tile"><p class="land-stat-num">6</p><p class="land-stat-lbl">Banking clients</p></div>
+</div>
+<div class="land-body">
+
+<div>
+<p class="land-section-label">Clients</p>
+<div class="land-filter-row">
+<span class="land-filter-chip">JP Morgan Chase (14)</span>
+<span class="land-filter-chip">RBC (6)</span>
+<span class="land-filter-chip">Fiserv (4)</span>
+<span class="land-filter-chip">American Express (3)</span>
+<span class="land-filter-chip">Capital One (2)</span>
+<span class="land-filter-chip">HSBC (2)</span>
+</div>
+</div>
+
+<div>
+<p class="land-explore-h">Explore by Capability</p>
+<p class="land-explore-sub">Browse 33 banking projects organized by specialty area.</p>
+<p class="land-tier-h">Core capabilities</p>
+<div class="land-cap-grid">
+<div class="land-cap-card core"><p class="land-cap-title">Global Payments & Treasury Solutions</p><p class="land-cap-sub">Payment platforms, treasury systems, real-time processing</p><p class="land-cap-meta">6 banking projects<span class="sep">·</span><span class="clients">2 clients</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Modern Engineering Practices & Solutions</p><p class="land-cap-sub">DevOps, CI/CD, cloud-native engineering, modern toolchains</p><p class="land-cap-meta">4 banking projects<span class="sep">·</span><span class="clients">3 clients</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Technology Strategy & Advisory</p><p class="land-cap-sub">Architecture roadmaps, strategic planning, technology vision</p><p class="land-cap-meta">4 banking projects<span class="sep">·</span><span class="clients">3 clients</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Agile Transformation & Delivery</p><p class="land-cap-sub">Scaling agile practices, delivery acceleration, team transformation</p><p class="land-cap-meta">3 banking projects<span class="sep">·</span><span class="clients">3 clients</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Program Management & Governance</p><p class="land-cap-sub">Large-scale program delivery, governance frameworks, PMO</p><p class="land-cap-meta">3 banking projects<span class="sep">·</span><span class="clients">3 clients</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Data & Analytics Solutions</p><p class="land-cap-sub">Data platforms, analytics, business intelligence</p><p class="land-cap-meta">3 banking projects<span class="sep">·</span><span class="clients">2 clients</span></p></div>
+</div>
+</div>
+
+<div>
+<p class="land-tier-h">Specialized capabilities</p>
+<div class="land-cap-grid">
+<div class="land-cap-card"><p class="land-cap-title">Digital Product Development</p><p class="land-cap-meta">2 banking projects<span class="sep">·</span><span class="clients">1 client</span></p></div>
+<div class="land-cap-card"><p class="land-cap-title">Enterprise Integration & API Management</p><p class="land-cap-meta">1 banking project</p></div>
+<div class="land-cap-card"><p class="land-cap-title">Cross-Functional Collaboration & Team Enablement</p><p class="land-cap-meta">1 banking project</p></div>
+<div class="land-cap-card"><p class="land-cap-title">Business Process Optimization</p><p class="land-cap-meta">1 banking project</p></div>
+<div class="land-cap-card"><p class="land-cap-title">Security & Compliance Solutions</p><p class="land-cap-meta">1 banking project</p></div>
+<div class="land-cap-card"><p class="land-cap-title">DevOps & Continuous Delivery</p><p class="land-cap-meta">1 banking project</p></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section" id="cross-industry">
+<h2>7. Cross-Industry Landing</h2>
+<p class="section-sub">Secondary surface (no top nav). Curated theme entry from Home category card. "Agy's Cross-Industry Playbook" framing: breadth-of-methodology, Industries filter dimension.</p>
+
+<p class="wf-label">Cross-Industry Landing — Desktop</p>
+<div class="wf-frame">
+<div class="back-affordance"><a class="back-link"><i class="ti ti-arrow-left"></i> Back to Home</a></div>
+<div class="land-header">
+<div class="land-avatar"><i class="ti ti-dog"></i><span class="agy-info-badge">i</span></div>
+<div><p class="land-title">Agy's Cross-Industry Playbook</p><p class="land-sub">Tracking proven methods across 57 transformation capabilities. Ask Agy 🐾 to find what's repeatable.</p></div>
+</div>
+<div class="land-stats-strip">
+<div class="land-stat-tile"><p class="land-stat-num">57</p><p class="land-stat-lbl">Projects delivered</p></div>
+<div class="land-stat-tile"><p class="land-stat-num">19</p><p class="land-stat-lbl">Capability areas</p></div>
+<div class="land-stat-tile"><p class="land-stat-num">6</p><p class="land-stat-lbl">Industries</p></div>
+</div>
+<div class="land-body">
+
+<div>
+<p class="land-section-label">Industries served</p>
+<div class="land-filter-row">
+<span class="land-filter-chip">Banking & Financial Services</span>
+<span class="land-filter-chip">Healthcare & Life Sciences</span>
+<span class="land-filter-chip">Transportation & Logistics</span>
+<span class="land-filter-chip">Telecommunications</span>
+<span class="land-filter-chip">Public Sector</span>
+<span class="land-filter-chip">Technology & Software</span>
+</div>
+</div>
+
+<div>
+<p class="land-explore-h">Explore by Transformation Capability</p>
+<p class="land-explore-sub">Browse 48 cross-industry projects organized by transformation approach and methodology.</p>
+<p class="land-tier-h">Core capabilities</p>
+<div class="land-cap-grid">
+<div class="land-cap-card core"><p class="land-cap-title">Modern Engineering Practices & Solutions</p><p class="land-cap-sub">DevOps, CI/CD, cloud-native engineering, modern toolchains</p><p class="land-cap-meta">21 cross-industry projects<span class="sep">·</span><span class="clients">2 clients</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Cross-Functional Collaboration & Team Enablement</p><p class="land-cap-sub">Team alignment, collaboration frameworks, culture change</p><p class="land-cap-meta">11 cross-industry projects<span class="sep">·</span><span class="clients">1 client</span></p></div>
+<div class="land-cap-card core"><p class="land-cap-title">Client Enablement & Sustainable Innovation</p><p class="land-cap-sub">Knowledge transfer, capability building, sustainable practices</p><p class="land-cap-meta">5 cross-industry projects<span class="sep">·</span><span class="clients">2 clients</span></p></div>
+</div>
+</div>
+
+<div>
+<p class="land-tier-h">Specialized capabilities</p>
+<div class="land-cap-grid">
+<div class="land-cap-card"><p class="land-cap-title">Product Management & Innovation Labs</p><p class="land-cap-meta">2 cross-industry projects<span class="sep">·</span><span class="clients">2 clients</span></p></div>
+<div class="land-cap-card"><p class="land-cap-title">Agile Transformation & Delivery</p><p class="land-cap-meta">2 cross-industry projects<span class="sep">·</span><span class="clients">1 client</span></p></div>
+<div class="land-cap-card"><p class="land-cap-title">Application Modernization</p><p class="land-cap-meta">2 cross-industry projects<span class="sep">·</span><span class="clients">2 clients</span></p></div>
+<div class="land-cap-card"><p class="land-cap-title">DevOps & Continuous Delivery</p><p class="land-cap-meta">1 cross-industry project</p></div>
+<div class="land-cap-card"><p class="land-cap-title">Platform Optimization & Cloud-Native Development</p><p class="land-cap-meta">1 cross-industry project</p></div>
+<div class="land-cap-card"><p class="land-cap-title">AI & Machine Learning Solutions</p><p class="land-cap-meta">1 cross-industry project</p></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section" id="how-i-built">
+<h2>8. How I Built MattGPT</h2>
+<p class="section-sub">Secondary surface (no top nav), context-aware back. A self-contained, techy-but-light technical overview that stands on its own. Reached from the Why Agy modal link, the How Agy Searches modal bridge, and the Profile signals panel.</p>
+
+<p class="wf-label">How I Built MattGPT — Desktop</p>
+<div class="wf-frame">
+<div class="back-affordance"><a class="back-link"><i class="ti ti-arrow-left"></i> Back</a></div>
+<div class="hib-page-header">
+<p class="hib-page-title">How I Built MattGPT</p>
+<p class="hib-page-sub">A technical deep-dive into the system architecture behind this portfolio.</p>
+</div>
+<div class="hib-body">
+
+<div class="hib-block">
+<p class="hib-block-h">The Problem</p>
+<p class="hib-block-p">Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 100+ projects by methodology, outcome, or domain. I wanted to create an <strong>intelligent, conversational interface</strong> that understands intent and surfaces relevant experience.</p>
+</div>
+
+<div class="hib-block">
+<p class="hib-block-h">Tech Stack</p>
+<div class="hib-tech-grid">
+<div class="hib-tech-card"><div class="hib-tech-icon">🐍</div><div class="hib-tech-name">Python 3.11</div></div>
+<div class="hib-tech-card"><div class="hib-tech-icon">⚡</div><div class="hib-tech-name">Streamlit</div></div>
+<div class="hib-tech-card"><div class="hib-tech-icon">⊙</div><div class="hib-tech-name">OpenAI GPT-4o</div></div>
+<div class="hib-tech-card"><div class="hib-tech-icon">📌</div><div class="hib-tech-name">Pinecone</div></div>
+<div class="hib-tech-card"><div class="hib-tech-icon">🧠</div><div class="hib-tech-name">text-embedding-3-small</div></div>
+<div class="hib-tech-card"><div class="hib-tech-icon">🔀</div><div class="hib-tech-name">GitHub Webhook</div></div>
+</div>
+</div>
+
+<div class="hib-block">
+<p class="hib-block-h" style="text-align: center;">System Architecture Flow</p>
+<p class="hib-block-sub">How data moves through the system, from raw Excel stories to a deployed RAG pipeline.</p>
+<div class="hib-pipeline-row">
+<div class="hib-pipeline-step"><div class="hib-pipeline-num">1</div><p class="hib-pipeline-name">Data Ingestion</p><p class="hib-pipeline-desc">Excel → JSONL with STAR format</p></div>
+<span class="hib-pipeline-arrow">→</span>
+<div class="hib-pipeline-step"><div class="hib-pipeline-num">2</div><p class="hib-pipeline-name">Embeddings</p><p class="hib-pipeline-desc">OpenAI text-embedding-3-small</p></div>
+<span class="hib-pipeline-arrow">→</span>
+<div class="hib-pipeline-step"><div class="hib-pipeline-num">3</div><p class="hib-pipeline-name">Vector Store</p><p class="hib-pipeline-desc">Pinecone with metadata filters</p></div>
+<span class="hib-pipeline-arrow">→</span>
+<div class="hib-pipeline-step"><div class="hib-pipeline-num">4</div><p class="hib-pipeline-name">Intent & Entity</p><p class="hib-pipeline-desc">Query classification + entity pinning</p></div>
+<span class="hib-pipeline-arrow">→</span>
+<div class="hib-pipeline-step"><div class="hib-pipeline-num">5</div><p class="hib-pipeline-name">RAG + GPT-4o</p><p class="hib-pipeline-desc">XML-isolated context → generation</p></div>
+</div>
+</div>
+
+<div class="hib-block">
+<p class="hib-runtime-label">Per-query runtime pipeline</p>
+<p class="hib-runtime-sub">What happens on every query, from the moment a user types to the moment Agy responds.</p>
+<div class="hib-runtime-step">
+<div class="hib-runtime-spine"><div class="hib-runtime-num">1</div><div class="hib-runtime-line"></div></div>
+<div class="hib-runtime-card">
+<p class="hib-runtime-card-h">Filters irrelevant/noisy input</p>
+<ul class="hib-runtime-list"><li>Regex-based nonsense rejection, sub-millisecond</li><li>Catches homework asks, gibberish, off-domain queries</li><li>No LLM cost for rejected queries</li></ul>
+</div>
+</div>
+<div class="hib-runtime-step">
+<div class="hib-runtime-spine"><div class="hib-runtime-num">2</div><div class="hib-runtime-line"></div></div>
+<div class="hib-runtime-card">
+<p class="hib-runtime-card-h">Detects interview intent</p>
+<ul class="hib-runtime-list"><li>Semantic router classifies into 15 intent families</li><li>Background, behavioral, technical, leadership, synthesis</li><li>Detects out-of-scope and personal queries before retrieval</li></ul>
+</div>
+</div>
+<div class="hib-runtime-step">
+<div class="hib-runtime-spine"><div class="hib-runtime-num">3</div><div class="hib-runtime-line"></div></div>
+<div class="hib-runtime-card">
+<p class="hib-runtime-card-h">Retrieves grounded experience stories</p>
+<ul class="hib-runtime-list"><li><code>Pinecone</code> top-K vector search</li><li><code>text-embedding-3-small</code>, 1536 dimensions</li><li>Entity-aware pinning for known clients, employers, divisions</li></ul>
+</div>
+</div>
+<div class="hib-runtime-step">
+<div class="hib-runtime-spine"><div class="hib-runtime-num">4</div><div class="hib-runtime-line"></div></div>
+<div class="hib-runtime-card">
+<p class="hib-runtime-card-h">Refuses weak matches / avoids fabrication</p>
+<ul class="hib-runtime-list"><li>Confidence gate inspects top match similarity</li><li>Below threshold, returns a "no strong matches" response</li><li>Prevents low-quality fabrication</li></ul>
+</div>
+</div>
+<div class="hib-runtime-step">
+<div class="hib-runtime-spine"><div class="hib-runtime-num">5</div></div>
+<div class="hib-runtime-card" style="margin-bottom: 0;">
+<p class="hib-runtime-card-h">Synthesizes a tailored interview response</p>
+<ul class="hib-runtime-list"><li><code>GPT-4o</code> grounded synthesis</li><li><code>&lt;primary_story&gt;</code> + <code>&lt;supporting_story&gt;</code> XML tags prevent cross-story bleed</li><li>STAR format, distinctive phrases preserved verbatim</li></ul>
+</div>
+</div>
+</div>
+
+<div class="hib-two-col">
+<div class="hib-block">
+<p class="hib-block-h">Data Pipeline</p>
+<ul class="hib-detail-list">
+<li>Excel master sheet with 100+ STAR stories</li>
+<li>Python script converts to JSONL with rich metadata</li>
+<li>5P framework: Person, Place, Purpose, Performance, Process</li>
+<li>Automated validation ensures consistency</li>
+</ul>
+</div>
+<div class="hib-block">
+<p class="hib-block-h">Embeddings Strategy</p>
+<ul class="hib-detail-list">
+<li><span class="key">Model:</span> <span class="val">OpenAI text-embedding-3-small (1536 dim)</span></li>
+<li><span class="key">Chunking:</span> <span class="val">Full STAR story per vector</span></li>
+<li><span class="key">Metadata:</span> <span class="val">Category, client, themes indexed</span></li>
+<li><span class="key">Refresh:</span> <span class="val">Excel → JSONL → enrich → embed → Pinecone</span></li>
+</ul>
+</div>
+</div>
+
+<div class="hib-two-col">
+<div class="hib-block">
+<p class="hib-block-h">CI/CD Pipeline</p>
+<ul class="hib-detail-list">
+<li><span class="key">Trigger:</span> <span class="val">Git push to main</span></li>
+<li><span class="key">Mechanism:</span> <span class="val">GitHub webhook → Streamlit Cloud</span></li>
+<li><span class="key">Action:</span> <span class="val">Auto-rebuild and deploy</span></li>
+<li><span class="key">Testing:</span> <span class="val">pytest with behavioral tests</span></li>
+<li><span class="key">Monitoring:</span> <span class="val">Query logging, error tracking</span></li>
+</ul>
+</div>
+<div class="hib-block">
+<p class="hib-block-h">RAG with GPT-4o</p>
+<ul class="hib-detail-list">
+<li><span class="key">Context Isolation:</span> <span class="val">XML tags prevent cross-story bleed</span></li>
+<li><span class="key">Texture Preservation:</span> <span class="val">Quotes distinctive phrases verbatim</span></li>
+<li><span class="key">Synthesis Mode:</span> <span class="val">Multi-theme responses for broad queries</span></li>
+<li><span class="key">Source Citations:</span> <span class="val">Links to full STAR stories</span></li>
+</ul>
+</div>
+</div>
+
+<div class="hib-block">
+<p class="hib-block-h">Frontend (Streamlit)</p>
+<ul class="hib-detail-list">
+<li>Conversational chat interface with history</li>
+<li>Dark mode support with CSS variables</li>
+<li>Story cards with expandable details</li>
+<li>Responsive design with custom CSS</li>
+</ul>
+</div>
+
+<div class="hib-block">
+<p class="hib-godeeper-lead">See it for yourself, the proof is in the code and the process.</p>
+<div class="hib-godeeper-grid">
+<div class="hib-godeeper-card">
+<div class="hib-godeeper-top"><i class="ti ti-brand-github"></i><span class="hib-godeeper-ttl">View the source</span></div>
+<p class="hib-godeeper-desc">The full codebase behind everything above: the RAG pipeline, data ingestion, and behavioral tests.</p>
+<a class="hib-godeeper-link">View on GitHub <i class="ti ti-external-link" style="font-size:11px;"></i></a>
+</div>
+<div class="hib-godeeper-card">
+<div class="hib-godeeper-top"><i class="ti ti-file-text"></i><span class="hib-godeeper-ttl">Read the design spec</span></div>
+<p class="hib-godeeper-desc">The end-to-end product process: strategy, architecture, and design decisions, documented in full.</p>
+<a class="hib-godeeper-link">View the full specification <i class="ti ti-arrow-right" style="font-size:11px;"></i></a>
+</div>
+</div>
+</div>
+
+<div class="hib-cta-block">
+<p class="hib-cta-h">See It In Action</p>
+<p class="hib-cta-sub">This isn't just a portfolio showcase. <strong>Agy is a working AI assistant</strong> that can answer detailed questions about my projects, methodologies, and outcomes.</p>
+<div class="hib-cta-prompts">
+<span class="hib-cta-prompt">How did Matt scale engineering teams from 4 to 150+ people?<i class="ti ti-arrow-right" style="font-size:11px;"></i></span>
+<span class="hib-cta-prompt">What were the biggest challenges at the Accenture Innovation Center?<i class="ti ti-arrow-right" style="font-size:11px;"></i></span>
+<span class="hib-cta-prompt">Show me examples of agile transformation with measurable outcomes<i class="ti ti-arrow-right" style="font-size:11px;"></i></span>
+<span class="hib-cta-prompt">How did Matt turn around a failing program?<i class="ti ti-arrow-right" style="font-size:11px;"></i></span>
+</div>
+</div>
+
+</div>
+</div>
+<div class="wf-annot"><i class="ti ti-info-circle"></i><span><strong>Back affordance:</strong> context-aware. Returns to wherever How I Built was opened from (Ask Agy, the surface behind the Why Agy modal, or the Profile signals panel), not a hardcoded "Back to Ask Agy." The two modals carry no back; close, Escape, or backdrop returns the user in place.</span></div>
+</section>
+
+<section class="section" id="why-agy-modal">
+<h2>9. Why Agy &amp; How Agy Searches modals</h2>
+<p class="section-sub">Both are @st.dialog overlays triggered from the Agy avatar badge (variant B — italic "i", 16px circle, bottom-right). Both have a footer <code>st.button</code> that opens How I Built as a sequential @st.dialog — close active modal, set flag, rerun, open next. Pattern proven in PoC (June 2, 2026). Neither carries a back affordance; close, Escape, or backdrop dismisses in place. Mobile: badge on body/hero avatars only — mobile nav avatar has no badge, just tappable.</p>
+
+<p class="wf-label">Why Agy modal — Desktop</p>
+<div class="modal-stage">
+<div class="modal-bg-ghost">
+<p class="modal-bg-ghost-title">Surface behind the modal</p>
+<div class="modal-bg-ghost-line"></div>
+<div class="modal-bg-ghost-line medium"></div>
+<div class="modal-bg-ghost-line short"></div>
+<div class="modal-bg-ghost-grid">
+<div class="modal-bg-ghost-card"></div>
+<div class="modal-bg-ghost-card"></div>
+<div class="modal-bg-ghost-card"></div>
+</div>
+</div>
+<div class="modal">
+<div class="modal-head">
+<div class="modal-id">
+<div class="modal-avatar"><i class="ti ti-dog"></i></div>
+<p class="modal-title">Why Agy?</p>
+</div>
+<span class="modal-close"><i class="ti ti-x"></i></span>
+</div>
+<div class="modal-body">
+<p class="modal-p">I'm named for Matt's Plott Hound. Plott Hounds are bred for tracking: determined, loyal, hard to shake. Those same traits define how I work: I track down the right stories from 100+ projects across 20+ years, hold onto the trail when the question gets tricky, and don't pretend to know what isn't in the corpus.</p>
+<p class="modal-p"><em>It felt right to keep his name part of the work we loved doing together.</em></p>
+</div>
+<div class="modal-foot">
+<button class="modal-footer-btn">Curious how I was built? Read the technical deep-dive <i class="ti ti-arrow-right" style="font-size:11px;"></i></button>
+</div>
+</div>
+</div>
+
+<div class="wf-annot" style="margin-top:12px;"><i class="ti ti-info-circle"></i><span><strong>Footer button:</strong> <code>st.button</code> — sets <code>active_dialog = "how_i_built"</code>, clears <code>why_agy</code>, calls <code>st.rerun()</code>. Why Agy closes, How I Built opens sequentially. Single <code>active_dialog</code> key (not two booleans) prevents the "only one dialog allowed" exception.</span></div>
+
+<p class="wf-label" style="margin-top:20px;">How Agy Searches modal — Desktop</p>
+<div class="modal-stage">
+<div class="modal-bg-ghost">
+<p class="modal-bg-ghost-title">Surface behind the modal</p>
+<div class="modal-bg-ghost-line"></div>
+<div class="modal-bg-ghost-line medium"></div>
+<div class="modal-bg-ghost-line short"></div>
+<div class="modal-bg-ghost-grid">
+<div class="modal-bg-ghost-card"></div>
+<div class="modal-bg-ghost-card"></div>
+<div class="modal-bg-ghost-card"></div>
+</div>
+</div>
+<div class="modal" style="min-height:420px;">
+<div class="modal-head">
+<div class="modal-id">
+<div class="modal-avatar"><i class="ti ti-search"></i></div>
+<p class="modal-title">How Agy searches</p>
+</div>
+<span class="modal-close"><i class="ti ti-x"></i></span>
+</div>
+<div class="modal-body">
+<div class="modal-step-lbl"><span class="modal-step-num">1</span> You Ask</div>
+<div class="modal-step-body">"Tell me about a time you dealt with a difficult stakeholder"</div>
+<div class="modal-step-arrow">↓</div>
+<div class="modal-step-lbl"><span class="modal-step-num">2</span> Agy Searches</div>
+<div class="modal-step-body">Filters noise → detects intent → retrieves grounded stories → refuses weak matches → synthesizes</div>
+<div class="modal-step-arrow">↓</div>
+<div class="modal-step-lbl"><span class="modal-step-num">3</span> You Get Results</div>
+<div class="modal-result-preview">
+<p class="modal-result-preview-h">Navigating Executive Resistance at Fortune 100 Bank</p>
+<p class="modal-result-preview-sub">Turned a skeptical CTO into a transformation champion... · ✓ High confidence match</p>
+</div>
+</div>
+<div class="modal-foot">
+<button class="modal-footer-btn">See how I built it <i class="ti ti-arrow-right" style="font-size:11px;"></i></button>
+</div>
+</div>
+</div>
+
+<div class="wf-annot" style="margin-top:12px;"><i class="ti ti-info-circle"></i><span><strong>Footer button:</strong> same sequential <code>st.button</code> pattern — sets <code>active_dialog = "how_i_built"</code>, closes How Agy Searches, opens How I Built. Styling TBD in build (may be styled as a text link rather than a full bordered button).</span></div>
+</section>
+
+<section class="section" id="my-work">
+<h2>10. My Work</h2>
+<p class="section-sub">Filter bar, view modes (Table, Cards, Timeline), and mobile layout. MATTGPT-065 (filter bar) is the primary ticket.</p>
+
+<p class="wf-label">My Work — Desktop (two-row filter bar)</p>
+<p class="section-sub">Filter bar two-row layout. Primary row always visible; secondary row always visible on desktop, collapsed behind toggle on mobile. Replaces the hidden "Advanced Filters" disclosure pattern. MATTGPT-065.</p>
+
+<div class="wf-frame" style="padding: 0;">
+
+  <div style="background: var(--color-bg-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 12px 16px 10px;">
+    <div class="es-filter-primary">
+      <div class="es-filter-search"><span class="es-filter-icon">🔍</span><span class="es-filter-placeholder">Try modern platforms, product innovation...</span></div>
+      <div class="es-filter-drop">Industry: All <span class="es-chevron">▾</span></div>
+      <div class="es-filter-drop">Capability: All <span class="es-chevron">▾</span></div>
+    </div>
+    <div class="es-filter-secondary">
+      <div class="es-filter-drop es-filter-drop-sm">Client: All <span class="es-chevron">▾</span></div>
+      <div class="es-filter-drop es-filter-drop-sm">Role: All <span class="es-chevron">▾</span></div>
+      <div class="es-filter-drop es-filter-drop-sm">Domain: All <span class="es-chevron">▾</span></div>
+      <span class="es-reset">Reset filters</span>
+    </div>
+  </div>
+
+  <div style="padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;">
+    <span style="font-size: 12px; color: var(--color-text-secondary);">Showing <strong>1–10</strong> of <strong>103</strong> projects</span>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 12px; color: var(--color-text-tertiary);">SHOW: 10 ▾</span>
+      <div class="es-view-toggle">
+        <span class="es-view-btn es-view-active">Table</span>
+        <span class="es-view-btn">Cards</span>
+        <span class="es-view-btn">Timeline</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="wf-label">My Work — Mobile</p>
+<p class="section-sub">Search always visible. All 5 filters (Industry, Capability, Client, Role, Domain) collapse behind a single "Filters" toggle. No separate "Advanced Filters" label.</p>
+
+<div style="max-width: 375px;">
+<div class="wf-frame" style="padding: 0;">
+  <div style="background: var(--color-bg-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 10px 12px 8px;">
+    <div style="display: flex; gap: 8px; margin-bottom: 0;">
+      <div class="es-filter-search" style="flex: 1; font-size: 12px; padding: 6px 10px;"><span class="es-filter-icon">🔍</span><span class="es-filter-placeholder">Search stories...</span></div>
+      <div class="es-filter-drop es-filter-drop-sm" style="white-space: nowrap;">⚙ Filters ▾</div>
+    </div>
+  </div>
+  <div style="padding: 8px 12px; font-size: 12px; color: var(--color-text-secondary);">Showing <strong>1–10</strong> of <strong>103</strong> projects · Cards ▾</div>
+</div>
+</div>
+
+<div class="pending-note" style="margin-top: 16px;">
+<strong>My Work filter bar — implementation notes (MATTGPT-065):</strong>
+Row 1 (primary): Search input flex:2, Industry dropdown flex:1, Capability dropdown flex:1. Height/padding unchanged from current production.
+Row 2 (secondary): Thin rule separator above. Client, Role, Domain dropdowns equal width (3 columns). Reset Filters right-aligned in 4th column. Font 12px, padding 5px 10px (vs row 1's 13px/7px).
+Desktop: Both rows always visible. Remove ▸ Advanced Filters toggle button entirely.
+Mobile: Search stays visible. All 5 filters collapse behind single "Filters" toggle button with filter count badge when active. Remove "Advanced Filters" label.
+CSS class: .es-filter-secondary scoped to @media (min-width: 768px) display:grid. Below 768px: display:none (toggle controls visibility).
+BDD: assert all 5 filter dropdowns visible on desktop without any click interaction.
+</div>
+
+<p class="wf-label">My Work — Table View (default)</p>
+<p class="section-sub">Default view. Serves Recruiter primary journey: scan, filter, verify depth. Columns sortable by clicking header. Row click renders story detail panel below the full table — current production pattern, do not change. Page autoscrolls to detail on click. MATTGPT-064 (row hover fix required).</p>
+
+<div class="pending-note">
+Columns: Title (flex-3), Client (flex-1, purple pill badge), Role (flex-1), Start Date (flex-0.5). Same proportions as current production AgGrid.
+Row hover: background #f7f5ff, cursor pointer — fix targets .ag-row.ag-row-hover (not :hover) and .ag-cell for cursor. MATTGPT-064.
+Selected row: purple tint background, title in #6d4cc4.
+Detail pane renders at the bottom of the page after the full table — current production behavior. Page autoscrolls to the detail on row click. This is the correct pattern; do not move it inline. Do not minimize story detail content — the full STAR breakdown is intentional.
+DECIDED AGAINST (June 8, 2026): Inline accordion (detail expanding immediately beneath the clicked row) was prototyped in PoC. Pattern works visually but requires replacing AgGrid entirely — AgGrid cannot inject Streamlit elements between rows. AgGrid replacement loses native column sorting, resizing, and reliable click handling. Cost too high for the UX gain. Keep AgGrid + scroll-to-bottom detail.
+</div>
+
+<p class="wf-label">My Work — Cards View</p>
+<p class="section-sub">Visual browsing. 3-column grid. Card is the click target — no inline button. Detail pane opens below grid on click (same pattern as Table). Serves readers who prefer narrative scan over data density.</p>
+
+<div class="wf-frame" style="padding: 16px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+    <div style="background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 14px; cursor: pointer; transition: border-color 0.15s;">
+      <p style="font-size: 10px; font-weight: 500; color: #6d4cc4; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px;">Accenture · Director · 2019</p>
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.35;">Building Cloud Innovation Centers</p>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin: 0; line-height: 1.5;">Scaled a 0→150+ practitioner engineering org delivering 30+ products and $100M+ in repeat business.</p>
+    </div>
+    <div style="background: var(--color-bg-primary); border: 0.5px solid #6d4cc4; border-radius: var(--radius-md); padding: 14px; cursor: pointer;">
+      <p style="font-size: 10px; font-weight: 500; color: #6d4cc4; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px;">JP Morgan Chase · Arch Mgr · 2013</p>
+      <p style="font-size: 13px; font-weight: 500; color: #6d4cc4; margin: 0 0 6px; line-height: 1.35;">ACCESS Payments Modernization</p>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin: 0; line-height: 1.5;">Rebuilt global payments platform across 12 countries, 135K+ corporate clients, 60-person team.</p>
+    </div>
+    <div style="background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 14px; cursor: pointer;">
+      <p style="font-size: 10px; font-weight: 500; color: #6d4cc4; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px;">Fiserv · Tech Lead · 2017</p>
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.35;">White-Label Card Portal Delivery</p>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin: 0; line-height: 1.5;">47/47 acceptance criteria, zero defect escape, $45M in transaction processing enabled.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pending-note" style="margin-top: 10px;">
+Card hover: border-color #6d4cc4, cursor pointer. No inline "View" button — whole card is the click target.
+Detail pane: opens below the cards grid row on click, same STAR layout as Table view detail.
+Mobile: single column. Card content unchanged.
+</div>
+
+<p class="wf-label">My Work — Timeline View</p>
+<p class="section-sub">Era-grouped chronological navigation. Serves CTO persona for career arc orientation. Most recent era expanded by default. Max 6 stories shown per era. "See all X →" links to Table view pre-filtered by role/era. Multiple eras can be open simultaneously.</p>
+
+<div class="wf-frame" style="padding: 16px;">
+  <div style="border-left: 2px solid #6d4cc4; padding-left: 16px; display: flex; flex-direction: column; gap: 16px;">
+
+    <div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+        <div>
+          <span style="font-size: 13px; font-weight: 500; color: var(--color-text-primary);">Independent Product Development</span>
+          <span style="font-size: 11px; color: var(--color-text-secondary); margin-left: 8px;">2023–2026 · 8 stories</span>
+        </div>
+        <span style="font-size: 11px; color: #6d4cc4; cursor: pointer;">▾ collapse</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+        <div style="background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 10px 12px; cursor: pointer;">
+          <p style="font-size: 11px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 3px; line-height: 1.3;">Implementing Eval-Driven Development</p>
+          <p style="font-size: 10px; color: var(--color-text-secondary); margin: 0;">AI/ML Engineer · 2026-01</p>
+        </div>
+        <div style="background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 10px 12px; cursor: pointer;">
+          <p style="font-size: 11px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 3px; line-height: 1.3;">Building MattGPT RAG Pipeline</p>
+          <p style="font-size: 10px; color: var(--color-text-secondary); margin: 0;">Product Designer · 2025-09</p>
+        </div>
+        <div style="background: var(--color-bg-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--radius-md); padding: 10px 12px; cursor: pointer;">
+          <p style="font-size: 11px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 3px; line-height: 1.3;">Implementing BDD for RAG Systems</p>
+          <p style="font-size: 10px; color: var(--color-text-secondary); margin: 0;">Software Engineer · 2025-10</p>
+        </div>
+      </div>
+      <span style="font-size: 11px; color: #6d4cc4; cursor: pointer;">See all 8 Independent Project stories →</span>
+    </div>
+
+    <div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-size: 13px; font-weight: 500; color: var(--color-text-primary);">Enterprise Innovation &amp; Transformation</span>
+          <span style="font-size: 11px; color: var(--color-text-secondary); margin-left: 8px;">2016–2023 · 41 stories</span>
+        </div>
+        <span style="font-size: 11px; color: #6d4cc4; cursor: pointer;">▸ expand</span>
+      </div>
+    </div>
+
+    <div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-size: 13px; font-weight: 500; color: var(--color-text-primary);">Financial Services Platform Engineering</span>
+          <span style="font-size: 11px; color: var(--color-text-secondary); margin-left: 8px;">2005–2016 · 32 stories</span>
+        </div>
+        <span style="font-size: 11px; color: #6d4cc4; cursor: pointer;">▸ expand</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="pending-note" style="margin-top: 10px;">
+Era grouping: uses existing EXCLUDED_ERA pattern. "Leadership &amp; Professional Narrative" era excluded from all three views by default (same as current Timeline behavior).
+Most recent era expanded on load. Multiple eras can be open simultaneously (not accordion).
+Max 6 story cards per era when expanded. Cards are compact (title + role + date only — no description excerpt).
+"See all X stories →" routes to Table view pre-filtered by that era's role/date range. Sort: Start_Date desc.
+Story card click: detail pane opens below the era section (same STAR layout as Table/Cards).
+Mobile: single column card grid within each era. Era headers and collapse/expand pattern unchanged.
+</div>
+</section>
+
+<section class="section" id="pending">
+<h2>11. Pending items reference</h2>
+<p class="section-sub">Items captured for next iteration. Most wait on Matt's positioning calls; some are batch updates inheriting the secondary-surface pattern.</p>
+
+<div class="pending-note">
+<strong>Home:</strong> Avatar treatment (illustrated / photo / monogram) — pending. Category cards redesign (MATTGPT-107) — done: 3-column grid, unified card treatment across all 6, compact content (icon + title + one meta line), whole-tile click targets.
+</div>
+<div class="pending-note">
+<strong>Profile v2:</strong> Link to How I Built MattGPT from signals panel (open). Remove How I Built section, relocated to standalone surface (open). Resolved: voice paragraph 2 cliché, VP positioning ripple (Level tile "Senior leader", referrer drops VP), "Agile at Scale" renamed to "Product delivery at scale".
+</div>
+<div class="pending-note">
+<strong>Role Match v3:</strong> Empty state (066) and public populated state (067) wireframed. State machine and full spec in MATTGPT-067-SPEC.md. Sample JD content done (066). Remaining: evaluation grid 4 tiles vs 3 tiles + logistics row (012). Strategic fit notes + Action items logic needs spec (012).
+</div>
+<div class="pending-note">
+<strong>Secondary surfaces (Banking, Cross-Industry, How I Built):</strong> Visual confirmation of no-top-nav pattern + context-aware back affordance. Pattern is in production on Banking and Cross-Industry; How I Built inherits.
+</div>
+<div class="pending-note">
+<strong>Cross-cutting:</strong> Story count copy standardization (use "100+" not "130+") per MATTGPT-019. Already reflected in this deliverable.
+</div>
+</section>
+
+</div>
+</body>
+</html>

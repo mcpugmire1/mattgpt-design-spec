@@ -317,7 +317,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - **Stage 3:** Confidence gating on Pinecone results (HIGH ≥0.25, LOW ≥0.20)
 - **Stage 4:** Entity detection & story pinning (Client, Employer, Division, Title)
 - **Stage 5:** Intent-aware ranking with context isolation (narrative vs entity queries)
-- **Quality:** 98.1% eval pass rate (60/61 queries)
+- **Quality:** 100% eval pass rate (64/64 queries)
 
 **Conversational Workflow:**
 - Streamlit's stateful UI for session management
@@ -443,10 +443,12 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 **Goal:** Continue delivering features on the proven Streamlit platform. Enhance search quality, add capabilities, and align content with industry standards.
 
 **Recent Deliveries (Q1–Q2 2026):**
-- ✅ Role Match — paste a JD, see how Matt's experience maps to requirements (Phases 1-3 shipped)
-- ✅ Mobile responsive design
-- ✅ Query analytics (Google Sheets logger, 21-column schema)
-- ✅ Eval framework expanded to 61 golden queries (98.1% pass rate)
+- ✅ Role Match — paste a JD, see how Matt's experience maps to requirements (Phases 1-3 shipped April, Phase 4 slice 1 shipped May: lock icon + password gate)
+- ✅ Triage agent surface — `scripts/assess_jd.py` CLI wraps the same engine (`jd_assessor.py`) for external agent orchestration
+- ✅ Mobile responsive design (1,520 lines in `mobile_overrides.py`)
+- ✅ Query analytics (Google Sheets logger, 32-column schema)
+- ✅ BDD test suite expanded to 219 scenarios across 30 feature files
+- ✅ Eval framework expanded to 64 golden queries (100% pass rate)
 - ✅ Data quality pass across 85+ stories
 
 **Recent Deliveries (continued):**
@@ -460,10 +462,7 @@ See [BACKLOG.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/B
 
 ### LATER (Phase 3)
 
-🎯 **Job Fit & Matching**
-- Paste job description → generate tailored response
-- Auto-extract requirements and match to relevant stories
-- Export as formatted cover letter or talking points
+See [BACKLOG.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/BACKLOG.md) for current open work. Key areas include Role Match Phase 4 slices 2-3 (agentic bypass, private assessment view), analytics dashboard, and semantic router improvements.
 
 ---
 
@@ -485,7 +484,7 @@ This isn't about replacing human judgment — it's about augmenting trust at sca
 
 ### What's Next
 
-The immediate roadmap is a React migration to improve performance and scalability. But the more interesting question is whether this becomes a product. Could consulting firms use this for their bench? Could job platforms integrate structured portfolios? Could this become the LinkedIn alternative that actually proves what people claim?
+A React migration remains a future consideration if a forcing function emerges. But the more interesting question is whether this becomes a product. Could consulting firms use this for their bench? Could job platforms integrate structured portfolios? Could this become the LinkedIn alternative that actually proves what people claim?
 
 I don't know yet. But the foundation is solid, and the thesis is validated.
 
@@ -548,9 +547,9 @@ Every line of code, every STAR story, every design decision serves that mission:
 - [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
 - [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
 - [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Wireframes and interaction design
-- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - How evals validate quality (98.1% pass rate)
+- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
 
 ---
 
-*Last Updated: April 29, 2026 (React migration reframe, recent deliveries added)*
-*Version: 1.3*
+*Last Updated: June 2026 (Staleness audit: eval 100%/64q, BDD 219/30)*
+*Version: 1.5*

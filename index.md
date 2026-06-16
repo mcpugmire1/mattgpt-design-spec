@@ -31,7 +31,8 @@ This isn't just a portfolio — it's a **demonstration of modern AI product deve
 - 🔍 **Semantic Search** (vector-based meaning matching)
 - 📊 **Data Governance** (Two-layer validation system)
 - 🎨 **User-Centered Design** (Three distinct personas)
-- ⚡ **Production Application** (Mobile-responsive Streamlit with Era-based timeline and advanced filtering)
+- ⚡ **Production Application** (Mobile-responsive Streamlit with Era-based timeline, advanced filtering, and Role Match)
+- 🎯 **Role Match** (JD-to-experience matching with evidence chips, fit scoring, and private assessment view)
 
 ---
 
@@ -75,7 +76,7 @@ Technical reference for developers — module overview, key function signatures,
 JSONL schema documentation — required fields, STAR framework structure, 5P taxonomy, filtering logic, and validation rules.
 
 **[✅ Testing & Quality Assurance](/mattgpt-design-spec/docs/11-testing-and-quality)**
-Complete 3-layer testing strategy — 12 unit test files, RAG evaluation framework (98.1% pass rate, 60+ golden queries), and 43 BDD/E2E scenarios validating full workflows.
+Complete 3-layer testing strategy — 12 unit test files, RAG evaluation framework (100% pass rate, 64 golden queries), and 219 BDD/E2E scenarios across 30 feature files validating full workflows.
 
 **[🔄 Data Pipeline & Ingestion](/mattgpt-design-spec/docs/12-data-pipeline)**
 Complete 3-stage data flow from Excel to production RAG — conversion scripts, enrichment process, embedding generation, data governance principles, and cost/performance metrics.
@@ -102,6 +103,11 @@ Explore clickable HTML prototypes of the MattGPT interface:
 ### Ask MattGPT (AI Interface)
 - **[Landing Page](/mattgpt-design-spec/wireframes/ask_mattgpt_landing_wireframe.html)** - Conversational search entry
 - **[Conversation View](/mattgpt-design-spec/wireframes/ask_mattgpt_wireframe.html)** - Live chat with source citations
+
+### Role Match (April 2026)
+- **[Recruiter View — Full Page](/mattgpt-design-spec/wireframes/role_match_mockup_v2.html)** - Two-column JD input + results layout
+- **[Card Spec v3](/mattgpt-design-spec/wireframes/role_match_blended_card_spec_v3.html)** - Requirement cards with evidence chips and match legend
+- **[Private View](/mattgpt-design-spec/wireframes/role_match_revised_mockup.html)** - Lock icon, fit score, recommendation, gap analysis (Phase 4)
 
 ### About Matt
 - **[About Matt Page](/mattgpt-design-spec/wireframes/about_matt_wireframe.html)** - Career journey, competencies, leadership philosophy
@@ -205,4 +211,4 @@ Product & Platform Leader | Digital Transformation Director
 
 *This design specification represents the complete product blueprint from discovery through detailed technical and UX specifications. It demonstrates end-to-end product development: from strategic vision through user research, technical architecture, and meticulous execution.*
 
-**Last Updated:** December 2025
+**Last Updated:** May 2026

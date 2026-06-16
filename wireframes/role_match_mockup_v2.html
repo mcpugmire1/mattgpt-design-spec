@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role Match Mockup v2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #F9FAFB; }
+
+  :root {
+    --accent-purple: #8B5CF6;
+    --accent-purple-hover: #7C3AED;
+    --bg-card: #FFFFFF;
+    --bg-surface: #F9FAFB;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --border-color: #E5E7EB;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --error-color: #EF4444;
+  }
+
+  .page { display: grid; grid-template-rows: auto 1fr; min-height: 100vh; }
+
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .hero-text h1 { font-size: 22px; font-weight: 600; color: white; }
+  .hero-text p { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 3px; }
+
+  .columns { display: grid; grid-template-columns: 2fr 3fr; gap: 0; flex: 1; }
+
+  .left-col {
+    padding: 20px;
+    border-right: 1px solid var(--border-color);
+    display: flex; flex-direction: column; gap: 12px;
+    background: var(--bg-card);
+  }
+  .hint-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .jd-textarea {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+    min-height: 280px;
+    resize: none;
+    font-family: inherit;
+  }
+  .match-btn {
+    background: var(--accent-purple);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .right-col {
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    background: var(--bg-surface);
+  }
+
+  .results-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-card);
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+  }
+  .role-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+  .role-company { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .action-btns { display: flex; gap: 6px; }
+  .action-btn {
+    font-size: 11px; color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px; padding: 4px 10px;
+    background: var(--bg-card); cursor: pointer;
+  }
+
+  .section-header {
+    font-size: 10px; font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    padding-left: 2px;
+  }
+
+  .req-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .req-title-row { display: flex; align-items: flex-start; gap: 8px; }
+  .status { font-size: 13px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+  .status.strong { color: var(--success-color); }
+  .status.partial { color: var(--warning-color); }
+  .status.gap { color: var(--error-color); }
+  .req-title { font-size: 13px; color: var(--text-primary); line-height: 1.4; }
+
+  .chips { display: flex; flex-direction: column; gap: 5px; padding-left: 22px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--accent-purple);
+    cursor: pointer;
+    width: fit-content;
+    transition: border-color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--accent-purple); }
+  .chip-icon { font-size: 10px; }
+
+  .gap-text {
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding-left: 22px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <div class="hero-avatar">🐕</div>
+    <div class="hero-text">
+      <h1>Role Match</h1>
+      <p>Drop a job description. Agy will show you evidence where Matt fits — and where he doesn't.</p>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="left-col">
+      <p class="hint-text">Paste a job description below. Agy will match each requirement and you can click any chip to explore the story.</p>
+      <textarea class="jd-textarea" placeholder="Paste job description here..."></textarea>
+      <button class="match-btn">Match this role 🐾</button>
+    </div>
+
+    <div class="right-col">
+      <div class="results-header">
+        <div>
+          <div class="role-title">Director of Engineering</div>
+          <div class="role-company">RiskTech Solutions</div>
+        </div>
+        <div class="action-btns">
+          <button class="action-btn">Helpful</button>
+          <button class="action-btn">🔗 Share</button>
+          <button class="action-btn">📄 Export</button>
+        </div>
+      </div>
+
+      <div class="section-header">Required Qualifications (12)</div>
+
+      <div class="req-card">
+        <div class="req-title-row">
+          <span class="status strong">✓</span>
+          <span class="req-title">10+ years of professional software development experience</span>
+        </div>
+        <div class="chips">
+          <div class="chip"><span class="chip-icon">🔗</span> Scaling Development Capacity · Capital One</div>
+          <div class="chip"><span class="chip-icon">🔗</span> Verified profile · 18+ years at Accenture</div>
+        </div>
+      </div>
+
+      <div class="req-card">
+        <div class="req-title-row">
+          <span class="status strong">✓</span>
+          <span class="req-title">5+ years managing managers and senior engineering leaders</span>
+        </div>
+        <div class="chips">
+          <div class="chip"><span class="chip-icon">🔗</span> My Leadership Journey · Accenture</div>
+          <div class="chip"><span class="chip-icon">🔗</span> Verified profile · Director, CIC, 150+ practitioners</div>
+        </div>
+      </div>
+
+      <div class="req-card">
+        <div class="req-title-row">
+          <span class="status partial">~</span>
+          <span class="req-title">Experience with a modern backend framework such as Node.js, Python/FastAPI, or Go</span>
+        </div>
+        <div class="chips">
+          <div class="chip"><span class="chip-icon">🔗</span> AmEx Virtual Payments Platform · American Express</div>
+          <div class="chip"><span class="chip-icon">🔗</span> Verified profile · Python, JavaScript</div>
+        </div>
+        <div class="gap-text">Experience with Python confirmed, but FastAPI, Node.js, or Go not specifically mentioned.</div>
+      </div>
+
+      <div class="req-card">
+        <div class="req-title-row">
+          <span class="status gap">✗</span>
+          <span class="req-title">Experience building mobile applications using React Native</span>
+        </div>
+        <div class="gap-text">No matching stories or profile evidence for React Native specifically.</div>
+      </div>
+
+      <div class="section-header" style="margin-top: 4px;">Preferred Qualifications (4)</div>
+
+      <div class="req-card">
+        <div class="req-title-row">
+          <span class="status strong">✓</span>
+          <span class="req-title">Agile/Scrum experience</span>
+        </div>
+        <div class="chips">
+          <div class="chip"><span class="chip-icon">🔗</span> Agile Transformation · Fiserv</div>
+          <div class="chip"><span class="chip-icon">🔗</span> Agile Transformation · Norfolk Southern</div>
+        </div>
+      </div>
+
+      <div class="req-card">
+        <div class="req-title-row">
+          <span class="status partial">~</span>
+          <span class="req-title">Insurance or risk management domain knowledge</span>
+        </div>
+        <div class="chips">
+          <div class="chip"><span class="chip-icon">🔗</span> What I Learned About Assumptions · Fortune 500</div>
+        </div>
+        <div class="gap-text">Risk management practices demonstrated, but insurance domain specifically not addressed.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
