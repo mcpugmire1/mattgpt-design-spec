@@ -1,256 +1,49 @@
-# MattGPT: Product Design & Strategy Documentation
+# MattGPT: The Build
 
-**Professional design documentation for MattGPT - An AI-powered career portfolio assistant**
+The design and build record for [MattGPT](https://askmattgpt.streamlit.app) — an AI-powered portfolio assistant built on a RAG pipeline over 100+ STAR-structured career stories.
 
-> This repo contains comprehensive product strategy, technical architecture, and UX design documentation for MattGPT, demonstrating end-to-end product thinking from concept through implementation.
+Read it as the audit, not the advertisement. The published spec is at [mcpugmire1.github.io/mattgpt-design-spec](https://mcpugmire1.github.io/mattgpt-design-spec).
 
----
-
-## 🎯 What is MattGPT?
-
-MattGPT is an **AI-powered portfolio interface** that eliminates doubt about a candidate's experience by acting as a **credibility engine**. Instead of making claims about skills and experience, it provides **proof through structured stories** using the STAR methodology (Situation, Task, Action, Result).
-
-**The Problem:** Traditional portfolios rely on self-promotion and claims that recruiters must verify.
-
-**The Solution:** An AI assistant trained on structured career stories that can:
-- Answer specific questions about experience with concrete examples
-- Provide metrics and outcomes from real projects
-- Demonstrate technical depth through searchable, verified content
-- Scale personal credibility to multiple conversations simultaneously
+Source code: [llm_portfolio_assistant](https://github.com/mcpugmire1/llm_portfolio_assistant)
 
 ---
 
-## 🔗 Quick Links
-
-| Resource | Description |
-|----------|-------------|
-| 🚀 [**Live App**](https://askmattgpt.streamlit.app/) | Try the deployed application |
-| 💻 [**Source Code**](https://github.com/mcpugmire1/llm_portfolio_assistant) | View the implementation |
-| 🎨 [**Interactive Prototypes**](wireframes/) | Explore clickable wireframes |
-| 📋 [**Project Context**](CONTEXT.md) | Current status, completed work, and next steps |
-
----
-
-## 📚 Documentation Structure
-
-This repo organizes design documentation into four key areas:
-
-### 1. Product Strategy & Vision
-- **[01-product-vision.md](docs/01-product-vision.md)**
-  - The Credibility Engine: WHY/HOW/WHAT framework
-  - Target user personas (Recruiter, Hiring Manager, Content User)
-  - Product scope & boundaries
-  - Two-layer governance model (STAR + Tagging)
-  - AI system prompt and integrity guidelines
-
-### 2. Technical Architecture
-- **[02-technical-architecture.md](docs/02-technical-architecture.md)**
-  - 5-stage RAG (Retrieval-Augmented Generation) pipeline (98.1% eval)
-  - Semantic router with 14 intent families + out-of-scope detection
-  - 3-phase evolution: MVP → Production → Enterprise
-  - Hybrid search architecture (semantic + keyword)
-  - Technology stack decisions and migration plan
-
-### 3. UX Design & Wireframes
-- **[03-ux-design-process.md](docs/03-ux-design-process.md)**
-  - Design principles and site architecture
-  - User journey diagrams (6 flows)
-  - Navigation architecture and filter specifications
-  - Component specifications with complete implementation details
-
-### 4. Development Journey
-- **[04-building-mattgpt.md](docs/04-building-mattgpt.md)**
-  - The challenge: Better portfolio presentation
-  - What I learned building this (RAG, Python, LLMs)
-  - Technical innovations and decisions
-  - Roadmap: Phase 1 polish → Phase 2 React rebuild
-
-### 5. Brand Voice Guide
-- **[05-agy-voice-guide.md](docs/05-agy-voice-guide.md)**
-  - Agy personality traits (Plott Hound AI assistant)
-  - Voice principles and response templates
-  - Tone calibration and situational responses
-
-### 6. Testing & Quality Assurance
-- **[11-testing-and-quality.md](docs/11-testing-and-quality.md)**
-  - 3-layer testing strategy: unit tests, RAG evals, BDD/E2E
-  - 12 unit test files (component isolation, <1 min runtime)
-  - RAG evaluation framework (98.1% pass rate, 60+ golden queries)
-  - 43 BDD/E2E scenarios (Playwright + pytest-bdd, ~25 min runtime)
-  - Quality gates and eval-driven development
-  - How evals guided January 2026 pipeline cleanup
-
-### 7. Data Pipeline & Ingestion
-- **[12-data-pipeline.md](docs/12-data-pipeline.md)**
-  - 3-stage data flow: Excel → JSONL → Embeddings → Pinecone
-  - Conversion scripts and enrichment process
-  - Embedding generation strategy
-  - Data governance principles (Excel as single source of truth)
-  - Cost & performance metrics ($0.0008 per re-index)
-  - Migration history (MiniLM → OpenAI embeddings)
-
----
-
-## 🎨 Design Artifacts
-
-### Interactive Prototypes
-Working HTML wireframes demonstrating key user flows:
-
-| Wireframe | Description |
-|-----------|-------------|
-| [index.html](wireframes/index.html) | Main landing page |
-| [about_matt_wireframe.html](wireframes/about_matt_wireframe.html) | About section |
-| [ask_mattgpt_wireframe.html](wireframes/ask_mattgpt_wireframe.html) | AI chat interface |
-| [ask_mattgpt_landing_wireframe.html](wireframes/ask_mattgpt_landing_wireframe.html) | Chat landing page |
-| [explore_stories_cards_wireframe.html](wireframes/explore_stories_cards_wireframe.html) | Story browsing (card view) |
-| [explore_stories_table_wireframe.html](wireframes/explore_stories_table_wireframe.html) | Story browsing (table view) |
-| [explore_stories_timeline_wireframe.html](wireframes/explore_stories_timeline_wireframe.html) | Story browsing (timeline view) |
-| [explore_stories_mobile_wireframe.html](wireframes/explore_stories_mobile_wireframe.html) | Mobile-optimized story view |
-| [banking_landing_page.html](wireframes/banking_landing_page.html) | Industry-specific landing demo |
-
-### Component Specifications
-- **[Component Library](components/component_inventory.md)** - Detailed component specifications
-- **[Site Navigation Flow](components/sitemap_navigation.md)** - Complete navigation structure and user journeys
-- **[Annotation Specifications](data/wireframe_annotations_all.csv)** - 190+ rows of wireframe annotations
-
----
-
-## 🧠 Key Concepts
-
-**STAR Framework:** Structured storytelling methodology (Situation, Task, Action, Result) that ensures credibility through concrete examples.
-
-**RAG Architecture:** Retrieval-Augmented Generation - AI technique that grounds responses in actual source documents rather than generating claims.
-
-**The Credibility Engine:** Core product positioning - proof over claims, verification over self-promotion.
-
-**Two-Layer Governance:**
-- **Layer 1:** STAR methodology (ensures integrity and structure)
-- **Layer 2:** Intelligent tagging (enables AI-powered search and filtering)
-
----
-
-## 📂 Repository Structure
+## Repository structure
 
 ```
 mattgpt-design-spec/
-├── README.md                   # This file - project overview
-├── CONTEXT.md                  # Current project status and session state
+├── index.md                        # Landing page — the build record
+├── README.md                       # This file
 │
-├── /docs/                      # Strategic documentation
+├── docs/                           # Published specification
 │   ├── 01-product-vision.md
 │   ├── 02-technical-architecture.md
 │   ├── 03-ux-design-process.md
 │   ├── 04-building-mattgpt.md
-│   └── 05-agy-voice-guide.md
+│   ├── 05-agy-voice-guide.md
+│   ├── 06-explore-stories-filter-redesign.md
+│   ├── 07-css-architecture.md
+│   ├── 08-mobile-implementation.md
+│   ├── 09-api-reference.md
+│   ├── 10-data-model.md
+│   ├── 11-testing-and-quality.md
+│   ├── 12-data-pipeline.md
+│   ├── 13-migration-architecture.md
+│   ├── audit-2026-06-15.md
+│   └── working/                    # Transitory drafts (lifecycle-declared)
 │
-├── /wireframes/                # Interactive HTML prototypes
-│   └── [9 working wireframes]
+├── _layouts/                       # Jekyll layout overrides
+├── _includes/                      # Shared partials (doc-nav, mermaid)
+├── _data/                          # Auto-generated facts (CI pipeline)
+│   └── facts.yml                   # Derived from source repo on every push
 │
-├── /components/                # Component specifications
-│   ├── component_inventory.md
-│   └── sitemap_navigation.md
-│
-├── /images/                    # Diagrams and visual assets
-│   ├── architecture/          # RAG diagrams, site architecture
-│   ├── wireflows/             # User journey diagrams (SVG)
-│   ├── logos/                 # Agy brand assets
-│   └── screenshots/           # App screenshots
-│
-├── /brand-kit/                 # Complete brand guidelines
-│   └── [logos, colors, typography]
-│
-├── /data/                      # Structured data & annotations
-│   └── wireframe_annotations_all.csv
-│
-└── /assets/                    # GitHub Pages styling
-    └── css/style.scss         # Custom brand colors
+├── assets/css/style.scss           # Brand styling
+├── wireframes/                     # Interactive HTML prototypes
+├── images/                         # Diagrams, architecture, screenshots
+├── brand-kit/                      # Logos, avatars, favicons
+└── archive/                        # Retired session artifacts
 ```
 
 ---
 
-## 📱 Mobile & Responsive Design
-
-MattGPT includes production-quality mobile CSS with:
-- **Breakpoints:** 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
-- **Mobile-First Patterns:** Stacking layouts, touch-optimized controls
-- **Responsive Tables:** Horizontal scroll with preserved functionality
-- **Adaptive Navigation:** Hamburger menu, collapsible filters
-
----
-
-## 🚀 What This Demonstrates
-
-This project showcases:
-
-1. **Product Thinking:** Strategic vision → technical architecture → user experience
-2. **AI/ML Application:** Practical implementation of RAG with vector search
-3. **Full-Stack Development:** Python backend, Streamlit frontend, deployment pipeline
-4. **UX Design:** User research → wireframes → prototypes → implementation
-5. **Documentation:** Professional-grade technical and product documentation
-6. **Problem Solving:** Innovative solution to portfolio credibility challenge
-
----
-
-## 📝 Project Status
-
-**Current Phase:** Streamlit Production Polish (January 2026)
-
-See **[CONTEXT.md](CONTEXT.md)** for detailed project status, completed work, and next steps.
-
-**Completed Since October 2025:**
-- ✅ **5-stage RAG pipeline** with 98.1% eval pass rate (Jan 2026)
-- ✅ **Semantic router** with 14 intent families (narrative, synthesis, out-of-scope) (Jan 2026)
-- ✅ **Model upgrade:** GPT-4o (from GPT-4o-mini) (Jan 2026)
-- ✅ **Removed:** Entity Gate bouncer, LLM intent classification (Jan 2026)
-- ✅ **Centralized thresholds** in config/constants.py (Jan 2026)
-- ✅ Timeline View with Era-based grouping
-- ✅ Mobile-responsive CSS (breakpoints at 767px, 1024px)
-- ✅ Modular Ask MattGPT architecture (9-file structure)
-- ✅ Related Projects UX pattern
-- ✅ Dark mode support via CSS variables
-- ✅ Conversation history and context management
-- ✅ Filter redesign (Phase 4)
-- ✅ All 6 documentation files complete and published
-- ✅ GitHub Pages live with custom brand styling
-- ✅ All 9 wireframes deployed and accessible
-- ✅ Architecture diagrams aligned with PDF design spec
-- ✅ Comprehensive wireframe audit (100% accuracy)
-- ✅ Agy Voice Guide integrated
-- ✅ User journey diagrams (high-level navigation paths)
-
-**Outstanding:**
-- 🔄 Design spec alignment (addressed December 2025)
-- 🔄 React migration planning (Phase 2)
-
-**Next Steps:**
-- Polish Streamlit MVP for immediate job search
-- Plan Phase 2: React modern architecture rebuild
-
----
-
-## 💡 Why This Approach?
-
-Traditional portfolios rely on candidates making claims that recruiters must verify. MattGPT inverts this:
-
-- **Instead of claiming expertise** → Provide searchable, structured proof
-- **Instead of bullet points** → Deliver STAR-formatted stories with metrics
-- **Instead of static resume** → Offer interactive AI interface
-- **Instead of one-way communication** → Enable dynamic Q&A at scale
-
-The result: **Credibility through demonstration, not declaration.**
-
----
-
-## 🔗 Related Projects
-
-- **[llm_portfolio_assistant](https://github.com/mcpugmire1/llm_portfolio_assistant)** - Source code for MattGPT application
-- **[askmattgpt.streamlit.app](https://askmattgpt.streamlit.app/)** - Live deployed application
-
----
-
-*Built by Matthew Pugmire | [LinkedIn](#) | [Portfolio](#)*
-
----
-
-**Last Updated:** January 30, 2026 (RAG Pipeline Update)
-**Version:** 2.1 (5-Stage Pipeline, Semantic Router, Threshold Updates)
+*Built by [Matthew Pugmire](https://www.linkedin.com/in/mattpugmire/)*
