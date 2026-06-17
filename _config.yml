@@ -59,6 +59,9 @@ exclude:
   - vendor
   - Gemfile
   - Gemfile.lock
+  - CONTEXT.md
+  - archive/
+  - docs/working/
 
 # Keep these folders as static assets
 keep_files:
