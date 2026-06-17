@@ -13,19 +13,12 @@ theme: jekyll-theme-minimal
 # Logo (Agy the Plott Hound - Transparent)
 logo: /images/logos/agy_transparent.png
 
-# Navigation
-header_pages:
-  - docs/01-product-vision.md
-  - docs/02-technical-architecture.md
-  - docs/03-ux-design-process.md
-  - docs/04-building-mattgpt.md
-
 # Defaults
 defaults:
   - scope:
       path: "docs"
     values:
-      layout: "doc"
+      layout: "default"
       nav_order: 1
 
 # Markdown Settings

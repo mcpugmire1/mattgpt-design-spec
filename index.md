@@ -51,24 +51,7 @@ With a team and a budget I would put the eval and BDD suites behind required sta
 
 ## Go deeper
 
-**The thinking**
-
-- [Product Vision](docs/01-product-vision): the credibility-engine premise, WHY/HOW/WHAT framing, governance model
-- [Audience Journeys](docs/03-ux-design-process): the four visitor journeys the design is derived from
-- [Building MattGPT](docs/04-building-mattgpt): the development story and what I learned building it
-- [Agy Voice Guide](docs/05-agy-voice-guide): the brand voice for Agy, the Plott Hound assistant
-
-**The build**
-
-- [Technical Architecture](docs/02-technical-architecture): the RAG pipeline, the semantic router, and the phased evolution plan
-- [Data Pipeline](docs/12-data-pipeline): the data flow from source to production retrieval
-- [Data Model](docs/10-data-model): the JSONL schema, the STAR structure, and the tagging taxonomy
-- [Testing and Quality](docs/11-testing-and-quality): the three-layer testing strategy and the eval framework
-
-**Reference and roadmap**
-
-- [API Reference](docs/09-api-reference): module inventory, key function signatures, session-state values, env configuration
-- [Migration Architecture](docs/13-migration-architecture): the planned Phase 2 React rebuild, not yet built
+{% include doc-nav.html descriptions=true %}
 
 The live application is at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app). The application source lives in a [separate repository](https://github.com/mcpugmire1/llm_portfolio_assistant); this repository holds the design and the record.
 
