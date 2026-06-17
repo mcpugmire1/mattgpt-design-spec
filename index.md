@@ -1,214 +1,73 @@
 ---
-layout: default
-title: Home
-nav_order: 0
+title: "MattGPT: The Build"
+description: "The record of how MattGPT was designed, built, and kept honest. Read it as the audit, not the advertisement."
 ---
 
-# MattGPT: Design Specification
+![Agy](https://mcpugmire1.github.io/mattgpt-design-spec/images/logos/agy_transparent.png)
 
-**Complete Product Blueprint for Strategy, Auditable Architecture, and Technical Execution**
+# MattGPT: The Build
 
----
+This is the working record of how MattGPT was designed, built, and is kept running. If you arrived from the app, you have already seen what it does. This is the part underneath: the reasoning, the decisions, and the discipline. Read it as the audit, not the advertisement.
 
-## What is MattGPT?
+## How to read this
 
-MattGPT is an **AI-powered portfolio** that transforms 20 years of Fortune 500 transformation experience into an intelligent, searchable interface. Instead of static resume bullets, it provides:
+I held the build to four principles. They double as the criteria you can hold it to.
 
-- ✅ **Verifiable proof** through structured STAR stories
-- ✅ **Semantic search** across 130+ real projects
-- ✅ **Pattern recognition** to surface relevant examples
-- ✅ **Auditable sources** for every AI-generated response
+**Proof over claims.** Every capability statement traces to a sourced, structured project story. A claim that cannot cite its evidence does not reach a user.
 
-**Tagline:** *"Matt doesn't claim credibility — he proves it in real time."*
+**Honest before impressive.** The system declines cleanly when it does not know, and it will not inflate a match. Where the engineering is immature, this record says so plainly, including below.
 
----
+**Design from audiences, not features.** The surfaces and the information architecture were derived from real visitor journeys, not a feature wishlist.
 
-## Why This Matters
+**Auditable governance.** Two layers: structured integrity (STAR stories with real metrics) and retrieval intelligence (tagging and semantic search), with the documentation held in sync with what is actually running, and audited when it drifts.
 
-This isn't just a portfolio — it's a **demonstration of modern AI product development**:
+What follows is the evidence for each.
 
-- 🧠 **RAG Architecture** (Retrieval-Augmented Generation)
-- 🔍 **Semantic Search** (vector-based meaning matching)
-- 📊 **Data Governance** (Two-layer validation system)
-- 🎨 **User-Centered Design** (Three distinct personas)
-- ⚡ **Production Application** (Mobile-responsive Streamlit with Era-based timeline, advanced filtering, and Role Match)
-- 🎯 **Role Match** (JD-to-experience matching with evidence chips, fit scoring, and private assessment view)
+## The proof, up front
 
----
+MattGPT runs on a retrieval-augmented pipeline: STAR-structured career stories embedded in Pinecone, retrieved through a semantic router that sorts queries into intent families, including an explicit out-of-scope path for questions it should refuse, and synthesized by GPT-4o with sources attached.
 
-## Documentation
+The part worth inspecting is how I know it works. The retrieval layer is gated by a behavioral eval suite. The current result is 64 of 64 on a golden-query set I maintain and extend whenever I find a question it should have handled and did not. A perfect score on a suite I curate is not the headline, and you should not read it as one. What it buys is a fast, specific signal the moment a change degrades retrieval, before any visitor sees it. Underneath the eval sit two more layers: unit tests for component isolation, and a BDD and end-to-end suite that exercises the real workflows. The full breakdown, including what the eval deliberately does not cover yet, is in the [testing and quality](docs/11-testing-and-quality) doc.
 
-### Core Strategy & Vision
+## The decisions, and what I rejected
 
-**[📘 Product Vision](/mattgpt-design-spec/docs/01-product-vision)**
-The Credibility Engine — WHY, HOW, WHAT framework, user personas, data governance model, and AI system prompt.
+The build involved hundreds of calls across data, retrieval, interface, voice, and governance. The full record lives in the ticketed backlog and the [audience journeys](docs/03-ux-design-process) doc. A few are worth walking, because they show the logic the rest of them followed.
 
-**[🏗️ Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture)**
-Two-phase evolution from Streamlit MVP to React rebuild, tech stack decisions, and strategic trade-offs.
+Take the call that cost the most to accept. I had built the site around what it could do, organized by feature: ask the assistant, match a role, explore the work. Then I ran it past CTO and recruiter personas, and the testing told me something I did not want to hear. It was feature-led, and the visitor is job-led. A recruiter holding a job description does not care that there is a semantic search engine underneath. They care whether this person fits the role and whether they can forward it in ninety seconds. The site was answering "what is this" while the visitor was asking "can he do the job." That reframe did not fix one thing. It invalidated the hero, the navigation order, and the entry routing at once, and it became a cluster of work rather than a tidy ticket. I settled it job-led: the surfaces are named for what the visitor came to do (My Work, Ask Agy, Role Match, My Profile), not for what each page is.
 
-**[🚀 Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture)**
-Technical blueprint for Phase 2 React migration — microfrontends, serverless backend, and step-by-step implementation roadmap.
+A smaller one, same logic. The work-browsing surface uses a dense, sortable, filterable grid rather than cards that expand one at a time. The expanding cards looked cleaner in isolation. But the people who browse many stories at once, a recruiter triaging or a hiring manager comparing, need density and side-by-side scanning more than a prettier single-item view. I chose the surface the audience needed over the one that demoed better.
 
-### Design & Implementation
+And one about what not to build. A cover-letter generator was the obvious next feature, and I closed it as Won't Do. A generator like that pulls the system toward confident prose that runs ahead of the evidence, which is the one thing a credibility engine cannot afford. Saying no to a plausible feature was the product decision.
 
-**[🎨 UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process)**
-Complete site architecture, user flows, and detailed wireframe specifications for every view.
+## How it is built, and where it is honest about its limits
 
-**[🔨 Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt)**
-The development journey, technical challenges, semantic search implementation, and product roadmap.
+MattGPT runs on a deliberately small stack: Claude Code at the command line for implementation, GitHub for source and history, and a webhook that deploys to Streamlit Cloud on push. There is no enterprise CI/CD here, and claiming otherwise would be the first thing a technical reader should distrust. This is one person's system. The interesting question is what discipline survives at that scale.
 
-**[🐾 Agy Voice Guide](/mattgpt-design-spec/docs/05-agy-voice-guide)**
-Complete brand voice documentation for Agy, the Plott Hound AI assistant — personality traits, response templates, and tone guidelines.
+What holds: the eval suite gates the retrieval layer, so a regression surfaces as a failing number rather than a user complaint. BDD scenarios run red to green before a feature counts as done. A rules file encodes the architectural conventions, and a pre-commit documentation checklist keeps these pages from drifting away from what is actually running.
 
-**[🎯 Explore Stories Filter Redesign](/mattgpt-design-spec/docs/06-explore-stories-filter-redesign)**
-Filter architecture with primary/advanced pattern, progressive disclosure, and landing page integration.
+Where it does not: the rules are not enforced by a pipeline, so they are not always followed. Claude Code, the AI CLI doing the implementation, will rebuild infrastructure that already exists or quietly change a protected value, and the governance is me catching it in review, not a gate stopping it at the door. Holding that line over a fast, capable, not-always-compliant AI tool is the actual daily work, and it is a closer analog to leading a team than a green pipeline would be.
 
-**[🎨 CSS Architecture](/mattgpt-design-spec/docs/07-css-architecture)**
-Complete CSS design system with variables, breakpoints, dark mode support, and component conventions.
+To keep this honest, I ran the first systematic audit of this documentation against the running system in June 2026. It caught a stale headline metric, brand vocabulary the product had retired months earlier still sitting in test expectations, and a case where the rules file itself was wrong on two configuration values where this spec was right. Documentation drifts from code in every real system. What distinguishes a mature one is having a mechanism that finds and corrects the drift. The [audit](docs/audit-2026-06-15) is committed alongside the docs it corrects.
 
-**[📱 Mobile Implementation](/mattgpt-design-spec/docs/08-mobile-implementation)**
-Production mobile CSS with responsive breakpoints, touch optimization, and component-specific mobile behaviors.
+With a team and a budget I would put the eval and BDD suites behind required status checks, add a staging deploy between push and production, and make the architectural rules lint-enforced instead of written in prose. I have not, because for one person the cost of that machinery outruns its value at this size. Knowing where that tradeoff flips is the job.
 
-**[📚 API Reference](/mattgpt-design-spec/docs/09-api-reference)**
-Technical reference for developers — module overview, key function signatures, data flow diagrams, and environment configuration.
+## Go deeper
 
-**[🗂️ Data Model](/mattgpt-design-spec/docs/10-data-model)**
-JSONL schema documentation — required fields, STAR framework structure, 5P taxonomy, filtering logic, and validation rules.
+The full documentation set, in reference order:
 
-**[✅ Testing & Quality Assurance](/mattgpt-design-spec/docs/11-testing-and-quality)**
-Complete 3-layer testing strategy — 12 unit test files, RAG evaluation framework (100% pass rate, 64 golden queries), and 219 BDD/E2E scenarios across 30 feature files validating full workflows.
+- [Product Vision](docs/01-product-vision): the credibility-engine premise, the WHY/HOW/WHAT framing, the governance model, and the system prompt.
+- [Technical Architecture](docs/02-technical-architecture): the RAG pipeline, the semantic router, and the phased evolution plan.
+- [Audience Journeys](docs/03-ux-design-process): the four visitor journeys the design is derived from.
+- [Building MattGPT](docs/04-building-mattgpt): the development story and what I learned building it.
+- [Agy Voice Guide](docs/05-agy-voice-guide): the brand voice for Agy, the Plott Hound assistant.
+- [API Reference](docs/09-api-reference): module inventory, key function signatures, session-state values, and environment configuration.
+- [Data Model](docs/10-data-model): the JSONL schema, the STAR structure, the tagging taxonomy, and validation rules.
+- [Testing and Quality](docs/11-testing-and-quality): the three-layer testing strategy and the eval framework.
+- [Data Pipeline](docs/12-data-pipeline): the data flow from source to production retrieval.
+- [Migration Architecture](docs/13-migration-architecture): the planned Phase 2 React rebuild, not yet built.
 
-**[🔄 Data Pipeline & Ingestion](/mattgpt-design-spec/docs/12-data-pipeline)**
-Complete 3-stage data flow from Excel to production RAG — conversion scripts, enrichment process, embedding generation, data governance principles, and cost/performance metrics.
-
----
-
-## Interactive Wireframes
-
-> **Note:** These wireframes represent the original design specification (October 2025). The live application includes additional features implemented since: Era-based Timeline View, mobile responsive design, advanced filtering, and Role Match (JD-to-experience fit assessment). See [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app) for current state.
-
-Explore clickable HTML prototypes of the MattGPT interface:
-
-### Core Views
-- **[Homepage](/mattgpt-design-spec/wireframes/index.html)** - Entry point with starter cards
-- **[Banking Landing Page](/mattgpt-design-spec/wireframes/banking_landing_page.html)** - Financial Services projects with capability breakdown
-- **[Cross-Industry Landing Page](/mattgpt-design-spec/wireframes/cross_industry_landing_page.html)** - Non-banking projects across industries
-
-### Explore Stories Interface
-- **[Table View](/mattgpt-design-spec/wireframes/explore_stories_table_wireframe.html)** - High-density browsing for recruiters
-- **[Card View](/mattgpt-design-spec/wireframes/explore_stories_cards_wireframe.html)** - Visual story previews
-- **[Timeline View](/mattgpt-design-spec/wireframes/explore_stories_timeline_wireframe.html)** - Era-based career progression (5 career phases)
-- **[Mobile View](/mattgpt-design-spec/wireframes/explore_stories_mobile_wireframe.html)** - Mobile-optimized story browsing
-
-### Ask Agy (AI Interface)
-- **[Landing Page](/mattgpt-design-spec/wireframes/ask_mattgpt_landing_wireframe.html)** - Conversational search entry
-- **[Conversation View](/mattgpt-design-spec/wireframes/ask_mattgpt_wireframe.html)** - Live chat with source citations
-
-### Role Match (April 2026)
-- **[Recruiter View — Full Page](/mattgpt-design-spec/wireframes/role_match_mockup_v2.html)** - Two-column JD input + results layout
-- **[Card Spec v3](/mattgpt-design-spec/wireframes/role_match_blended_card_spec_v3.html)** - Requirement cards with evidence chips and match legend
-- **[Private View](/mattgpt-design-spec/wireframes/role_match_revised_mockup.html)** - Lock icon, fit score, recommendation, gap analysis (Phase 4)
-
-### About Matt
-- **[About Matt Page](/mattgpt-design-spec/wireframes/about_matt_wireframe.html)** - Career journey, competencies, leadership philosophy
-
----
-
-## Design System & Components
-
-**[🗺️ Sitemap & Navigation](/mattgpt-design-spec/components/sitemap_navigation)**
-Complete information architecture, user flows, and navigation patterns.
-
-**[📦 Component Inventory](/mattgpt-design-spec/components/component_inventory)**
-Catalog of reusable UI components with specifications.
-
-**[🎨 Brand Guidelines](/mattgpt-design-spec/brand-kit/brand_kit_preview.html)**
-Complete brand kit with logos, colors, typography, and usage guidelines.
-
----
-
-## Design Artifacts
-
-### Architecture Diagrams
-- [RAG Build + Run Architecture](/mattgpt-design-spec/images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle with 4-phase implementation
-- [Site Architecture](/mattgpt-design-spec/images/architecture/site_architecture_updated.md) - Page hierarchy & navigation structure (December 2025)
-- [Architecture Evolution](/mattgpt-design-spec/wireframes/architecture_evolution_slide_wireframe.html) - Streamlit MVP to React Rebuild roadmap
-
-### New Components & Features
-- **How Agy Searches Modal** - 3-step RAG search flow visualization
-- **Related Projects Grid** - 3-column context-aware project recommendations
-- **Match Confidence Indicators** - Visual confidence bars (green/orange/red thresholds)
-- **Timeline Era Groups** - 5 career phases with progressive disclosure
-- **Advanced Filter Pattern** - Primary + collapsible advanced filters
-
----
-
-## Key Concepts
-
-### The Credibility Engine
-
-MattGPT replaces generic claims with **instant, quantifiable proof**:
-
-- ❌ NOT: "Matt is experienced in agile transformation"
-- ✅ YES: "Matt accelerated delivery 4x at JP Morgan Chase by implementing CI/CD pipelines and automated testing frameworks." [Source: Agile Transformation at JP Morgan Chase]
-
-### Two-Layer Governance
-
-**Layer 1: Integrity (STAR Method)**
-Every project includes Situation, Task, Action, Result with measurable metrics.
-
-**Layer 2: Intelligence (Tagging)**
-5P taxonomy + semantic tags enable semantic search and pattern recognition.
-
-### User Personas
-
-1. **Recruiter** - Speed, scalability, filtering (breadth and comparison)
-2. **Hiring Manager** - Depth, narrative structure, metrics (verifiability)
-3. **Content User (Matt)** - Quick retrieval, synthesis (interview prep)
-
----
-
-## What This Demonstrates
-
-### Product Leadership
-- ✅ Strategic positioning (WHY/HOW/WHAT framework)
-- ✅ User research (3 distinct personas with different needs)
-- ✅ MVP scoping (conscious trade-offs, not technical debt)
-- ✅ Roadmap planning (NOW/NEXT/LATER phases)
-
-### Technical Execution
-- ✅ Modern AI architecture (RAG pipeline, vector search)
-- ✅ Data governance (mandatory STAR validation)
-- ✅ Performance optimization (semantic search with confidence scoring)
-- ✅ Scalable design (modular architecture → microservices → enterprise)
-
-### Design Thinking
-- ✅ Information architecture (6 user flows, 9 view specifications)
-- ✅ Component systems (reusable patterns, design tokens)
-- ✅ Interaction design (detailed wireframe annotations)
-- ✅ Accessibility (keyboard nav, screen readers, contrast)
-
----
-
-## Live Application
-
-**Try the working MVP:** [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-
-**GitHub Repository:** [github.com/mcpugmire1/mattgpt-design-spec](https://github.com/mcpugmire1/mattgpt-design-spec)
-
----
+The live application is at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app). The application source lives in a [separate repository](https://github.com/mcpugmire1/llm_portfolio_assistant); this repository holds the design and the record.
 
 ## Contact
 
-**Matt Pugmire**
-Product & Platform Leader | Digital Transformation Director
-
-📧 [mpugmire@gmail.com](mailto:mpugmire@gmail.com)
-💼 [LinkedIn](https://www.linkedin.com/in/mattpugmire/)
-🤖 [Ask Agy](https://askmattgpt.streamlit.app) - AI assistant powered by 100+ project stories
-
----
-
-*This design specification represents the complete product blueprint from discovery through detailed technical and UX specifications. It demonstrates end-to-end product development: from strategic vision through user research, technical architecture, and meticulous execution.*
-
-**Last Updated:** June 2026
+Matt Pugmire. [LinkedIn](https://www.linkedin.com/in/mattpugmire/). [Ask Agy](https://askmattgpt.streamlit.app).
