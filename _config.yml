@@ -2,8 +2,8 @@
 # GitHub Pages will automatically use this configuration
 
 # Site Settings
-title: MattGPT Design Specification
-description: Complete product blueprint for strategy, auditable architecture, and technical execution
+title: MattGPT: The Build
+description: The record of how MattGPT was designed, built, and kept honest. Read it as the audit, not the advertisement.
 baseurl: "/mattgpt-design-spec"
 url: "https://mcpugmire1.github.io"
 

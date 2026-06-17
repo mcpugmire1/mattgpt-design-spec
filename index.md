@@ -3,8 +3,6 @@ title: "MattGPT: The Build"
 description: "The record of how MattGPT was designed, built, and kept honest. Read it as the audit, not the advertisement."
 ---
 
-![Agy](https://mcpugmire1.github.io/mattgpt-design-spec/images/logos/agy_transparent.png)
-
 # MattGPT: The Build
 
 This is the working record of how MattGPT was designed, built, and is kept running. If you arrived from the app, you have already seen what it does. This is the part underneath: the reasoning, the decisions, and the discipline. Read it as the audit, not the advertisement.
