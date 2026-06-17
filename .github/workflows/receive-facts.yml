@@ -3,6 +3,12 @@ name: Receive facts from source repo
 on:
   repository_dispatch:
     types: [facts-updated]
+  workflow_dispatch:
+    inputs:
+      facts_json:
+        description: "Facts JSON for testing — paste contents of facts.json"
+        required: true
+        type: string
 
 jobs:
   update-facts:
@@ -14,7 +20,7 @@ jobs:
 
       - name: Write _data/facts.yml
         env:
-          FACTS_JSON: ${{ toJson(github.event.client_payload.facts) }}
+          FACTS_JSON: ${{ github.event_name == 'workflow_dispatch' && inputs.facts_json || toJson(github.event.client_payload.facts) }}
         run: |
           mkdir -p _data
           python3 - <<'PYEOF'
