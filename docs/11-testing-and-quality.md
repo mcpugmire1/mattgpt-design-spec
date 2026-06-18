@@ -2,7 +2,7 @@
 
 **How MattGPT maintains quality through 3-layer testing strategy**
 
-> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (100% pass rate, 64/64), and BDD/E2E tests for UI workflows (219 scenarios across 30 feature files).
+> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (100% pass rate, 64/64), and BDD/E2E tests for UI workflows ({{ site.data.facts.bdd_summary }}).
 
 ---
 
