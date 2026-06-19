@@ -40,7 +40,10 @@
 
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
-        {% include doc-nav.html %}
+        <button class="nav-toggle" aria-controls="nav-collapsible" aria-expanded="false">☰ Navigation</button>
+        <div id="nav-collapsible" class="nav-collapsible">
+          {% include doc-nav.html %}
+        </div>
 
         <p class="view"><a href="https://askmattgpt.streamlit.app">Try the app →</a></p>
 
@@ -54,12 +57,22 @@
 
       </section>
       <footer>
-        {% if site.github.is_project_page %}
-        <p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-        {% endif %}
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
+    <script>
+      (function () {
+        var btn = document.querySelector('.nav-toggle');
+        var nav = document.getElementById('nav-collapsible');
+        if (btn && nav) {
+          btn.addEventListener('click', function () {
+            var open = nav.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            btn.textContent = open ? '✕ Navigation' : '☰ Navigation';
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

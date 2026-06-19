@@ -140,6 +140,13 @@ header h1 a {
   font-weight: 700;
 }
 
+header img {
+  max-width: 80px;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px;
+}
+
 header p {
   color: var(--medium-gray);
 }
@@ -186,7 +193,7 @@ header .site-nav ul li {
 }
 
 header .site-nav ul li a {
-  color: var(--dark-navy);
+  color: var(--primary-indigo);
   font-size: 0.85rem;
   text-decoration: none;
 }
@@ -243,6 +250,40 @@ a:focus, button:focus, input:focus, textarea:focus {
   color: var(--success-green);
   border-left: 4px solid var(--success-green);
   padding-left: 16px;
+}
+
+/* Mobile nav toggle button — hidden on desktop, visible when header stacks */
+.nav-toggle {
+  display: none;
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 10px;
+  background: var(--background);
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  color: var(--dark-navy);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  background: var(--light-gray);
+}
+
+@media (max-width: 960px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-collapsible {
+    display: none;
+  }
+
+  .nav-collapsible.is-open {
+    display: block;
+  }
 }
 
 /* Mermaid diagram styling adjustments */
