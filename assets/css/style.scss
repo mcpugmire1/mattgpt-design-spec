@@ -352,6 +352,16 @@ a:focus, button:focus, input:focus, textarea:focus {
     padding-right: 0;
   }
 
+  /* Kill desktop footer-clearance padding — footer is no longer fixed at mobile */
+  header {
+    padding-bottom: 0;
+  }
+
+  /* Scale avatar down: 160px = ~48% of 332px viewport; 100px keeps it recognizable */
+  header img {
+    max-width: 100px;
+  }
+
   section {
     border: 1px solid #e5e5e5;
     border-width: 1px 0;
