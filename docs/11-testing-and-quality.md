@@ -91,9 +91,9 @@ def test_semantic_router_intent_detection():
     ]
 
     for query, expected_intent in test_cases:
-        result = semantic_router.classify(query)
-        assert result["intent"] == expected_intent
-        assert result["score"] >= 0.40  # SOFT_ACCEPT threshold
+        is_valid, score, intent, family = is_portfolio_query_semantic(query)
+        assert intent == expected_intent
+        assert score >= 0.40  # SOFT_ACCEPT threshold
 ```
 
 **Running Unit Tests:**
@@ -507,12 +507,12 @@ pytest tests/bdd/ -v
 ## Quality Gates
 
 **Pre-Merge Requirements:**
-- ✅ All unit tests passing (12/12)
+- ✅ All {{ site.data.facts.unit_test_file_count }} unit test files passing
 - ✅ RAG eval pass rate ≥ 95% (61+/64)
 - ✅ BDD scenarios passing
 
 **Production Deploy Requirements:**
-- ✅ All unit tests passing (12/12)
+- ✅ All {{ site.data.facts.unit_test_file_count }} unit test files passing
 - ✅ RAG eval pass rate ≥ 98% (63+/64)
 - ✅ BDD scenarios passing
 - ✅ Manual smoke test (5 queries + 2 UI workflows)

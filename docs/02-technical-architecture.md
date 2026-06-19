@@ -35,10 +35,10 @@ MattGPT's architecture evolved through intentional phases:
 
 The MVP phase consciously accepted limitations to accelerate learning:
 
-- ~~**Mobile-responsive implementation:**~~ ✅ Shipped — 1,520 lines of production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
+- ~~**Mobile-responsive implementation:**~~ ✅ Shipped — production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
 - **Limited scalability:** Estimated ~100 concurrent users (not load-tested; Streamlit Community Cloud limits apply)
 - **No caching layer:** Direct database queries
-- ~~**Modular architecture:**~~ ✅ Shipped — refactored from monolithic app.py to component-based structure (118 Python files)
+- ~~**Modular architecture:**~~ ✅ Shipped — refactored from monolithic app.py to component-based structure
 - ~~**Minimal observability:**~~ ✅ Shipped — 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
 
 ### Key Decisions
@@ -77,7 +77,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - Reusable component library (ui/components/)
 
 **Design System:**
-- CSS variables for light/dark mode support (global_styles.py:28-122)
+- CSS variables for light/dark mode support (global_styles.py)
 - Standardized breakpoints: 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
 - Consistent purple brand (#8B5CF6) across all views
 
@@ -87,7 +87,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - Progressive disclosure pattern (6 most recent per era)
 
 **Mobile Implementation:**
-- 1,520 lines of responsive CSS across global_styles.py and mobile_overrides.py
+- Responsive CSS across global_styles.py and mobile_overrides.py
 - Touch-optimized controls and stacking layouts
 - Horizontal scroll tables with preserved functionality
 
@@ -150,9 +150,9 @@ graph TD
     L1["Layer 1: Rules-Based Rejection<br/>nonsense_filters.jsonl · is_nonsense() · &lt;5ms · zero embedding cost"] --> L2
     L2["Layer 2: Semantic Router<br/>text-embedding-3-small · 15 intent families<br/>HARD_ACCEPT=0.80 · SOFT_ACCEPT=0.40 · reject if below 0.40"] --> L3
     L3["Layer 3: Fast Exit Checks<br/>out_of_scope → graceful redirect<br/>entity detection: Client · Employer · Division · Title<br/>Title = SOFT filter (no Pinecone metadata filter)"] --> L4
-    L4["Layer 4: Pinecone Vector Search<br/>Standard/Narrative: top 10 (SEARCH_TOP_K) · entity + UI filters<br/>Synthesis: 3 theme queries × top 3 = up to 9 candidates"] --> L5
+    L4["Layer 4: Pinecone Vector Search<br/>Standard/Narrative: top 10 (SEARCH_TOP_K) · entity + UI filters<br/>Synthesis: all SYNTHESIS_THEMES × top_per_theme=3 = candidate pool"] --> L5
     L5["Layer 5: Confidence Gate<br/>HIGH ≥0.25 · LOW ≥0.20 · NONE &lt;0.20 → suggestion chips"] --> L6
-    L6["Layer 6: Post-Retrieval Processing<br/>STANDARD: entity pin → diversify_results() → 5 to LLM<br/>NARRATIVE: sort by Pinecone score → 5 to LLM<br/>SYNTHESIS: named-clients-first (up to 9 retrieved) → 7 to LLM"] --> L7
+    L6["Layer 6: Post-Retrieval Processing<br/>STANDARD: entity pin → diversify_results() → 5 to LLM<br/>NARRATIVE: sort by Pinecone score → 5 to LLM<br/>SYNTHESIS: named-clients-first (deduped pool) → 7 to LLM"] --> L7
     L7["Layer 7: Context Assembly<br/>XML isolation · MATT_DNA injection · mode-specific prompt<br/>~2,000–4,000 tokens"] --> L8
     L8["Layer 8: LLM Generation (GPT-4o)<br/>temp 0.4 standard / 0.2 synthesis · max 700 tokens"] --> L9
     L9["Layer 9: Response Formatting<br/>citations · Related Projects · follow-up question"]
@@ -181,7 +181,7 @@ graph TD
 | Aspect | Standard Mode | Synthesis Mode |
 |--------|--------------|----------------|
 | **Search Strategy** | Pinecone vector search | Theme-filtered parallel search |
-| **Story Selection** | Top 7 with diversity | Up to 9, named-clients-first |
+| **Story Selection** | Top 5 with diversity | Up to 7, named-clients-first |
 | **Ranking** | Pinecone score + entity pinning | Named clients prioritized over generic |
 | **Temperature** | 0.4 | 0.2 (lower for consistency) |
 | **Focus** | Single story deep-dive | Patterns across stories |
@@ -429,7 +429,7 @@ SEARCH_TOP_K = 10                          # Was 100 (explore) / 7 (ask) - now u
 
 Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious off-domain queries.
 
-**Filter Categories (10+):**
+**Filter Categories (34):**
 
 | Category | Pattern Examples | Sample Rejected Queries |
 |----------|-----------------|------------------------|
@@ -445,7 +445,7 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 | **general_knowledge** | `\b(capital of|president of|who is the)\b` | "Who is the president of France?" |
 
 **Performance:**
-- Pattern matching is O(n) where n = number of patterns (~20)
+- Pattern matching is O(n) where n = number of patterns (79)
 - Executes in <5ms before semantic routing
 - Zero embedding cost for obvious nonsense
 
@@ -613,7 +613,7 @@ pinecone_filter = {
 ```
 
 **Field-Specific Casing (Pinecone Metadata):**
-- **Lowercase:** `division`, `employer`, `project`, `place`, `industry`, `complexity`
+- **Lowercase:** `division`, `employer`, `project`, `place`
 - **PascalCase:** `client`, `role`, `title`, `domain`
 
 **3. UI Hydration**
@@ -695,9 +695,9 @@ story_index = 0  # Select by index, build query from actual title
 - ✅ 100+ STAR-structured project stories
 - ✅ Semantic search with confidence scoring and metadata filtering
 - ✅ **Timeline View** with Era-based career progression
-- ✅ **Mobile-responsive design** (1,520 lines in `mobile_overrides.py`; breakpoints: 767px, 1024px)
+- ✅ **Mobile-responsive design** (global_styles.py + mobile_overrides.py; breakpoints: 767px, 1024px)
 - ✅ **Dark mode support** via CSS variables
-- ✅ **Modular architecture** (9-file ask_mattgpt/ structure)
+- ✅ **Modular architecture** ({{ site.data.facts.ask_mattgpt_module_file_count }}-file ask_mattgpt/ structure)
 - ✅ **BDD test suite** — {{ site.data.facts.bdd_summary }}
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern

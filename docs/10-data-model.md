@@ -58,11 +58,12 @@ These fields are **required** for every story:
 
 | Field | Type | Purpose | Example |
 |-------|------|---------|---------|
+| `Client` | str | Client organization | `"JP Morgan"`, `"RBC"` |
 | `Employer` | str | Employment org (Matt's employer) | `"Accenture"`, `"Independent"` |
 | `Division` | str | Organizational division/unit | `"Cloud Innovation Center"`, `"Technology"` |
-| `Project` | str | Project name | `"Career Narrative"`, `"Platform Modernization"` |
 
 **Entity Pinning Behavior:**
+- Query mentions "JP Morgan" → filters by `Client = "JP Morgan"`, pins matching story to #1
 - Query mentions "Accenture" → filters by `Employer = "Accenture"`, pins matching story to #1
 - Query mentions "Cloud Innovation Center" → filters by `Division = "Cloud Innovation Center"`
 - Multi-field search uses Pinecone `$or` operator across entity fields
@@ -214,7 +215,7 @@ Complete alphabetical field reference:
 | `Person` | str | No | Yes | No | No | No |
 | `Place` | str | No | Yes | No | No | No |
 | `Process` | list[str] | No | Yes | No | No | ✅ Approach |
-| `Project` | str | No | Yes | No | ✅ Yes | No |
+| `Project` | str | No | Yes | No | No | No |
 | `Project Scope / Complexity` | str | No | No | No | No | No |
 | `public_tags` | list[str] | No | Yes | ✅ Yes | No | No |
 | `Purpose` | str | No | Yes | No | No | ✅ Goal |
@@ -411,7 +412,7 @@ Some fields have aliases for backward compatibility:
 **Primary Source:**
 - Excel workbook (`MPugmire - STAR Stories - 20DEC25.xlsx`) → JSONL conversion script
 - Script: `generate_jsonl_from_excel.py`
-- Output: `echo_star_stories_nlp.jsonl` (130+ stories)
+- Output: `echo_star_stories_nlp.jsonl` ({{ site.data.facts.story_count_label }} stories)
 
 **Quality Assurance:**
 - Manual review of STAR completeness
@@ -429,15 +430,18 @@ Stories are embedded and indexed in Pinecone for semantic search:
 **Vector ID:** Must match story `id` field (required for result mapping)
 
 **Metadata Indexed:**
+
+`build_custom_embeddings.py` indexes all story fields as metadata via `build_metadata()`. Two layers: canonical PascalCase fields (Title, Client, Employer, Division, Role, Industry, Era, Purpose, Process, Performance, 5PSummary, public_tags, and full STAR content) plus lowercase UI-friendly duplicates for Pinecone filter queries (client, employer, division, role, project, industry, complexity, domain, tags, summary).
+
+Simplified example:
 ```python
 {
     "id": story["id"],
-    "title": story["Title"],
-    "client": story["Client"],
-    "industry": story["Industry"],
-    "domain": story["Sub-category"],
-    "role": story["Role"],
-    "tags": story["public_tags"]
+    "Title": story["Title"],       # PascalCase canonical
+    "Client": story["Client"],
+    "employer": employer.lower(),  # lowercase duplicate for $eq filters
+    "division": division.lower(),
+    # ... see build_metadata() in build_custom_embeddings.py
 }
 ```
 

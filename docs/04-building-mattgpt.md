@@ -21,7 +21,7 @@
 
 ## The Problem
 
-Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search 130+ projects by methodology, outcome, or domain.
+Traditional portfolios are static PDFs that don't scale. Recruiters and hiring managers can't easily search {{ site.data.facts.story_count_label }} projects by methodology, outcome, or domain.
 
 **The Core Issues:**
 
@@ -64,7 +64,7 @@ Recruiters would spend 30 seconds scanning my PDF. How could they possibly under
 
 I'd been experimenting with RAG architectures and vector search for a client POC, and the idea clicked: What if I could build an AI that actually understood my work — not through keyword matching, but through semantic understanding of outcomes, methodologies, and context?
 
-I started with a two-week MVP sprint in April 2025. That initial prototype validated the concept, but the real work — 130+ stories, semantic search tuning, mobile design, the strangler fig refactor — took another eight months.
+I started with a two-week MVP sprint in April 2025. That initial prototype validated the concept, but the real work — {{ site.data.facts.story_count_label }} stories, semantic search tuning, mobile design, the strangler fig refactor — took another eight months.
 
 I named it after Agy, my late Plott Hound — short for Agador Spartacus from "The Birdcage." He was a tracker — goofy yet patient, determined, excellent at finding exactly what you were looking for. That's what I wanted this AI to be.
 
@@ -139,7 +139,7 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
               ▼
    ┌─────────────────────┐
    │  RAG Orchestrator   │
-   │  (GPT-4 + Context)  │
+   │  (GPT-4o + Context) │
    └──────────┬──────────┘
               │
               ▼
@@ -358,7 +358,7 @@ The solution was confidence-based filtering with metadata enhancement. By implem
 
 Early versions of the system would confidently generate plausible-sounding details that never happened. "Matt led a team of 200 engineers," when the actual number was 150. "The project saved $50M" when I'd never quantified the savings.
 
-The fix was two-fold: mandatory STAR structure (every story needs verifiable Situation, Task, Action, Result) and aggressive fact-checking. I went through all 130+ stories line by line, deleting anything I couldn't defend in an interview. If I couldn't cite a specific metric or name a specific outcome, it got cut.
+The fix was two-fold: mandatory STAR structure (every story needs verifiable Situation, Task, Action, Result) and aggressive fact-checking. I went through all {{ site.data.facts.story_count_label }} stories line by line, deleting anything I couldn't defend in an interview. If I couldn't cite a specific metric or name a specific outcome, it got cut.
 
 ### The Streamlit CSS Problem
 
@@ -418,7 +418,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - Core semantic search implementation
 - `echo_star_stories.jsonl` data structure finalized
 - Streamlit frontend deployed
-- 130+ stories curated and validated
+- {{ site.data.facts.story_count_label }} stories curated and validated
 
 ✅ **Phase 3: Polish & Filtering**
 - Streamlit UI refinement (colors, spacing, gradients)
@@ -447,22 +447,21 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 - ✅ Triage agent surface — `scripts/assess_jd.py` CLI wraps the same engine (`jd_assessor.py`) for external agent orchestration
 - ✅ Mobile responsive design (1,520 lines in `mobile_overrides.py`)
 - ✅ Query analytics (Google Sheets logger, 32-column schema)
-- ✅ BDD test suite expanded to 219 scenarios across 30 feature files
+- ✅ BDD test suite — {{ site.data.facts.bdd_summary }}
 - ✅ Eval framework expanded to 64 golden queries (100% pass rate)
 - ✅ Data quality pass across 85+ stories
 
 **Recent Deliveries (continued):**
-- ✅ Public tags enrichment — `generate_public_tags.py` uses GPT-4 with SFIA/O*NET/LinkedIn taxonomy alignment. `public_tags` flows through the entire pipeline: JSONL generation, embedding construction, Pinecone metadata, app startup, filtering, scoring, and UI display.
+- ✅ Public tags enrichment — `generate_public_tags.py` uses GPT-4o with SFIA/O*NET/LinkedIn taxonomy alignment. `public_tags` flows through the entire pipeline: JSONL generation, embedding construction, Pinecone metadata, app startup, filtering, scoring, and UI display.
 
 **Open Items:**
-See [BACKLOG.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/BACKLOG.md) in the MattGPT repo for current open work. Key areas include Role Match Phase 4, semantic router improvements, and analytics dashboard.
-- See [Migration Architecture](/docs/13-migration-architecture) for the detailed approach
+See [BACKLOG.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/BACKLOG.md) in the MattGPT repo for current open work. Key areas include Role Match Phase 4, semantic router improvements, and analytics dashboard.
 
 ---
 
 ### LATER (Phase 3)
 
-See [BACKLOG.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/BACKLOG.md) for current open work. Key areas include Role Match Phase 4 slices 2-3 (agentic bypass, private assessment view), analytics dashboard, and semantic router improvements.
+See [BACKLOG.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/BACKLOG.md) for current open work. Key areas include Role Match Phase 4 slices 2-3 (agentic bypass, private assessment view), analytics dashboard, and semantic router improvements.
 
 ---
 
@@ -499,7 +498,7 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 - Validated RAG pipeline with OpenAI GPT-4
 
 ### May-June 2025: Expansion
-- Grew corpus to 115+ stories covering full career
+- Grew corpus to {{ site.data.facts.story_count_label }} stories covering full career
 - Added filters (client, role, domain, industry)
 - Designed three view modes: Table, Card, Timeline
 - Built "How Agy Searches" transparency modal
@@ -514,10 +513,10 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 - Line-by-line audit of all stories
 - Removed AI-generated fabrications
 - Ensured 100% defensibility standard
-- Finalized 130+ verified stories
+- Finalized {{ site.data.facts.story_count_label }} verified stories
 
 ### October 2025: Architecture Refactor
-- Strangler fig pattern: 5,000 → 1,000 lines in app.py
+- Strangler fig pattern: 5,765 → 284 lines in app.py
 - Extracted modular components
 - Created comprehensive design specification
 - Deployed to Streamlit Cloud
@@ -551,5 +550,5 @@ Every line of code, every STAR story, every design decision serves that mission:
 
 ---
 
-*Last Updated: June 2026 (Staleness audit: eval 100%/64q, BDD 219/30)*
+*Last Updated: June 2026 (Staleness audit: eval 100%/64q, BDD {{ site.data.facts.bdd_summary }})*
 *Version: 1.5*

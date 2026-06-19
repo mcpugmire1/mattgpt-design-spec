@@ -7,6 +7,7 @@ Read these before every session.
 - **No Co-Authored-By lines. Ever.** No `--no-verify`. No force push to main.
 - **No em dashes anywhere in this repo.** Not in docs, not in commits, not in this file. Use a colon, comma, or rewrite the sentence.
 - **A number in this file is a bug.** CLAUDE.md contains no constants, counts, thresholds, or file inventories. Those live in `_data/facts.yml`.
+- **Inclusive, bias-free language throughout.** Describe people by scope, skill, and impact, not by demographic proxies. In practice: no "X+ years of experience" or tenure-span framing in published prose.
 - **Read existing `_layouts` and `_includes` before creating anything.** If a layout or include already exists, use it. Never author a layout from scratch.
 - **All CSS in `assets/css/style.scss`.** No new stylesheets. No inline styles.
 
@@ -136,7 +137,6 @@ mattgpt-design-spec/
 │   ├── 10-data-model.md
 │   ├── 11-testing-and-quality.md
 │   ├── 12-data-pipeline.md
-│   ├── 13-migration-architecture.md
 │   ├── audit-2026-06-15.md
 │   └── working/                      # Transitory files with deletion targets
 ├── _layouts/                         # Jekyll layouts - reuse before creating

@@ -522,8 +522,8 @@ input, select, textarea {
 ## Implementation Files
 
 ### Primary Files
-- **global_styles.py:399-596** - 200 lines of mobile CSS
-- **mobile_overrides.py** - Additional mobile-specific fixes
+- **global_styles.py** - Mobile `@media` blocks (check file for current positions)
+- **mobile_overrides.py** - Additional mobile-specific overrides
 - **timeline_view.py** - Mobile timeline layout
 - **explore_stories.py** - Mobile filter stacking
 

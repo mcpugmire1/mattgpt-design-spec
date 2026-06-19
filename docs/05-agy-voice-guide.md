@@ -167,7 +167,7 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 
 ### Aspirational (Not Yet Implemented)
 
-**5P as Pattern Taxonomy:** The spec envisions using 5P dimensions to structure cross-story pattern recognition — e.g., "by Process" or "by Performance" drill-downs. This is tracked as MATTGPT-041 (Dimensional Drill-Down) and MATTGPT-042 (Pattern Taxonomy) in BACKLOG.
+**5P as Pattern Taxonomy:** The spec envisioned using 5P dimensions to structure cross-story pattern recognition. MATTGPT-041 (Dimensional Drill-Down) and MATTGPT-042 (Pattern Taxonomy) are Decided Against in BACKLOG.
 
 **Example of aspirational behavior:**
 ```
@@ -185,7 +185,7 @@ balanced teams, and CI/CD-first. The Performance outcomes track too:
 
 **Humane Framing** means responding with empathy and context-awareness, recognizing the human behind the question.
 
-**Current state:** `_generate_agy_response()` in `backend_service.py` randomly selects a focus angle (human impact, methodology, scale, leadership, outcomes, or innovation) for each response. This provides variety but is not intent-driven — a "tell me about a time..." behavioral question gets the same random angle selection as a "can Matt help with..." consulting question. An earlier prompt architecture (`theme_guidance`) was closer to intent-specific framing but was replaced to enforce anti-meta-commentary discipline. Tracked as MATTGPT-043 in BACKLOG.
+**Current state:** `_generate_agy_response()` in `backend_service.py` randomly selects a focus angle (human impact, methodology, scale, leadership, outcomes, or innovation) for each response. This provides variety but is not intent-driven — a "tell me about a time..." behavioral question gets the same random angle selection as a "can Matt help with..." consulting question. An earlier prompt architecture (`theme_guidance`) was closer to intent-specific framing but was replaced to enforce anti-meta-commentary discipline. MATTGPT-043 is Decided Against in BACKLOG.
 
 **The guidelines below describe the aspirational intent-to-tone mapping:**
 
@@ -246,7 +246,7 @@ Before answering, ask: **"Why is this person asking?"**
 
 **Pattern Insights** help Agy connect dots across multiple projects to demonstrate repeatable expertise.
 
-**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). Entity cluster promotion (`backend_service.py`) and multi-story context assembly provide the raw material. Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below. Tracked as MATTGPT-044 in BACKLOG.
+**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). Entity cluster promotion (`backend_service.py`) and multi-story context assembly provide the raw material. Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below. MATTGPT-044 is Decided Against in BACKLOG.
 
 **The examples below describe aspirational structured pattern templates:**
 
@@ -665,11 +665,11 @@ Want me to dig deeper into the implementation details?
 ## Knowledge Base
 
 Agy has access to career case studies in JSONL format with the following fields:
-- **Title, Client, Role, Industry, Domain, Time Period**
+- **Title, Client, Role, Industry, Sub-category, Era**
 - **STAR format**: Situation, Task, Action, Result
 - **Competencies**: Technical and leadership skills demonstrated
 - **Public Tags**: Semantic keywords for searchability
-- **Key Metrics**: Quantifiable outcomes (e.g., "4x faster", "150+ engineers")
+- **Result / Performance**: Quantifiable outcomes (e.g., "4x faster", "150+ engineers")
 
 When a user asks a question:
 1. **Search semantically** across all fields (not just keywords)
@@ -823,7 +823,6 @@ The voice should feel:
 
 - [01-product-vision.md](01-product-vision.md) - MattGPT's credibility engine mission
 - [03-ux-design-process.md](03-ux-design-process.md) - How Agy integrates into the UX
-- [13-migration-architecture.md](13-migration-architecture.md) - React + FastAPI migration plan
 
 ---
 

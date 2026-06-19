@@ -14,6 +14,7 @@
 |--------|---------|
 | `jd_assessor.py` | Role Match engine — JD extraction, requirement retrieval, assessment, `compute_recommendation()` |
 | `query_logger.py` | 32-column event logger to Google Sheets (query, feedback, Role Match, UTM) |
+| `role_match_summary.py` | Role Match summary generation and scoring helpers |
 | `semantic_router.py` | Query intent classification using embedding similarity |
 | `rag_service.py` | Semantic search orchestration and confidence gating |
 | `pinecone_service.py` | Vector database integration for semantic search |
@@ -23,50 +24,56 @@
 
 | Module | Purpose |
 |--------|---------|
+| `client_utils.py` | Generic client detection and known client set helpers |
 | `filters.py` | Story filtering (industry, capability, client, domain, role, tags) |
-| `scoring.py` | Hybrid scoring (semantic + keyword relevance) |
 | `formatting.py` | Text formatting and STAR story presentation |
-| `validation.py` | Input validation and token overlap checking |
+| `landing_cards.py` | Landing page card data helpers |
+| `scoring.py` | Hybrid scoring (semantic + keyword relevance) |
+| `search.py` | Explore Stories search and filter orchestration |
 | `ui_helpers.py` | Session state management and UI rendering helpers |
+| `validation.py` | Input validation and token overlap checking |
 
 ### UI Components (`ui/components/`)
 
-| Component | Purpose | Size |
-|-----------|---------|------|
-| `ask_mattgpt_header.py` | Ask Agy header with branding | 57 KB |
-| `story_detail.py` | Story detail modal with STAR format | 32 KB |
-| `how_agy_dialog.py` | "How Agy Searches" dialog | 29 KB |
-| `why_agy_dialog.py` | "Why Agy?" dialog | — |
-| `timeline_view.py` | Era-based timeline visualization | 22 KB |
-| `category_cards.py` | Industry/capability card displays | 21 KB |
-| `hero.py` | Homepage hero section | 12 KB |
-| `navbar.py` | Top navigation bar | 10 KB |
-| `lock_icon.py` | Role Match private-view lock indicator | — |
-| `thinking_indicator.py` | AI thinking/loading indicator | 4 KB |
-| `footer.py` | Footer component | 4 KB |
+| Component | Purpose |
+|-----------|---------|
+| `ask_mattgpt_header.py` | Ask Agy header with branding |
+| `action_buttons.py` | Shared action button components |
+| `story_detail.py` | Story detail modal with STAR format |
+| `how_agy_dialog.py` | "How Agy Searches" dialog |
+| `how_i_built_dialog.py` | "How I Built MattGPT" dialog |
+| `why_agy_dialog.py` | "Why Agy?" dialog |
+| `timeline_view.py` | Era-based timeline visualization |
+| `category_cards.py` | Industry/capability card displays |
+| `hero.py` | Homepage hero section |
+| `navbar.py` | Top navigation bar |
+| `lock_icon.py` | Role Match private-view lock indicator |
+| `thinking_indicator.py` | AI thinking/loading indicator |
+| `footer.py` | Footer component |
 
 ### UI Pages (`ui/pages/`)
 
-| Page | Purpose | Size |
-|------|---------|------|
-| `explore_stories.py` | My Work — story browsing with table/card/timeline views | 73 KB |
-| `ask_mattgpt/` | Ask Agy — conversational AI interface (9-file module) | 186 KB |
-| `about_matt.py` | My Profile page | 38 KB |
-| `role_match.py` | Role Match — JD-to-experience fit assessment | — |
-| `banking_landing.py` | Banking industry landing page | 21 KB |
-| `cross_industry_landing.py` | Cross-industry landing page | 21 KB |
-| `home.py` | Homepage router | 1 KB |
+| Page | Purpose |
+|------|---------|
+| `explore_stories.py` | My Work — story browsing with table/card/timeline views |
+| `ask_mattgpt/` | Ask Agy — conversational AI interface ({{ site.data.facts.ask_mattgpt_module_file_count }}-file module) |
+| `about_matt.py` | My Profile page |
+| `role_match.py` | Role Match — JD-to-experience fit assessment |
+| `banking_landing.py` | Banking industry landing page |
+| `cross_industry_landing.py` | Cross-industry landing page |
+| `home.py` | Homepage router |
 
 **Ask Agy Submodules (ask_mattgpt/):**
 - `__init__.py` - Module router
-- `backend_service.py` (43 KB) - Chat backend and LLM orchestration
-- `styles.py` (57 KB) - Chat-specific CSS
-- `conversation_helpers.py` (30 KB) - Conversation logic
-- `conversation_view.py` (15 KB) - Conversation UI rendering
-- `landing_view.py` (12 KB) - Landing view with capability cards
-- `story_intelligence.py` (12 KB) - Story analysis and persona inference
-- `shared_state.py` (8 KB) - Shared conversation state
-- `utils.py` (9 KB) - Conversation utilities
+- `backend_service.py` - Chat backend and LLM orchestration
+- `styles.py` - Chat-specific CSS
+- `conversation_helpers.py` - Conversation logic
+- `conversation_view.py` - Conversation UI rendering
+- `landing_view.py` - Landing view with capability cards
+- `prompts.py` - System prompts and LLM prompt templates
+- `story_intelligence.py` - Story analysis and persona inference
+- `shared_state.py` - Shared conversation state
+- `utils.py` - Conversation utilities
 
 ---
 
@@ -139,7 +146,7 @@ semantic_search(
     enforce_overlap: bool = False,
     min_overlap: float = 0.0,
     stories: list,
-    top_k: int = 20
+    top_k: int = 10  # SEARCH_TOP_K
 ) -> dict
 ```
 
@@ -355,7 +362,7 @@ Key session state variables used throughout the application:
 | `__last_ranked_sources__` | list | Ordered list of story IDs from last search |
 | `__pc_suppressed__` | bool | True if Pinecone results were suppressed (low confidence) |
 | `__dbg_pc_hits` | int | Number of Pinecone hits (for debugging) |
-| `conversation_history` | list | Ask MattGPT chat history |
+| `ask_transcript` | list | Ask Agy chat history |
 | `selected_capability` | str | Selected capability for homepage filtering |
 
 ---
@@ -428,7 +435,7 @@ pytest --cov=services --cov=utils tests/
 **Semantic Router:**
 - Embeddings cached to `data/intent_embeddings.json` (2MB)
 - Warm cache at startup with `warm_cache()`
-- Cosine similarity: O(n) where n = number of intent families (~70 intents)
+- Cosine similarity: O(n) where n = number of canonical intents ({{ site.data.facts.intent_total_count }})
 
 **RAG Service:**
 - Pinecone queries: ~200-500ms

@@ -103,7 +103,7 @@ Landing pages provide **data visualization** to show the big picture. Explore St
 if st.button("View Projects →"):
     st.session_state["prefilter_industry"] = "Financial Services / Banking"
     st.session_state["prefilter_capability"] = "Agile Transformation & Delivery"
-    st.session_state["active_tab"] = "Explore Stories"
+    st.session_state["active_tab"] = "My Work"
     st.rerun()
 ```
 
@@ -173,7 +173,7 @@ Strategic/High-level
 
 ### Technical
 - ✅ No data loss from JSONL to story objects
-- ✅ All 119 stories load correctly with new field structure
+- ✅ All {{ site.data.facts.story_count_label }} stories load correctly with new field structure
 - ✅ Filter matching logic works with raw JSONL field names
 - ✅ Pre-filter state management works across page transitions
 
@@ -203,7 +203,7 @@ Strategic/High-level
 - ✅ Industry filter: **Single-select** (st.selectbox)
 - ✅ Capability filter: **Single-select** (st.selectbox)
 - ✅ Advanced filters (Client, Role, Domain): **Multi-select** (st.multiselect)
-- ✅ Advanced section: **State preserved** via session_state["show_advanced_filters"]
+- ✅ Advanced section: **State preserved** via session_state["es_mobile_r2_open"]
 - ✅ Wireframes: **No update needed** - design intent captured
 
 ### Implementation Details Not in Original Design
@@ -214,7 +214,7 @@ To prevent Streamlit widget key collisions and ensure clean filter resets:
 - Incremented on filter removal to force widget recreation
 - Prevents stale state bugs
 
-See: explore_stories.py:1490-1554
+See: `explore_stories.py` — `reset_all_filters()`
 
 #### 2. Search Guarding
 Search only executes when user explicitly submits form:
@@ -222,23 +222,18 @@ Search only executes when user explicitly submits form:
 - Prevents accidental Pinecone API calls on every keystroke
 - Improves performance and reduces costs
 
-See: explore_stories.py:1621-1642
+See: `explore_stories.py` — search guard logic
 
 #### 3. Confidence Banners
-Three-tier confidence system for search results:
-- **High:** "Found N matching stories for 'query'"
-- **Low:** "Showing closest matches. Relevance may be low."
-- **None:** "No strong matches. Matt may not have worked with this."
-
-See: explore_stories.py:241-270
+Three-tier confidence system for search results. See: `explore_stories.py` — `_render_confidence_banner()`
 
 #### 4. Active Filter Chips
 Visual chips showing applied filters with individual removal:
-- Hash-based stable keys prevent button ID collisions
+- Index-based keys per chip
 - "Clear all" resets entire filter state
 - Syncs with widget versions for clean updates
 
-See: explore_stories.py:273-354
+See: `explore_stories.py` — `render_filter_chips()`
 
 ---
 

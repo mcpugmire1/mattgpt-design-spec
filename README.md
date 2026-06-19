@@ -28,7 +28,6 @@ mattgpt-design-spec/
 │   ├── 10-data-model.md
 │   ├── 11-testing-and-quality.md
 │   ├── 12-data-pipeline.md
-│   ├── 13-migration-architecture.md
 │   ├── audit-2026-06-15.md
 │   └── working/                    # Transitory drafts (lifecycle-declared)
 │

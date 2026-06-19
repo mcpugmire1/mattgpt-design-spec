@@ -28,7 +28,7 @@ intent_family_names:
   - "technical"
 intent_total_count: 127
 story_count: 113
-story_count_label: "110+"
+story_count_label: "100+"
 bdd_scenario_count: 376
 bdd_feature_file_count: 31
 bdd_feature_files:

@@ -29,6 +29,7 @@
 ```
 Home Page
 ├── Navigation (Persistent)
+│   ├── Home
 │   ├── My Work
 │   ├── Ask Agy
 │   ├── Role Match
@@ -247,12 +248,12 @@ User Question
 
 **Semantic Search:**
 - Pinecone cosine similarity (vector matching)
-- Minimum similarity threshold: 0.20
+- Minimum similarity threshold: {{ site.data.facts.pinecone_min_sim }}
 - Top-k pool: 10 candidates before ranking
 - Confidence-based result filtering
 
 **Response Synthesis:**
-- Rank top 3 stories by similarity score
+- Retrieve top {{ site.data.facts.search_top_k }} candidates; standard mode delivers top 5 to LLM, synthesis up to 7
 - Generate 3 views from same sources:
   - **Narrative:** 1-paragraph summary
   - **Key Points:** 3-4 bullets
@@ -327,7 +328,7 @@ Both Banking and Cross-Industry landing pages follow a consistent pattern optimi
 
 | # | Element | Category | Details |
 |---|---------|----------|---------|
-| 1 | Top Navigation Bar | Header | Dark navy background: Homepage, My Work, Ask Agy, Role Match, My Profile |
+| 1 | Top Navigation Bar | Header | Dark navy background: Home, My Work, Ask Agy, Role Match, My Profile |
 | 2 | Page Title | Heading (H1) | "Financial Services / Banking" |
 | 3 | Subtitle/Breadcrumb | Descriptive Text | "Banking and financial services experience across 16 specialized areas — or ask Agy to find what you're looking for" |
 | 4 | Client Filter Row | Filter Component | Pill-style buttons: JP Morgan Chase (33), RBC (11), Fiserv (7), American Express (3), Capital One (2), HSBC (2) |
@@ -836,9 +837,9 @@ The My Profile page serves as both a professional introduction and a demonstrati
 **Tech Stack (Icon Pills):**
 - Python 3.11
 - Streamlit (MVP)
-- OpenAI GPT-4
+- OpenAI GPT-4o
 - Pinecone
-- Sentence Transformers
+- OpenAI text-embedding-3-small
 - Pandas
 - NumPy
 - Netlify
@@ -855,19 +856,16 @@ Source Data    AI Data Index  Pinecone    RAG Orchestrator
 **The Secret Sauce: Semantic Search with Confidence Scoring**
 
 ```python
-def semantic_search(query: str, top_k: int = 10) -> dict:
-    """
-    Pure semantic retrieval with confidence-based filtering
-    to ensure high-quality, relevant results.
-    """
-    # Vector similarity search via Pinecone
-    hits = pinecone_query(embed(query), top_k=top_k)
-
-    # Calculate confidence from top score
-    top_score = max(h.get("pc_score", 0.0) for h in hits)
-    confidence = "high" if top_score >= 0.25 else "low" if top_score >= 0.20 else "none"
-
-    return {"results": hits, "confidence": confidence, "top_score": top_score}
+semantic_search(
+    query: str,
+    filters: dict,
+    *,
+    enforce_overlap: bool = False,
+    min_overlap: float = 0.0,
+    stories: list,
+    top_k: int = SEARCH_TOP_K  # 10
+) -> dict
+# Returns: {"results": [...], "confidence": str, "top_score": float}
 ```
 
 **What MattGPT Can Do:**
@@ -894,7 +892,7 @@ def semantic_search(query: str, top_k: int = 10) -> dict:
 **🔧 Backend & DevOps**
 - Conversational workflow for candidate screening
 - Context-aware UI using Streamlit's stateful UI for resume filtering
-- Semantic embeddings using Sentence Transformers
+- Semantic embeddings using OpenAI text-embedding-3-small
 - Metadata filtering: Sort, search, tag for instant access to what you need
 - Modularizing: Logging for query analysis, response quality, and system health
 
@@ -905,7 +903,7 @@ def semantic_search(query: str, top_k: int = 10) -> dict:
 **Section:** "🎯 See It In Action"
 
 **Content:**
-"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my 100+ stories, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
+"This isn't just a portfolio showcase — Agy 🐾 is a working AI assistant that can answer detailed questions about my {{ site.data.facts.story_count_label }} stories, methodologies, and outcomes. Think of it as an interactive interview you can conduct on your own time."
 
 **Try asking questions like:**
 - "How did Matt scale engineering teams from 4 to 150+ people?"

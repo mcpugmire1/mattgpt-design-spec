@@ -34,62 +34,11 @@ The MattGPT CSS architecture uses a modern, variable-based approach to ensure co
 ## CSS Variable System
 
 ### Implementation Location
-`llm_portfolio_assistant/ui/styles/global_styles.py:28-122`
+`llm_portfolio_assistant/ui/styles/global_styles.py`
 
 ### Core Variables
 
-```css
-:root {
-  /* Brand Colors */
-  --color-primary: #8B5CF6;           /* Purple accent */
-  --color-primary-dark: #7C3AED;      /* Darker purple (hover) */
-  --color-primary-light: rgba(139, 92, 246, 0.1); /* Light purple bg */
-
-  /* Neutral Colors */
-  --color-dark: #2c3e50;              /* Primary text */
-  --color-gray: #7f8c8d;              /* Secondary text */
-  --color-light-gray: #f8f9fa;        /* Light backgrounds */
-  --color-border: #e0e0e0;            /* Borders */
-
-  /* Semantic Colors */
-  --bg-surface: #ffffff;              /* Card backgrounds */
-  --bg-hover: #f5f5f5;                /* Hover states */
-  --text-primary: #2c3e50;            /* Primary text */
-  --text-muted: #7d8590;              /* Muted text */
-  --accent-purple: #8B5CF6;           /* Interactive elements */
-
-  /* Typography */
-  --font-size-xl: 48px;
-  --font-size-lg: 28px;
-  --font-size-md: 18px;
-  --font-size-sm: 14px;
-  --font-size-xs: 12px;
-
-  /* Spacing */
-  --spacing-xs: 8px;
-  --spacing-sm: 16px;
-  --spacing-md: 24px;
-  --spacing-lg: 40px;
-  --spacing-xl: 60px;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.15);
-  --shadow-primary: 0 4px 12px rgba(139, 92, 246, 0.3);
-
-  /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-pill: 20px;
-
-  /* Transitions */
-  --transition-fast: all 0.15s ease;
-  --transition-base: all 0.2s ease;
-  --transition-slow: all 0.3s ease;
-}
-```
+The canonical variable definitions live in the `:root` block at the top of `global_styles.py`. Read that file for current names and values. A copied table here re-drifts on every refactor — the audit-2026-06-15 record shows exactly how that happens.
 
 ### Usage Examples
 
@@ -139,7 +88,7 @@ The MattGPT CSS architecture uses a modern, variable-based approach to ensure co
 ```
 
 ### Implementation Location
-`llm_portfolio_assistant/ui/styles/global_styles.py:399-596` (200 lines of mobile CSS)
+`llm_portfolio_assistant/ui/styles/global_styles.py` (mobile `@media` blocks — check the file for current line positions)
 
 ### Breakpoint Usage Patterns
 
@@ -237,7 +186,7 @@ Dark mode is implemented by swapping CSS variable values:
 ```
 
 ### Implementation Status
-✅ CSS variable system in place (`global_styles.py:28-122`)
+✅ CSS variable system in place (`global_styles.py`)
 ✅ Dark mode toggle — implemented via Streamlit's native settings menu on desktop + custom mobile hamburger menu. Pragmatic reuse of platform capability rather than a custom-built toggle. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
 
 ---
@@ -250,11 +199,8 @@ Dark mode is implemented by swapping CSS variable values:
 llm_portfolio_assistant/
 └── ui/
     ├── styles/
-    │   ├── global_styles.py       # 612 lines
-    │   │   ├── CSS Variables      # Lines 28-122
-    │   │   ├── Base Styles        # Lines 123-398
-    │   │   └── Mobile Queries     # Lines 399-596
-    │   ├── mobile_overrides.py    # Mobile-specific fixes
+    │   ├── global_styles.py       # CSS variables, base styles, mobile queries
+    │   ├── mobile_overrides.py    # Additional mobile-specific overrides
     │   └── __init__.py
     │
     ├── components/
@@ -265,16 +211,16 @@ llm_portfolio_assistant/
     │
     └── pages/
         └── ask_mattgpt/
-            └── styles.py          # 39.0 KB (Ask MattGPT-specific styles)
+            └── styles.py          # Ask Agy-specific styles
 ```
 
 ### Style Loading Pattern
 
 ```python
 # In app.py or page files
-from ui.styles.global_styles import load_global_styles
+from ui.styles.global_styles import apply_global_styles
 
-load_global_styles()  # Injects CSS into page
+apply_global_styles()  # Injects CSS into page
 ```
 
 ---
@@ -388,7 +334,7 @@ Keep component-specific styles scoped to prevent conflicts:
 
 ### Phase 1: Streamlit (Current)
 ✅ CSS variables implemented
-✅ Mobile-responsive design (`ui/styles/mobile_overrides.py`, 1,520 lines)
+✅ Mobile-responsive design (`ui/styles/mobile_overrides.py`)
 ✅ Component-scoped styling
 ✅ Dark mode toggle (Streamlit native settings menu)
 
