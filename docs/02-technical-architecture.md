@@ -12,7 +12,7 @@ MattGPT's architecture evolved through intentional phases:
 
 1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment — ✅ Complete
 2. **Production (Streamlit):** Ongoing feature delivery — Role Match, mobile responsive, eval framework, query analytics
-3. **Future consideration:** React + FastAPI migration if a forcing function emerges (see [Migration Architecture](/docs/13-migration-architecture))
+
 
 ---
 
@@ -27,7 +27,7 @@ MattGPT's architecture evolved through intentional phases:
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
 | 🐍 **Frontend/Backend** | Streamlit (Monolith) | Rapid prototyping framework |
-| 🤖 **LLM** | OpenAI GPT-4 | Natural language processing |
+| 🤖 **LLM** | OpenAI {{ site.data.facts.chat_model }} | Natural language processing |
 | 🌲 **Vector Database** | Pinecone | Semantic search and embeddings |
 | 📦 **Dependencies** | Python venv + pip | Local development environment |
 
@@ -72,7 +72,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - ✅ Model upgrade: GPT-4o-mini → GPT-4o
 
 **December 2025 - Modular Architecture:**
-- Refactored monolithic ask_mattgpt.py (4,696 lines) into 9-file directory
+- Refactored monolithic ask_mattgpt.py (4,696 lines) into {{ site.data.facts.ask_mattgpt_module_file_count }}-file directory
 - Separated concerns: backend_service.py, conversation_view.py, conversation_helpers.py
 - Reusable component library (ui/components/)
 
@@ -87,7 +87,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - Progressive disclosure pattern (6 most recent per era)
 
 **Mobile Implementation:**
-- 200 lines of responsive CSS (global_styles.py:399-596)
+- 1,520 lines of responsive CSS across global_styles.py and mobile_overrides.py
 - Touch-optimized controls and stacking layouts
 - Horizontal scroll tables with preserved functionality
 
@@ -539,18 +539,6 @@ What would you like to know about Matt's experience?
 
 ---
 
-### Previously Considered Enhancements
-
-The following were evaluated and **decided against** on architectural grounds. The data pipeline (Excel → JSONL → embeddings → Pinecone) is one-directional by design with no write-back path. This constraint makes closed-loop approaches impractical at current scale.
-
-- **~~Dynamic intent expansion~~** — Would require a write-back path to update intent embeddings from accepted queries. Eval-driven manual iteration serves this purpose at current traffic volume. (MATTGPT-050, Decided Against)
-- **~~User feedback loop retraining~~** — No write-back path for closed-loop retraining. Google Sheets logger captures feedback for manual analysis instead. (MATTGPT-051, Decided Against)
-- **~~A/B testing on thresholds~~** — Traffic volume insufficient for statistical significance. Eval suite with 64 golden queries provides deterministic threshold validation. (MATTGPT-052, Decided Against)
-- **Intent routing** — Different response templates per intent family. Spirit partially exists via random focus angles; deterministic mapping tracked as MATTGPT-043.
-- **Analytics dashboard** — Tracked as MATTGPT-045 (Open, Low priority). Query logger captures the data; visualization is a separate effort.
-
-**Architecture note:** The semantic router logic is framework-agnostic and would port directly to a React/FastAPI architecture if a forcing function emerges.
-
 ---
 
 ## Data Governance & Architecture Principles
@@ -691,163 +679,6 @@ story_index = 0  # Select by index, build query from actual title
 **Time:** ~2 minutes end-to-end
 
 **See:** [Data Pipeline Documentation](/docs/12-data-pipeline) for complete ingestion workflow.
-
----
-
-## Future Consideration: React Rebuild
-
-**Status:** Deferred — no forcing function currently justifies a rewrite
-**Purpose:** Better performance and maintainability if scaling or design constraints emerge
-
-The Streamlit MVP validated the RAG architecture and UX patterns, and has continued to absorb new features (Role Match, mobile responsive, query analytics, eval framework) without hitting structural walls. A React rebuild remains a future option if specific requirements arise that Streamlit can't meet. See [Migration Architecture](/docs/13-migration-architecture) for the detailed approach.
-
-### Tech Stack
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| ⚛️ **Frontend** | React + Next.js | Modern, performant UI framework |
-| 🚀 **Backend** | FastAPI | High-performance async API |
-| 🔍 **RAG Pipeline** | Same as Phase 1 | Proven architecture, no changes needed |
-
-### What Changes
-
-- **UI Framework:** Streamlit → React (better performance, component reusability)
-- **API Layer:** Monolithic app.py → FastAPI microservices
-- **Mobile:** Responsive CSS → Mobile-first from the start
-
-### What Stays the Same
-
-- Semantic search with confidence scoring
-- Semantic router and nonsense detection
-- STAR data model and 5P taxonomy
-- Pinecone vector database
-- OpenAI embeddings and LLM
-
-**Why React?** Modern component architecture, better mobile experience, easier to maintain long-term.
-
----
-
-## Strategic Rationale
-
-### 1. De-Risk with MVP-First Thinking
-
-**Decision:** Start with Streamlit monolith instead of production-ready stack
-
-**Rationale:**
-- Validated RAG architecture effectiveness before infrastructure investment
-- Tested system prompt design with real users
-- Refined user experience patterns
-- Minimized wasted effort on premature optimization
-
-**Result:** 2-week build time vs 3+ months for React-based solution
-
----
-
-### 2. Preserve Core IP Across Phases
-
-**Decision:** Keep data pipeline architecture unchanged across all phases
-
-**What Stays Constant:**
-- Embedding generation process
-- Pinecone indexing strategy
-- STAR taxonomy and metadata
-- Search relevance algorithms
-
-**What Evolves:**
-- Presentation layer (Streamlit → React)
-- API architecture (monolith → microservices)
-- Infrastructure (local → cloud)
-
-**Benefit:** Minimizes technical debt and preserves investment in core IP
-
----
-
-### 3. Demonstrate Trade-Off Awareness
-
-**MVP Limitations Were Intentional Shortcuts:**
-
-| Limitation | Business Justification |
-|-----------|----------------------|
-| Desktop-only | Target users (recruiters, hiring managers) primarily use desktop |
-| 100-user limit | Portfolio showcase doesn't require scale |
-| Monolithic architecture | Faster development, simpler deployment |
-| No caching | Query latency acceptable for MVP validation |
-
-**vs. Accidental Technical Debt:**
-- Not "ran out of time to implement mobile"
-- Not "didn't know how to scale"
-- **Consciously traded features for speed**
-
----
-
-### 4. Align Architecture to Business Goals
-
-**Phase 1: Portfolio Showcase (Current)**
-- **Purpose:** Demonstrate technical capability to employers
-- **Stack:** Streamlit monolith - fast to build, sufficient for use case
-- **Result:** Validated RAG architecture and UX in 2 weeks vs 3+ months
-
-**Future: React + FastAPI (if forcing function emerges)**
-- **Purpose:** Better performance and maintainability at scale
-- **Stack:** React + FastAPI — modern tooling, mobile-first
-- **Benefit:** Preserve core IP (RAG pipeline), improve presentation layer
-- **Current status:** Deferred — Streamlit continues to meet all functional requirements
-
-**Principle:** Start simple, evolve intentionally — and don't rewrite what's working
-
----
-
-## Cost & Performance
-
-### Embedding Generation
-
-**OpenAI text-embedding-3-small:**
-- **Rate:** $0.02 per 1M tokens
-- **Story Size:** ~300 tokens average (after text composition)
-- **100+ Stories:** ~30,000 tokens = $0.0006 per full re-index
-- **Time:** ~30 seconds
-
-**Annual Cost (4 full refreshes/month):**
-- 4 refreshes × 12 months × $0.0006 = **$0.029/year**
-- Effectively free
-
-### Pinecone Vector Database
-
-**matt-portfolio-v2 Index:**
-- **Tier:** Starter (free tier, 100K vectors)
-- **Usage:** 100+ vectors (<0.1% of quota)
-- **Dimensions:** 1536
-- **Cost:** $0/month
-
-### LLM Generation (GPT-4o)
-
-**Per Query:**
-- **Input tokens:** ~2,000-4,000 (context + prompt)
-- **Output tokens:** ~200-600 (response)
-- **Cost per query:** ~$0.01-0.03
-
-**Monthly Cost (100 queries/month):**
-- 100 queries × $0.02 avg = **$2/month**
-
-**Production Scale (1000 queries/month):**
-- 1000 queries × $0.02 avg = **$20/month**
-
-### Processing Performance
-
-**Full Pipeline (Excel → Production):**
-- Stage 1 (Excel → JSONL): ~5 seconds
-- Stage 2 (Enrichment): ~10 seconds
-- Stage 3 (Embeddings): ~30 seconds
-- **Total:** ~45 seconds
-
-**Semantic Search (Runtime):**
-- Query embedding: ~200ms
-- Pinecone vector search: ~300ms
-- LLM generation: ~3-5 seconds (GPT-4o)
-- **Total query latency:** ~4-6 seconds
-
-**Key Insight:** Cost-optimized architecture with negligible infrastructure costs. Primary expense is LLM generation at ~$0.02 per query. Full data refresh costs less than $0.001.
-
 ---
 
 ## Current State Summary
@@ -871,36 +702,7 @@ The Streamlit MVP validated the RAG architecture and UX patterns, and has contin
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern
 
-### Future Consideration: React Migration
 
-If a forcing function emerges (scaling limit, design constraint Streamlit can't meet, external requirement):
-
-- React + Next.js frontend rebuild
-- FastAPI backend
-- Mobile-first design from the start
-- Same RAG pipeline, better UI
-
-See [Migration Architecture](/docs/13-migration-architecture) for the detailed approach.
-
----
-
-## Data Pipeline
-
-**How STAR stories move from Excel to production search index:**
-
-<div class="mermaid">
-graph LR
-    A["Excel<br/>Master Sheet"] --> B["generate_jsonl<br/>_from_excel.py"] --> C["echo_star_stories<br/>_nlp.jsonl"] --> D["build_custom<br/>_embeddings.py"] --> E["Pinecone Index<br/>matt-portfolio-v2"] --> F["Production App<br/>pinecone_service.py"]
-</div>
-
----
-
-## Key Takeaways
-
-1. **MVP-first approach** validated RAG architecture in weeks instead of months
-2. **Core IP preservation** - RAG pipeline remains unchanged, only UI evolves
-3. **Conscious trade-offs** - Streamlit limitations were intentional, not accidental
-4. **Honest roadmap** - Phase 2 React rebuild for better UX, not fantasy enterprise features
 
 ---
 
