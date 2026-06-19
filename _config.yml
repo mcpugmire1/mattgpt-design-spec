@@ -10,8 +10,8 @@ url: "https://mcpugmire1.github.io"
 # Theme
 theme: jekyll-theme-minimal
 
-# Logo (Agy the Plott Hound - Transparent)
-logo: /images/logos/agy_transparent.png
+# Logo (Agy the Plott Hound - headphones variant)
+logo: /brand-kit/chat_avatars/agy_ask_mattgpt.png
 
 # Defaults
 defaults:
