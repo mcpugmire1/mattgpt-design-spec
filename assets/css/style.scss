@@ -303,6 +303,25 @@ a:focus, button:focus, input:focus, textarea:focus {
     right: auto;
     top: auto;
   }
+
+  /* Layout reset — moved up from theme's 960px block to match new wrapper width.
+     Required to override the explicit width/float rules on header and section. */
+  header, section, footer {
+    float: none;
+    position: static;
+    width: auto;
+  }
+
+  header {
+    padding-right: 0;
+  }
+
+  section {
+    border: 1px solid #e5e5e5;
+    border-width: 1px 0;
+    padding: 20px 0;
+    margin: 0 0 20px;
+  }
 }
 
 /* Mermaid diagram styling adjustments */
