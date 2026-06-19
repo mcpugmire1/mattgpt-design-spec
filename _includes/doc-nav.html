@@ -2,21 +2,21 @@
 <nav class="site-nav">
   <p class="nav-group-label">The thinking</p>
   <ul>
-    <li><a href="{{ '/docs/01-product-vision' | relative_url }}">Product Vision</a>{% if show_desc %} — the credibility-engine premise, the WHY/HOW/WHAT framing, and the governance model{% endif %}</li>
-    <li><a href="{{ '/docs/03-ux-design-process' | relative_url }}">Audience Journeys</a>{% if show_desc %} — the four visitor journeys the design is derived from{% endif %}</li>
-    <li><a href="{{ '/docs/04-building-mattgpt' | relative_url }}">Building MattGPT</a>{% if show_desc %} — the development story and what I learned building it{% endif %}</li>
-    <li><a href="{{ '/docs/05-agy-voice-guide' | relative_url }}">Agy Voice Guide</a>{% if show_desc %} — the brand voice for Agy, the Plott Hound assistant{% endif %}</li>
+    <li {% if page.url contains '01-product-vision' %}class="active"{% endif %}><a href="{{ '/docs/01-product-vision' | relative_url }}">Product Vision</a>{% if show_desc %} — the credibility-engine premise, the WHY/HOW/WHAT framing, and the governance model{% endif %}</li>
+    <li {% if page.url contains '03-ux-design-process' %}class="active"{% endif %}><a href="{{ '/docs/03-ux-design-process' | relative_url }}">Audience Journeys</a>{% if show_desc %} — the four visitor journeys the design is derived from{% endif %}</li>
+    <li {% if page.url contains '04-building-mattgpt' %}class="active"{% endif %}><a href="{{ '/docs/04-building-mattgpt' | relative_url }}">Building MattGPT</a>{% if show_desc %} — the development story and what I learned building it{% endif %}</li>
+    <li {% if page.url contains '05-agy-voice-guide' %}class="active"{% endif %}><a href="{{ '/docs/05-agy-voice-guide' | relative_url }}">Agy Voice Guide</a>{% if show_desc %} — the brand voice for Agy, the Plott Hound assistant{% endif %}</li>
   </ul>
   <p class="nav-group-label">The build</p>
   <ul>
-    <li><a href="{{ '/docs/02-technical-architecture' | relative_url }}">Technical Architecture</a>{% if show_desc %} — the RAG pipeline, the semantic router, and the phased plan{% endif %}</li>
-    <li><a href="{{ '/docs/10-data-model' | relative_url }}">Data Model</a>{% if show_desc %} — the JSONL schema, the STAR structure, and the tagging taxonomy{% endif %}</li>
-    <li><a href="{{ '/docs/11-testing-and-quality' | relative_url }}">Testing and Quality</a>{% if show_desc %} — the three-layer testing strategy and the eval framework{% endif %}</li>
-    <li><a href="{{ '/docs/12-data-pipeline' | relative_url }}">Data Pipeline</a>{% if show_desc %} — the data flow from source to production retrieval{% endif %}</li>
+    <li {% if page.url contains '02-technical-architecture' %}class="active"{% endif %}><a href="{{ '/docs/02-technical-architecture' | relative_url }}">Technical Architecture</a>{% if show_desc %} — the RAG pipeline, the semantic router, and the phased plan{% endif %}</li>
+    <li {% if page.url contains '10-data-model' %}class="active"{% endif %}><a href="{{ '/docs/10-data-model' | relative_url }}">Data Model</a>{% if show_desc %} — the JSONL schema, the STAR structure, and the tagging taxonomy{% endif %}</li>
+    <li {% if page.url contains '11-testing-and-quality' %}class="active"{% endif %}><a href="{{ '/docs/11-testing-and-quality' | relative_url }}">Testing and Quality</a>{% if show_desc %} — the three-layer testing strategy and the eval framework{% endif %}</li>
+    <li {% if page.url contains '12-data-pipeline' %}class="active"{% endif %}><a href="{{ '/docs/12-data-pipeline' | relative_url }}">Data Pipeline</a>{% if show_desc %} — the data flow from source to production retrieval{% endif %}</li>
   </ul>
   <p class="nav-group-label">Reference and roadmap</p>
   <ul>
-    <li><a href="{{ '/docs/09-api-reference' | relative_url }}">API Reference</a>{% if show_desc %} — module inventory, function signatures, session state, and configuration{% endif %}</li>
-    <li><a href="{{ '/docs/13-migration-architecture' | relative_url }}">Migration Architecture</a>{% if show_desc %} — the planned Phase 2 React rebuild, not yet built{% endif %}</li>
+    <li {% if page.url contains '09-api-reference' %}class="active"{% endif %}><a href="{{ '/docs/09-api-reference' | relative_url }}">API Reference</a>{% if show_desc %} — module inventory, function signatures, session state, and configuration{% endif %}</li>
+    <li {% if page.url contains '13-migration-architecture' %}class="active"{% endif %}><a href="{{ '/docs/13-migration-architecture' | relative_url }}">Migration Architecture</a>{% if show_desc %} — the planned Phase 2 React rebuild, not yet built{% endif %}</li>
   </ul>
 </nav>

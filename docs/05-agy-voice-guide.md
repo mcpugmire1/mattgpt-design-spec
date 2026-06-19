@@ -4,9 +4,12 @@ title: Agy Voice Guide
 nav_order: 5
 ---
 
-# Agy Voice Guide 🐾
+# Agy Voice Guide
 
 **The Plott Hound AI Assistant**
+
+> This document covers Agy's personality, voice DNA, response framework, intent recognition patterns, standard templates, and the boundaries on what Agy can and cannot answer. Treat it as the controlling reference before modifying prompts or response behavior.
+
 Version 2.2 | May 2026
 
 ---

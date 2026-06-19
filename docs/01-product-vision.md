@@ -2,7 +2,7 @@
 
 **MattGPT: The Credibility Engine**
 
-> My AI-powered guide to 20 years of verifiable transformation
+> This document covers the strategic rationale for MattGPT: three target personas, the two-layer data governance model, and the guardrails that keep responses grounded in source data. A reader who finishes it understands what the system is for, who it serves, and what it will never do.
 
 ---
 

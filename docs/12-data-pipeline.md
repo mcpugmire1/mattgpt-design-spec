@@ -2,7 +2,7 @@
 
 **From Excel to Production RAG: Complete Data Flow**
 
-> This document describes the complete data pipeline from source Excel spreadsheet through embedding generation to production semantic search.
+> This document covers the three-stage pipeline that transforms the Excel master sheet into a production Pinecone index: Excel-to-JSONL conversion, semantic enrichment, and embedding generation. Any change to story content, public tags, or the vector index must follow the workflow described here.
 
 ---
 

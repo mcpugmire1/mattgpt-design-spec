@@ -222,6 +222,31 @@ header .site-nav ul li a:hover {
   text-decoration: underline;
 }
 
+header .site-nav ul li.active a {
+  color: var(--primary-indigo);
+  font-weight: 700;
+  border-left: 2px solid var(--primary-indigo);
+  padding-left: 6px;
+}
+
+/* "Try the app" and "View on GitHub" as styled buttons */
+p.view a {
+  display: inline-block;
+  background: var(--primary-indigo);
+  color: #fff !important;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+p.view a:hover {
+  background: var(--primary-purple);
+  color: #fff !important;
+}
+
 /* Landing Go deeper — within section, default list styles */
 section .site-nav .nav-group-label {
   font-weight: 700;

@@ -2,7 +2,7 @@
 
 **JSONL Schema and Field Definitions**
 
-> This document defines the data structure for MattGPT project stories. Stories are stored in JSONL format (JSON Lines) with one story per line.
+> This document covers the JSONL schema for story records: required fields, STAR framework fields, taxonomy fields, entity detection fields, and validation rules at load time. Field definitions here are the source of truth for embedding construction, Pinecone metadata, and filter logic.
 
 ---
 

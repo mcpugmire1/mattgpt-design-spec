@@ -2,7 +2,7 @@
 
 **Technical reference for llm_portfolio_assistant codebase**
 
-> Quick reference for developers working with MattGPT's Python codebase. For architecture overview, see [Technical Architecture](/docs/02-technical-architecture).
+> This document covers the function signatures, parameters, return types, and data flow for every service, utility, and UI module in the codebase. Check here before writing any code that touches semantic routing, RAG retrieval, story filtering, or session state.
 
 ---
 

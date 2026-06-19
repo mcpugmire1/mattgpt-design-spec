@@ -4,7 +4,9 @@
 **Purpose:** Technical blueprint for a potential migration from Streamlit to decoupled React architecture
 **Target:** Production-ready, independently deployable, highly scalable system
 
-> **Context (April 2026):** MattGPT was originally scoped with a planned migration to React + FastAPI. The Streamlit MVP has continued to meet all functional requirements through ongoing development with AI-assisted tooling — absorbing Role Match, mobile responsive design, query analytics, and an expanded eval framework without hitting structural walls. The migration remains a future consideration but is not currently planned. The architecture below captures the approach if and when a forcing function emerges (scaling limit, specific design constraint that Streamlit can't meet, or external requirement).
+> This document covers a reference architecture for a potential future migration from the Streamlit monolith to React microfrontends backed by AWS Lambda, including a phased roadmap, stack rationale, and cost analysis. As of April 2026 this migration is not planned; it exists as a blueprint if a forcing function emerges and as evidence of distributed systems design thinking.
+
+> **Context (April 2026):** The Streamlit MVP has continued to meet all functional requirements through ongoing development. The migration remains a future consideration but is not currently planned. The architecture below captures the approach if and when a forcing function emerges.
 
 ---
 
