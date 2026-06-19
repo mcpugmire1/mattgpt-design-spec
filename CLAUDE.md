@@ -72,6 +72,8 @@ Facts are single-sourced from `llm_portfolio_assistant` into `_data/facts.yml` b
 
 **No overclaiming.** Docs state real maturity including limits. Never imply enterprise CI/CD, automated pipelines, or practices not actually in place.
 
+**Change-triggered diagram review:** When `ARCHITECTURE.md` or any module it references changes, re-verify the current-state diagrams in `docs/02-technical-architecture.md` and `docs/11-testing-and-quality.md` (and any other diagram describing live architecture). This check rides with the architectural change commit, not a calendar cadence.
+
 ---
 
 ## Editing the Site - Anti-Greenfield Rules
