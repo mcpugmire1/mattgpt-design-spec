@@ -12,7 +12,7 @@ MattGPT's architecture evolved through intentional phases:
 
 1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment — ✅ Complete
 2. **Production (Streamlit):** Ongoing feature delivery — Role Match, mobile responsive, eval framework, query analytics
-3. **Future consideration:** React + FastAPI migration if a forcing function emerges (see [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture))
+3. **Future consideration:** React + FastAPI migration if a forcing function emerges (see [Migration Architecture](/docs/13-migration-architecture))
 
 ---
 
@@ -723,7 +723,7 @@ story_index = 0  # Select by index, build query from actual title
 
 **Time:** ~2 minutes end-to-end
 
-**See:** [Data Pipeline Documentation](/mattgpt-design-spec/docs/12-data-pipeline) for complete ingestion workflow.
+**See:** [Data Pipeline Documentation](/docs/12-data-pipeline) for complete ingestion workflow.
 
 ---
 
@@ -732,7 +732,7 @@ story_index = 0  # Select by index, build query from actual title
 **Status:** Deferred — no forcing function currently justifies a rewrite
 **Purpose:** Better performance and maintainability if scaling or design constraints emerge
 
-The Streamlit MVP validated the RAG architecture and UX patterns, and has continued to absorb new features (Role Match, mobile responsive, query analytics, eval framework) without hitting structural walls. A React rebuild remains a future option if specific requirements arise that Streamlit can't meet. See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach.
+The Streamlit MVP validated the RAG architecture and UX patterns, and has continued to absorb new features (Role Match, mobile responsive, query analytics, eval framework) without hitting structural walls. A React rebuild remains a future option if specific requirements arise that Streamlit can't meet. See [Migration Architecture](/docs/13-migration-architecture) for the detailed approach.
 
 ### Tech Stack
 
@@ -913,7 +913,7 @@ If a forcing function emerges (scaling limit, design constraint Streamlit can't 
 - Mobile-first design from the start
 - Same RAG pipeline, better UI
 
-See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach.
+See [Migration Architecture](/docs/13-migration-architecture) for the detailed approach.
 
 ---
 
@@ -950,10 +950,10 @@ See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture
 ---
 
 **Related Documentation:**
-- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning
-- [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Design decisions
-- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
-- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - Eval framework (64/64, 100%)
+- [Product Vision](/docs/01-product-vision) - Strategic positioning
+- [UX Design Process](/docs/03-ux-design-process) - Design decisions
+- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
+- [RAG Quality Evaluation](/docs/11-testing-and-quality) - Eval framework (64/64, 100%)
 
 ---
 

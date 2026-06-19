@@ -400,9 +400,9 @@ The voice blends:
 ---
 
 **Related Documentation:**
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
-- [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - User experience decisions
-- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
+- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
+- [UX Design Process](/docs/03-ux-design-process) - User experience decisions
+- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
 
 ---
 

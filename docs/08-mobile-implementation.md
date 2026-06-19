@@ -587,8 +587,8 @@ Place primary actions in the "thumb zone" (bottom 2/3 of screen on mobile).
 
 ## Related Documentation
 
-- [02-technical-architecture.md](/mattgpt-design-spec/docs/02-technical-architecture) - Overall architecture
-- [07-css-architecture.md](/mattgpt-design-spec/docs/07-css-architecture) - CSS system
+- [02-technical-architecture.md](/docs/02-technical-architecture) - Overall architecture
+- [07-css-architecture.md](/docs/07-css-architecture) - CSS system
 - [component_inventory.md](/mattgpt-design-spec/components/component_inventory) - Component specs
 - [sitemap_navigation.md](/mattgpt-design-spec/components/sitemap_navigation) - Mobile navigation
 

@@ -5,6 +5,8 @@ description: "The record of how MattGPT was designed, built, and kept honest. Re
 
 # MattGPT: The Build
 
+> This is the engineering and design record behind MattGPT. The live portfolio is at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app).
+
 This is the record of how MattGPT was designed, built, and kept running. If you came from the app, you have seen what it does. This is what sits underneath: the decisions, the discipline, and where it falls short. Read it as the audit, not the pitch.
 
 ## How to read this

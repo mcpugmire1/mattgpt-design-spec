@@ -456,7 +456,7 @@ The MattGPT roadmap follows a deliberate three-phase evolution strategy, balanci
 
 **Open Items:**
 See [BACKLOG.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/BACKLOG.md) in the MattGPT repo for current open work. Key areas include Role Match Phase 4, semantic router improvements, and analytics dashboard.
-- See [Migration Architecture](/mattgpt-design-spec/docs/13-migration-architecture) for the detailed approach
+- See [Migration Architecture](/docs/13-migration-architecture) for the detailed approach
 
 ---
 
@@ -544,10 +544,10 @@ Every line of code, every STAR story, every design decision serves that mission:
 ---
 
 **Related Documentation:**
-- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
-- [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Wireframes and interaction design
-- [RAG Quality Evaluation](/mattgpt-design-spec/docs/11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
+- [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
+- [UX Design Process](/docs/03-ux-design-process) - Wireframes and interaction design
+- [RAG Quality Evaluation](/docs/11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
 
 ---
 

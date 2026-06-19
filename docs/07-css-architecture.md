@@ -402,8 +402,8 @@ Keep component-specific styles scoped to prevent conflicts:
 
 ## Related Documentation
 
-- [02-technical-architecture.md](/mattgpt-design-spec/docs/02-technical-architecture) - Overall architecture
-- [08-mobile-implementation.md](/mattgpt-design-spec/docs/08-mobile-implementation) - Mobile-specific patterns
+- [02-technical-architecture.md](/docs/02-technical-architecture) - Overall architecture
+- [08-mobile-implementation.md](/docs/08-mobile-implementation) - Mobile-specific patterns
 - [component_inventory.md](/mattgpt-design-spec/components/component_inventory) - Component specifications
 
 ---

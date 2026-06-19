@@ -826,10 +826,10 @@ Until then, it serves as portfolio content demonstrating distributed systems des
 ---
 
 **Related Documentation:**
-- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - Current phase roadmap
-- [UX Design Process](/mattgpt-design-spec/docs/03-ux-design-process) - Wireframes and interaction design
-- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
+- [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](/docs/02-technical-architecture) - Current phase roadmap
+- [UX Design Process](/docs/03-ux-design-process) - Wireframes and interaction design
+- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
 
 ---
 

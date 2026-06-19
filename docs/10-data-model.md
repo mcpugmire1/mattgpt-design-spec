@@ -510,9 +510,9 @@ if not all(query_token in story_tokens for query_token in query_tokens):
 
 ## Related Documentation
 
-- [API Reference](/mattgpt-design-spec/docs/09-api-reference) - Function signatures and module overview
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and search architecture
-- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - STAR methodology and governance model
+- [API Reference](/docs/09-api-reference) - Function signatures and module overview
+- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and search architecture
+- [Product Vision](/docs/01-product-vision) - STAR methodology and governance model
 
 ---
 

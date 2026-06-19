@@ -2,7 +2,7 @@
 
 **Technical reference for llm_portfolio_assistant codebase**
 
-> Quick reference for developers working with MattGPT's Python codebase. For architecture overview, see [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture).
+> Quick reference for developers working with MattGPT's Python codebase. For architecture overview, see [Technical Architecture](/docs/02-technical-architecture).
 
 ---
 
@@ -444,9 +444,9 @@ pytest --cov=services --cov=utils tests/
 
 ## Related Documentation
 
-- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - Two-phase roadmap and RAG architecture
-- [Data Model](/mattgpt-design-spec/docs/10-data-model) - JSONL schema and field definitions
+- [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](/docs/02-technical-architecture) - Two-phase roadmap and RAG architecture
+- [Data Model](/docs/10-data-model) - JSONL schema and field definitions
 
 ---
 

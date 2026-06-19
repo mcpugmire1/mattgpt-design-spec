@@ -1037,9 +1037,9 @@ def semantic_search(query: str, top_k: int = 10) -> dict:
 ---
 
 **Related Documentation:**
-- [Product Vision](/mattgpt-design-spec/docs/01-product-vision) - Strategic positioning and user personas
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline and system design
-- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey and lessons learned
+- [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
+- [Building MattGPT](/docs/04-building-mattgpt) - Development journey and lessons learned
 
 ---
 

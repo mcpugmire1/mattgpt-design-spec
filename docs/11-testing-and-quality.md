@@ -24,8 +24,8 @@
 ```
 ┌─────────────────────────────────────────┐
 │ Layer 3: BDD/E2E Tests                  │
-│ - 219 Playwright scenarios              │
-│ - 30 feature files                      │
+│ - 376 Playwright scenarios              │
+│ - 31 feature files                      │
 │ - Full UI workflows                     │
 ├─────────────────────────────────────────┤
 │ Layer 2: RAG Quality Evaluation         │
@@ -43,7 +43,7 @@
 **Quality Metrics:**
 - **Unit Test Coverage:** 12 files testing core components
 - **RAG Eval Pass Rate:** 100% (64/64 queries)
-- **BDD/E2E Pass Rate:** 219 scenarios across 30 feature files
+- **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
 - **Total Test Runtime:** ~30 minutes (full suite)
 
 **Why This Matters:**
@@ -467,7 +467,7 @@ By Category:
 pytest tests/bdd -v
 ```
 
-**Coverage (219 scenarios across 30 feature files):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, Role Match, responsive layout, edge cases, and more.
+**Coverage ({{ site.data.facts.bdd_summary }}):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, Role Match, responsive layout, edge cases, and more.
 
 **Status:** Red → Green → Refactor cycle enforced per feature. Scenarios written and committed before implementation code.
 
@@ -539,7 +539,7 @@ pytest tests/bdd/ -v
 3. **Eval-driven development prevents regressions:** Entity Gate removal validated through evals
 4. **Threshold tuning requires data:** 0.72 → 0.40 was guided by query score analysis
 5. **Voice quality is measurable:** Meta-commentary detection is binary (no subjective "feels right")
-6. **E2E validates reality:** 219 scenarios across 30 feature files ensure complete user workflows work end-to-end
+6. **E2E validates reality:** {{ site.data.facts.bdd_summary }} ensure complete user workflows work end-to-end
 
 **The Bottom Line:**
 
@@ -548,9 +548,9 @@ pytest tests/bdd/ -v
 ---
 
 **Related Documentation:**
-- [Technical Architecture](/mattgpt-design-spec/docs/02-technical-architecture) - RAG pipeline details
-- [Building MattGPT](/mattgpt-design-spec/docs/04-building-mattgpt) - Development journey
-- [API Reference](/mattgpt-design-spec/docs/09-api-reference) - Function signatures and parameters
+- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline details
+- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
+- [API Reference](/docs/09-api-reference) - Function signatures and parameters
 
 ---
 
