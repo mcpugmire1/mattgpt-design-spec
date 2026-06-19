@@ -48,6 +48,7 @@ body {
 /* Wrapper and main content area */
 .wrapper {
   background-color: #FFFFFF;
+  width: 1120px;
 }
 
 /* Code blocks */
@@ -135,6 +136,15 @@ header {
   background: #FFFFFF;
   border-right: 1px solid var(--light-gray);
   padding-bottom: 170px;
+  width: 300px;
+}
+
+section {
+  width: 720px;
+}
+
+footer {
+  width: 300px;
 }
 
 header h1 a {
@@ -274,7 +284,7 @@ a:focus, button:focus, input:focus, textarea:focus {
   background: var(--light-gray);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1120px) {
   .nav-toggle {
     display: block;
   }
