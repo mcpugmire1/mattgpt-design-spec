@@ -21,27 +21,16 @@
 
 **3-Layer Testing Strategy:**
 
-```
-┌─────────────────────────────────────────┐
-│ Layer 3: BDD/E2E Tests                  │
-│ - 376 Playwright scenarios              │
-│ - 31 feature files                      │
-│ - Full UI workflows                     │
-├─────────────────────────────────────────┤
-│ Layer 2: RAG Quality Evaluation         │
-│ - 64 golden queries                     │
-│ - 100% pass rate (64/64)                │
-│ - Eval-driven development               │
-├─────────────────────────────────────────┤
-│ Layer 1: Unit Tests                     │
-│ - 12 test files                         │
-│ - Component isolation                   │
-│ - Fast feedback (<1 min)                │
-└─────────────────────────────────────────┘
-```
+<div class="mermaid">
+graph TD
+    L3["Layer 3: BDD/E2E Tests<br/>{{ site.data.facts.bdd_summary }}<br/>Full UI workflows"]
+    L2["Layer 2: RAG Eval<br/>{{ site.data.facts.eval_query_count }} golden queries · {{ site.data.facts.eval_summary }} pass rate<br/>Eval-driven development"]
+    L1["Layer 1: Unit Tests<br/>{{ site.data.facts.unit_test_file_count }} test files · Component isolation<br/>Fast feedback (under 1 min)"]
+    L3 --> L2 --> L1
+</div>
 
 **Quality Metrics:**
-- **Unit Test Coverage:** 12 files testing core components
+- **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} files testing core components
 - **RAG Eval Pass Rate:** 100% (64/64 queries)
 - **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
 - **Total Test Runtime:** ~30 minutes (full suite)
@@ -64,7 +53,7 @@ MattGPT's testing strategy provides:
 **Framework:** pytest
 **Runtime:** <1 minute
 
-### Test Files (12 total)
+### Test Files ({{ site.data.facts.unit_test_file_count }} total)
 
 ```
 tests/unit/
@@ -76,7 +65,7 @@ tests/unit/
 ├── test_validation.py            # Input validation, nonsense detection
 ├── test_formatting.py            # Response formatting, source citations
 ├── test_story_intelligence.py    # Story analysis, metadata extraction
-└── ... (4 more files)
+└── ... (12 more files)
 ```
 
 ### What Unit Tests Cover

@@ -102,9 +102,10 @@ MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensu
 
 ### Pipeline Overview
 
-```
-Query → Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 → LLM Response
-```
+<div class="mermaid">
+graph LR
+    Q[Query] --> S1["Stage 1<br/>Nonsense Filter"] --> S2["Stage 2<br/>Semantic Router"] --> S3["Stage 3<br/>Confidence Gate"] --> S4["Stage 4<br/>Entity Detection"] --> S5["Stage 5<br/>Intent Ranking"] --> R["LLM Response"]
+</div>
 
 **Stage 1: Rules-Based Nonsense Detection**
 - Fast regex matching against `nonsense_filters.jsonl` patterns
