@@ -56,9 +56,9 @@ This isn't just a portfolio showcase — it's a **functional AI application demo
 
 ## Why I Built This
 
-In September 2023, I left Accenture after 18.5 years. I'd built their Cloud Innovation Center from scratch, scaled it to 150+ professionals, and helped Fortune 500 companies modernize platforms worth billions. But I was burned out, underwent a few surgeries, and I needed time to figure out what came next.
+In September 2023, I left Accenture. I'd built their Cloud Innovation Center from scratch, scaled it to 150+ professionals, and helped Fortune 500 companies modernize platforms worth billions. But I was burned out, underwent a few surgeries, and I needed time to figure out what came next.
 
-Six months into my sabbatical, I started updating my resume. That's when it hit me: I had 20 years of transformation stories, and I was trying to squeeze them into two pages of bullet points. The format was fundamentally broken.
+Six months into my sabbatical, I started updating my resume. That's when it hit me: I had more transformation stories than I could tell in an interview, and I was trying to squeeze them into two pages of bullet points. The format was fundamentally broken.
 
 Recruiters would spend 30 seconds scanning my PDF. How could they possibly understand the nuance of scaling engineering teams from 4 to 150? Or the pattern recognition I'd developed across 55 banking projects? They couldn't. Nobody could.
 
@@ -471,7 +471,7 @@ See [BACKLOG.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main
 
 MattGPT started as a personal portfolio, but the underlying thesis is universal: professionals shouldn't have to choose between depth and discoverability.
 
-Every consultant has 10-20 years of stories they can't effectively communicate. Every recruiter spends hours manually searching through resumes that all look the same. Every hiring manager wishes they could ask follow-up questions before deciding who to interview.
+Every consultant has a career's worth of stories they can't effectively communicate. Every recruiter spends hours manually searching through resumes that all look the same. Every hiring manager wishes they could ask follow-up questions before deciding who to interview.
 
 I envision a future where:
 - Every professional has an AI that can articulate their unique value
@@ -532,7 +532,7 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 
 ## Conclusion
 
-Building MattGPT has been equal parts technical challenge and product discovery. What started as a personal problem — "How do I make 20 years of experience searchable?" — became a demonstration of modern AI product development: RAG architecture, semantic search, data governance, and user-centered design.
+Building MattGPT has been equal parts technical challenge and product discovery. What started as a personal problem — "How do I make a full career of experience searchable?" — became a demonstration of modern AI product development: RAG architecture, semantic search, data governance, and user-centered design.
 
 **The core thesis remains:**
 

@@ -597,7 +597,7 @@ The Ask Agy feature provides a conversational interface for exploring Matt's pro
 
 **Hero Section:**
 - **Title:** "Ask Agy"
-- **Subtitle:** "Your AI-powered guide — Tracking down insights from 20+ years of transformation experience"
+- **Subtitle:** "Your AI-powered guide — Tracking down insights from Matt's transformation experience"
 - **"How It Works" Button:** Top-right CTA, toggles expanded info panel
 - **Status Strip:** "Semantic search active | Pinecone index: ready | 100+ stories indexed"
 
@@ -720,7 +720,7 @@ The My Profile page serves as both a professional introduction and a demonstrati
 - **Name (H1):** "Matt Pugmire"
 - **Role/Title:** "Digital Transformation Leader | Director of Technology Delivery"
 - **Summary Paragraph:** 2-3 concise sentences positioning outcomes and scope
-  - Example: "20+ years driving innovation, agile transformation, and application modernization across Fortune 500 companies. Proven track record of accelerating delivery 3-20x, scaling engineering teams to 150+ people, and building high-performing product organizations. Exploring opportunities to lead platform engineering, product innovation, and organizational transformation initiatives."
+  - Example: "Engineering leader who has driven innovation, agile transformation, and application modernization across Fortune 500 companies. Proven track record of accelerating delivery 3-20x, scaling engineering teams to 150+ people, and building high-performing product organizations. Exploring opportunities to lead platform engineering, product innovation, and organizational transformation initiatives."
 
 **Metric Badges Row:**
 - **20+ Years** Experience

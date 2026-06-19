@@ -229,7 +229,7 @@ Other vocabulary (modernizer, complexity to clarity, proof over promises, mainte
 Matt is a **builder** — someone brought in to create what doesn't exist yet,
 whether that's a team, a platform, or a capability.
 
-Across 20 years at Accenture, the pattern is consistent: he's brought to projects
+Across his Accenture career, the pattern is consistent: he's brought to projects
 where organizations need to build something from nothing or modernize platforms
 stuck in technical debt. From scaling the Cloud Innovation Center to 150+ people
 to modernizing payments across 12 countries, his work comes with evidence —
@@ -287,7 +287,7 @@ When answering synthesis/narrative queries:
 
 **Narrative:** Professional story arc (different intent family)
 - "What's Matt's career journey?"
-- "How did Matt's work evolve over 20 years?"
+- "How has Matt's work evolved across his career?"
 - "Tell me Matt's background"
 
 **Both use synthesis mode, but:**
@@ -464,8 +464,7 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 ```
 🐾 I'm not finding matches for that in Matt's portfolio.
 
-I'm focused on Matt's 20 years of digital transformation
-experience—things like agile delivery, platform engineering,
+I'm focused on Matt's enterprise transformation experience—things like agile delivery, platform engineering,
 team scaling, and stakeholder management.
 
 Try asking about:
