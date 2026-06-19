@@ -140,60 +140,26 @@ graph LR
 
 ---
 
-## Production RAG Flow (8-Layer Detail)
+## Production RAG Flow (9-Layer Detail)
 
 **Complete query-to-response flow with all decision points:**
 
-```
-User Question: "How did Matt scale engineering teams?"
-      ↓
-[Layer 1: Validation]
-├─ is_nonsense() → reject if regex match (weather, sports, etc.)
-├─ Semantic router → reject if score < 0.40
-└─ Returns intent_family (15 families: narrative, synthesis, personal, technical, etc.)
-      ↓
-[Layer 2: Fast Exit Checks]
-├─ Out-of-scope check: if intent_family == "out_of_scope" → graceful redirect
-├─ Synthesis check: if intent_family == "synthesis" → skip Pinecone, use theme filter
-└─ Entity detection → (field, value) for scoped retrieval
-      ↓
-[Layer 3: Semantic Search]
-├─ Embed query with text-embedding-3-small (1536 dims)
-├─ Vector search in Pinecone (top 10, similarity > 0.15)
-├─ Apply entity metadata filters (Client, Employer, Division, Project, Place)
-└─ NOTE: Title entities use SOFT filtering (no Pinecone filter, semantic ranks naturally)
-      ↓
-[Layer 4: Confidence Gate]
-├─ CONFIDENCE_HIGH (≥0.25) → proceed normally
-├─ CONFIDENCE_LOW (≥0.20, <0.25) → proceed with warning
-└─ Below 0.20 → "I couldn't find relevant stories" + suggestion chips
-      ↓
-[Layer 5: Retrieval Strategy (Intent-Based)]
-├─ STANDARD MODE: entity pin → diversify_results() → top 7 with client variety
-├─ NARRATIVE MODE: sort by Pinecone score (skip diversity, trust semantic ranking)
-└─ SYNTHESIS MODE: theme-filtered parallel search → named-clients-first (up to 9)
-      ↓
-[Layer 6: Context Assembly]
-├─ XML isolation: <primary_story> + <supporting_story> tags prevent cross-story bleed
-├─ Build prompt with STAR narratives + theme guidance
-├─ Include MATT_DNA ground truth (dynamic from JSONL)
-└─ Context window: ~2,000-4,000 tokens
-      ↓
-[Layer 7: LLM Generation (GPT-4o)]
-├─ STANDARD: Primary story focus → human stakes → methodology → outcomes
-├─ SYNTHESIS: Theme/pattern → evidence across projects → insight
-└─ Temperature: 0.4 (standard) / 0.2 (synthesis for consistency)
-      ↓
-[Layer 8: Response Formatting]
-├─ Extract answer + sources from LLM response
-├─ Render with citations (story titles, confidence scores)
-├─ Display Related Projects (3-5 semantically similar stories)
-└─ Generate follow-up question
-      ↓
-User receives cited, STAR-formatted answer with sources
-```
+<div class="mermaid">
+graph TD
+    Q["User Question"] --> L1
+    L1["Layer 1: Rules-Based Rejection<br/>nonsense_filters.jsonl · is_nonsense() · &lt;5ms · zero embedding cost"] --> L2
+    L2["Layer 2: Semantic Router<br/>text-embedding-3-small · 15 intent families<br/>HARD_ACCEPT=0.80 · SOFT_ACCEPT=0.40 · reject if below 0.40"] --> L3
+    L3["Layer 3: Fast Exit Checks<br/>out_of_scope → graceful redirect<br/>entity detection: Client · Employer · Division · Title<br/>Title = SOFT filter (no Pinecone metadata filter)"] --> L4
+    L4["Layer 4: Pinecone Vector Search<br/>Standard/Narrative: top 10 (SEARCH_TOP_K) · entity + UI filters<br/>Synthesis: 3 theme queries × top 3 = up to 9 candidates"] --> L5
+    L5["Layer 5: Confidence Gate<br/>HIGH ≥0.25 · LOW ≥0.20 · NONE &lt;0.20 → suggestion chips"] --> L6
+    L6["Layer 6: Post-Retrieval Processing<br/>STANDARD: entity pin → diversify_results() → 5 to LLM<br/>NARRATIVE: sort by Pinecone score → 5 to LLM<br/>SYNTHESIS: named-clients-first (up to 9 retrieved) → 7 to LLM"] --> L7
+    L7["Layer 7: Context Assembly<br/>XML isolation · MATT_DNA injection · mode-specific prompt<br/>~2,000–4,000 tokens"] --> L8
+    L8["Layer 8: LLM Generation (GPT-4o)<br/>temp 0.4 standard / 0.2 synthesis · max 700 tokens"] --> L9
+    L9["Layer 9: Response Formatting<br/>citations · Related Projects · follow-up question"]
+    L9 --> R["User receives cited, STAR-formatted answer"]
+</div>
 
-*Components removed during the January 2026 RAG pipeline cleanup (Entity Gate, classify_query_intent LLM call, Title Hard Filtering) are documented in [HISTORY.md](https://github.com/mpugmire/llm_portfolio_assistant/blob/main/HISTORY.md) in the codebase repo.*
+*Components removed during the January 2026 RAG pipeline cleanup (Entity Gate, classify_query_intent LLM call, Title Hard Filtering) are documented in [HISTORY.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/HISTORY.md) in the codebase repo.*
 
 ---
 
@@ -901,7 +867,7 @@ The Streamlit MVP validated the RAG architecture and UX patterns, and has contin
 - ✅ **Mobile-responsive design** (1,520 lines in `mobile_overrides.py`; breakpoints: 767px, 1024px)
 - ✅ **Dark mode support** via CSS variables
 - ✅ **Modular architecture** (9-file ask_mattgpt/ structure)
-- ✅ **BDD test suite** — 219 Playwright scenarios across 30 feature files
+- ✅ **BDD test suite** — {{ site.data.facts.bdd_summary }}
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern
 
@@ -918,26 +884,14 @@ See [Migration Architecture](/docs/13-migration-architecture) for the detailed a
 
 ---
 
-## Technical Diagrams
+## Data Pipeline
 
-### Site Navigation Flow
+**How STAR stories move from Excel to production search index:**
 
-![Site Navigation Diagram](../images/architecture/site-navigation-diagram.png)
-
-### Explore Stories Views
-
-![Explore Stories Diagram](../images/architecture/explore-stories-diagram.png)
-
-### Ask MattGPT Flow
-
-![Ask MattGPT Diagram](../images/architecture/askmatt-flow-diagram.png)
-
-### Additional Resources
-
-- [RAG Architecture Diagram](../images/architecture/tech_rag_architecture.png) - Complete RAG lifecycle
-- [Site Architecture](../images/architecture/site_architecture_updated.md) - Page hierarchy and navigation (December 2025)
-- [Interactive Wireframes](../wireframes/) - Complete UI/UX wireframe set
-- [Architecture Evolution Slide](../wireframes/architecture_evolution_slide_wireframe.html) - Visual roadmap timeline
+<div class="mermaid">
+graph LR
+    A["Excel<br/>Master Sheet"] --> B["generate_jsonl<br/>_from_excel.py"] --> C["echo_star_stories<br/>_nlp.jsonl"] --> D["build_custom<br/>_embeddings.py"] --> E["Pinecone Index<br/>matt-portfolio-v2"] --> F["Production App<br/>pinecone_service.py"]
+</div>
 
 ---
 
@@ -958,5 +912,5 @@ See [Migration Architecture](/docs/13-migration-architecture) for the detailed a
 
 ---
 
-*Last Updated: June 2026 (Staleness audit: eval 100%/64q, sacred vocab builder-only, MATT_DNA, BDD 219/30, story count 100+)*
+*Last Updated: June 2026 (Staleness audit: eval 100%/64q, sacred vocab builder-only, MATT_DNA, BDD {{ site.data.facts.bdd_summary }}, story count {{ site.data.facts.story_count_label }})*
 *Version: 1.5*
