@@ -60,6 +60,15 @@ To keep this honest, I audited the docs against the running system in June 2026.
 
 With a team I would put the eval and BDD suites behind required checks, add a staging deploy, and lint-enforce the rules instead of writing them in prose. I have not, because for one person that machinery costs more than it returns. Knowing where that tradeoff flips is the job.
 
+## Where to start
+
+| If you are | Start here |
+|---|---|
+| A recruiter with a job description | [Role Match](https://askmattgpt.streamlit.app) in the live app, then [Audience Journeys](/docs/03-ux-design-process) for context on how the surfaces were designed |
+| A hiring manager evaluating fit | [Ask Agy](https://askmattgpt.streamlit.app) with a specific question, then [Product Vision](/docs/01-product-vision) for the governance model |
+| An engineer evaluating the build | [Technical Architecture](/docs/02-technical-architecture), then [Testing and Quality](/docs/11-testing-and-quality) |
+| A designer or PM | [Audience Journeys](/docs/03-ux-design-process), then [Building MattGPT](/docs/04-building-mattgpt) |
+
 ## Go deeper
 
 {% include doc-nav.html descriptions=true %}

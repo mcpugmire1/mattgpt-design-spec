@@ -1,0 +1,29 @@
+{% assign docs = site.data.doc_nav %}
+{% assign current_url = page.url | remove_first: '/' | remove: '.html' | prepend: '/' %}
+{% for doc in docs %}
+  {% if doc.url == current_url %}
+    {% assign current_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if current_index %}
+  {% assign prev_index = current_index | minus: 1 %}
+  {% assign next_index = current_index | plus: 1 %}
+  {% assign prev_doc = docs[prev_index] %}
+  {% assign next_doc = docs[next_index] %}
+{% endif %}
+
+{% if prev_doc or next_doc %}
+<nav class="prev-next">
+  <div class="prev-next-inner">
+    {% if prev_doc %}
+    <a class="prev-next-link prev-link" href="{{ prev_doc.url | relative_url }}">← {{ prev_doc.title }}</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    {% if next_doc %}
+    <a class="prev-next-link next-link" href="{{ next_doc.url | relative_url }}">{{ next_doc.title }} →</a>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}

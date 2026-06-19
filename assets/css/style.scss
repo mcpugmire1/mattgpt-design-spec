@@ -356,6 +356,34 @@ a:focus, button:focus, input:focus, textarea:focus {
   }
 }
 
+/* Prev/next doc navigation */
+.prev-next {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--light-gray);
+}
+
+.prev-next-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prev-next-link {
+  color: var(--primary-indigo);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.prev-next-link:hover {
+  text-decoration: underline;
+}
+
+.next-link {
+  margin-left: auto;
+}
+
 /* Mermaid diagram styling adjustments */
 .mermaid {
   background: #FFFFFF;

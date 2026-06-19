@@ -1,0 +1,20 @@
+- title: Product Vision
+  url: /docs/01-product-vision
+- title: Audience Journeys
+  url: /docs/03-ux-design-process
+- title: Building MattGPT
+  url: /docs/04-building-mattgpt
+- title: Agy Voice Guide
+  url: /docs/05-agy-voice-guide
+- title: Technical Architecture
+  url: /docs/02-technical-architecture
+- title: Data Model
+  url: /docs/10-data-model
+- title: Testing and Quality
+  url: /docs/11-testing-and-quality
+- title: Data Pipeline
+  url: /docs/12-data-pipeline
+- title: API Reference
+  url: /docs/09-api-reference
+- title: Migration Architecture
+  url: /docs/13-migration-architecture
