@@ -150,7 +150,7 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
    └─────────────────────┘
 ```
 
-### The Secret Sauce: Semantic Search with Confidence Scoring
+### Semantic Search with Confidence Scoring
 
 One of the core technical innovations in MattGPT is the **semantic search** approach that combines vector-based meaning matching with confidence-based filtering.
 

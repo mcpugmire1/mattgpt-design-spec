@@ -26,12 +26,6 @@
 
 The core purpose is to replace generic claims and shallow experience with instant, quantifiable proof.
 
-**The Problem:**
-- ❌ NOT: "Matt is experienced"
-- ❌ NOT: "Matt knows agile"
-
-**The Mission:** Trust.
-
 Traditional portfolios rely on self-promotion and unverifiable claims. Recruiters and hiring managers waste time validating experience, and candidates struggle to differentiate themselves from generic resumes.
 
 ---
@@ -59,7 +53,7 @@ MattGPT delivers verifiable outcomes for three primary use cases:
 #### 1. Recruiter Vetting
 - **Need:** Fast validation of skills and experience
 - **Outcome:** Instant keyword matching + proof of outcomes
-- **Value:** Screen candidates 10x faster with confidence
+- **Value:** Verifiable skills evidence without back-and-forth
 
 #### 2. Interview Prep
 - **Need:** Deep preparation with specific examples
@@ -100,7 +94,7 @@ By creating MattGPT as a system that is **reliable, auditable, and engineered fo
 | Layer | Technical Name | Purpose (The WHY) | Key Data Fields |
 |-------|---------------|-------------------|-----------------|
 | **Layer 1: Integrity** (The Core) | Mandatory STAR Method | Guarantees every story has **verifiable context** and **measurable results (metrics)**, fulfilling the promise of "Eliminate Doubt" | Situation, Task, Action, Result (with metrics) |
-| **Layer 2: Intelligence** (The AI Fuel) | The Tagging Systems (5P + Semantic) | Enables complex **Hybrid Search** and **Pattern Recognition** for the AI (e.g., "Scaled payments at 3 banks") | 5P Taxonomy (Person, Place, Purpose), Semantic Public Tags (O*NET/SFIA alignment) |
+| **Layer 2: Intelligence** (The AI Fuel) | The Tagging Systems (5P + Semantic) | Enables complex **Hybrid Search** and **Pattern Recognition** for the AI (e.g., "Scaled payments at 3 banks") | 5P Taxonomy (Person, Place, Purpose, Process, Performance), Semantic Public Tags (O*NET/SFIA alignment) |
 
 ---
 
@@ -115,11 +109,7 @@ Every project in the MattGPT corpus follows the STAR framework:
 - **Action:** Methodology, decisions, and execution
 - **Result:** Measurable outcomes with metrics
 
-**Why This Matters:**
-- ✅ Ensures **no generic claims** ("experienced in agile")
-- ✅ Forces **concrete examples** with business context
-- ✅ Creates **auditable source references** for every AI answer
-- ✅ Maintains **data integrity** across 100+ projects
+STAR structure rules out generic claims, forces concrete examples with business context, and creates an auditable reference chain from every AI answer back to source data.
 
 **Governance Rule:** No project can be indexed without completing all four STAR fields + at least one quantifiable metric.
 
@@ -135,18 +125,15 @@ To enable sophisticated search and pattern recognition, every project is enriche
 - **Person** - Role, seniority, team structure
 - **Place** - Client, industry, geographic context
 - **Purpose** - Capability area, transformation type
-- **[Additional dimensions]**
+- **Process** - How the work was done; approach and methods
+- **Performance** - Measurable outcomes and results
 
 #### Semantic Public Tags (Industry Standards)
 - **O*NET Competencies** - Standardized skill taxonomy
 - **SFIA Framework** - IT professional skills
 - **LinkedIn Skills** - Common search terms
 
-**Why This Matters:**
-- ✅ Enables **semantic search** (vector-based meaning matching)
-- ✅ Powers **pattern recognition** ("Show me all payment modernization projects")
-- ✅ Supports **cross-project synthesis** (AI can connect related work)
-- ✅ Aligns with **industry-standard taxonomies** for discoverability
+The tagging layer enables semantic search and cross-project pattern recognition ("Show me all payment modernization projects"), supports synthesis across related work, and aligns with industry-standard taxonomies so the vocabulary connects to how roles are actually searched.
 
 ---
 
@@ -168,10 +155,9 @@ The system exists to surface relevant STAR stories and connect patterns across 1
 
 ### Core Directive: Anchor Every Answer in Proof
 
-**DO:**
-- ✅ Anchor every answer in specific projects (citing Client, Title, Outcome)
-- ✅ Lead with outcomes, then methodology (e.g., "Achieved 4x acceleration by implementing...")
-- ✅ Infer user intent (Interview Prep, Due Diligence, Pitch) to tailor the response structure
+- Anchor every answer in specific projects (Client, Title, Outcome)
+- Lead with outcomes, then methodology ("Achieved 4x acceleration by implementing...")
+- Infer user intent (Interview Prep, Due Diligence, Pitch) to tailor the response structure
 
 **Data Logic:**
 - Semantic search across STAR, 5P, and Competencies to prioritize relevance and pattern extraction
@@ -182,9 +168,9 @@ The system exists to surface relevant STAR stories and connect patterns across 1
 
 **The Archetype: Trusted, Pragmatic Advisor**
 
-The voice blends:
-- **Strategic Advisor (60%)** - Executive-ready, outcome-focused
-- **Pragmatic Operator (30%)** - Grounded in results, implementation-focused
+The voice blends two registers (the full archetype is in the [Agy Voice Guide](/docs/05-agy-voice-guide)):
+- **Strategic Advisor** — Executive-ready, outcome-focused
+- **Pragmatic Operator** — Grounded in results, implementation-focused
 
 **Tone:** Warm, confident, and professional—never robotic or buzzword-heavy.
 
@@ -297,7 +283,7 @@ The voice blends:
 ### The Value Proposition
 
 **For Recruiters:**
-- Screen candidates 10x faster with verifiable proof
+- Validate skills and experience with verifiable proof
 - Eliminate doubt with concrete examples and metrics
 - Filter by technology, industry, and outcomes
 
@@ -310,20 +296,6 @@ The voice blends:
 - Retrieve relevant stories instantly for interview prep
 - Synthesize themes across related projects
 - Demonstrate credibility through proof, not claims
-
----
-
-### The Strategic Positioning
-
-**MattGPT is NOT:**
-- ❌ A chatbot that generates generic career advice
-- ❌ A resume formatter or application tracker
-- ❌ A claims-based portfolio with unverifiable statements
-
-**MattGPT IS:**
-- ✅ A credibility engine backed by structured, auditable data
-- ✅ An intelligent search system for Fortune 500 transformation stories
-- ✅ A proof-driven interface that replaces claims with evidence
 
 ---
 

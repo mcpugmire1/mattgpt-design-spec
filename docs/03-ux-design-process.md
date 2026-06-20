@@ -853,7 +853,7 @@ Source Data    AI Data Index  Pinecone    RAG Orchestrator
 (JSONL)        (Vectors)                  (LLM)
 ```
 
-**The Secret Sauce: Semantic Search with Confidence Scoring**
+**Semantic Search with Confidence Scoring**
 
 ```python
 semantic_search(

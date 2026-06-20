@@ -127,23 +127,37 @@ RAG evals validate end-to-end pipeline quality, not just component behavior. The
 
 ### Query Categories
 
-### 1. Entity Detection (Client, Division, Employer)
+The 8 categories below match the Pass Rate Breakdown. Each targets a distinct failure mode.
 
-Tests the system's ability to detect and pin stories based on named entities.
+### 1. Narrative (13 queries)
+
+Professional identity, career story, "builder" vocabulary, and synthesis questions.
 
 **Example Queries:**
-- "Show me Accenture projects"
-- "What did Matt do at JP Morgan?"
-- "Tell me about Cloud Innovation Center work"
+- "Is Matt a builder or a maintainer?"
+- "What's Matt's professional narrative?"
+- "Summarize Matt's career themes"
 
 **Expected Behavior:**
-- Correct entity detected (Client, Employer, Division)
-- Matching story pinned to #1 in results
+- Uses verbatim "builder" vocabulary (sacred term as of March 2026)
+- Broad thematic response, not story-specific details
+- No meta-commentary
+
+### 2. Client (6 queries)
+
+Named client entity detection and story pinning.
+
+**Example Queries:**
+- "What did Matt do at JP Morgan?"
+- "Show me RBC work"
+
+**Expected Behavior:**
+- Correct Client entity detected and pinned to #1
 - High confidence score (≥0.25)
 
-### 2. Behavioral Questions
+### 3. Intent (9 queries)
 
-Interview-style behavioral questions requiring STAR-formatted responses.
+Behavioral and stakeholder questions requiring STAR-formatted responses.
 
 **Example Queries:**
 - "Tell me about a time Matt failed"
@@ -152,12 +166,24 @@ Interview-style behavioral questions requiring STAR-formatted responses.
 
 **Expected Behavior:**
 - Returns stories with strong behavioral examples
-- No meta-commentary ("this demonstrates," "this shows")
-- Preserves STAR structure in response
+- No meta-commentary
+- Preserves STAR structure
 
-### 3. Technical/Delivery Queries
+### 4. Edge (4 queries)
 
-Questions about technical depth, methodologies, and delivery outcomes.
+Nonsense detection and graceful out-of-scope rejection.
+
+**Example Queries:**
+- "What's the weather in New York?"
+- "asdfghjkl"
+
+**Expected Behavior:**
+- Semantic router rejects (score < 0.40)
+- Graceful off-domain response with suggestion chips
+
+### 5. Surgical (11 queries)
+
+Delivery and technical depth questions requiring precise story retrieval.
 
 **Example Queries:**
 - "How did Matt achieve 4x faster delivery?"
@@ -166,12 +192,23 @@ Questions about technical depth, methodologies, and delivery outcomes.
 
 **Expected Behavior:**
 - Returns stories with technical details or delivery metrics
-- Confidence-based filtering (only HIGH confidence for vague queries)
-- Correct intent family classification
+- Confidence-based filtering for vague queries
 
-### 4. Marketing/Landing Page Questions
+### 6. Entity Detection (11 queries)
 
-Queries that should trigger concise, punchy responses suitable for landing pages.
+Employer and Division entity pinning (complements Client category).
+
+**Example Queries:**
+- "Show me Accenture projects"
+- "Tell me about Cloud Innovation Center work"
+
+**Expected Behavior:**
+- Correct Employer or Division entity detected and pinned to #1
+- High confidence score (≥0.25)
+
+### 7. Marketing (7 queries)
+
+Landing page queries requiring zero meta-commentary.
 
 **Example Queries:**
 - "What's Matt's superpower?"
@@ -179,37 +216,17 @@ Queries that should trigger concise, punchy responses suitable for landing pages
 - "Why should I hire Matt?"
 
 **Expected Behavior:**
-- NO meta-commentary (critical for marketing copy)
-- Synthesizes themes across multiple stories
-- Short, direct responses (not exhaustive lists)
+- NO meta-commentary (hardest constraint — zero tolerance)
+- Short, direct responses
 
-### 5. Synthesis/Narrative Queries
+### 8. Context Story (3 queries)
 
-High-level questions about professional identity and career themes.
-
-**Example Queries:**
-- "What's Matt's professional narrative?"
-- "Is Matt a builder or a maintainer?"
-- "Summarize Matt's career themes"
+"Tell me more about [Title]" queries — tests Title soft-filter detection and retrieval.
 
 **Expected Behavior:**
-- Triggers synthesis mode (no Pinecone search needed for some)
-- Uses verbatim sacred vocabulary ("builder" — the only required verbatim term as of March 2026)
-- Broad thematic response, not story-specific details
-
-### 6. Edge Cases (Nonsense, Out-of-Scope)
-
-Tests query validation and graceful rejection.
-
-**Example Queries:**
-- "What's the weather in New York?"
-- "Tell me about Matt's experience in aerospace" (out-of-scope industry)
-- "asdfghjkl" (gibberish)
-
-**Expected Behavior:**
-- Semantic router rejects (score <0.40)
-- Graceful off-domain response with suggestion chips
-- No attempt to fabricate answers
+- Story retrieved by Title detection (soft-filter, not entity gate)
+- Sources returned and not blocked
+- Response references the named story
 
 ---
 
