@@ -507,10 +507,12 @@ pytest tests/bdd/ -v
 
 ### CI/CD Integration
 
-Four automation layers are active: deployment fires on push to main via Streamlit Cloud webhook, an external uptime monitor (UptimeRobot) keeps the app warm on a five-minute schedule, a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code, and test gates run on every push via the workflow below.
+Three automation layers are active: deployment fires on push to main via Streamlit Cloud webhook (real continuous deployment — every merge ships immediately), an external uptime monitor (UptimeRobot) keeps the app warm on a five-minute schedule, and a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code.
+
+Test gates are not currently enforced by the pipeline. They run manually before merge and deploy (see Quality Gates below). If automated enforcement were added, the workflow would look like this:
 
 ```yaml
-# .github/workflows/test.yml
+# .github/workflows/test.yml (illustrative — not yet active)
 - name: Run Unit Tests
   run: pytest tests/unit/ -v
 
@@ -525,16 +527,18 @@ Four automation layers are active: deployment fires on push to main via Streamli
 
 ## Quality Gates
 
-**Pre-Merge Requirements:**
-- ✅ All {{ site.data.facts.unit_test_file_count }} unit test files passing
-- ✅ RAG eval pass rate ≥ 95% (61+/64)
-- ✅ BDD scenarios passing
+These gates run manually before merge and before production deploy. They are conventions, not automated checks.
 
-**Production Deploy Requirements:**
-- ✅ All {{ site.data.facts.unit_test_file_count }} unit test files passing
-- ✅ RAG eval pass rate ≥ 98% (63+/64)
-- ✅ BDD scenarios passing
-- ✅ Manual smoke test (5 queries + 2 UI workflows)
+**Pre-Merge:**
+- All {{ site.data.facts.unit_test_file_count }} unit test files passing
+- RAG eval pass rate ≥ 95% (61+/64)
+- BDD scenarios passing
+
+**Production Deploy:**
+- All {{ site.data.facts.unit_test_file_count }} unit test files passing
+- RAG eval pass rate ≥ 98% (63+/64)
+- BDD scenarios passing
+- Manual smoke test (5 queries + 2 UI workflows)
 
 **Rationale:** 64 queries is small enough that 1-2 failures indicate real issues, not statistical noise. BDD scenarios validate complete user workflows end-to-end.
 

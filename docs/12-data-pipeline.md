@@ -517,7 +517,7 @@ clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Clie
 - Result: High similarity to "Executive alignment", "Stakeholder management" stories
 
 **Why the Upgrade:**
-Eval framework showed 15% improvement in query relevance (from 83% → 98% pass rate) after migration. The cost increase ($0.0008 per re-index) was negligible compared to quality gains.
+Eval framework showed 15% improvement in query relevance (from 83% → 98% pass rate) after migration (snapshot at migration time; the suite has since grown to 64/64, 100%). The cost increase ($0.0008 per re-index) was negligible compared to quality gains.
 
 ### v3: Title Inclusion (January 2026)
 

@@ -235,7 +235,7 @@ The voice blends two registers (the full archetype is in the [Agy Voice Guide](/
 ---
 
 #### 3. Core Query
-**Requirement:** The Explore Stories interface MUST provide filtering by **Industry, Technology, and Key Outcome** for rapid comparison by the Vetting Analyst persona.
+**Requirement:** The Explore Stories interface MUST provide filtering by **Industry, Technology, and Key Outcome** for rapid recruiter comparison.
 
 **Rationale:** Enables recruiters to efficiently screen candidates.
 

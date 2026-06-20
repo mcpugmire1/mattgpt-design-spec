@@ -429,13 +429,13 @@ Run tests from project root:
 pytest tests/unit/
 
 # Specific module tests
-pytest tests/unit/test_semantic_router.py    # Intent classification tests (11KB)
-pytest tests/unit/test_filters.py            # Filter logic tests (9.9KB)
-pytest tests/unit/test_scoring.py            # Hybrid scoring tests (7.7KB)
-pytest tests/unit/test_formatting.py         # STAR formatting tests (14KB)
-pytest tests/unit/test_validation.py         # Input validation tests (12KB)
-pytest tests/unit/test_backend_service.py    # Ask MattGPT backend tests (15KB)
-pytest tests/unit/test_story_intelligence.py # Story analysis tests (9.5KB)
+pytest tests/unit/test_semantic_router.py    # Intent classification tests
+pytest tests/unit/test_filters.py            # Filter logic tests
+pytest tests/unit/test_scoring.py            # Hybrid scoring tests
+pytest tests/unit/test_formatting.py         # STAR formatting tests
+pytest tests/unit/test_validation.py         # Input validation tests
+pytest tests/unit/test_backend_service.py    # Ask MattGPT backend tests
+pytest tests/unit/test_story_intelligence.py # Story analysis tests
 
 # With coverage
 pytest --cov=services --cov=utils tests/
