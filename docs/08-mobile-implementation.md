@@ -20,13 +20,13 @@
 
 ## Overview
 
-MattGPT implements production-quality mobile CSS with 200+ lines of responsive styling (global_styles.py:399-596). The approach prioritizes mobile experience while maintaining desktop functionality.
+MattGPT implements production-quality mobile CSS in `@media` blocks within `global_styles.py` ({{ site.data.facts.global_styles_line_count }} lines total). The approach prioritizes mobile experience while maintaining desktop functionality.
 
 **Key Stats:**
 - **Mobile Breakpoint:** < 767px
 - **Tablet Breakpoint:** 768px - 1024px
 - **Desktop Breakpoint:** > 1024px
-- **Mobile CSS:** 200 lines (global_styles.py:399-596)
+- **Mobile CSS:** `@media (max-width: 767px)` blocks in `global_styles.py` — see file for current positions
 - **Touch Target Minimum:** 44px
 
 ---
@@ -396,11 +396,8 @@ Load essential styles first, defer non-critical:
 
 ```python
 # In global_styles.py
-def load_critical_styles():
-    """Load above-the-fold styles immediately"""
-
-def load_non_critical_styles():
-    """Defer below-fold styles"""
+def apply_global_styles():
+    """Inject all CSS into Streamlit — called once at app startup"""
 ```
 
 ### 5. Font Loading Strategy

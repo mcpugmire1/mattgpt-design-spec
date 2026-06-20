@@ -46,20 +46,18 @@ The canonical variable definitions live in the `:root` block at the top of `glob
 /* Good - Uses variables */
 .card {
     background: var(--bg-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--hover-shadow);
 }
 
 /* Bad - Hardcoded values */
 .card {
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 24px;
 }
 ```
+
+For spacing and border-radius, check existing patterns in `global_styles.py` — there are no dedicated `--spacing-*` or `--radius-*` variables; use consistent values from what is already in the file.
 
 ---
 
@@ -178,7 +176,7 @@ Dark mode is implemented by swapping CSS variable values:
 }
 
 /* Dark mode */
-[data-theme="dark"] {
+body.dark-theme {
     --bg-surface: #1a1a1a;
     --text-primary: #e0e0e0;
     --border-color: #3a3a3a;

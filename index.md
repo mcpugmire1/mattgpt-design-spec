@@ -50,11 +50,11 @@ Hundreds of calls went into this across data, retrieval, the surfaces, voice, an
 
 ## How it is built, and where it is thin
 
-Small stack on purpose: Claude Code at the command line for the build, GitHub for source and history, and a webhook that deploys to Streamlit Cloud on push. There is no enterprise CI/CD here, and claiming otherwise would be the first thing to distrust. One person built this. The question worth asking is what discipline holds at that size.
+Small stack on purpose: Claude Code at the command line for the build, GitHub for source and history, and a webhook that deploys to Streamlit Cloud on every push. Push-to-deploy is real continuous deployment, and scheduled jobs keep the app warm and sync its data. This is not a fully mature, automated pipeline that enforces the test gates, and I won't dress it up as one. One person built this. The question worth asking is what discipline holds at that size.
 
 What holds: the eval gates the retrieval layer, so a regression shows up as a failing number, not a user complaint. BDD scenarios run red to green before a feature counts as done. A rules file sets the architectural conventions, and a pre-commit check keeps these pages from drifting off what is running.
 
-What does not: the rules are not enforced by a pipeline, so they are not always followed. Claude Code, the AI doing the implementation, will rebuild things that already exist or quietly change a protected value, and I catch it in review, not at a gate. Holding that line over a fast, capable, not-always-compliant tool is the real daily work, and it is closer to leading a team than a green pipeline would be.
+What does not: the architectural rules are not pipeline-enforced, so they are not always followed. Claude Code, the AI doing the implementation, will rebuild things that already exist or quietly change a protected value, and I catch it in review, not at a gate. Holding that line over a fast, capable, not-always-compliant tool is the real daily work, and it is closer to leading a team than a green pipeline would be.
 
 To keep this honest, I audited the docs against the running system in June 2026. It caught a stale metric, retired wording still sitting in the tests, and the rules file itself wrong on two values where this spec was right. Docs drift from code in every real system. What matters is having something that catches it. The [audit](docs/audit-2026-06-15) is committed alongside the docs it corrects.
 

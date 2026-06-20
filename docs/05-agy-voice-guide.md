@@ -579,12 +579,7 @@ Ask me anything — from building MattGPT to leading global programs...
 
 ### Suggested Prompts (Homepage)
 
-- 🚀 Tell me about leading a global payments transformation
-- 🏥 How did you apply GenAI in a healthcare project?
-- 💡 How have you driven innovation in your career?
-- 👥 How do you scale agile across large organizations?
-- ⚡ Show me your platform engineering experience
-- 🎯 What's your approach to stakeholder management?
+Six topic-chip prompts appear on the Ask Agy landing page, each targeting a distinct career narrative (payments modernization, failure and learning, team-building velocity, Cloud Innovation Center, talent development, transformation resistance). For the current text, see `ui/pages/ask_mattgpt/landing_view.py`.
 
 ---
 

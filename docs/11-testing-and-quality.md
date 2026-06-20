@@ -412,7 +412,7 @@ By Category:
 
 ### Flaky Test Handling
 
-**LLM Variance:** GPT-4o responses vary slightly between runs (temperature = 0.4 for standard queries)
+**LLM Variance:** GPT-4o responses vary slightly between runs (temperature = 0.4 for standard queries, 0.2 for synthesis)
 
 **Known Flaky Tests:**
 - Q14: "Tell me about a time Matt failed" (rephrasing variance)
@@ -490,8 +490,10 @@ pytest tests/bdd/ -v
 
 ### CI/CD Integration
 
+Four automation layers are active: deployment fires on push to main via Streamlit Cloud webhook, an external uptime monitor (UptimeRobot) keeps the app warm on a five-minute schedule, a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code, and test gates run on every push via the workflow below.
+
 ```yaml
-# .github/workflows/test.yml (example)
+# .github/workflows/test.yml
 - name: Run Unit Tests
   run: pytest tests/unit/ -v
 

@@ -364,7 +364,7 @@ The fix was two-fold: mandatory STAR structure (every story needs verifiable Sit
 
 Streamlit is great for rapid prototyping. It's terrible for custom styling. Class names change between versions. CSS selectors that work on desktop break on mobile. The st-emotion-cache-* classes are generated dynamically and can't be targeted reliably.
 
-I learned to use data-testid attributes and container keys for CSS targeting. The global_styles.py file grew to 600+ lines of carefully scoped overrides. It's not pretty, but it works.
+I learned to use data-testid attributes and container keys for CSS targeting. The global_styles.py file grew to {{ site.data.facts.global_styles_line_count }} lines of carefully scoped overrides. It's not pretty, but it works.
 
 ### The January 2026 RAG Pipeline Cleanup
 
@@ -374,7 +374,7 @@ The cleanup removed both:
 - **Entity Gate removed:** Was rejecting valid narrative/synthesis queries
 - **LLM intent classification removed:** Redundant with semantic router (which uses embeddings, not LLM calls)
 
-The semantic router now handles everything: 15 intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification (0.80 hard accept / 0.40 soft accept), and graceful rejection with suggestion chips. Eval quality improved to 98.4% (60/61) while reducing costs and latency.
+The semantic router now handles everything: 15 intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification (0.80 hard accept / 0.40 soft accept), and graceful rejection with suggestion chips. At that stage (January 2026), eval quality improved to 98.4% (60/61) while reducing costs and latency; the suite has since grown to 64/64 (100%).
 
 ---
 

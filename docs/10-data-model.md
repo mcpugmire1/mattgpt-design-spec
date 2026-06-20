@@ -96,7 +96,7 @@ Stories follow the STAR methodology for behavioral interviewing:
 
 ## 5P Taxonomy Fields
 
-**5P Framework = People, Process, Problem, Product, Platform**
+**5P Framework = Person, Place, Purpose, Process, Performance**
 
 These fields enable semantic search and intelligent filtering:
 
@@ -409,10 +409,9 @@ Some fields have aliases for backward compatibility:
 
 ## Data Sources
 
-**Primary Source:**
-- Excel workbook (`MPugmire - STAR Stories - 20DEC25.xlsx`) → JSONL conversion script
-- Script: `generate_jsonl_from_excel.py`
-- Output: `echo_star_stories_nlp.jsonl` ({{ site.data.facts.story_count_label }} stories)
+**Production data file:** `echo_star_stories_nlp.jsonl` ({{ site.data.facts.story_count_label }} stories)
+
+Two-stage pipeline: Excel workbook → `generate_jsonl_from_excel.py` → `echo_star_stories.jsonl` (Stage 1 raw output) → semantic enrichment scripts → `echo_star_stories_nlp.jsonl` (Stage 2, production). See [Data Pipeline](/docs/12-data-pipeline) for the full ingestion workflow.
 
 **Quality Assurance:**
 - Manual review of STAR completeness

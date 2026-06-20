@@ -41,7 +41,7 @@ Convert Excel master sheet to structured JSONL format while preserving existing 
 
 ### Script Details
 
-**Script:** `generate_jsonl_from_excel.py` (283 lines, root-level)
+**Script:** `generate_jsonl_from_excel.py` (root-level)
 
 **Input:**
 - Excel file: `MPugmire - STAR Stories - [DATE].xlsx`
@@ -134,7 +134,7 @@ Add semantic metadata and public-facing tags to enhance search quality.
 
 ### Script Details
 
-**Script:** `generate_public_tags.py` (197 lines, root-level)
+**Script:** `generate_public_tags.py` (root-level)
 
 **Input:** `echo_star_stories.jsonl` (from Stage 1)
 
@@ -187,7 +187,7 @@ Generate vector embeddings and upsert to Pinecone for semantic search.
 
 ### Script Details
 
-**Script:** `build_custom_embeddings.py` (508 lines, root-level)
+**Script:** `build_custom_embeddings.py` (root-level)
 
 **Input:** `echo_star_stories_nlp.jsonl` (enriched stories)
 

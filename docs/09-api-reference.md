@@ -163,7 +163,9 @@ semantic_search(
 {
     "results": [story, ...],    # Stories with "pc" score attached
     "confidence": str,           # "high" | "low" | "none"
-    "top_score": float          # Highest Pinecone similarity score
+    "top_score": float,         # Highest Pinecone similarity score
+    "relaxed_count": int,       # Stories passing relaxed (no-filter) search
+    "active_filters": dict      # Filters that were applied to the query
 }
 ```
 
@@ -258,6 +260,15 @@ matches_filters(s: dict, F: dict | None = None) -> bool
          │
          ▼
 ┌─────────────────────────────────────────┐
+│  Nonsense Filter (nonsense_filters.jsonl│
+│  - Regex pattern match against query    │
+│  - Blocks off-topic / abusive queries   │
+└────────┬────────────────────────────────┘
+         │
+         └─ [match] → REJECT immediately
+         │
+         ▼
+┌─────────────────────────────────────────┐
 │  Semantic Router (semantic_router.py)   │
 │  - Embed query (OpenAI text-embedding)  │
 │  - Compare to canonical intents         │
@@ -271,7 +282,9 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 ┌─────────────────────────────────────────┐
 │  RAG Service (rag_service.py)           │
 │  - semantic_search(query, filters)      │
-│  - Calls Pinecone for vector matches    │
+│  - Entity Detection (Client/Employer/   │
+│    Division) — pins matching story #1   │
+│  - Calls Pinecone with entity filters   │
 │  - Applies confidence gating            │
 │  - Filters results by metadata          │
 └────────┬────────────────────────────────┘
@@ -407,7 +420,7 @@ STORIES_JSONL=echo_star_stories_nlp.jsonl
 
 ## Testing
 
-**Test Coverage:** 8 test modules covering services and utilities (86KB total)
+**Test Coverage:** {{ site.data.facts.unit_test_file_count }} test modules covering services and utilities (selected modules below)
 
 Run tests from project root:
 

@@ -158,7 +158,7 @@ Strategic/High-level
 - Pre-filter state management works across page transitions
 
 ### ✅ Phase 5: Other Pages (Completed)
-- ask_mattgpt.py, semantic_router.py, scoring.py updated
+- ask_mattgpt/ (package), semantic_router.py, scoring.py updated
 - Semantic search and context building verified working
 
 ---
@@ -202,7 +202,8 @@ Strategic/High-level
 
 - ✅ Industry filter: **Single-select** (st.selectbox)
 - ✅ Capability filter: **Single-select** (st.selectbox)
-- ✅ Advanced filters (Client, Role, Domain): **Multi-select** (st.multiselect)
+- ✅ Advanced filters (Client, Domain): **Multi-select** (st.multiselect)
+- ✅ Advanced filter (Role): **Single-select** (st.selectbox)
 - ✅ Advanced section: **State preserved** via session_state["es_mobile_r2_open"]
 - ✅ Wireframes: **No update needed** - design intent captured
 

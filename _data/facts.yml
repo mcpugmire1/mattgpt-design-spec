@@ -126,3 +126,10 @@ ask_mattgpt_module_files:
 env_vars:
   - "OPENAI_API_KEY"
 pinecone_index_env_var: "PINECONE_INDEX_NAME"
+
+# Hand-placed pending extract_facts.py update — overwritten by sync if not added to extract script first:
+jp_morgan_story_count: 14
+rbc_story_count: 6
+fiserv_story_count: 4
+banking_capability_count: 15
+global_styles_line_count: "4,107"
