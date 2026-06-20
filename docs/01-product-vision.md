@@ -2,14 +2,14 @@
 
 **MattGPT: The Credibility Engine**
 
-> This document covers the strategic rationale for MattGPT: three target personas, the two-layer data governance model, and the guardrails that keep responses grounded in source data. A reader who finishes it understands what the system is for, who it serves, and what it will never do.
+> This document covers the strategic rationale for MattGPT: four visitor paths, the two-layer data governance model, and the guardrails that keep responses grounded in source data. A reader who finishes it understands what the system is for, who it serves, and what it will never do.
 
 ---
 
 ## Table of Contents
 
 1. [The Credibility Engine: WHY, HOW, WHAT](#the-credibility-engine)
-2. [Target User Personas](#target-user-personas)
+2. [Who This Is For](#who-this-is-for)
 3. [Data Model & Two-Layer Governance](#data-model--two-layer-governance)
 4. [MattGPT AI Core: System Prompt & Integrity Mandate](#mattgpt-ai-core)
 5. [Project Scope & Boundaries](#project-scope--boundaries)
@@ -73,85 +73,19 @@ MattGPT delivers verifiable outcomes for three primary use cases:
 
 ---
 
-## Target User Personas
+## Who This Is For
 
-MattGPT serves three distinct personas, each with different needs and interaction patterns.
+Four visitor types shaped the surface design. Each needs something different from the same corpus.
 
-### Persona 1: The Recruiter
+**A recruiter with a job description** needs a fast, forwardable fit signal. Role Match takes the JD, returns a scored assessment with evidence-backed ratings and a gap summary, and produces an artifact a hiring manager can act on in under 90 seconds.
 
-**Profile:** High-volume screener who needs to validate quickly
+**A recruiter doing inbound triage** needs six facts in 30 seconds: level, last company, last team size, geo, current status, target titles. My Profile is the entry point. No digging required.
 
-**Primary Need:** Speed, Scalability, and Filtering
+**A hiring CTO, VP Engineering, or Head of Platform** got the link from a trusted contact and has genuine intent. They will browse one or two stories, then navigate to Ask Agy with a specific, possibly hard question. Whether that answer is honest is the make-or-break moment. Ask Agy is not just a feature for this visitor; it is the test.
 
-They need to know: *"Does Matt meet the basic keyword and experience threshold?"*
+**A referrer** has already decided to make the intro. They need one-sentence positioning they can lead with, two or three substantiating facts, and confidence that what the recipient sees matches what the intro promised.
 
-**Feature Drivers:**
-- **Table View** - High data density, sortable columns
-- **Timeline View** - Quick check for tenure and career evolution
-- **Advanced Search** - Filter by technology, industry, and outcome
-- **Mobile-Responsive Design** - Screen candidates on mobile devices
-- **Touch-Optimized Controls** - Easy filtering and navigation on tablets
-
-**Focus:** Breadth and Comparison
-
-**Typical Journey:**
-1. Land on homepage
-2. Search for specific technology or industry
-3. Scan table/card view for matches
-4. Click 2-3 stories to verify depth
-5. Export or share findings
-
----
-
-### Persona 2: The Hiring Manager
-
-**Profile:** Decision-maker who needs depth, structure, and verifiable proof
-
-**Primary Need:** Depth, Narrative Structure, and Metrics
-
-They need to confirm: *"How did Matt achieve that result, and can I trust the process?"*
-
-**Feature Drivers:**
-- **Detail View** - Full STAR Method breakdown
-- **Key Metrics Sidebar** - Immutable, quantifiable proof
-- **Related Projects** - Pattern recognition across similar work
-- **Match Confidence Indicators** - Visual bars showing search relevance
-- **Source Verification** - Clickable source chips for audit trail
-
-**Focus:** Depth and Verifiability
-
-**Typical Journey:**
-1. Land on industry-specific page (e.g., Banking)
-2. Browse capability categories
-3. Open 4-6 detailed stories
-4. Cross-reference outcomes and methodologies
-5. Ask follow-up questions via Ask Agy
-
----
-
-### Persona 3: The Content User (Matt)
-
-**Profile:** The subject who needs quick story retrieval for interview rehearsal
-
-**Primary Need:** Quick Retrieval and Synthesis
-
-They need to find: *"Specific stories and themes based on interview questions"*
-
-**Feature Drivers:**
-- **Ask Agy** - Fast story retrieval via conversational AI
-- **Pattern Recognition** - Show related projects and connecting skills
-- **Export/Share** - Quick reference materials for prep
-- **Timeline View** - Chronological career progression by Era
-- **Era Grouping** - Stories organized by career phase for context
-
-**Focus:** Efficiency and Synthesis
-
-**Typical Journey:**
-1. Receive interview question or client inquiry
-2. Ask Agy conversational question
-3. Review synthesized response + sources
-4. Drill into specific stories for detail
-5. Export relevant stories for review
+The detailed journey logic, failure modes, and surface rationale for each visitor is in [Audience Journeys](/docs/03-ux-design-process).
 
 ---
 
