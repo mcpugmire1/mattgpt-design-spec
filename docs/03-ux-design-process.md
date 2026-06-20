@@ -189,7 +189,7 @@ The homepage uses strategic entry point cards that route users to the most relev
 |----------------------|-------------|----------------|
 | **Product Innovation & Strategy** | My Work (capability filter) | Stories filtered by Product Innovation capability, across all industries |
 | **App Modernization** | My Work (capability filter) | Stories filtered by App Modernization capability, across all industries |
-| **Financial Services & Payments** | Banking Landing Page | {{ site.data.facts.banking_capability_count }} capability categories, client tags, option to browse all banking stories |
+| **Financial Services & Payments** | Banking Landing Page | Capability category cards (one per banking specialty, derived from story data), client tags, option to browse all banking stories |
 | **Cross-Industry Transformation** | Cross-Industry Landing Page | 15+ transformation capabilities — delivery patterns that work across any industry |
 | **Consulting & Transformation** | My Work (cross-industry filter) | Cross-industry transformation stories |
 | **Teams & Talent Development** | My Work (outcome filter) | Stories focused on team development, upskilling, leadership |
@@ -330,15 +330,15 @@ Both Banking and Cross-Industry landing pages follow a consistent pattern optimi
 |---|---------|----------|---------|
 | 1 | Top Navigation Bar | Header | Dark navy background: Home, My Work, Ask Agy, Role Match, My Profile |
 | 2 | Page Title | Heading (H1) | "Financial Services / Banking" |
-| 3 | Subtitle/Breadcrumb | Descriptive Text | "Banking and financial services experience across {{ site.data.facts.banking_capability_count }} specialized areas — or ask Agy to find what you're looking for" |
-| 4 | Client Filter Row | Filter Component | Pill-style buttons: JP Morgan Chase ({{ site.data.facts.jp_morgan_story_count }}), RBC ({{ site.data.facts.rbc_story_count }}), Fiserv ({{ site.data.facts.fiserv_story_count }}), American Express (3), Capital One (2), HSBC (2) |
+| 3 | Subtitle/Breadcrumb | Descriptive Text | "Banking and financial services experience across the portfolio's capability areas — or ask Agy to find what you're looking for" |
+| 4 | Client Filter Row | Filter Component | Pill-style buttons for each banking client (JP Morgan Chase, RBC, Fiserv, American Express, Capital One, HSBC); counts are live story tallies, derived from data |
 | 5 | Section Header | Heading (H2) | "Explore by Capability" with supporting text |
-| 6 | Capability Cards | Card Grid | 3-column responsive grid containing {{ site.data.facts.banking_capability_count }} capability category cards |
+| 6 | Capability Cards | Card Grid | 3-column responsive grid; one card per capability category, derived from story data |
 | 7 | Card Components | Composite Element | Each card: Icon, Title, Project count (purple text), Descriptive tags/keywords |
 | 8 | Search CTA Section | Call-to-Action | "Can't find what you're looking for?" with "Ask Agy" button |
 | 9 | Footer Contact Section | Footer | "Let's Connect" with contact methods |
 
-**{{ site.data.facts.banking_capability_count }} Capability Categories:**
+**Capability Categories (derived from story data):**
 - Agile Transformation (8)
 - Modern Engineering (8)
 - Global Payments (7)
@@ -401,10 +401,10 @@ All three views share:
 
 **Client Filter:**
 - All Clients (default)
-- JP Morgan Chase ({{ site.data.facts.jp_morgan_story_count }} projects) *(dynamic - count updates with data)*
-- RBC ({{ site.data.facts.rbc_story_count }} projects) *(dynamic - count updates with data)*
-- Accenture (13 projects) *(dynamic - count updates with data)*
-- Fiserv ({{ site.data.facts.fiserv_story_count }} projects) *(dynamic - count updates with data)*
+- JP Morgan Chase *(dynamic - count updates with data)*
+- RBC *(dynamic - count updates with data)*
+- Accenture *(dynamic - count updates with data)*
+- Fiserv *(dynamic - count updates with data)*
 
 **Role Filter:**
 - All Roles (default)

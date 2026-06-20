@@ -20,7 +20,7 @@
 
 ## Overview
 
-MattGPT implements production-quality mobile CSS in `@media` blocks within `global_styles.py` ({{ site.data.facts.global_styles_line_count }} lines total). The approach prioritizes mobile experience while maintaining desktop functionality.
+MattGPT implements production-quality mobile CSS in `@media` blocks within `global_styles.py`, the single home for all application CSS. The approach prioritizes mobile experience while maintaining desktop functionality.
 
 **Key Stats:**
 - **Mobile Breakpoint:** < 767px

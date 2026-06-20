@@ -364,7 +364,7 @@ The fix was two-fold: mandatory STAR structure (every story needs verifiable Sit
 
 Streamlit is great for rapid prototyping. It's terrible for custom styling. Class names change between versions. CSS selectors that work on desktop break on mobile. The st-emotion-cache-* classes are generated dynamically and can't be targeted reliably.
 
-I learned to use data-testid attributes and container keys for CSS targeting. The global_styles.py file grew to {{ site.data.facts.global_styles_line_count }} lines of carefully scoped overrides. It's not pretty, but it works.
+I learned to use data-testid attributes and container keys for CSS targeting. All application CSS lives in global_styles.py — carefully scoped overrides for Streamlit's generated class names. It's not pretty, but it works.
 
 ### The January 2026 RAG Pipeline Cleanup
 
