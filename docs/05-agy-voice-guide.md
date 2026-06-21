@@ -700,10 +700,6 @@ The voice should feel:
 
 ---
 
-**That's Agy V2.1.**
-
----
-
 ## Changelog
 
 **Version 2.2** (May 2026): Updated implementation status labels (5P Framework, Humane Framing, Pattern Insights marked PARTIALLY IMPLEMENTED).
