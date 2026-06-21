@@ -358,29 +358,7 @@ button:active {
 
 ## Performance Considerations
 
-### 1. Image Optimization
-
-```html
-<!-- Responsive images -->
-<img
-    src="image-mobile.jpg"
-    srcset="image-mobile.jpg 480w,
-            image-tablet.jpg 768w,
-            image-desktop.jpg 1200w"
-    sizes="(max-width: 767px) 100vw,
-           (max-width: 1024px) 50vw,
-           33vw"
-/>
-```
-
-### 2. Lazy Loading
-
-```python
-# In Streamlit components
-st.image(url, loading="lazy")
-```
-
-### 3. Minimize Reflows
+### 1. Minimize Reflows
 
 ```css
 /* GPU-accelerated animations */
@@ -390,7 +368,7 @@ st.image(url, loading="lazy")
 }
 ```
 
-### 4. Critical CSS
+### 2. Critical CSS
 
 Load essential styles first, defer non-critical:
 
@@ -400,7 +378,7 @@ def apply_global_styles():
     """Inject all CSS into Streamlit — called once at app startup"""
 ```
 
-### 5. Font Loading Strategy
+### 3. Font Loading Strategy
 
 ```css
 /* System font stack for instant render */
@@ -438,10 +416,6 @@ Test at these specific widths:
 - Chrome DevTools Device Mode
 - Firefox Responsive Design Mode
 - Safari Responsive Design Mode
-
-**Online Tools:**
-- BrowserStack (real device testing)
-- Responsively App (multi-device preview)
 
 **Manual Testing:**
 - Physical devices (iOS + Android)

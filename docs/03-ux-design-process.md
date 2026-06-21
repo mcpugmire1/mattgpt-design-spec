@@ -120,6 +120,8 @@ For the full search and retrieval pipeline, see [Technical Architecture](/docs/0
 - [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
 - [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
 - [Building MattGPT](/docs/04-building-mattgpt) - Development journey and lessons learned
+- [CSS Architecture](/docs/07-css-architecture) - CSS variable system and Streamlit override patterns
+- [Mobile Implementation](/docs/08-mobile-implementation) - Mobile-first patterns and responsive breakpoints
 
 ---
 
