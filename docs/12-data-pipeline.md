@@ -336,10 +336,17 @@ pinecone_filter = {
     "$or": [
         {"client": {"$eq": "Accenture"}},
         {"employer": {"$eq": "Accenture"}},
-        # ... (5 more fields)
+        {"division": {"$eq": "accenture"}},  # lowercase
+        {"project": {"$eq": "accenture"}},   # lowercase
+        {"place": {"$eq": "accenture"}},     # lowercase
+        {"title": {"$eq": "Accenture"}}      # PascalCase
     ]
 }
 ```
+
+**Field-Specific Casing (Pinecone Metadata):**
+- **Lowercase:** `division`, `employer`, `project`, `place`
+- **PascalCase:** `client`, `role`, `title`, `domain`
 
 **Why Multi-Field:**
 - "Accenture" might appear as Client, Employer, or Division
@@ -383,6 +390,18 @@ clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Clie
 1. Edit story in Excel
 2. Run `generate_jsonl_from_excel.py`
 3. Review diff, commit if correct
+
+**❌ Hardcoded Story Titles in Tests:**
+```python
+# BAD: Titles change frequently
+expected_title = "Implementing Responsible AI Governance Framework"
+```
+
+**✅ Index-Based Test Selection:**
+```python
+# GOOD: Stable reference
+story_index = 0  # Select by index, build query from actual title
+```
 
 ---
 
