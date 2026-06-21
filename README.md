@@ -21,7 +21,6 @@ mattgpt-design-spec/
 │   ├── 03-ux-design-process.md
 │   ├── 04-building-mattgpt.md
 │   ├── 05-agy-voice-guide.md
-│   ├── 06-explore-stories-filter-redesign.md
 │   ├── 07-css-architecture.md
 │   ├── 08-mobile-implementation.md
 │   ├── 09-api-reference.md

@@ -132,7 +132,6 @@ mattgpt-design-spec/
 │   ├── 03-ux-design-process.md
 │   ├── 04-building-mattgpt.md
 │   ├── 05-agy-voice-guide.md
-│   ├── 06-explore-stories-filter-redesign.md  # Cross-linked from build doc
 │   ├── 07-css-architecture.md                 # Cross-linked from 02
 │   ├── 08-mobile-implementation.md            # Cross-linked from 02
 │   ├── 09-api-reference.md
