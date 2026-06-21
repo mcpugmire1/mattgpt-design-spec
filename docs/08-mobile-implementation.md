@@ -20,7 +20,7 @@
 
 ## Overview
 
-MattGPT implements production-quality mobile CSS in `@media` blocks within `global_styles.py`, the single home for all application CSS. The approach prioritizes mobile experience while maintaining desktop functionality.
+MattGPT implements production-quality mobile CSS in `@media` blocks across `global_styles.py` and `mobile_overrides.py`. The patterns described below use prose rather than source selectors — for actual class names and rules, read those files directly.
 
 **Key Stats:**
 - **Mobile Breakpoint:** < 767px
@@ -81,23 +81,6 @@ MattGPT implements production-quality mobile CSS in `@media` blocks within `glob
 **Desktop:** Multi-column grid
 **Mobile:** Single column stack
 
-```css
-/* Base (Mobile) */
-.filter-row {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-    .filter-row {
-        flex-direction: row;
-        gap: var(--spacing-md);
-    }
-}
-```
-
 **Implementation Example:**
 - Filters stack vertically on mobile (explore_stories.py)
 - Search input full-width
@@ -108,57 +91,18 @@ MattGPT implements production-quality mobile CSS in `@media` blocks within `glob
 **Desktop:** Full navigation visible
 **Mobile:** Hamburger menu
 
-```css
-@media (max-width: 767px) {
-    .nav-links {
-        display: none; /* Hidden by default */
-    }
-
-    .nav-links.active {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .hamburger {
-        display: block; /* Show hamburger */
-    }
-}
-```
-
 **Implementation:**
-- Hamburger menu < 768px
+- Hamburger menu < 768px (JS-injected, not CSS class toggling)
 - Vertical stack of links
 - Touch-friendly 44px targets
 
 ### 3. Horizontal Scroll Tables
 
 **Desktop:** Full table layout
-**Mobile:** Horizontal scroll with sticky first column
-
-```css
-@media (max-width: 767px) {
-    .table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-        min-width: 600px; /* Forces horizontal scroll */
-    }
-
-    th:first-child,
-    td:first-child {
-        position: sticky;
-        left: 0;
-        background: var(--bg-surface);
-        z-index: 1;
-    }
-}
-```
+**Mobile:** Horizontal scroll with `-webkit-overflow-scrolling: touch`
 
 **Implementation:**
 - Preserve table functionality on mobile
-- Sticky first column for context
 - Smooth touch scrolling
 
 ### 4. Adaptive Typography
@@ -186,18 +130,6 @@ h1 {
 
 **Desktop:** Show all details
 **Mobile:** Progressive disclosure
-
-```css
-@media (max-width: 767px) {
-    .secondary-info {
-        display: none; /* Hide on mobile */
-    }
-
-    .card.expanded .secondary-info {
-        display: block; /* Show when expanded */
-    }
-}
-```
 
 ---
 
@@ -343,32 +275,11 @@ button:active {
 }
 ```
 
-### 5. Disable Hover-Only Features
-
-```css
-@media (hover: none) {
-    /* Remove hover-dependent features on touch devices */
-    .tooltip-on-hover {
-        display: none;
-    }
-}
-```
-
 ---
 
 ## Performance Considerations
 
-### 1. Minimize Reflows
-
-```css
-/* GPU-accelerated animations */
-.animated {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-}
-```
-
-### 2. Critical CSS
+### 1. Critical CSS
 
 Load essential styles first, defer non-critical:
 
@@ -378,7 +289,7 @@ def apply_global_styles():
     """Inject all CSS into Streamlit — called once at app startup"""
 ```
 
-### 3. Font Loading Strategy
+### 2. Font Loading Strategy
 
 ```css
 /* System font stack for instant render */

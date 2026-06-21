@@ -185,7 +185,7 @@ body.dark-theme {
 
 ### Implementation Status
 ✅ CSS variable system in place (`global_styles.py`)
-✅ Dark mode toggle — implemented via Streamlit's native settings menu on desktop + custom mobile hamburger menu. Pragmatic reuse of platform capability rather than a custom-built toggle. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
+✅ Dark mode toggle — Streamlit's native settings menu handles dark mode on both desktop and mobile. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
 
 ---
 
