@@ -33,48 +33,7 @@ The detailed journey logic, failure modes, and surface rationale for each visito
 
 ## Data Model & Two-Layer Governance
 
-**How do you ensure the AI's answers are trustworthy?**
-
-By creating MattGPT as a system that is **reliable, auditable, and engineered for high-quality information retrieval.**
-
-### The Two-Layer Architecture
-
-### Layer 1: Integrity (The Foundation)
-
-**Mandatory STAR Method**
-
-Every project in the MattGPT corpus follows the STAR framework:
-
-- **Situation:** Context and business challenge
-- **Task:** Specific objective or problem to solve
-- **Action:** Methodology, decisions, and execution
-- **Result:** Measurable outcomes with metrics
-
-STAR structure rules out generic claims, forces concrete examples with business context, and creates an auditable reference chain from every AI answer back to source data.
-
-**Governance Rule:** No project can be indexed without completing all four STAR fields + at least one quantifiable metric.
-
----
-
-### Layer 2: Intelligence (The Discovery Layer)
-
-**The Tagging Systems**
-
-To enable sophisticated search and pattern recognition, every project is enriched with two tagging systems:
-
-#### 5P Taxonomy (Private Metadata)
-- **Person** - Role, seniority, team structure
-- **Place** - Client, industry, geographic context
-- **Purpose** - Capability area, transformation type
-- **Process** - How the work was done; approach and methods
-- **Performance** - Measurable outcomes and results
-
-#### Semantic Public Tags (Industry Standards)
-- **O*NET Competencies** - Standardized skill taxonomy
-- **SFIA Framework** - IT professional skills
-- **LinkedIn Skills** - Common search terms
-
-The tagging layer enables semantic search and cross-project pattern recognition ("Show me all payment modernization projects"), supports synthesis across related work, and aligns with industry-standard taxonomies so the vocabulary connects to how roles are actually searched.
+The corpus runs on two layers. The integrity layer is the STAR structure: every story carries Situation, Task, Action, Result, and at least one metric, which is what lets any answer trace back to a sourced project. The intelligence layer is the tagging that makes retrieval work: a 5P breakdown (Person, Place, Purpose, Process, Performance) and public tags aligned to SFIA, O*NET, and LinkedIn vocabularies so the corpus connects to how roles are actually searched. The full schema is in Data Model.
 
 ---
 
@@ -84,112 +43,13 @@ The tagging layer enables semantic search and cross-project pattern recognition 
 
 > **Implementation Note:** The "system prompt" is implemented as a distributed architecture across multiple services (semantic_router.py, rag_service.py, backend_service.py) rather than a single prompt file. The documented principles guide routing logic, query validation, and response formatting.
 
-### The Operational Mandate
-
-**Your Purpose: The Credibility Engine**
-
-The system exists to surface relevant STAR stories and connect patterns across 100+ projects, driving the user to the core thought:
-
-> *"Matt consistently delivers measurable transformation results — and here's the specific proof."*
-
----
-
-### Core Directive: Anchor Every Answer in Proof
-
-- Anchor every answer in specific projects (Client, Title, Outcome)
-- Lead with outcomes, then methodology ("Achieved 4x acceleration by implementing...")
-- Infer user intent (Interview Prep, Due Diligence, Pitch) to tailor the response structure
-
-**Data Logic:**
-- Semantic search across STAR, 5P, and Competencies to prioritize relevance and pattern extraction
-
----
-
-### The Archetype & Governance
-
-**The Archetype: Trusted, Pragmatic Advisor**
-
-The voice blends two registers (the full archetype is in the [Agy Voice Guide](/docs/05-agy-voice-guide)):
-- **Strategic Advisor** — Executive-ready, outcome-focused
-- **Pragmatic Operator** — Grounded in results, implementation-focused
-
-**Tone:** Warm, confident, and professional—never robotic or buzzword-heavy.
-
----
-
-### The Integrity Mandate
-
-**All answers MUST be auditable by providing a source reference to the underlying project data.**
-
-**Implementation:**
-- Every AI-generated response includes clickable source chips
-- Each source links directly to the full STAR story
-- Users can verify claims by reading the original content
-- No "hallucinated" metrics or outcomes—everything traces to source
+Every answer is anchored to specific sourced projects and carries a clickable source chip linking back to the full STAR story, so any claim can be verified against the original. Nothing is generated that doesn't trace to source. The voice blends a strategic and a pragmatic register; the full archetype is in the Agy Voice Guide.
 
 ---
 
 ## Project Scope & Boundaries
 
-**MVP Definition**
-
-### IN SCOPE: Must Do (Integrity & Proof)
-
-#### 1. Data Structure
-**Requirement:** All content MUST be schema-driven, utilizing the **STAR Method** (Situation, Task, Action, Result) as the mandatory format for every project.
-
-**Rationale:** Ensures consistency, auditability, and proof-based responses.
-
----
-
-#### 2. Verifiability
-**Requirement:** The system MUST provide direct **source references (audit trail)** from any AI-generated answer back to the source Key Metric or STAR Story.
-
-**Rationale:** Maintains trust and allows users to verify claims.
-
----
-
-#### 3. Core Query
-**Requirement:** The Explore Stories interface MUST provide filtering by **Industry, Technology, and Key Outcome** for rapid recruiter comparison.
-
-**Rationale:** Enables recruiters to efficiently screen candidates.
-
----
-
-#### 4. Performance
-**Requirement:** The Detail View (STAR Method & Metrics) MUST load in **under 1 second** to ensure instant, reliable proof delivery.
-
-**Rationale:** Speed builds trust; delays create doubt.
-
----
-
-### OUT OF SCOPE: Must Never Do (Focus & Anti-Chatbot)
-
-#### 1. Generative AI Scope
-**Guardrail:** The system MUST NEVER generate generic career advice, synthesize opinions, or answer questions outside the scope of the **100+ verified STAR-formatted stories**.
-
-**Rationale:** Prevents hallucination and maintains credibility.
-
----
-
-#### 2. Data Mutability
-**Guardrail:** All displayed Key Metrics (e.g., "Accelerated delivery 4x") MUST NEVER be interactive, editable, or changeable via the front-end interface.
-
-**Rationale:** Protects data integrity and prevents tampering.
-
----
-
-#### 3. User Tracking & Personalization
-**Guardrail:** The MVP MUST NEVER include user logins, account creation, or attempt to personalize content based on browsing history.
-
-**Rationale:** Reduces complexity; focuses on core value delivery.
-
----
-
-#### 4. Monetization Features
-**Guardrail:** The system MUST NEVER include payment gateways, subscriptions, or premium content features.
-
-**Rationale:** MVP is a portfolio showcase, not a SaaS product (yet).
+MattGPT is scoped deliberately. It answers only from the sourced project corpus: it won't give generic career advice, synthesize opinions, or speak to anything outside the stories. Displayed metrics are read-only, never editable from the interface. The point is a focused proof engine, not a chatbot.
 
 ---
 
