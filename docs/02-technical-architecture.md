@@ -158,7 +158,7 @@ graph LR
 | Aspect | Standard Mode | Synthesis Mode |
 |--------|--------------|----------------|
 | **Search Strategy** | Pinecone vector search | Theme-filtered parallel search |
-| **Story Selection** | Top 5 with diversity | Up to 7, named-clients-first |
+| **Story Selection** | Top 5 with diversity | Named-clients-first across themes, mode determines final slice |
 | **Ranking** | Pinecone score + entity pinning | Named clients prioritized over generic |
 | **Temperature** | 0.4 | 0.2 (lower for consistency) |
 | **Focus** | Single story deep-dive | Patterns across stories |
