@@ -61,7 +61,7 @@ MattGPT is scoped deliberately. It answers only from the sourced project corpus:
 
 **Related Documentation:**
 - [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
-- [UX Design Process](/docs/03-ux-design-process) - User experience decisions
+- [Audience Journeys](/docs/03-ux-design-process) - The four visitor journeys the design is derived from
 - [Building MattGPT](/docs/04-building-mattgpt) - Development journey
 
 ---
