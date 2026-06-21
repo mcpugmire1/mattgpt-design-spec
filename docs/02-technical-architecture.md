@@ -215,27 +215,7 @@ real outcomes, not just strategy decks.
 
 ### MATT_DNA Ground Truth
 
-**Dynamic extraction from JSONL:**
-
-```python
-# Extracted at startup from "About Matt – My Leadership Journey" story
-MATT_DNA = {
-    "identity": [
-        "builder"  # Only verbatim-required term (March 2026 cleanup)
-    ],
-    "focus_areas": [
-        "solving ambiguous problems",
-        "building high-trust engineering cultures",
-        "modernizing platforms",
-        "shifting how organizations think about technology"
-    ]
-}
-```
-
-**Why Dynamic:**
-- Single source of truth: "About Matt" story in JSONL
-- Update narrative in Excel → auto-updates everywhere
-- No hardcoded identity statements in code
+`MATT_DNA` is generated at startup from the full story corpus — not extracted from a single story. See [Data Pipeline](/docs/12-data-pipeline#january-2026-sovereignty-patterns) for the correct mechanism.
 
 ### Synthesis Prompt Structure
 

@@ -319,7 +319,7 @@ PINECONE_NAMESPACE=default
 
 **1. Dynamic Identity (MATT_DNA)**
 
-Professional narrative generated at app startup from aggregate story data via `generate_dynamic_dna()` in `backend_service.py`. Extracts real-time metrics (career span, client list, theme count) from the loaded corpus and injects them into the system prompt to prevent hallucination. The only verbatim-required term is "builder" (March 2026 cleanup).
+`MATT_DNA` is generated at app startup from the full story corpus via `generate_dynamic_dna()` in `backend_service.py`. It extracts: all unique `Theme` fields, client list and clients grouped by industry, and career span computed from a 2005 start. One exception: the practitioner count is parsed by regex from the Cloud Innovation Center story, with a hardcoded "150" fallback. The only verbatim-required term is "builder" (March 2026 cleanup).
 
 **Why Dynamic:**
 - Single source of truth (story corpus at runtime)
