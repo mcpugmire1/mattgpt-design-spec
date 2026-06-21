@@ -391,19 +391,6 @@ python -m pytest tests/eval_rag_quality.py -v -s
 - Common query patterns (top 10 from analytics)
 - Regression-prone areas (entity pinning, narrative queries)
 
-### Category Guidelines
-
-| Category | Min Cases | Focus |
-|----------|-----------|-------|
-| Entity Detection | 15+ | Client, Employer, Division coverage |
-| Behavioral | 10+ | Interview prep scenarios |
-| Technical/Delivery | 10+ | Methodologies, outcomes, metrics |
-| Marketing | 5+ | ZERO meta-commentary tolerance |
-| Synthesis/Narrative | 5+ | Sacred vocabulary enforcement |
-| Edge Cases | 10+ | Graceful failure modes |
-
----
-
 ### Metrics & Reporting
 
 ### Pass Rate Breakdown
