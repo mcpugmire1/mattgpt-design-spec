@@ -82,7 +82,7 @@ tests/unit/
 def test_semantic_router_intent_detection():
     """Verify semantic router correctly classifies query intents"""
     test_cases = [
-        ("Show me JP Morgan projects", "entity_detection"),
+        ("Show me Matt's platform engineering work", "technical"),
         ("How did Matt scale teams?", "behavioral"),
         ("Tell me about platform engineering", "technical"),
         ("What's Matt's story?", "narrative"),
