@@ -17,7 +17,7 @@
 
 ## Who This Is For
 
-Four visitor types shaped the surface design. Each needs something different from the same corpus.
+Four visitor types shaped the surface design. Each needs something different from the same story corpus.
 
 **A recruiter with a job description** needs a fast, forwardable fit signal. Role Match takes the JD, returns a scored assessment with evidence-backed ratings and a gap summary, and produces an artifact a hiring manager can act on in under 90 seconds.
 
