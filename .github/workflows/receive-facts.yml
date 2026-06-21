@@ -1,4 +1,4 @@
-name: Receive facts from source repo
+name: Receive facts and update page dates
 
 on:
   repository_dispatch:
@@ -9,16 +9,21 @@ on:
         description: "Facts JSON for testing — paste contents of facts.json"
         required: true
         type: string
+  push:
+    paths:
+      - 'docs/**'
 
 jobs:
-  update-facts:
+  update-site-data:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Write _data/facts.yml
+        if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch'
         env:
           FACTS_JSON: ${{ github.event_name == 'workflow_dispatch' && inputs.facts_json || toJson(github.event.client_payload.facts) }}
         run: |
@@ -52,10 +57,50 @@ jobs:
           print(f"Wrote _data/facts.yml ({len(facts)} keys)")
           PYEOF
 
+      - name: Derive page dates from git history
+        run: |
+          mkdir -p _data
+          python3 - <<'PYEOF'
+          import subprocess
+
+          pages = {
+              '01-product-vision': 'docs/01-product-vision.md',
+              '02-technical-architecture': 'docs/02-technical-architecture.md',
+              '03-ux-design-process': 'docs/03-ux-design-process.md',
+              '04-building-mattgpt': 'docs/04-building-mattgpt.md',
+              '05-agy-voice-guide': 'docs/05-agy-voice-guide.md',
+              '07-css-architecture': 'docs/07-css-architecture.md',
+              '08-mobile-implementation': 'docs/08-mobile-implementation.md',
+              '09-api-reference': 'docs/09-api-reference.md',
+              '10-data-model': 'docs/10-data-model.md',
+              '11-testing-and-quality': 'docs/11-testing-and-quality.md',
+              '12-data-pipeline': 'docs/12-data-pipeline.md',
+          }
+
+          lines = [
+              '# Auto-generated — do not edit manually.',
+              '# Updated by .github/workflows/receive-facts.yml',
+              '',
+          ]
+
+          for slug, path in pages.items():
+              result = subprocess.run(
+                  ['git', 'log', '-1', '--format=%ad', '--date=format:%B %Y', '--', path],
+                  capture_output=True, text=True
+              )
+              date = result.stdout.strip() or ''
+              lines.append(f'{slug}: "{date}"')
+
+          with open('_data/page_dates.yml', 'w') as f:
+              f.write('\n'.join(lines) + '\n')
+
+          print(f"Wrote _data/page_dates.yml ({len(pages)} entries)")
+          PYEOF
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add _data/facts.yml
+          git add _data/facts.yml _data/page_dates.yml
           git diff --cached --quiet && echo "No changes to commit" || \
-            (git commit -m "chore: sync facts from source repo [skip ci]" && git push)
+            (git commit -m "chore: sync site data [skip ci]" && git push)
