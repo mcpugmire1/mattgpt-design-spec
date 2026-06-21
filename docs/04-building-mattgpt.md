@@ -25,19 +25,19 @@ Traditional portfolios are static PDFs that don't scale. Recruiters and hiring m
 
 **The Core Issues:**
 
-❌ **Generic, Unverifiable Claims**
+**Generic, Unverifiable Claims**
 - "Experienced in agile transformation"
 - "Skilled in platform engineering"
 - "Led large-scale projects"
 
 These statements provide no proof, no context, and no measurable outcomes.
 
-❌ **Inefficient Vetting Process**
+**Inefficient Vetting Process**
 - Recruiters spend hours manually scanning resumes
 - Hiring managers can't quickly validate specific experience
 - Candidates struggle to retrieve relevant stories for interviews
 
-❌ **Lost Opportunities**
+    **Lost Opportunities**
 - Deep expertise gets overlooked due to poor discoverability
 - Pattern recognition across projects is impossible
 - No way to demonstrate methodology consistency
@@ -197,7 +197,7 @@ def semantic_search(query: str, top_k: int = 10) -> Dict:
 
 - **Semantic Understanding:** Recognizes that "bootstrap it" and "start a new project" are conceptually similar
 - **Confidence Scoring:** Three-tier system (high/low/none) ensures quality results
-- **Threshold Gating:** Prevents low-quality matches from appearing (minimum 0.20 similarity)
+- **Threshold Gating:** Prevents low-quality matches from appearing (minimum {{ site.data.facts.pinecone_min_sim }} similarity)
 - **Intent Recognition:** Understands user goals (interview prep, due diligence, pitch)
 
 This approach was validated through manual testing of common query patterns, demonstrating effective semantic understanding and confidence-based filtering.
@@ -264,7 +264,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Handles synonyms, related concepts, and contextual understanding
 
 **Confidence-Based Filtering:**
-- Three-tier system: high (≥0.25), low (≥0.20), none (<0.20)
+- Three-tier system: high, low, none
 - Prevents low-quality matches from appearing
 - Ensures results are relevant and trustworthy
 
@@ -314,10 +314,10 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 **5-Stage RAG Pipeline (January 2026):**
 - **Stage 1:** Rules-based nonsense detection (regex patterns)
 - **Stage 2:** Semantic router with 15 intent families (intent classification + out-of-scope/personal detection)
-- **Stage 3:** Confidence gating on Pinecone results (HIGH ≥0.25, LOW ≥0.20)
+- **Stage 3:** Confidence gating on Pinecone results
 - **Stage 4:** Entity detection & story pinning (Client, Employer, Division, Title)
 - **Stage 5:** Intent-aware ranking with context isolation (narrative vs entity queries)
-- **Quality:** 100% eval pass rate (64/64 queries)
+- **Quality:** 100% eval pass rate 
 
 **Conversational Workflow:**
 - Streamlit's stateful UI for session management
@@ -352,7 +352,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 Early semantic search was too fuzzy. Ask about "JP Morgan," and it might return stories about "banking transformation" that never mention the client by name. The challenge was balancing broad conceptual understanding with precision.
 
-The solution was confidence-based filtering with metadata enhancement. By implementing a three-tier confidence system (high ≥ 0.25, low ≥ 0.20, none < 0.20) and combining vector similarity with client/industry/domain filters, the system now delivers both relevant and precise results. Getting the threshold values right took three weeks of tuning against real queries.
+The solution was confidence-based filtering with metadata enhancement. By implementing a three-tier confidence system (high ≥ {{ site.data.facts.confidence_high }}, low ≥ {{ site.data.facts.confidence_low }}, none < {{ site.data.facts.confidence_low }}) and combining vector similarity with client/industry/domain filters, the system now delivers both relevant and precise results. Getting the threshold values right took three weeks of tuning against real queries.
 
 ### The Hallucination Problem
 
@@ -374,7 +374,7 @@ The cleanup removed both:
 - **Entity Gate removed:** Was rejecting valid narrative/synthesis queries
 - **LLM intent classification removed:** Redundant with semantic router (which uses embeddings, not LLM calls)
 
-The semantic router now handles everything: 15 intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification (0.80 hard accept / 0.40 soft accept), and graceful rejection with suggestion chips. At that stage (January 2026), eval quality improved to 98.4% (60/61) while reducing costs and latency; the suite has since grown to 64/64 (100%).
+The semantic router now handles everything: 15 intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification ({{ site.data.facts.router_hard_accept }} hard accept / {{ site.data.facts.router_soft_accept }} soft accept), and graceful rejection with suggestion chips. At that stage (January 2026), eval quality improved to 98.4% (60/61) while reducing costs and latency; the suite has since grown to 64/64 (100%).
 
 ---
 

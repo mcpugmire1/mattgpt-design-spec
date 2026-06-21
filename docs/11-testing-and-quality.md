@@ -368,7 +368,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 ```python
 {
     "query": "Show me Accenture projects",
-    "expected_intent": "entity_detection",
+    "expected_intent": "innovation",
     "expected_entity": {
         "type": "Client",
         "value": "Accenture"

@@ -115,14 +115,14 @@ graph LR
 
 **Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
 - Embedding-based similarity matching against 15 intent families
-- Dual-threshold system: HARD_ACCEPT (0.80), SOFT_ACCEPT (0.40)
+- Dual-threshold system: HARD_ACCEPT ({{ site.data.facts.router_hard_accept }}), SOFT_ACCEPT ({{ site.data.facts.router_soft_accept }})
 - Detects synthesis queries (no Pinecone search needed)
 - Flags out-of-scope industries gracefully
 - **Replaced:** Legacy LLM intent classification (removed Jan 2026)
 
 **Stage 3: Confidence Gating**
 - Pinecone semantic search with confidence scoring
-- Thresholds: HIGH (0.25), LOW (0.20)
+- Thresholds: HIGH ({{ site.data.facts.confidence_high }}), LOW ({{ site.data.facts.confidence_low }})
 - Filters phantom similarity noise
 - Returns 0 results below minimum threshold
 
@@ -432,7 +432,7 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 
 **When a query is rejected:**
 
-1. **Semantic router** flags query as below 0.40 threshold
+1. **Semantic router** flags query as below {{ site.data.facts.router_soft_accept }} threshold
 2. **Pattern filter** (optional) confirms off-domain category
 3. **Agy responds** with helpful redirect:
 
@@ -459,61 +459,9 @@ What would you like to know about Matt's experience?
 
 ---
 
-### Accepted vs. Rejected Query Examples
+### How the Two-Stage Gate Works
 
-**✅ ACCEPTED Queries:**
-
-| Query | Why Accepted | Intent Family |
-|-------|-------------|---------------|
-| "How do you scale agile?" | 0.87 similarity to "team_scaling" family | team_scaling |
-| "Tell me about Matt's biggest failure" | 0.82 similarity to "behavioral" family | behavioral |
-| "Show me banking projects" | 0.91 similarity to "domain_payments" family | domain_payments |
-| "What's Matt's technical background?" | 0.85 similarity to "technical" family | technical |
-| "How does Matt handle difficult stakeholders?" | 0.89 similarity to "stakeholders" family | stakeholders |
-
-**❌ REJECTED Queries:**
-
-| Query | Why Rejected | Detection Method |
-|-------|-------------|------------------|
-| "What's the weather in New York?" | 0.32 similarity + weather pattern match | Semantic + Pattern |
-| "Who won the Super Bowl?" | 0.28 similarity + sports pattern match | Semantic + Pattern |
-| "What's Bitcoin's price?" | 0.19 similarity + crypto pattern match | Semantic + Pattern |
-| "Write me a poem about leadership" | 0.41 similarity + creative_writing pattern | Semantic + Pattern |
-| "What's Matt's favorite color?" | 0.35 similarity + personal_trivia pattern | Semantic + Pattern |
-
-**Borderline Cases (0.40-0.80):**
-
-| Query | Similarity | Action |
-|-------|-----------|--------|
-| "What's Matt's management philosophy?" | 0.74 | Accepted (soft), logged for review |
-| "How does someone become a platform engineer?" | 0.58 | Accepted (soft), may redirect to Matt's experience |
-| "Tell me about product-market fit" | 0.35 | Rejected, suggest Matt's product innovation work |
-
----
-
-### Why This Approach Works
-
-**Prevents Poor User Experience:**
-- No wasted searches on irrelevant queries
-- No confusing "here's what I found" with zero results
-- Immediate feedback with helpful suggestions
-
-**Maintains Credibility:**
-- Agy never pretends to know things outside Matt's domain
-- Clear boundaries reinforce "proof, not promises" positioning
-- Honest limitations build trust
-
-**Reduces Costs:**
-- Pattern filters catch 60%+ of nonsense before embedding
-- Semantic router catches another 35% before RAG pipeline
-- Only ~5% of queries reach expensive LLM generation unnecessarily
-
-**Enables Learning:**
-- Soft accept threshold (0.40-0.80) logs borderline queries
-- Manual review improves intent family coverage over time
-- Telemetry shows what users are actually asking
-
----
+Off-domain queries are rejected in two stages before reaching Pinecone. Stage 1 — the pattern gate — runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2 — the semantic router — embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }}–{{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} triggers the off-domain response with suggestion chips.
 
 ---
 
