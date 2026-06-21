@@ -140,29 +140,6 @@ graph LR
 
 ---
 
-## Production RAG Flow (9-Layer Detail)
-
-**Complete query-to-response flow with all decision points:**
-
-<div class="mermaid">
-graph TD
-    Q["User Question"] --> L1
-    L1["Layer 1: Rules-Based Rejection<br/>nonsense_filters.jsonl · is_nonsense() · &lt;5ms · zero embedding cost"] --> L2
-    L2["Layer 2: Semantic Router<br/>text-embedding-3-small · 15 intent families<br/>HARD_ACCEPT=0.80 · SOFT_ACCEPT=0.40 · reject if below 0.40"] --> L3
-    L3["Layer 3: Fast Exit Checks<br/>out_of_scope → graceful redirect<br/>entity detection: Client · Employer · Division · Title<br/>Title = SOFT filter (no Pinecone metadata filter)"] --> L4
-    L4["Layer 4: Pinecone Vector Search<br/>Standard/Narrative: top 10 (SEARCH_TOP_K) · entity + UI filters<br/>Synthesis: all SYNTHESIS_THEMES × top_per_theme=3 = candidate pool"] --> L5
-    L5["Layer 5: Confidence Gate<br/>HIGH ≥0.25 · LOW ≥0.20 · NONE &lt;0.20 → suggestion chips"] --> L6
-    L6["Layer 6: Post-Retrieval Processing<br/>STANDARD: entity pin → diversify_results() → 5 to LLM<br/>NARRATIVE: sort by Pinecone score → 5 to LLM<br/>SYNTHESIS: named-clients-first (deduped pool) → up to 9 to LLM<br/>(10 fetched provides headroom; mode determines final slice)"] --> L7
-    L7["Layer 7: Context Assembly<br/>XML isolation · MATT_DNA injection · mode-specific prompt<br/>~2,000–4,000 tokens"] --> L8
-    L8["Layer 8: LLM Generation (GPT-4o)<br/>temp 0.4 standard / 0.2 synthesis · max 700 tokens"] --> L9
-    L9["Layer 9: Response Formatting<br/>citations · Related Projects · follow-up question"]
-    L9 --> R["User receives cited, STAR-formatted answer"]
-</div>
-
-*Components removed during the January 2026 RAG pipeline cleanup (Entity Gate, classify_query_intent LLM call, Title Hard Filtering) are documented in [HISTORY.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/HISTORY.md) in the codebase repo.*
-
----
-
 ## Synthesis Mode
 
 **Purpose:** Answer high-level narrative and thematic questions by synthesizing patterns across multiple stories.

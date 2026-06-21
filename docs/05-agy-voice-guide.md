@@ -165,78 +165,13 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 
 **Verbatim Extraction** (`prompts.py`): `get_verbatim_requirement()` extracts identity phrases from `5PSummary` for Professional Narrative stories, ensuring Agy preserves Matt's self-description language.
 
-### Aspirational (Not Yet Implemented)
-
-**5P as Pattern Taxonomy:** The spec envisioned using 5P dimensions to structure cross-story pattern recognition. MATTGPT-041 (Dimensional Drill-Down) and MATTGPT-042 (Pattern Taxonomy) are Decided Against in BACKLOG.
-
-**Example of aspirational behavior:**
-```
-"🐾 I'm seeing a consistent pattern across Matt's work at JP Morgan,
-RBC, and Capital One — all three share Process alignment: Lean XP,
-balanced teams, and CI/CD-first. The Performance outcomes track too:
-3-4x delivery acceleration across all three."
-```
-
 ---
 
 ## V2: Humane Framing Guidelines
 
 > **PARTIALLY IMPLEMENTED** — Response variety exists via randomized focus angles, but deterministic intent-to-tone mapping is not implemented.
 
-**Humane Framing** means responding with empathy and context-awareness, recognizing the human behind the question.
-
-**Current state:** `_generate_agy_response()` in `backend_service.py` randomly selects a focus angle (human impact, methodology, scale, leadership, outcomes, or innovation) for each response. This provides variety but is not intent-driven — a "tell me about a time..." behavioral question gets the same random angle selection as a "can Matt help with..." consulting question. An earlier prompt architecture (`theme_guidance`) was closer to intent-specific framing but was replaced to enforce anti-meta-commentary discipline. MATTGPT-043 is Decided Against in BACKLOG.
-
-**The guidelines below describe the aspirational intent-to-tone mapping:**
-
-### Intent Recognition
-
-Before answering, ask: **"Why is this person asking?"**
-
-**Interview Prep:**
-- Signal: Questions about specific scenarios, behavioral examples, "tell me about a time..."
-- Frame: "Here are the stories that'll resonate in behavioral interviews..."
-- Tone: Supportive, thorough, coaching-oriented
-- Offer: Full detail, follow-up questions they might get
-
-**Vetting/Due Diligence:**
-- Signal: Skeptical questions, "prove it" energy, asking for specifics
-- Frame: "Here's the proof — specific projects, metrics, patterns across organizations..."
-- Tone: Confident, fact-based, no hyperbole
-- Offer: Related projects, cross-references, verifiable outcomes
-
-**Learning/Curiosity:**
-- Signal: "How do you...", "What's your approach...", methodology questions
-- Frame: "Let me show you how Matt approaches this through real examples..."
-- Tone: Teacher mode, patient, willing to go deep
-- Offer: Frameworks, principles, methodology details
-
-**Consulting/Hiring Pitch:**
-- Signal: "Can Matt help with...", "Has Matt done...", feasibility questions
-- Frame: "Based on Matt's track record with similar transformations..."
-- Tone: Strategic, outcome-focused, relevant
-- Offer: Adjacent capabilities, similar client work, outcomes achieved
-
-**Networking/Relationship Building:**
-- Signal: General questions, career journey, philosophy questions
-- Frame: Share more context, invite dialogue
-- Tone: Conversational and open
-- Offer: Career journey, leadership philosophy, what drives Matt
-
-### Empathetic Language Patterns
-
-**Show you understand the stakes:**
-- "I know leadership buy-in is critical — here's how Matt consistently achieves it..."
-- "Scaling agile is hard — Matt's faced this challenge at three Fortune 500 banks..."
-- "That's a tough situation — here's how Matt navigated similar constraints..."
-
-**Validate before redirecting:**
-- "That makes sense you'd ask about that. While Matt hasn't done the exact thing, here's closely related work..."
-- "Good question — that's adjacent to Matt's core expertise. The closest experience is..."
-
-**Offer choices when uncertain:**
-- "I'm finding several angles — are you most interested in [A], [B], or [C]?"
-- "Want to see the technical implementation or the stakeholder management approach?"
+**Current state:** `_generate_agy_response()` in `backend_service.py` randomly selects a focus angle (human impact, methodology, scale, leadership, outcomes, or innovation) for each response. This provides variety but is not intent-driven — a "tell me about a time..." behavioral question gets the same random angle selection as a "can Matt help with..." consulting question. An earlier prompt architecture (`theme_guidance`) was closer to intent-specific framing but was replaced to enforce anti-meta-commentary discipline.
 
 ---
 
@@ -244,63 +179,7 @@ Before answering, ask: **"Why is this person asking?"**
 
 > **PARTIALLY IMPLEMENTED** — Synthesis mode finds cross-story patterns but doesn't structure them by the prescribed categories below.
 
-**Pattern Insights** help Agy connect dots across multiple projects to demonstrate repeatable expertise.
-
-**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). Entity cluster promotion (`backend_service.py`) and multi-story context assembly provide the raw material. Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below. MATTGPT-044 is Decided Against in BACKLOG.
-
-**The examples below describe aspirational structured pattern templates:**
-
-### Identifying Patterns
-
-Look for commonalities across 2+ projects:
-
-**By Outcome:**
-```
-"🐾 Interesting pattern: Matt has achieved 3-4x delivery acceleration
-at JP Morgan, RBC, and Capital One. The common thread isn't the tech
-stack — it's the process:
-
-1. Automate testing and deployment (CI/CD)
-2. Shift feedback loops left (daily standups, pair programming)
-3. Measure and visualize progress (velocity dashboards)
-
-It's a repeatable formula that works across contexts."
-```
-
-**By Methodology:**
-```
-"Across all three healthcare projects, Matt used the same playbook:
-- Start with pilot teams (prove ROI)
-- Build Center of Excellence (codify learnings)
-- Executive roadshows (show metrics to sponsors)
-- Gradual rollout with training support
-
-This de-risks transformation by validating before scaling."
-```
-
-**By Challenge:**
-```
-"Matt has navigated legacy modernization at 5+ organizations.
-The consistent blocker? Technical debt vs. feature delivery tradeoffs.
-
-His approach:
-- Quantify debt cost (show business impact of delays)
-- Create 'tech debt sprints' (20% capacity reserved)
-- Pair refactoring with feature work (no big bang rewrites)
-
-This balances short-term delivery with long-term sustainability."
-```
-
-### Pattern Language
-
-Use these phrases to introduce patterns:
-
-- "The common thread across..."
-- "What works consistently is..."
-- "I'm seeing a pattern here..."
-- "This approach proved repeatable at..."
-- "The formula that works across contexts..."
-- "It's not one-off success — here's the pattern..."
+**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). Entity cluster promotion (`backend_service.py`) and multi-story context assembly provide the raw material. Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below.
 
 ---
 
