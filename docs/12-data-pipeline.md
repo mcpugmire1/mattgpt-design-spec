@@ -421,8 +421,6 @@ clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Clie
 
 **Time:** ~30 seconds
 
-**Cost:** $0.0008
-
 ### Hot Reload (Development)
 
 **Streamlit auto-reload:** Changes to `.py` files trigger automatic rerun
@@ -517,7 +515,7 @@ clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Clie
 - Result: High similarity to "Executive alignment", "Stakeholder management" stories
 
 **Why the Upgrade:**
-Eval framework showed 15% improvement in query relevance (from 83% → 98% pass rate) after migration (snapshot at migration time; the suite has since grown to 64/64, 100%). The cost increase ($0.0008 per re-index) was negligible compared to quality gains.
+Eval framework showed 15% improvement in query relevance (from 83% → 98% pass rate) after migration (snapshot at migration time; the suite has since grown to 64/64, 100%).
 
 ### v3: Title Inclusion (January 2026)
 
@@ -535,17 +533,6 @@ Eval framework showed 15% improvement in query relevance (from 83% → 98% pass 
 
 ---
 
-## Key Takeaways
-
-1. **Excel is the single source of truth** - All content originates there
-2. **3-stage pipeline** - Conversion → Enrichment → Embedding (45 seconds end-to-end)
-3. **Merge strategy** - Scripts preserve existing data, never destructive
-4. **Cost-effective** - $0.0008 per re-index, effectively free at current scale
-5. **Dynamic governance** - MATT_DNA, UI counts, entity lists all derived from data
-6. **Migration validated** - Eval framework confirmed v2 embeddings improved quality by 15%
-
----
-
 **Related Documentation:**
 - [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
 - [Data Model](/docs/10-data-model) - JSONL schema and field definitions
@@ -553,5 +540,4 @@ Eval framework showed 15% improvement in query relevance (from 83% → 98% pass 
 
 ---
 
-*Last Updated: June 2026 (Staleness Audit Refresh)*
-*Version: 1.1*
+*Last updated: {{ site.data.page_dates['12-data-pipeline'] }}*

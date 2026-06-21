@@ -591,5 +591,4 @@ Place primary actions in the "thumb zone" (bottom 2/3 of screen on mobile).
 
 ---
 
-*Last Updated: April 29, 2026 (React migration reframe)*
-*Version: 1.1*
+*Last updated: {{ site.data.page_dates['08-mobile-implementation'] }}*

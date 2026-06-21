@@ -78,15 +78,15 @@ I named it after Agy, my late Plott Hound — short for Agador Spartacus from "T
 
 | Technology | Purpose | Why This Choice |
 |------------|---------|-----------------|
-| 🐍 **Python 3.11** | Primary language | Rich ML/AI ecosystem, rapid prototyping |
+| **Python 3.11** | Primary language | Rich ML/AI ecosystem, rapid prototyping |
 | **Streamlit** | Frontend framework (MVP) | 2-week build time vs 3+ months for React |
-| 🤖 **OpenAI GPT-4o** | LLM for response generation | State-of-the-art reasoning and synthesis |
-| 🌲 **Pinecone** | Vector database | Managed solution, fast ANN search |
+| **OpenAI GPT-4o** | LLM for response generation | State-of-the-art reasoning and synthesis |
+| **Pinecone** | Vector database | Managed solution, fast ANN search |
 | **OpenAI Embeddings** | Embedding generation | text-embedding-3-small (1536-dim) |
 | **Pandas** | Data manipulation | JSONL processing and metadata handling |
 | **NumPy** | Numerical operations | Vector math and similarity scoring |
-| 📦 **Python venv** | Dependency management | Local dev environment with requirements.txt |
-| ☁️ **Streamlit Cloud** | Deployment (MVP) | Free hosting for Streamlit apps |
+| **Python venv** | Dependency management | Local dev environment with requirements.txt |
+| **Streamlit Cloud** | Deployment (MVP) | Free hosting for Streamlit apps |
 
 ### System Architecture
 
@@ -256,7 +256,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ---
 
-### 🔍 Semantic Search Strategy
+### Semantic Search Strategy
 
 **Vector-Based Meaning Matching:**
 - Understanding intent, not just keywords
@@ -280,7 +280,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ---
 
-### 📊 Frontend (Streamlit MVP)
+### Frontend (Streamlit MVP)
 
 **Conversational UI:**
 - Context-aware chat history persistence
@@ -309,7 +309,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ---
 
-### 🔧 Backend & DevOps
+### Backend & DevOps
 
 **5-Stage RAG Pipeline (January 2026):**
 - **Stage 1:** Rules-based nonsense detection (regex patterns)
@@ -388,9 +388,9 @@ I originally planned to build a React + FastAPI stack. I'm glad I didn't. Stream
 
 I spent more time curating STAR stories and validating metadata than I did on the ML pipeline. That discipline paid off: every AI response traces to auditable source data, and users trust the system because it never makes things up.
 
-### The Strangler Fig Refactor
+### Refactoring the Monolith
 
-By October 2025, the main app.py file had grown to over 5,000 lines. It was unmaintainable. I used the strangler fig pattern to extract components one by one — timeline_view.py, story_detail.py, landing_view.py — until the core file was under 1,000 lines. The architecture is now modular enough that I can hand off individual components to AI coding assistants without them needing to understand the whole system.
+By October 2025, app.py had grown to 5,765 lines and ask_mattgpt.py to 4,696, both unmaintainable. I broke them apart incrementally, extracting one component at a time rather than rewriting, until app.py was 284 lines and ask_mattgpt.py a modular directory, small enough to hand individual pieces to AI coding assistants without them needing the whole system.
 
 ### The "Can You Defend It?" Standard
 
@@ -516,8 +516,7 @@ I don't know yet. But the foundation is solid, and the thesis is validated.
 - Finalized {{ site.data.facts.story_count_label }} verified stories
 
 ### October 2025: Architecture Refactor
-- Strangler fig pattern: 5,765 → 284 lines in app.py
-- Extracted modular components
+- Refactored monolith: app.py 5,765 → 284 lines, ask_mattgpt.py 4,696 → modular directory
 - Created comprehensive design specification
 - Deployed to Streamlit Cloud
 
@@ -550,5 +549,4 @@ Every line of code, every STAR story, every design decision serves that mission:
 
 ---
 
-*Last Updated: June 2026 (Staleness audit: eval 100%/64q, BDD {{ site.data.facts.bdd_summary }})*
-*Version: 1.5*
+*Last updated: {{ site.data.page_dates['04-building-mattgpt'] }}*

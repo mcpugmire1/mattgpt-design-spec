@@ -519,5 +519,4 @@ if not all(query_token in story_tokens for query_token in query_tokens):
 
 ---
 
-*Last Updated: January 30, 2026 (Entity Fields & Interview Questions)*
-*Version: 1.1 (Added Entity Detection Fields, Dates, Interview Questions)*
+*Last updated: {{ site.data.page_dates['10-data-model'] }}*

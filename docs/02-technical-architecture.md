@@ -26,10 +26,10 @@ MattGPT's architecture evolved through intentional phases:
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
-| 🐍 **Frontend/Backend** | Streamlit (Monolith) | Rapid prototyping framework |
-| 🤖 **LLM** | OpenAI {{ site.data.facts.chat_model }} | Natural language processing |
-| 🌲 **Vector Database** | Pinecone | Semantic search and embeddings |
-| 📦 **Dependencies** | Python venv + pip | Local development environment |
+| **Frontend/Backend** | Streamlit (Monolith) | Rapid prototyping framework |
+| **LLM** | OpenAI {{ site.data.facts.chat_model }} | Natural language processing |
+| **Vector Database** | Pinecone | Semantic search and embeddings |
+| **Dependencies** | Python venv + pip | Local development environment |
 
 ### Accepted Trade-offs
 
@@ -713,5 +713,4 @@ story_index = 0  # Select by index, build query from actual title
 
 ---
 
-*Last Updated: June 2026 (Staleness audit: eval 100%/64q, sacred vocab builder-only, MATT_DNA, BDD {{ site.data.facts.bdd_summary }}, story count {{ site.data.facts.story_count_label }})*
-*Version: 1.5*
+*Last updated: {{ site.data.page_dates['02-technical-architecture'] }}*

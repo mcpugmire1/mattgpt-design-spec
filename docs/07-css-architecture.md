@@ -352,5 +352,4 @@ Keep component-specific styles scoped to prevent conflicts:
 
 ---
 
-*Last Updated: April 29, 2026 (React migration reframe)*
-*Version: 1.1*
+*Last updated: {{ site.data.page_dates['07-css-architecture'] }}*

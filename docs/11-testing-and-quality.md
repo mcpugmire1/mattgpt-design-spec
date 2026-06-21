@@ -35,8 +35,6 @@ graph TD
 - **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
 - **Total Test Runtime:** ~30 minutes (full suite)
 
-**Why This Matters:**
-
 RAG systems are notoriously hard to test. LLM outputs are non-deterministic, semantic similarity is fuzzy, and "good enough" is subjective. Without systematic testing, pipeline changes become high-risk guesswork.
 
 MattGPT's testing strategy provides:
@@ -265,7 +263,6 @@ Landing page queries requiring zero meta-commentary.
 - "Matt's ability to"
 - "his ability to"
 
-**Why This Matters:**
 Marketing and landing page queries fail HARD if meta-commentary slips through. "What's Matt's superpower?" should NOT return "This demonstrates Matt's ability to..." — it should say "Building from nothing" directly.
 
 ### Confidence Threshold Behavior
@@ -329,7 +326,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 **Eval-Driven Solution:**
 1. Ran eval suite → 52/60 pass rate (86.7%)
 2. Analyzed failures → Entity Gate blocking narrative queries
-3. Removed Entity Gate → 60/61 pass rate (98.1%), then expanded to 64/64 (100%) through suite growth
+3. Removed Entity Gate → 60/61 pass rate, then expanded to 64/64 (100%) through suite growth
 4. Validated with regression suite → No new failures introduced
 
 **Key Insight:** Without evals, the Entity Gate would have stayed in place, silently degrading UX for 13% of queries.
@@ -349,7 +346,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 3. Monitored borderline cases (0.40-0.50) for 2 weeks
 4. Confirmed: No quality degradation, better recall
 
-**Result:** 98.1% pass rate with fewer false rejections
+**Result:** Fewer false rejections with no quality degradation
 
 ### LLM Intent Classification Removal
 
@@ -544,21 +541,6 @@ These gates run manually before merge and before production deploy. They are con
 
 ---
 
-## Key Takeaways
-
-1. **3-layer strategy catches everything:** Unit tests (components), RAG evals (pipeline), E2E (workflows)
-2. **Fast feedback loop:** Unit tests run in <1 minute, catch issues immediately
-3. **Eval-driven development prevents regressions:** Entity Gate removal validated through evals
-4. **Threshold tuning requires data:** 0.72 → 0.40 was guided by query score analysis
-5. **Voice quality is measurable:** Meta-commentary detection is binary (no subjective "feels right")
-6. **E2E validates reality:** {{ site.data.facts.bdd_summary }} ensure complete user workflows work end-to-end
-
-**The Bottom Line:**
-
-> Without systematic testing, quality is guesswork. With 3-layer testing, architectural changes become low-risk, data-driven decisions backed by 100+ test cases.
-
----
-
 **Related Documentation:**
 - [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline details
 - [Building MattGPT](/docs/04-building-mattgpt) - Development journey
@@ -566,5 +548,4 @@ These gates run manually before merge and before production deploy. They are con
 
 ---
 
-*Last Updated: June 2026 (Staleness Audit Refresh)*
-*Version: 1.1*
+*Last updated: {{ site.data.page_dates['11-testing-and-quality'] }}*

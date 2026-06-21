@@ -470,5 +470,4 @@ pytest --cov=services --cov=utils tests/
 
 ---
 
-*Last Updated: June 2026 (Staleness Audit Refresh)*
-*Version: 1.1*
+*Last updated: {{ site.data.page_dates['09-api-reference'] }}*

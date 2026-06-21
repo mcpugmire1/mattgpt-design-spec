@@ -278,27 +278,6 @@ The voice blends two registers (the full archetype is in the [Agy Voice Guide](/
 
 ---
 
-## Key Takeaways
-
-### The Value Proposition
-
-**For Recruiters:**
-- Validate skills and experience with verifiable proof
-- Eliminate doubt with concrete examples and metrics
-- Filter by technology, industry, and outcomes
-
-**For Hiring Managers:**
-- Assess depth and process with STAR-formatted stories
-- Verify claims through auditable source references
-- Understand patterns across 100+ real projects
-
-**For Candidates (Matt):**
-- Retrieve relevant stories instantly for interview prep
-- Synthesize themes across related projects
-- Demonstrate credibility through proof, not claims
-
----
-
 **The Mission:**
 
 > Replace "I'm experienced" with "Here's exactly what I did, how I did it, and the measurable results."
@@ -312,5 +291,4 @@ The voice blends two registers (the full archetype is in the [Agy Voice Guide](/
 
 ---
 
-*Last Updated: June 2026 (Staleness Audit Refresh)*
-*Version: 1.2 (Updated with Implementation Details)*
+*Last updated: {{ site.data.page_dates['01-product-vision'] }}*
