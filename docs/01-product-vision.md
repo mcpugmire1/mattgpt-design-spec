@@ -8,62 +8,10 @@
 
 ## Table of Contents
 
-1. [The Credibility Engine: WHY, HOW, WHAT](#the-credibility-engine)
-2. [Who This Is For](#who-this-is-for)
-3. [Data Model & Two-Layer Governance](#data-model--two-layer-governance)
-4. [MattGPT AI Core: System Prompt & Integrity Mandate](#mattgpt-ai-core)
-5. [Project Scope & Boundaries](#project-scope--boundaries)
-
----
-
-## The Credibility Engine
-
-**Tagline:** *"Matt doesn't claim credibility — he proves it in real time."*
-
-### WHY: Establish Credibility
-
-**Eliminate Doubt**
-
-The core purpose is to replace generic claims and shallow experience with instant, quantifiable proof.
-
-Traditional portfolios rely on self-promotion and unverifiable claims. Recruiters and hiring managers waste time validating experience, and candidates struggle to differentiate themselves from generic resumes.
-
----
-
-### HOW: Act as a Credibility Engine
-
-**Automatically mining 100+ real projects to surface the right evidence instantly.**
-
-MattGPT functions as an intelligent search and retrieval system that:
-
-- **Surfaces Specific STAR Stories** - Structured narratives with verifiable context
-- **Identifies Methodology Patterns** - e.g., "Scaled payments at 3 banks"
-- **Quantifies Measurable Outcomes** - e.g., "Accelerated delivery 4x"
-
-**Key Capability:** The AI doesn't generate claims—it **retrieves and presents proof** from structured, auditable source data.
-
----
-
-### WHAT: Specific Outcomes
-
-**The AI-Powered Guide**
-
-MattGPT delivers verifiable outcomes for three primary use cases:
-
-#### 1. Recruiter Vetting
-- **Need:** Fast validation of skills and experience
-- **Outcome:** Instant keyword matching + proof of outcomes
-- **Value:** Verifiable skills evidence without back-and-forth
-
-#### 2. Interview Prep
-- **Need:** Deep preparation with specific examples
-- **Outcome:** STAR-formatted stories ready to use
-- **Value:** Walk into interviews with concrete narratives
-
-#### 3. Client Pitches
-- **Need:** Relevant case studies and proven results
-- **Outcome:** Industry-specific examples with metrics
-- **Value:** Build trust through demonstration, not declaration
+1. [Who This Is For](#who-this-is-for)
+2. [Data Model & Two-Layer Governance](#data-model--two-layer-governance)
+3. [MattGPT AI Core: System Prompt & Integrity Mandate](#mattgpt-ai-core)
+4. [Project Scope & Boundaries](#project-scope--boundaries)
 
 ---
 
@@ -90,13 +38,6 @@ The detailed journey logic, failure modes, and surface rationale for each visito
 By creating MattGPT as a system that is **reliable, auditable, and engineered for high-quality information retrieval.**
 
 ### The Two-Layer Architecture
-
-| Layer | Technical Name | Purpose (The WHY) | Key Data Fields |
-|-------|---------------|-------------------|-----------------|
-| **Layer 1: Integrity** (The Core) | Mandatory STAR Method | Guarantees every story has **verifiable context** and **measurable results (metrics)**, fulfilling the promise of "Eliminate Doubt" | Situation, Task, Action, Result (with metrics) |
-| **Layer 2: Intelligence** (The AI Fuel) | The Tagging Systems (5P + Semantic) | Enables complex **Hybrid Search** and **Pattern Recognition** for the AI (e.g., "Scaled payments at 3 banks") | 5P Taxonomy (Person, Place, Purpose, Process, Performance), Semantic Public Tags (O*NET/SFIA alignment) |
-
----
 
 ### Layer 1: Integrity (The Foundation)
 
@@ -176,22 +117,6 @@ The voice blends two registers (the full archetype is in the [Agy Voice Guide](/
 
 ---
 
-### Non-Negotiable Guardrails
-
-❌ **No generic career advice or philosophical answers**
-- The system only discusses Matt's specific project experience
-- No hypotheticals, no general industry commentary
-
-❌ **No corporate buzzword soup or robotic language**
-- Use concrete, human language
-- Avoid jargon without context
-
-❌ **Never pretend to know things outside Matt's portfolio**
-- If a query falls outside the 100+ projects, acknowledge limitations
-- Suggest alternative search terms or clarify scope
-
----
-
 ### The Integrity Mandate
 
 **All answers MUST be auditable by providing a source reference to the underlying project data.**
@@ -201,16 +126,6 @@ The voice blends two registers (the full archetype is in the [Agy Voice Guide](/
 - Each source links directly to the full STAR story
 - Users can verify claims by reading the original content
 - No "hallucinated" metrics or outcomes—everything traces to source
-
-**Example Response Format:**
-```
-✅ Good: "Matt accelerated delivery 4x at JP Morgan Chase by implementing
-         CI/CD pipelines and automated testing frameworks."
-         [Source: Agile Transformation at JP Morgan Chase]
-
-❌ Bad:  "Matt is experienced in DevOps and has worked with major banks."
-         [No source, no metric, no proof]
-```
 
 ---
 
