@@ -452,11 +452,11 @@ Place primary actions in the "thumb zone" (bottom 2/3 of screen on mobile).
 ## Roadmap
 
 ### Current State (Streamlit)
-✅ Mobile-responsive CSS (200 lines)
-✅ Touch-optimized controls
-✅ Horizontal scroll tables
-✅ Stacking layouts
-✅ Hamburger navigation
+Mobile-responsive CSS (200 lines)
+Touch-optimized controls
+Horizontal scroll tables
+Stacking layouts
+Hamburger navigation
 
 ### Future: React Migration (if forcing function emerges)
 - PWA capabilities (offline support)
