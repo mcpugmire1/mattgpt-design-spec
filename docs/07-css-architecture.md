@@ -184,8 +184,8 @@ body.dark-theme {
 ```
 
 ### Implementation Status
-✅ CSS variable system in place (`global_styles.py`)
-✅ Dark mode toggle: Streamlit's native settings menu handles dark mode on both desktop and mobile. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
+CSS variable system in place (`global_styles.py`)
+Dark mode toggle: Streamlit's native settings menu handles dark mode on both desktop and mobile. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
 
 ---
 
@@ -228,11 +228,11 @@ apply_global_styles()  # Injects CSS into page
 ### 1. Always Use CSS Variables
 
 ```css
-/* ✅ Good */
+/* Good */
 color: var(--text-primary);
 background: var(--bg-surface);
 
-/* ❌ Bad */
+/* Bad */
 color: #2c3e50;
 background: #ffffff;
 ```
@@ -240,7 +240,7 @@ background: #ffffff;
 ### 2. Mobile-First Approach
 
 ```css
-/* ✅ Good - Base styles for mobile, enhance for desktop */
+/* Good - Base styles for mobile, enhance for desktop */
 .card {
     padding: var(--spacing-sm);
 }
@@ -251,7 +251,7 @@ background: #ffffff;
     }
 }
 
-/* ❌ Bad - Desktop-first requires more overrides */
+/* Bad - Desktop-first requires more overrides */
 .card {
     padding: var(--spacing-lg);
 }
@@ -268,11 +268,11 @@ background: #ffffff;
 Use the spacing variables instead of arbitrary values:
 
 ```css
-/* ✅ Good */
+/* Good */
 margin: var(--spacing-md);
 padding: var(--spacing-sm) var(--spacing-md);
 
-/* ❌ Bad */
+/* Bad */
 margin: 24px;
 padding: 16px 24px;
 ```
@@ -282,7 +282,7 @@ padding: 16px 24px;
 Keep component-specific styles scoped to prevent conflicts:
 
 ```css
-/* ✅ Good - Scoped to component */
+/* Good - Scoped to component */
 .story-card {
     /* Story card specific styles */
 }
@@ -291,7 +291,7 @@ Keep component-specific styles scoped to prevent conflicts:
     /* Nested selector */
 }
 
-/* ❌ Bad - Too generic */
+/* Bad - Too generic */
 .card {
     /* Could conflict with other cards */
 }
@@ -316,11 +316,11 @@ Keep component-specific styles scoped to prevent conflicts:
 ```css
 /* Avoid expensive properties on animations */
 .animated-element {
-    /* ✅ GPU-accelerated */
+    /* GPU-accelerated */
     transform: translateX(10px);
     opacity: 0.8;
 
-    /* ❌ Triggers reflow */
+    /* Triggers reflow */
     margin-left: 10px;
     width: 200px;
 }
@@ -331,10 +331,10 @@ Keep component-specific styles scoped to prevent conflicts:
 ## Migration Roadmap
 
 ### Phase 1: Streamlit (Current)
-✅ CSS variables implemented
-✅ Mobile-responsive design (`ui/styles/mobile_overrides.py`)
-✅ Component-scoped styling
-✅ Dark mode toggle (Streamlit native settings menu)
+CSS variables implemented
+Mobile-responsive design (`ui/styles/mobile_overrides.py`)
+Component-scoped styling
+Dark mode toggle (Streamlit native settings menu)
 
 ### Future: React Migration (if forcing function emerges)
 - Convert to CSS Modules or Styled Components
