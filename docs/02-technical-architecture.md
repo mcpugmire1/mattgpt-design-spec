@@ -10,7 +10,7 @@
 
 MattGPT's architecture evolved through intentional phases:
 
-1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment: ✅ Complete
+1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment: Complete
 2. **Production (Streamlit):** Ongoing feature delivery: Role Match, mobile responsive, eval framework, query analytics
 
 
@@ -18,7 +18,7 @@ MattGPT's architecture evolved through intentional phases:
 
 ## Phase 1: MVP - Rapid Validation
 
-**Status:** ✅ Complete (December 2025)
+**Status:** Complete (December 2025)
 **Timeline:** Current State
 **Primary Goal:** Validate product-market fit with minimal investment
 
@@ -35,19 +35,19 @@ MattGPT's architecture evolved through intentional phases:
 
 The MVP phase consciously accepted limitations to accelerate learning:
 
-- ~~**Mobile-responsive implementation:**~~ ✅ Shipped: production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
+- ~~**Mobile-responsive implementation:**~~ Shipped: production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
 - **Limited scalability:** Estimated ~100 concurrent users (not load-tested; Streamlit Community Cloud limits apply)
 - **No caching layer:** Direct database queries
-- ~~**Modular architecture:**~~ ✅ Shipped: refactored from monolithic app.py to component-based structure
-- ~~**Minimal observability:**~~ ✅ Shipped: 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
+- ~~**Modular architecture:**~~ Shipped: refactored from monolithic app.py to component-based structure
+- ~~**Minimal observability:**~~ Shipped: 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
 
 ### Key Decisions
 
 **Why Streamlit?**
-- ✅ Initial MVP build time: 2 weeks vs 3+ months for React*
-- ✅ Python-native (matches ML/AI ecosystem)
-- ✅ Built-in state management
-- ✅ Rapid iteration without frontend complexity
+- Initial MVP build time: 2 weeks vs 3+ months for React*
+- Python-native (matches ML/AI ecosystem)
+- Built-in state management
+- Rapid iteration without frontend complexity
 
 *Note: Continuous refinement and feature additions ongoing since launch.
 
@@ -61,15 +61,15 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ### Architecture Evolutions Achieved
 
 **January 2026 - RAG Pipeline Cleanup:**
-- ✅ 5-stage RAG pipeline with 100% eval pass rate (64/64)
-- ❌ Removed Entity Gate bouncer (was blocking legitimate queries)
-- ❌ Removed `classify_query_intent()` LLM call (redundant with router)
-- ✅ Semantic router now handles synthesis + out-of-scope + narrative detection
-- ✅ Expanded to 15 intent families (was 10)
-- ✅ Centralized thresholds in `config/constants.py`
-- ✅ Unified SEARCH_TOP_K = 10 (was 100/7 conflict)
-- ✅ Title soft filtering (semantic search ranks naturally)
-- ✅ Model upgrade: GPT-4o-mini → GPT-4o
+- 5-stage RAG pipeline with 100% eval pass rate (64/64)
+- Removed Entity Gate bouncer (was blocking legitimate queries)
+- Removed `classify_query_intent()` LLM call (redundant with router)
+- Semantic router now handles synthesis + out-of-scope + narrative detection
+- Expanded to 15 intent families (was 10)
+- Centralized thresholds in `config/constants.py`
+- Unified SEARCH_TOP_K = 10 (was 100/7 conflict)
+- Title soft filtering (semantic search ranks naturally)
+- Model upgrade: GPT-4o-mini → GPT-4o
 
 **December 2025 - Modular Architecture:**
 - Refactored monolithic ask_mattgpt.py (4,696 lines) into {{ site.data.facts.ask_mattgpt_module_file_count }}-file directory
@@ -95,7 +95,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 
 ## 5-Stage RAG Pipeline
 
-**Status:** ✅ Implemented (January 2026)
+**Status:** Implemented (January 2026)
 **Quality:** 100% eval pass rate (64/64 queries)
 
 MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
@@ -297,13 +297,13 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 ```
 
 **What Changed (January 2026):**
-- ❌ **Removed:** Entity Gate threshold bouncer (was blocking legitimate narrative queries)
-- ❌ **Removed:** `classify_query_intent()` LLM call (GPT-4o-mini - redundant with router)
-- ✅ **Added:** Synthesis detection (intent_family == "synthesis")
-- ✅ **Added:** Out-of-scope industry detection (intent_family == "out_of_scope")
-- ✅ **Added:** Narrative queries (intent_family == "narrative")
-- ✅ **Added:** Personal query detection (intent_family == "personal")
-- ✅ **Expanded:** 10 intent families → 15 intent families
+- **Removed:** Entity Gate threshold bouncer (was blocking legitimate narrative queries)
+- **Removed:** `classify_query_intent()` LLM call (GPT-4o-mini - redundant with router)
+- **Added:** Synthesis detection (intent_family == "synthesis")
+- **Added:** Out-of-scope industry detection (intent_family == "out_of_scope")
+- **Added:** Narrative queries (intent_family == "narrative")
+- **Added:** Personal query detection (intent_family == "personal")
+- **Expanded:** 10 intent families → 15 intent families
 
 **Intent Families (15 categories):**
 
@@ -453,22 +453,22 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 
 ### What's Live Today (June 2026)
 
-- ✅ Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- ✅ **5-stage RAG pipeline** with 100% eval pass rate (64/64)
-- ✅ **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
-- ✅ **Semantic router** with 15 intent families + out-of-scope/personal detection
-- ✅ **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
-- ✅ **Query analytics**: 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
-- ✅ **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
-- ✅ 100+ STAR-structured project stories
-- ✅ Semantic search with confidence scoring and metadata filtering
-- ✅ **Timeline View** with Era-based career progression
-- ✅ **Mobile-responsive design** (global_styles.py + mobile_overrides.py; breakpoints: 767px, 1024px)
-- ✅ **Dark mode support** via CSS variables
-- ✅ **Modular architecture** ({{ site.data.facts.ask_mattgpt_module_file_count }}-file ask_mattgpt/ structure)
-- ✅ **BDD test suite**: {{ site.data.facts.bdd_summary }}
-- ✅ Conversation history and context management
-- ✅ Related Projects UX pattern
+- Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
+- **5-stage RAG pipeline** with 100% eval pass rate (64/64)
+- **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
+- **Semantic router** with 15 intent families + out-of-scope/personal detection
+- **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
+- **Query analytics**: 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
+- **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
+- 100+ STAR-structured project stories
+- Semantic search with confidence scoring and metadata filtering
+- **Timeline View** with Era-based career progression
+- **Mobile-responsive design** (global_styles.py + mobile_overrides.py; breakpoints: 767px, 1024px)
+- **Dark mode support** via CSS variables
+- **Modular architecture** ({{ site.data.facts.ask_mattgpt_module_file_count }}-file ask_mattgpt/ structure)
+- **BDD test suite**: {{ site.data.facts.bdd_summary }}
+- Conversation history and context management
+- Related Projects UX pattern
 
 
 
