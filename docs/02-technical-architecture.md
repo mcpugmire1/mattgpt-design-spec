@@ -111,7 +111,6 @@ graph LR
 - Fast regex matching against `nonsense_filters.jsonl` patterns
 - Catches obvious off-domain queries (weather, sports, stocks, etc.)
 - Zero embedding cost, executes in <5ms
-- Blocks 60%+ of nonsense before semantic processing
 
 **Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
 - Embedding-based similarity matching against 15 intent families
