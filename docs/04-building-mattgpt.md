@@ -14,9 +14,6 @@
 4. [What MattGPT Can Do](#what-mattgpt-can-do)
 5. [Key Challenges & Solutions](#key-challenges--solutions)
 6. [Lessons Learned](#lessons-learned)
-7. [Product Roadmap](#product-roadmap)
-8. [Future Vision](#future-vision)
-
 ---
 
 ## The Problem
@@ -212,11 +209,11 @@ Every project must include:
 - **Action:** Methodology, decisions, execution
 - **Result:** Measurable outcomes with metrics
 
-**Enforcement:** No project can be indexed without completing all four STAR fields + at least one quantifiable metric.
+Every story is authored with all four STAR fields and at least one metric.
 
 **Layer 2: Intelligence (Tagging Systems)**
 
-**5P Taxonomy (Private Metadata):**
+**5P Taxonomy:**
 - **Person:** Role, seniority, team structure
 - **Place:** Client, industry, geographic context
 - **Purpose:** Capability area, transformation type
@@ -395,97 +392,6 @@ By October 2025, app.py had grown to 5,765 lines and ask_mattgpt.py to 4,696, bo
 ### The "Can You Defend It?" Standard
 
 Every claim in this portfolio passes one test: Can I defend it in an interview? If someone asks, "How do you know it was 4x faster?" I have the answer. If someone asks, "What exactly did you do versus the team?" I can explain my specific contribution. This standard eliminated much of the impressive-sounding but unverifiable content.
-
----
-
-## Product Roadmap
-
-### Strategic Roadmap Translation: Now, Next, Later
-
-The MattGPT roadmap follows a deliberate three-phase evolution strategy, balancing immediate value delivery with long-term product vision.
-
----
-
-### NOW (MVP: The Verifiable Foundation)
-
-**Goal:** Establish data integrity, launch core filtering, and secure follow-up intelligence.
-
-**Status:** ✅ Complete (December 2025)
-
-**Completed Milestones:**
-
-✅ **Phase 1 & 2 Foundations**
-- Core semantic search implementation
-- `echo_star_stories.jsonl` data structure finalized
-- Streamlit frontend deployed
-- {{ site.data.facts.story_count_label }} stories curated and validated
-
-✅ **Phase 3: Polish & Filtering**
-- Streamlit UI refinement (colors, spacing, gradients)
-- "About Matt" hero panel with metrics badges
-- Core filters: Role, Client, Tags, 5P taxonomy
-- Three view modes: Table, Card, Timeline
-
-✅ **Intelligence Layer**
-- Gated Export/Share functionality
-- Persona Scoring (session depth tracking)
-- Email capture for high-intent leads
-
-**Key Outcomes:**
-- Semantic search with confidence-based filtering validated through manual testing
-- 100% data compliance with STAR method
-- Deployed to production at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-
----
-
-### NEXT (Ongoing: Feature Delivery on Streamlit)
-
-**Goal:** Continue delivering features on the proven Streamlit platform. Enhance search quality, add capabilities, and align content with industry standards.
-
-**Recent Deliveries (Q1–Q2 2026):**
-- ✅ Role Match — paste a JD, see how Matt's experience maps to requirements (Phases 1-3 shipped April, Phase 4 slice 1 shipped May: lock icon + password gate)
-- ✅ Triage agent surface — `scripts/assess_jd.py` CLI wraps the same engine (`jd_assessor.py`) for external agent orchestration
-- ✅ Mobile responsive design (1,520 lines in `mobile_overrides.py`)
-- ✅ Query analytics (Google Sheets logger, 32-column schema)
-- ✅ BDD test suite — {{ site.data.facts.bdd_summary }}
-- ✅ Eval framework expanded to 64 golden queries (100% pass rate)
-- ✅ Data quality pass across 85+ stories
-
-**Recent Deliveries (continued):**
-- ✅ Public tags enrichment — `generate_public_tags.py` uses GPT-4o with SFIA/O*NET/LinkedIn taxonomy alignment. `public_tags` flows through the entire pipeline: JSONL generation, embedding construction, Pinecone metadata, app startup, filtering, scoring, and UI display.
-
-**Open Items:**
-See [BACKLOG.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/BACKLOG.md) in the MattGPT repo for current open work. Key areas include Role Match Phase 4, semantic router improvements, and analytics dashboard.
-
----
-
-### LATER (Phase 3)
-
-See [BACKLOG.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/BACKLOG.md) for current open work. Key areas include Role Match Phase 4 slices 2-3 (agentic bypass, private assessment view), analytics dashboard, and semantic router improvements.
-
----
-
-## Future Vision
-
-### The Bigger Picture: Credibility as a Service
-
-MattGPT started as a personal portfolio, but the underlying thesis is universal: professionals shouldn't have to choose between depth and discoverability.
-
-Every consultant has a career's worth of stories they can't effectively communicate. Every recruiter spends hours manually searching through resumes that all look the same. Every hiring manager wishes they could ask follow-up questions before deciding who to interview.
-
-I envision a future where:
-- Every professional has an AI that can articulate their unique value
-- Hiring managers can query candidate portfolios with natural language
-- Career stories are structured, auditable, and composable
-- The interview process starts with verified proof, not generic claims
-
-This isn't about replacing human judgment — it's about augmenting trust at scale.
-
-### What's Next
-
-A React migration remains a future consideration if a forcing function emerges. But the more interesting question is whether this becomes a product. Could consulting firms use this for their bench? Could job platforms integrate structured portfolios? Could this become the LinkedIn alternative that actually proves what people claim?
-
-I don't know yet. But the foundation is solid, and the thesis is validated.
 
 ---
 

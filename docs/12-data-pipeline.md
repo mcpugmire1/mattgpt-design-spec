@@ -14,8 +14,7 @@
 4. [Stage 3: Embedding Generation](#stage-3-embedding-generation)
 5. [Data Governance Principles](#data-governance-principles)
 6. [Ingestion Workflow](#ingestion-workflow)
-7. [Cost & Performance](#cost--performance)
-8. [Migration History](#migration-history)
+7. [Migration History](#migration-history)
 
 ---
 
@@ -267,13 +266,6 @@ Added Title to embedding text after observing that users often search for story 
 - All entity fields stored lowercase for consistent filtering
 - Tags stored as array for multi-tag filtering
 
-### Processing Stats
-
-- **Stories:** {{ site.data.facts.story_count_label }}
-- **Time:** ~30 seconds for full re-index
-- **Cost:** ~$0.0006 per full re-index ({{ site.data.facts.story_count_label }} stories × ~300 tokens avg)
-- **API:** OpenAI text-embedding-3-small @ $0.02 per 1M tokens
-
 ### Environment Configuration
 
 ```bash
@@ -445,57 +437,6 @@ story_index = 0  # Select by index, build query from actual title
 **Streamlit auto-reload:** Changes to `.py` files trigger automatic rerun
 
 **Data changes require manual restart:** JSONL loaded at startup, not watched
-
----
-
-## Cost & Performance
-
-### Embedding Generation
-
-**OpenAI text-embedding-3-small:**
-- **Rate:** $0.02 per 1M tokens
-- **Story Size:** ~300 tokens average (after text composition)
-- **{{ site.data.facts.story_count_label }} Stories:** ~30,000 tokens = $0.0006 per full re-index
-- **Time:** ~30 seconds
-
-**Annual Cost (4 full refreshes/month):**
-- 4 refreshes × 12 months × $0.0006 = **$0.029/year**
-- Effectively free
-
-### Pinecone Vector Database
-
-**matt-portfolio-v2 Index:**
-- **Tier:** Starter (free tier, 100K vectors)
-- **Usage:** {{ site.data.facts.story_count_label }} vectors (<0.1% of quota)
-- **Dimensions:** 1536
-- **Cost:** $0/month
-
-### LLM Generation (GPT-4o)
-
-**Per Query:**
-- **Input tokens:** ~2,000-4,000 (context + prompt)
-- **Output tokens:** ~200-600 (response)
-- **Cost per query:** ~$0.01-0.03
-
-**Monthly Cost (100 queries/month):**
-- 100 queries × $0.02 avg = **$2/month**
-
-**Production Scale (1000 queries/month):**
-- 1000 queries × $0.02 avg = **$20/month**
-
-### Processing Performance
-
-**Full Pipeline (Excel → Production):**
-- Stage 1 (Excel → JSONL): ~5 seconds
-- Stage 2 (Enrichment): ~10 seconds
-- Stage 3 (Embeddings): ~30 seconds
-- **Total:** ~45 seconds
-
-**Semantic Search (Runtime):**
-- Query embedding: ~200ms
-- Pinecone vector search: ~300ms
-- LLM generation: ~3-5 seconds (GPT-4o)
-- **Total query latency:** ~4-6 seconds
 
 ---
 

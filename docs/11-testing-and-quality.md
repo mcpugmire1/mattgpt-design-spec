@@ -25,12 +25,12 @@
 graph TD
     L3["Layer 3: BDD/E2E Tests<br/>{{ site.data.facts.bdd_summary }}<br/>Full UI workflows"]
     L2["Layer 2: RAG Eval<br/>{{ site.data.facts.eval_query_count }} golden queries · {{ site.data.facts.eval_summary }} pass rate<br/>Eval-driven development"]
-    L1["Layer 1: Unit Tests<br/>{{ site.data.facts.unit_test_file_count }} test files · Component isolation<br/>Fast feedback (under 1 min)"]
+    L1["Layer 1: Unit Tests<br/>{{ site.data.facts.unit_test_file_count }} unit test files · Component isolation<br/>Fast feedback (under 1 min)"]
     L3 --> L2 --> L1
 </div>
 
 **Quality Metrics:**
-- **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} files testing core components
+- **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} unit test files testing core components
 - **RAG Eval Pass Rate:** 100% (64/64 queries)
 - **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
 - **Total Test Runtime:** ~30 minutes (full suite)
@@ -433,20 +433,6 @@ By Category:
 
 ---
 
-### Future Enhancements
-
-**Planned Improvements:**
-
-1. **Automated Regression Detection:** Run evals on every commit (GitHub Actions)
-2. **Latency Benchmarks:** Track P50/P95 response times per category
-3. **Cost Tracking:** Log LLM token usage per query (optimize expensive patterns)
-4. **Eval Coverage Gaps:** Add "tell me more" follow-up queries (currently missing)
-5. **A/B Testing Framework:** Compare threshold changes with statistical significance
-
-**Migration note:** Eval suite is framework-agnostic (pure pytest) and would port directly to a React/FastAPI architecture if needed.
-
----
-
 ## BDD/E2E Tests (Explore Stories)
 
 **Location:** `tests/bdd/`
@@ -491,7 +477,7 @@ pytest tests/bdd/ -v
 
 ### CI/CD Integration
 
-Three automation layers are active: deployment fires on push to main via Streamlit Cloud webhook (real continuous deployment — every merge ships immediately), an external uptime monitor (UptimeRobot) keeps the app warm on a five-minute schedule, and a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code.
+Three automation layers are active: push to main triggers a Streamlit Cloud deploy (real continuous deployment — every merge ships immediately), a GitHub Actions cron job (~10 min schedule) keeps the app warm, and a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code.
 
 Test gates are not currently enforced by the pipeline. They run manually before merge and deploy (see Quality Gates below). If automated enforcement were added, the workflow would look like this:
 
