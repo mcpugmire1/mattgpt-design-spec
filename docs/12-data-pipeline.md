@@ -361,35 +361,35 @@ healthcare_count = len([s for s in stories if s.get("Industry") == "Healthcare"]
 
 ### Anti-Patterns (Don't Do This)
 
-**❌ Hardcoded Lists:**
+**Avoid: Hardcoded Lists**
 ```python
 # BAD: Will drift out of sync with data
 CLIENTS = ["JP Morgan", "Capital One", "RBC", "Johnson & Johnson"]
 ```
 
-**✅ Derived from Data:**
+**Prefer: Derived from Data**
 ```python
 # GOOD: Always accurate
 clients = {s.get("Client") for s in stories if not is_generic_client(s.get("Client"))}
 ```
 
-**❌ Manual JSONL Editing:**
+**Avoid: Manual JSONL Editing**
 - Don't hand-edit JSONL files for content changes
 - Content changes belong in Excel (master source)
 - JSONL editing allowed ONLY for: `public_tags`, `Interview Questions`, `content` (derived fields)
 
-**✅ Excel-First Workflow:**
+**Prefer: Excel-First Workflow**
 1. Edit story in Excel
 2. Run `generate_jsonl_from_excel.py`
 3. Review diff, commit if correct
 
-**❌ Hardcoded Story Titles in Tests:**
+**Avoid: Hardcoded Story Titles in Tests**
 ```python
 # BAD: Titles change frequently
 expected_title = "Implementing Responsible AI Governance Framework"
 ```
 
-**✅ Index-Based Test Selection:**
+**Prefer: Index-Based Test Selection**
 ```python
 # GOOD: Stable reference
 story_index = 0  # Select by index, build query from actual title
