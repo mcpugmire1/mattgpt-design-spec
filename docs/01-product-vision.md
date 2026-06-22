@@ -27,7 +27,7 @@ Four visitor types shaped the surface design. Each needs something different fro
 
 **A referrer** has already decided to make the intro. They need one-sentence positioning they can lead with, two or three substantiating facts, and confidence that what the recipient sees matches what the intro promised.
 
-The detailed journey logic, failure modes, and surface rationale for each visitor is in [Audience Journeys](/docs/03-ux-design-process).
+The detailed journey logic, failure modes, and surface rationale for each visitor is in [Audience Journeys](03-ux-design-process).
 
 ---
 
@@ -60,9 +60,9 @@ MattGPT is scoped deliberately. It answers only from the sourced project corpus:
 ---
 
 **Related Documentation:**
-- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
-- [Audience Journeys](/docs/03-ux-design-process) - The four visitor journeys the design is derived from
-- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
+- [Technical Architecture](02-technical-architecture) - RAG pipeline and system design
+- [Audience Journeys](03-ux-design-process) - The four visitor journeys the design is derived from
+- [Building MattGPT](04-building-mattgpt) - Development journey
 
 ---
 

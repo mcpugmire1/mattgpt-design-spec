@@ -214,7 +214,7 @@ real outcomes, not just strategy decks.
 
 ### MATT_DNA Ground Truth
 
-`MATT_DNA` is generated at startup from the full story corpus, not extracted from a single story. See [Data Pipeline](/docs/12-data-pipeline#january-2026-sovereignty-patterns) for the correct mechanism.
+`MATT_DNA` is generated at startup from the full story corpus, not extracted from a single story. See [Data Pipeline](12-data-pipeline#january-2026-sovereignty-patterns) for the correct mechanism.
 
 ### Synthesis Prompt Structure
 
@@ -440,7 +440,7 @@ Off-domain queries are rejected in two stages before reaching Pinecone. Stage 1,
 
 ## Data Governance & Architecture Principles
 
-For data governance, sovereignty patterns, entity search, anti-patterns, and ingestion workflow, see [Data Pipeline](/docs/12-data-pipeline).
+For data governance, sovereignty patterns, entity search, anti-patterns, and ingestion workflow, see [Data Pipeline](12-data-pipeline).
 
 ## Current State Summary
 
@@ -468,10 +468,10 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 ---
 
 **Related Documentation:**
-- [Product Vision](/docs/01-product-vision) - Strategic positioning
-- [UX Design Process](/docs/03-ux-design-process) - Design decisions
-- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
-- [RAG Quality Evaluation](/docs/11-testing-and-quality) - Eval framework (64/64, 100%)
+- [Product Vision](01-product-vision) - Strategic positioning
+- [UX Design Process](03-ux-design-process) - Design decisions
+- [Building MattGPT](04-building-mattgpt) - Development journey
+- [RAG Quality Evaluation](11-testing-and-quality) - Eval framework (64/64, 100%)
 
 ---
 
