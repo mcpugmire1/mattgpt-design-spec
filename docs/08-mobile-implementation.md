@@ -20,13 +20,13 @@
 
 ## Overview
 
-MattGPT implements production-quality mobile CSS in `@media` blocks across `global_styles.py` and `mobile_overrides.py`. The patterns described below use prose rather than source selectors — for actual class names and rules, read those files directly.
+MattGPT implements production-quality mobile CSS in `@media` blocks across `global_styles.py` and `mobile_overrides.py`. The patterns described below use prose rather than source selectors; for actual class names and rules, read those files directly.
 
 **Key Stats:**
 - **Mobile Breakpoint:** < 767px
 - **Tablet Breakpoint:** 768px - 1024px
 - **Desktop Breakpoint:** > 1024px
-- **Mobile CSS:** `@media (max-width: 767px)` blocks in `global_styles.py` — see file for current positions
+- **Mobile CSS:** `@media (max-width: 767px)` blocks in `global_styles.py` (see file for current positions)
 - **Touch Target Minimum:** 44px
 
 ---
@@ -286,7 +286,7 @@ Load essential styles first, defer non-critical:
 ```python
 # In global_styles.py
 def apply_global_styles():
-    """Inject all CSS into Streamlit — called once at app startup"""
+    """Inject all CSS into Streamlit: called once at app startup"""
 ```
 
 ### 2. Font Loading Strategy
