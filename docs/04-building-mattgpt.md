@@ -47,7 +47,7 @@ I wanted to create an intelligent, conversational interface that:
 - ✅ Enables rapid filtering and comparison
 - ✅ Provides auditable source references
 
-This isn't just a portfolio showcase — it's a **functional AI application demonstrating product thinking, modern engineering practices, and hands-on implementation.**
+This isn't just a portfolio showcase; it's a **functional AI application demonstrating product thinking, modern engineering practices, and hands-on implementation.**
 
 ---
 
@@ -59,11 +59,11 @@ Six months into my sabbatical, I started updating my resume. That's when it hit 
 
 Recruiters would spend 30 seconds scanning my PDF. How could they possibly understand the nuance of scaling engineering teams from 4 to 150? Or the pattern recognition I'd developed across 55 banking projects? They couldn't. Nobody could.
 
-I'd been experimenting with RAG architectures and vector search for a client POC, and the idea clicked: What if I could build an AI that actually understood my work — not through keyword matching, but through semantic understanding of outcomes, methodologies, and context?
+I'd been experimenting with RAG architectures and vector search for a client POC, and the idea clicked: What if I could build an AI that actually understood my work, not through keyword matching, but through semantic understanding of outcomes, methodologies, and context?
 
-I started with a two-week MVP sprint in April 2025. That initial prototype validated the concept, but the real work — {{ site.data.facts.story_count_label }} stories, semantic search tuning, mobile design, the strangler fig refactor — took another eight months.
+I started with a two-week MVP sprint in April 2025. That initial prototype validated the concept, but the real work ({{ site.data.facts.story_count_label }} stories, semantic search tuning, mobile design, the strangler fig refactor) took another eight months.
 
-I named it after Agy, my late Plott Hound — short for Agador Spartacus from "The Birdcage." He was a tracker — goofy yet patient, determined, excellent at finding exactly what you were looking for. That's what I wanted this AI to be.
+I named it after Agy, my late Plott Hound (short for Agador Spartacus from "The Birdcage"). He was a tracker: goofy yet patient, determined, excellent at finding exactly what you were looking for. That's what I wanted this AI to be.
 
 ---
 
@@ -247,7 +247,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Identifies methodology patterns across contexts
 
 **Natural Language Queries:**
-- Ask in plain English — no keyword guessing required
+- Ask in plain English: no keyword guessing required
 - Intent recognition understands question types (vetting, assessment, pitch)
 - Conversational follow-up with context retention
 
@@ -361,7 +361,7 @@ The fix was two-fold: mandatory STAR structure (every story needs verifiable Sit
 
 Streamlit is great for rapid prototyping. It's terrible for custom styling. Class names change between versions. CSS selectors that work on desktop break on mobile. The st-emotion-cache-* classes are generated dynamically and can't be targeted reliably.
 
-I learned to use data-testid attributes and container keys for CSS targeting. All application CSS lives in global_styles.py — carefully scoped overrides for Streamlit's generated class names. It's not pretty, but it works.
+I learned to use data-testid attributes and container keys for CSS targeting. All application CSS lives in global_styles.py: carefully scoped overrides for Streamlit's generated class names. It's not pretty, but it works.
 
 ### The January 2026 RAG Pipeline Cleanup
 
@@ -379,7 +379,7 @@ The semantic router now handles everything: 15 intent families (including narrat
 
 ### MVP-First Thinking Pays Off
 
-I originally planned to build a React + FastAPI stack. I'm glad I didn't. Streamlit let me validate the core RAG architecture in two weeks instead of three months. The UI isn't perfect, but the search quality and system prompt design are solid — those are the hard parts.
+I originally planned to build a React + FastAPI stack. I'm glad I didn't. Streamlit let me validate the core RAG architecture in two weeks instead of three months. The UI isn't perfect, but the search quality and system prompt design are solid; those are the hard parts.
 
 ### Data Quality > Fancy Algorithms
 
@@ -437,7 +437,7 @@ Every claim in this portfolio passes one test: Can I defend it in an interview? 
 
 ## Conclusion
 
-Building MattGPT has been equal parts technical challenge and product discovery. What started as a personal problem — "How do I make a full career of experience searchable?" — became a demonstration of modern AI product development: RAG architecture, semantic search, data governance, and user-centered design.
+Building MattGPT has been equal parts technical challenge and product discovery. What started as a personal problem ("How do I make a full career of experience searchable?") became a demonstration of modern AI product development: RAG architecture, semantic search, data governance, and user-centered design.
 
 **The core thesis remains:**
 
