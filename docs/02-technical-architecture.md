@@ -10,8 +10,8 @@
 
 MattGPT's architecture evolved through intentional phases:
 
-1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment — ✅ Complete
-2. **Production (Streamlit):** Ongoing feature delivery — Role Match, mobile responsive, eval framework, query analytics
+1. **Phase 1 (Streamlit MVP):** Validate RAG architecture with minimal investment: ✅ Complete
+2. **Production (Streamlit):** Ongoing feature delivery: Role Match, mobile responsive, eval framework, query analytics
 
 
 ---
@@ -35,11 +35,11 @@ MattGPT's architecture evolved through intentional phases:
 
 The MVP phase consciously accepted limitations to accelerate learning:
 
-- ~~**Mobile-responsive implementation:**~~ ✅ Shipped — production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
+- ~~**Mobile-responsive implementation:**~~ ✅ Shipped: production mobile CSS with breakpoints at 767px (mobile), 768-1024px (tablet), 1024+ (desktop)
 - **Limited scalability:** Estimated ~100 concurrent users (not load-tested; Streamlit Community Cloud limits apply)
 - **No caching layer:** Direct database queries
-- ~~**Modular architecture:**~~ ✅ Shipped — refactored from monolithic app.py to component-based structure
-- ~~**Minimal observability:**~~ ✅ Shipped — 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
+- ~~**Modular architecture:**~~ ✅ Shipped: refactored from monolithic app.py to component-based structure
+- ~~**Minimal observability:**~~ ✅ Shipped: 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
 
 ### Key Decisions
 
@@ -191,7 +191,7 @@ return named_first[:9]  # Max 9 stories for synthesis
 
 **Verbatim phrase required in synthesis responses:**
 
-- **"builder"** — the one term that must appear verbatim
+- **"builder"**: the one term that must appear verbatim
 
 Other vocabulary (modernizer, complexity to clarity, proof over promises, maintenance role) was removed from story data during March 2026 data quality cleanup. Only "builder" remains as a verbatim requirement.
 
@@ -203,19 +203,19 @@ Other vocabulary (modernizer, complexity to clarity, proof over promises, mainte
 **Example Synthesis Response:**
 
 ```
-Matt is a **builder** — someone brought in to create what doesn't exist yet,
+Matt is a **builder**, someone brought in to create what doesn't exist yet,
 whether that's a team, a platform, or a capability.
 
 Across his Accenture career, the pattern is consistent: he's brought to projects
 where organizations need to build something from nothing or modernize platforms
 stuck in technical debt. From scaling the Cloud Innovation Center to 150+ people
-to modernizing payments across 12 countries, his work comes with evidence —
+to modernizing payments across 12 countries, his work comes with evidence:
 real outcomes, not just strategy decks.
 ```
 
 ### MATT_DNA Ground Truth
 
-`MATT_DNA` is generated at startup from the full story corpus — not extracted from a single story. See [Data Pipeline](/docs/12-data-pipeline#january-2026-sovereignty-patterns) for the correct mechanism.
+`MATT_DNA` is generated at startup from the full story corpus, not extracted from a single story. See [Data Pipeline](/docs/12-data-pipeline#january-2026-sovereignty-patterns) for the correct mechanism.
 
 ### Synthesis Prompt Structure
 
@@ -421,7 +421,7 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 ```
 🐾 I'm not finding matches for that in Matt's portfolio.
 
-I'm focused on Matt's enterprise transformation experience—things like agile delivery, platform engineering,
+I'm focused on Matt's enterprise transformation experience: things like agile delivery, platform engineering,
 team scaling, and stakeholder management.
 
 Try asking about:
@@ -441,7 +441,7 @@ What would you like to know about Matt's experience?
 
 ### How the Two-Stage Gate Works
 
-Off-domain queries are rejected in two stages before reaching Pinecone. Stage 1 — the pattern gate — runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2 — the semantic router — embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }}–{{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} triggers the off-domain response with suggestion chips.
+Off-domain queries are rejected in two stages before reaching Pinecone. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }}–{{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} triggers the off-domain response with suggestion chips.
 
 ---
 
@@ -457,16 +457,16 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 - ✅ **5-stage RAG pipeline** with 100% eval pass rate (64/64)
 - ✅ **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
 - ✅ **Semantic router** with 15 intent families + out-of-scope/personal detection
-- ✅ **Role Match** — JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
-- ✅ **Query analytics** — 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
-- ✅ **Triage agent surface** — `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
+- ✅ **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
+- ✅ **Query analytics**: 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
+- ✅ **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
 - ✅ 100+ STAR-structured project stories
 - ✅ Semantic search with confidence scoring and metadata filtering
 - ✅ **Timeline View** with Era-based career progression
 - ✅ **Mobile-responsive design** (global_styles.py + mobile_overrides.py; breakpoints: 767px, 1024px)
 - ✅ **Dark mode support** via CSS variables
 - ✅ **Modular architecture** ({{ site.data.facts.ask_mattgpt_module_file_count }}-file ask_mattgpt/ structure)
-- ✅ **BDD test suite** — {{ site.data.facts.bdd_summary }}
+- ✅ **BDD test suite**: {{ site.data.facts.bdd_summary }}
 - ✅ Conversation history and context management
 - ✅ Related Projects UX pattern
 
