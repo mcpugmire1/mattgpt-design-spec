@@ -348,7 +348,6 @@ Dark mode toggle (Streamlit native settings menu)
 
 - [02-technical-architecture.md](02-technical-architecture) - Overall architecture
 - [08-mobile-implementation.md](08-mobile-implementation) - Mobile-specific patterns
-- [component_inventory.md](/mattgpt-design-spec/components/component_inventory) - Component specifications
 
 ---
 

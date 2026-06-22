@@ -471,8 +471,6 @@ Hamburger navigation
 
 - [02-technical-architecture.md](02-technical-architecture) - Overall architecture
 - [07-css-architecture.md](07-css-architecture) - CSS system
-- [component_inventory.md](/mattgpt-design-spec/components/component_inventory) - Component specs
-- [sitemap_navigation.md](/mattgpt-design-spec/components/sitemap_navigation) - Mobile navigation
 
 ---
 
