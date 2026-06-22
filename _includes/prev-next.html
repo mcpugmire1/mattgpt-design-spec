@@ -6,11 +6,13 @@
   {% endif %}
 {% endfor %}
 
-{% if current_index %}
-  {% assign prev_index = current_index | minus: 1 %}
+{% if current_index != nil %}
   {% assign next_index = current_index | plus: 1 %}
-  {% assign prev_doc = docs[prev_index] %}
   {% assign next_doc = docs[next_index] %}
+  {% if current_index > 0 %}
+    {% assign prev_index = current_index | minus: 1 %}
+    {% assign prev_doc = docs[prev_index] %}
+  {% endif %}
 {% endif %}
 
 {% if prev_doc or next_doc %}

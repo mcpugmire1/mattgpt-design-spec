@@ -14,5 +14,9 @@
   url: /docs/11-testing-and-quality
 - title: Data Pipeline
   url: /docs/12-data-pipeline
+- title: CSS Architecture
+  url: /docs/07-css-architecture
+- title: Mobile Implementation
+  url: /docs/08-mobile-implementation
 - title: API Reference
   url: /docs/09-api-reference

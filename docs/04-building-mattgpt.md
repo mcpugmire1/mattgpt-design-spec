@@ -14,6 +14,7 @@
 4. [What MattGPT Can Do](#what-mattgpt-can-do)
 5. [Key Challenges & Solutions](#key-challenges--solutions)
 6. [Lessons Learned](#lessons-learned)
+
 ---
 
 ## The Problem
@@ -450,7 +451,7 @@ Every line of code, every STAR story, every design decision serves that mission:
 **Related Documentation:**
 - [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
 - [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
-- [UX Design Process](/docs/03-ux-design-process) - Wireframes and interaction design
+- [Audience Journeys](/docs/03-ux-design-process) - The four visitor journeys the design is derived from
 - [RAG Quality Evaluation](/docs/11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
 
 ---
