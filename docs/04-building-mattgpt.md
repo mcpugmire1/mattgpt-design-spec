@@ -42,10 +42,10 @@ These statements provide no proof, no context, and no measurable outcomes.
 **The Mission:**
 
 I wanted to create an intelligent, conversational interface that:
-- ✅ Understands intent, not just keywords
-- ✅ Surfaces verifiable proof from structured data
-- ✅ Enables rapid filtering and comparison
-- ✅ Provides auditable source references
+- Understands intent, not just keywords
+- Surfaces verifiable proof from structured data
+- Enables rapid filtering and comparison
+- Provides auditable source references
 
 This isn't just a portfolio showcase; it's a **functional AI application demonstrating product thinking, modern engineering practices, and hands-on implementation.**
 
@@ -229,7 +229,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ## What MattGPT Can Do
 
-### 🧠 LLM-Powered Capabilities
+### LLM-Powered Capabilities
 
 **RAG (Retrieval-Augmented Generation):**
 - Uses structured STAR stories and semantic search
