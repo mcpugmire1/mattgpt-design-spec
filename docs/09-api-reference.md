@@ -464,9 +464,9 @@ pytest --cov=services --cov=utils tests/
 
 ## Related Documentation
 
-- [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
-- [Technical Architecture](/docs/02-technical-architecture) - Two-phase roadmap and RAG architecture
-- [Data Model](/docs/10-data-model) - JSONL schema and field definitions
+- [Product Vision](01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](02-technical-architecture) - Two-phase roadmap and RAG architecture
+- [Data Model](10-data-model) - JSONL schema and field definitions
 
 ---
 

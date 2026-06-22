@@ -449,10 +449,10 @@ Every line of code, every STAR story, every design decision serves that mission:
 ---
 
 **Related Documentation:**
-- [Product Vision](/docs/01-product-vision) - Strategic positioning and user personas
-- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and system design
-- [Audience Journeys](/docs/03-ux-design-process) - The four visitor journeys the design is derived from
-- [RAG Quality Evaluation](/docs/11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
+- [Product Vision](01-product-vision) - Strategic positioning and user personas
+- [Technical Architecture](02-technical-architecture) - RAG pipeline and system design
+- [Audience Journeys](03-ux-design-process) - The four visitor journeys the design is derived from
+- [RAG Quality Evaluation](11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
 
 ---
 

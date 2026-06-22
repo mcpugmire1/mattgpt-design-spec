@@ -515,9 +515,9 @@ These gates run manually before merge and before production deploy. They are con
 ---
 
 **Related Documentation:**
-- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline details
-- [Building MattGPT](/docs/04-building-mattgpt) - Development journey
-- [API Reference](/docs/09-api-reference) - Function signatures and parameters
+- [Technical Architecture](02-technical-architecture) - RAG pipeline details
+- [Building MattGPT](04-building-mattgpt) - Development journey
+- [API Reference](09-api-reference) - Function signatures and parameters
 
 ---
 

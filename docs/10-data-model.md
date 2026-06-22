@@ -411,7 +411,7 @@ Some fields have aliases for backward compatibility:
 
 **Production data file:** `echo_star_stories_nlp.jsonl` ({{ site.data.facts.story_count_label }} stories)
 
-Two-stage pipeline: Excel workbook → `generate_jsonl_from_excel.py` → `echo_star_stories.jsonl` (Stage 1 raw output) → semantic enrichment scripts → `echo_star_stories_nlp.jsonl` (Stage 2, production). See [Data Pipeline](/docs/12-data-pipeline) for the full ingestion workflow.
+Two-stage pipeline: Excel workbook → `generate_jsonl_from_excel.py` → `echo_star_stories.jsonl` (Stage 1 raw output) → semantic enrichment scripts → `echo_star_stories_nlp.jsonl` (Stage 2, production). See [Data Pipeline](12-data-pipeline) for the full ingestion workflow.
 
 **Quality Assurance:**
 - Manual review of STAR completeness
@@ -513,9 +513,9 @@ if not all(query_token in story_tokens for query_token in query_tokens):
 
 ## Related Documentation
 
-- [API Reference](/docs/09-api-reference) - Function signatures and module overview
-- [Technical Architecture](/docs/02-technical-architecture) - RAG pipeline and search architecture
-- [Product Vision](/docs/01-product-vision) - STAR methodology and governance model
+- [API Reference](09-api-reference) - Function signatures and module overview
+- [Technical Architecture](02-technical-architecture) - RAG pipeline and search architecture
+- [Product Vision](01-product-vision) - STAR methodology and governance model
 
 ---
 
