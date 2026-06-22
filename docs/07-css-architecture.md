@@ -38,7 +38,7 @@ The MattGPT CSS architecture uses a modern, variable-based approach to ensure co
 
 ### Core Variables
 
-The canonical variable definitions live in the `:root` block at the top of `global_styles.py`. Read that file for current names and values. A copied table here re-drifts on every refactor — the audit-2026-06-15 record shows exactly how that happens.
+The canonical variable definitions live in the `:root` block at the top of `global_styles.py`. Read that file for current names and values. A copied table here re-drifts on every refactor; the audit-2026-06-15 record shows exactly how that happens.
 
 ### Usage Examples
 
@@ -57,7 +57,7 @@ The canonical variable definitions live in the `:root` block at the top of `glob
 }
 ```
 
-For spacing and border-radius, check existing patterns in `global_styles.py` — there are no dedicated `--spacing-*` or `--radius-*` variables; use consistent values from what is already in the file.
+For spacing and border-radius, check existing patterns in `global_styles.py`: there are no dedicated `--spacing-*` or `--radius-*` variables; use consistent values from what is already in the file.
 
 ---
 
@@ -86,7 +86,7 @@ For spacing and border-radius, check existing patterns in `global_styles.py` —
 ```
 
 ### Implementation Location
-`llm_portfolio_assistant/ui/styles/global_styles.py` (mobile `@media` blocks — check the file for current line positions)
+`llm_portfolio_assistant/ui/styles/global_styles.py` (mobile `@media` blocks, check the file for current line positions)
 
 ### Breakpoint Usage Patterns
 
@@ -185,7 +185,7 @@ body.dark-theme {
 
 ### Implementation Status
 ✅ CSS variable system in place (`global_styles.py`)
-✅ Dark mode toggle — Streamlit's native settings menu handles dark mode on both desktop and mobile. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
+✅ Dark mode toggle: Streamlit's native settings menu handles dark mode on both desktop and mobile. The CSS variable system handles the actual theming; Streamlit handles the user-facing toggle mechanism.
 
 ---
 
