@@ -12,7 +12,7 @@
 
 | Module | Purpose |
 |--------|---------|
-| `jd_assessor.py` | Role Match engine — JD extraction, requirement retrieval, assessment, `compute_recommendation()` |
+| `jd_assessor.py` | Role Match engine: JD extraction, requirement retrieval, assessment, `compute_recommendation()` |
 | `query_logger.py` | 32-column event logger to Google Sheets (query, feedback, Role Match, UTM) |
 | `role_match_summary.py` | Role Match summary generation and scoring helpers |
 | `semantic_router.py` | Query intent classification using embedding similarity |
@@ -55,10 +55,10 @@
 
 | Page | Purpose |
 |------|---------|
-| `explore_stories.py` | My Work — story browsing with table/card/timeline views |
-| `ask_mattgpt/` | Ask Agy — conversational AI interface ({{ site.data.facts.ask_mattgpt_module_file_count }}-file module) |
+| `explore_stories.py` | My Work: story browsing with table/card/timeline views |
+| `ask_mattgpt/` | Ask Agy: conversational AI interface ({{ site.data.facts.ask_mattgpt_module_file_count }}-file module) |
 | `about_matt.py` | My Profile page |
-| `role_match.py` | Role Match — JD-to-experience fit assessment |
+| `role_match.py` | Role Match: JD-to-experience fit assessment |
 | `banking_landing.py` | Banking industry landing page |
 | `cross_industry_landing.py` | Cross-industry landing page |
 | `home.py` | Homepage router |
@@ -283,7 +283,7 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 │  RAG Service (rag_service.py)           │
 │  - semantic_search(query, filters)      │
 │  - Entity Detection (Client/Employer/   │
-│    Division) — pins matching story #1   │
+│    Division): pins matching story #1   │
 │  - Calls Pinecone with entity filters   │
 │  - Applies confidence gating            │
 │  - Filters results by metadata          │
