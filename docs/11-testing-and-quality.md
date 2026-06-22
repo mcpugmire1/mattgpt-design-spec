@@ -214,12 +214,12 @@ Landing page queries requiring zero meta-commentary.
 - "Why should I hire Matt?"
 
 **Expected Behavior:**
-- NO meta-commentary (hardest constraint — zero tolerance)
+- NO meta-commentary (hardest constraint, zero tolerance)
 - Short, direct responses
 
 ### 8. Context Story (3 queries)
 
-"Tell me more about [Title]" queries — tests Title soft-filter detection and retrieval.
+"Tell me more about [Title]" queries: tests Title soft-filter detection and retrieval.
 
 **Expected Behavior:**
 - Story retrieved by Title detection (soft-filter, not entity gate)
@@ -263,7 +263,7 @@ Landing page queries requiring zero meta-commentary.
 - "Matt's ability to"
 - "his ability to"
 
-Marketing and landing page queries fail HARD if meta-commentary slips through. "What's Matt's superpower?" should NOT return "This demonstrates Matt's ability to..." — it should say "Building from nothing" directly.
+Marketing and landing page queries fail HARD if meta-commentary slips through. "What's Matt's superpower?" should NOT return "This demonstrates Matt's ability to..."; it should say "Building from nothing" directly.
 
 ### Confidence Threshold Behavior
 
@@ -477,12 +477,12 @@ pytest tests/bdd/ -v
 
 ### CI/CD Integration
 
-Three automation layers are active: push to main triggers a Streamlit Cloud deploy (real continuous deployment — every merge ships immediately), a GitHub Actions cron job (~10 min schedule) keeps the app warm, and a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code.
+Three automation layers are active: push to main triggers a Streamlit Cloud deploy (real continuous deployment, every merge ships immediately), a GitHub Actions cron job (~10 min schedule) keeps the app warm, and a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code.
 
 Test gates are not currently enforced by the pipeline. They run manually before merge and deploy (see Quality Gates below). If automated enforcement were added, the workflow would look like this:
 
 ```yaml
-# .github/workflows/test.yml (illustrative — not yet active)
+# .github/workflows/test.yml
 - name: Run Unit Tests
   run: pytest tests/unit/ -v
 
