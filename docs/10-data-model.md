@@ -199,35 +199,35 @@ Complete alphabetical field reference:
 
 | Field | Type | Required | Searchable | Filterable | Entity Detection | Used in 5P Summary |
 |-------|------|----------|------------|------------|-----------------|-------------------|
-| `5PSummary` | str | No | Yes | No | No | ✅ Primary |
+| `5PSummary` | str | No | Yes | No | No | Primary |
 | `Action` | list[str] | No | Yes | No | No | Via `Process` |
 | `Category` | str | No | Yes | No | No | No |
-| `Client` | str | Yes | Yes | ✅ Yes | ✅ Yes | No |
+| `Client` | str | Yes | Yes | Yes | Yes | No |
 | `Competencies` | list[str] | No | Yes | No | No | No |
-| `Division` | str | No | Yes | No | ✅ Yes | No |
-| `Employer` | str | No | Yes | No | ✅ Yes | No |
+| `Division` | str | No | Yes | No | Yes | No |
+| `Employer` | str | No | Yes | No | Yes | No |
 | `End_Date` | str | No | No | No | No | No |
-| `Era` | str | No | Yes | ✅ Yes | No | No |
+| `Era` | str | No | Yes | Yes | No | No |
 | `id` | str | **Yes** | No | No | No | No |
-| `Industry` | str | Yes | Yes | ✅ Yes | No | No |
+| `Industry` | str | Yes | Yes | Yes | No | No |
 | `Interview Questions` | list[str] | No | Yes | No | No | No |
-| `Performance` | list[str] | No | Yes | No | No | ✅ Outcome |
+| `Performance` | list[str] | No | Yes | No | No | Outcome |
 | `Person` | str | No | Yes | No | No | No |
 | `Place` | str | No | Yes | No | No | No |
-| `Process` | list[str] | No | Yes | No | No | ✅ Approach |
+| `Process` | list[str] | No | Yes | No | No | Approach |
 | `Project` | str | No | Yes | No | No | No |
 | `Project Scope / Complexity` | str | No | No | No | No | No |
-| `public_tags` | list[str] | No | Yes | ✅ Yes | No | No |
-| `Purpose` | str | No | Yes | No | No | ✅ Goal |
+| `public_tags` | list[str] | No | Yes | Yes | No | No |
+| `Purpose` | str | No | Yes | No | No | Goal |
 | `Result` | list[str] | No | Yes | No | No | Via `Performance` |
-| `Role` | str | No | Yes | ✅ Yes | No | No |
+| `Role` | str | No | Yes | Yes | No | No |
 | `Situation` | list[str] | No | Yes | No | No | No |
-| `Solution / Offering` | str | No | Yes | ✅ Yes | No | No |
+| `Solution / Offering` | str | No | Yes | Yes | No | No |
 | `Start_Date` | str | No | No | No | No | No |
-| `Sub-category` | str | No | Yes | ✅ Yes | No | No |
+| `Sub-category` | str | No | Yes | Yes | No | No |
 | `Task` | list[str] | No | Yes | No | No | No |
 | `Theme` | str | No | Yes | No | No | No |
-| `Title` | str | Yes | Yes | No | ✅ Soft | Via summary |
+| `Title` | str | Yes | Yes | No | Soft | Via summary |
 | `Use Case(s)` | list[str] | No | Yes | No | No | No |
 
 **Notes:**
