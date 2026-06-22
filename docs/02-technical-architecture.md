@@ -365,12 +365,6 @@ SEARCH_TOP_K = 10         # Stories to fetch (headroom for reranking/filtering)
                           # Centralized Jan 2026 - was 100/7 conflict
 ```
 
-**Entity Detection:**
-```python
-ENTITY_GATE_THRESHOLD = 0.30  # Semantic scoring threshold (lowered from 0.55)
-                               # Note: Entity Gate as bouncer removed Jan 2026
-```
-
 **Model Configuration:**
 ```python
 DEFAULT_CHAT_MODEL = "gpt-4o"              # Primary LLM (upgraded from gpt-4o-mini)
