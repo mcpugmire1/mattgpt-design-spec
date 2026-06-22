@@ -20,7 +20,7 @@ MattGPT's architecture evolved through intentional phases:
 
 **Status:** Complete (December 2025)
 **Timeline:** Current State
-**Primary Goal:** Validate product-market fit with minimal investment
+**Primary Goal:** The goal was to validate the RAG approach with minimal investment before committing to a heavier stack.
 
 ### Tech Stack
 
@@ -51,7 +51,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 
 *Note: Continuous refinement and feature additions ongoing since launch.
 
-**What We Validated:**
+**The MVP confirmed the parts that mattered:**
 - RAG architecture effectiveness
 - System prompt design
 - STAR methodology implementation
