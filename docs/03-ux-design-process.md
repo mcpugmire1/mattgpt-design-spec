@@ -13,7 +13,7 @@
 
 ## Audience Journeys
 
-MattGPT is designed around four audience journeys, not surfaces. The navigation order and page surfaces fall out of these journeys — not from a feature wishlist.
+MattGPT is designed around four audience journeys, not surfaces. The navigation order and page surfaces fall out of these journeys, not from a feature wishlist.
 
 ---
 
@@ -38,7 +38,7 @@ MattGPT is designed around four audience journeys, not surfaces. The navigation 
 
 ### Journey 2: Cold Recruiter, Inbound Triage
 
-**Who:** Recruiter doing inbound triage — Matt's name surfaced via DM, referral, or past contact. No JD in hand.
+**Who:** Recruiter doing inbound triage: Matt's name surfaced via DM, referral, or past contact. No JD in hand.
 
 **Trigger:** Needs six facts in 30 seconds: level, last company, last team size, geo/relocation, current status, target titles.
 
@@ -64,15 +64,15 @@ MattGPT is designed around four audience journeys, not surfaces. The navigation 
 2. Scans past the stats row (registers as deck claims)
 3. Browses one or two stories in My Work to form a question
 4. Navigates to Ask Agy with a specific, possibly hard question
-5. Evaluates whether the answer is honest — this is the make-or-break moment
+5. Evaluates whether the answer is honest; this is the make-or-break moment
 6. Optionally cross-checks Role Match against their own opening
 7. Commits to a screening call or forwards the link internally
 
 **Goal:** Commit to a 30-minute screening call with a sharp agenda, or amplify as a secondary referrer.
 
-**Failure modes (by severity):** Methodology context absent — reads as sales/consulting figure, not engineering leader; CTO disqualifies without articulating why. Role Match vs Ask Agy inconsistency (credibility hit). Brand-identity-first hero with no adjacent substance signal.
+**Failure modes (by severity):** Methodology context absent: reads as sales/consulting figure, not engineering leader; CTO disqualifies without articulating why. Role Match vs Ask Agy inconsistency (credibility hit). Brand-identity-first hero with no adjacent substance signal.
 
-**Design principle:** Ask Agy is not just a feature for this audience — it's the test. How it handles the hard question shapes the hiring decision more than the corpus content does.
+**Design principle:** Ask Agy is not just a feature for this audience; it's the test. How it handles the hard question shapes the hiring decision more than the corpus content does.
 
 ---
 
@@ -88,7 +88,7 @@ MattGPT is designed around four audience journeys, not surfaces. The navigation 
 - A clean URL to embed
 - Confidence that what the recipient sees matches what the intro promised
 
-**Failure modes:** No clear "this is the language about Matt" surface. Voice block uses pitch-register or consulting-deck language the referrer can't reuse in a Slack DM. No copy-intro-language affordance — PDF export and URL copy exist, but pre-composed third-person text formatted for pasting does not.
+**Failure modes:** No clear "this is the language about Matt" surface. Voice block uses pitch-register or consulting-deck language the referrer can't reuse in a Slack DM. No copy-intro-language affordance: PDF export and URL copy exist, but pre-composed third-person text formatted for pasting does not.
 
 ---
 
