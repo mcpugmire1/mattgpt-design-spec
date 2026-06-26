@@ -13,7 +13,7 @@ ask_mattgpt_module_files:
   - "story_intelligence.py"
   - "styles.py"
   - "utils.py"
-bdd_feature_file_count: 31
+bdd_feature_file_count: 32
 bdd_feature_files:
   - "about_matt.feature"
   - "agy_voice.feature"
@@ -39,6 +39,7 @@ bdd_feature_files:
   - "navbar_brand_layout.feature"
   - "navbar_css_scope.feature"
   - "navbar_mobile_viewport_gate.feature"
+  - "navigation_stale_hero.feature"
   - "page_load_tracking.feature"
   - "post_era_project_counts.feature"
   - "role_match.feature"
@@ -46,8 +47,8 @@ bdd_feature_files:
   - "search.feature"
   - "story_detail_feedback.feature"
   - "why_agy_dialog.feature"
-bdd_scenario_count: 375
-bdd_summary: "375 scenarios across 31 feature files"
+bdd_scenario_count: 378
+bdd_summary: "378 scenarios across 32 feature files"
 chat_model: "gpt-4o"
 component_count: 13
 components:
@@ -104,7 +105,7 @@ router_soft_accept: 0.4
 search_top_k: 10
 story_count: 113
 story_count_label: "110+"
-unit_test_file_count: 20
+unit_test_file_count: 21
 unit_test_files:
   - "test_assess_jd.py"
   - "test_backend_service.py"
@@ -115,6 +116,7 @@ unit_test_files:
   - "test_explore_stories.py"
   - "test_filters.py"
   - "test_formatting.py"
+  - "test_global_styles.py"
   - "test_landing_cards.py"
   - "test_query_logger.py"
   - "test_rag_service.py"
