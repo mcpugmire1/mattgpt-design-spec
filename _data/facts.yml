@@ -104,7 +104,7 @@ router_hard_accept: 0.8
 router_soft_accept: 0.4
 search_top_k: 10
 story_count: 113
-story_count_label: "110+"
+story_count_label: "100+"
 unit_test_file_count: 21
 unit_test_files:
   - "test_assess_jd.py"
