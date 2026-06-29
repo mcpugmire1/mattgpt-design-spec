@@ -29,7 +29,7 @@
 | `formatting.py` | Text formatting and STAR story presentation |
 | `landing_cards.py` | Landing page card data helpers |
 | `scoring.py` | Hybrid scoring (semantic + keyword relevance) |
-| `search.py` | Explore Stories search and filter orchestration |
+| `search.py` | My Work search and filter orchestration |
 | `ui_helpers.py` | Session state management and UI rendering helpers |
 | `validation.py` | Input validation and token overlap checking |
 
@@ -313,7 +313,7 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 └─────────────────────────────────────────┘
 ```
 
-### 2. Explore Stories Filtering
+### 2. My Work Filtering
 
 ```
 ┌─────────────────┐
@@ -434,7 +434,7 @@ pytest tests/unit/test_filters.py            # Filter logic tests
 pytest tests/unit/test_scoring.py            # Hybrid scoring tests
 pytest tests/unit/test_formatting.py         # STAR formatting tests
 pytest tests/unit/test_validation.py         # Input validation tests
-pytest tests/unit/test_backend_service.py    # Ask MattGPT backend tests
+pytest tests/unit/test_backend_service.py    # Ask Agy backend tests
 pytest tests/unit/test_story_intelligence.py # Story analysis tests
 
 # With coverage

@@ -152,7 +152,7 @@ h1 {
 - Vertical stacked links (hidden by default)
 - Full-width dropdown on menu open
 
-### Filters (Explore Stories)
+### Filters (My Work)
 
 **Desktop:**
 ```
@@ -211,7 +211,7 @@ h1 {
 - Full-width cards
 - Tap instead of hover
 
-### Related Projects Grid (Ask MattGPT)
+### Related Projects Grid (Ask Agy)
 
 **Desktop:**
 - 3-column grid
