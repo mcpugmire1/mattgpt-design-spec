@@ -13,10 +13,11 @@ ask_mattgpt_module_files:
   - "story_intelligence.py"
   - "styles.py"
   - "utils.py"
-bdd_feature_file_count: 32
+bdd_feature_file_count: 33
 bdd_feature_files:
   - "about_matt.feature"
   - "agy_voice.feature"
+  - "ask_agy_button_alignment.feature"
   - "ask_mattgpt.feature"
   - "banking_landing.feature"
   - "cross_industry_landing.feature"
@@ -47,8 +48,8 @@ bdd_feature_files:
   - "search.feature"
   - "story_detail_feedback.feature"
   - "why_agy_dialog.feature"
-bdd_scenario_count: 378
-bdd_summary: "378 scenarios across 32 feature files"
+bdd_scenario_count: 382
+bdd_summary: "382 scenarios across 33 feature files"
 chat_model: "gpt-4o"
 component_count: 13
 components:
@@ -105,8 +106,9 @@ router_soft_accept: 0.4
 search_top_k: 10
 story_count: 113
 story_count_label: "100+"
-unit_test_file_count: 21
+unit_test_file_count: 22
 unit_test_files:
+  - "test_ask_agy_button_css.py"
   - "test_assess_jd.py"
   - "test_backend_service.py"
   - "test_banking_landing_js.py"
