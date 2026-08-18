@@ -13,18 +13,21 @@ ask_mattgpt_module_files:
   - "story_intelligence.py"
   - "styles.py"
   - "utils.py"
-bdd_feature_file_count: 33
+bdd_feature_file_count: 44
 bdd_feature_files:
   - "about_matt.feature"
   - "agy_voice.feature"
   - "ask_agy_button_alignment.feature"
   - "ask_mattgpt.feature"
   - "banking_landing.feature"
+  - "cluster_promotion_kw.feature"
+  - "corpus_loader.feature"
   - "cross_industry_landing.feature"
   - "entity_routing.feature"
   - "evidence_fidelity.feature"
   - "explore_stories.feature"
   - "explore_stories_default_state.feature"
+  - "fatal_fallback_handler.feature"
   - "home.feature"
   - "home_category_cards.feature"
   - "home_hero.feature"
@@ -35,21 +38,29 @@ bdd_feature_files:
   - "jd_assessment.feature"
   - "jd_extraction.feature"
   - "landing_page.feature"
+  - "matt_dna_career_span.feature"
   - "mode_routing.feature"
   - "nav_labels.feature"
   - "navbar_brand_layout.feature"
   - "navbar_css_scope.feature"
   - "navbar_mobile_viewport_gate.feature"
   - "navigation_stale_hero.feature"
+  - "nonsense_filter_behavior.feature"
+  - "nonsense_loader_guard.feature"
   - "page_load_tracking.feature"
+  - "pn_exclusion.feature"
   - "post_era_project_counts.feature"
+  - "profile_grounding.feature"
+  - "query_logger_top_score.feature"
+  - "query_substitution_077.feature"
   - "role_match.feature"
   - "role_match_logging.feature"
   - "search.feature"
   - "story_detail_feedback.feature"
+  - "synthesis_guard.feature"
   - "why_agy_dialog.feature"
-bdd_scenario_count: 382
-bdd_summary: "382 scenarios across 33 feature files"
+bdd_scenario_count: 445
+bdd_summary: "445 scenarios across 44 feature files"
 chat_model: "gpt-4o"
 component_count: 13
 components:
@@ -90,7 +101,7 @@ intent_family_names:
   - "synthesis"
   - "team_scaling"
   - "technical"
-intent_total_count: 127
+intent_total_count: 130
 page_count: 6
 pages:
   - "about_matt.py"
@@ -104,9 +115,9 @@ pinecone_min_sim: 0.15
 router_hard_accept: 0.8
 router_soft_accept: 0.4
 search_top_k: 10
-story_count: 113
+story_count: 114
 story_count_label: "100+"
-unit_test_file_count: 22
+unit_test_file_count: 23
 unit_test_files:
   - "test_ask_agy_button_css.py"
   - "test_assess_jd.py"
@@ -124,6 +135,7 @@ unit_test_files:
   - "test_rag_service.py"
   - "test_role_match_chip_toggle.py"
   - "test_scoring.py"
+  - "test_scoring_contracts.py"
   - "test_semantic_router.py"
   - "test_story_detail.py"
   - "test_story_intelligence.py"
