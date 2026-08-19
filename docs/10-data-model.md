@@ -87,10 +87,12 @@ Stories follow the STAR methodology for behavioral interviewing:
 | `Action` | list[str] | Actions taken bullets (2-5 items) | `["Migrated to microservices", "Implemented CI/CD"]` |
 | `Result` | list[str] | Outcomes with metrics (2-4 items) | `["Reduced deployment time by 75%"]` |
 
-**Alias Fields (Legacy):**
-- `Process` → Maps to `Action` (how bullets)
-- `Performance` → Maps to `Result` (what bullets)
-- `Purpose` → Maps to `Task` (why/goal)
+**Field Overlap with 5P Fields:**
+- `Action` (STAR) and `Process` (5P) both describe how the work was done.
+- `Result` (STAR) and `Performance` (5P) both describe outcomes.
+- `Task` (STAR) and `Purpose` (5P) both describe the objective.
+
+These pairs coexist as distinct fields rather than aliases; both members are typically populated on the same story. Downstream consumers read whichever fits their need.
 
 ---
 

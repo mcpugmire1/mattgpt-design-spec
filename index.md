@@ -56,7 +56,7 @@ What holds: the eval gates the retrieval layer, so a regression shows up as a fa
 
 What does not: the architectural rules are not pipeline-enforced, so they are not always followed. Claude Code, the AI doing the implementation, will rebuild things that already exist or quietly change a protected value, and I catch it in review, not at a gate. Holding that line over a fast, capable, not-always-compliant tool is the real daily work, and it is closer to leading a team than a green pipeline would be.
 
-To keep this honest, I audited the docs against the running system in June 2026. It caught a stale metric, retired wording still sitting in the tests, and the rules file itself wrong on two values where this spec was right. Docs drift from code in every real system. What matters is having something that catches it. The [audit](docs/audit-2026-06-15) is committed alongside the docs it corrects.
+To keep this honest, volatile facts sync from code to docs on every push, and the prose gets a periodic human pass. The pipeline syncs facts, it does not enforce rules. The June 2026 pass found the rules file wrong on two config values where this spec was right, which is the case for deriving facts rather than restating them. [How the spec stays in sync](docs/keeping-docs-in-sync) covers both layers and what the pipeline cannot reach.
 
 With a team I would put the eval and BDD suites behind required checks, add a staging deploy, and lint-enforce the rules instead of writing them in prose. I have not, because for one person that machinery costs more than it returns. Knowing where that tradeoff flips is the job.
 

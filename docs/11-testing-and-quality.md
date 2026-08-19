@@ -176,7 +176,7 @@ Nonsense detection and graceful out-of-scope rejection.
 - "asdfghjkl"
 
 **Expected Behavior:**
-- Semantic router rejects (score < 0.40)
+- Semantic router flags query as low confidence (score below {{ site.data.facts.router_soft_accept }}); Pinecone confidence gate handles the actual rejection downstream
 - Graceful off-domain response with suggestion chips
 
 ### 5. Surgical (11 queries)
@@ -270,9 +270,9 @@ Marketing and landing page queries fail HARD if meta-commentary slips through. "
 **Question:** Are confidence thresholds applied correctly?
 
 **Validation:**
-- HIGH confidence (≥0.25) → "Found X stories"
-- LOW confidence (≥0.20) → "Relevance may be low" warning
-- NONE (<0.20) → "No strong matches" with suggestions
+- HIGH confidence (≥{{ site.data.facts.confidence_high }}) → "Found X stories"
+- LOW confidence (≥{{ site.data.facts.confidence_low }}) → "Relevance may be low" warning
+- NONE (<{{ site.data.facts.confidence_low }}) → "No strong matches" with suggestions
 
 ---
 
@@ -463,7 +463,7 @@ pytest tests/bdd/ -v
 
 ### CI/CD Integration
 
-Three automation layers are active: push to main triggers a Streamlit Cloud deploy (real continuous deployment, every merge ships immediately), a GitHub Actions cron job (~10 min schedule) keeps the app warm, and a scheduled GitHub Actions job keeps `_data/facts.yml` in sync with the running code.
+Three automation layers are active: push to main triggers a Streamlit Cloud deploy (real continuous deployment, every merge ships immediately), a GitHub Actions cron job (~10 min schedule) keeps the app warm, and a push-triggered GitHub Actions job derives volatile facts from the source code and syncs them to `_data/facts.yml` in the design-spec repo.
 
 Test gates are not currently enforced by the pipeline. They run manually before merge and deploy (see Quality Gates below). If automated enforcement were added, the workflow would look like this:
 

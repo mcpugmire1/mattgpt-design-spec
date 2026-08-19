@@ -235,7 +235,7 @@ Added Title to embedding text after observing that users often search for story 
     "division": "Cloud Innovation Center",
     "project": "Team Scaling Initiative",
     "industry": "Financial Services",
-    "domain": "Platform Engineering",  # Maps to Sub-category
+    "domain": "Platform Engineering",  # Category + " / " + Sub-category
     "role": "Head of Engineering",
     "theme": "Team Scaling & Leadership",
     "tags": ["Team Scaling", "Engineering Leadership"],
