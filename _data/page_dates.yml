@@ -2,13 +2,13 @@
 # Updated by .github/workflows/receive-facts.yml
 
 01-product-vision: "June 2026"
-02-technical-architecture: "June 2026"
+02-technical-architecture: "August 2026"
 03-ux-design-process: "June 2026"
 04-building-mattgpt: "June 2026"
 05-agy-voice-guide: "June 2026"
 07-css-architecture: "June 2026"
 08-mobile-implementation: "June 2026"
 09-api-reference: "June 2026"
-10-data-model: "June 2026"
-11-testing-and-quality: "June 2026"
-12-data-pipeline: "June 2026"
+10-data-model: "August 2026"
+11-testing-and-quality: "August 2026"
+12-data-pipeline: "August 2026"
