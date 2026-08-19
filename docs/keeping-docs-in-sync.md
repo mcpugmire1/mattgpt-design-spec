@@ -44,3 +44,7 @@ restating. Fixed in the source repo.
 
 Everything the June pass corrected by hand is now either synced or
 recorded here. The next pass covers prose only.
+
+---
+
+*Last updated: {{ site.data.page_dates['keeping-docs-in-sync'] }}*

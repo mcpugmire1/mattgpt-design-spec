@@ -19,5 +19,6 @@
   <p class="nav-group-label">Reference</p>
   <ul>
     <li {% if page.url contains '09-api-reference' %}class="active"{% endif %}><a href="{{ '/docs/09-api-reference' | relative_url }}">API Reference</a>{% if show_desc %} — module inventory, function signatures, session state, and configuration{% endif %}</li>
+    <li {% if page.url contains 'keeping-docs-in-sync' %}class="active"{% endif %}><a href="{{ '/docs/keeping-docs-in-sync' | relative_url }}">Keeping the spec in sync</a>{% if show_desc %} — how facts sync from code to docs, and where human review still applies{% endif %}</li>
   </ul>
 </nav>
