@@ -2,7 +2,7 @@
 
 **How MattGPT maintains quality through 3-layer testing strategy**
 
-> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (100% pass rate, 64/64), and BDD/E2E tests for UI workflows ({{ site.data.facts.bdd_summary }}).
+> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (100% pass rate, {{ site.data.facts.eval_summary }}), and BDD/E2E tests for UI workflows ({{ site.data.facts.bdd_summary }}).
 
 ---
 
@@ -31,7 +31,7 @@ graph TD
 
 **Quality Metrics:**
 - **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} unit test files testing core components
-- **RAG Eval Pass Rate:** 100% (64/64 queries)
+- **RAG Eval Pass Rate:** 100% ({{ site.data.facts.eval_summary }} queries)
 - **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
 - **Total Test Runtime:** ~30 minutes (full suite)
 
@@ -63,7 +63,7 @@ tests/unit/
 ├── test_validation.py            # Input validation, nonsense detection
 ├── test_formatting.py            # Response formatting, source citations
 ├── test_story_intelligence.py    # Story analysis, metadata extraction
-└── ... (12 more files)
+└── ... (see `tests/unit/` for the full list)
 ```
 
 ### What Unit Tests Cover
@@ -107,7 +107,7 @@ pytest tests/unit/ -v
 **Location:** `tests/eval_rag_quality.py`
 **Framework:** pytest-based golden query testing
 **Coverage:** 64 queries across 8 categories
-**Current Pass Rate:** 100% (64/64)
+**Current Pass Rate:** 100% ({{ site.data.facts.eval_summary }})
 
 ### Why RAG Evals Matter
 
@@ -395,21 +395,7 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ### Pass Rate Breakdown
 
-```
-Total Queries: 64
-PASS: 64 (100%)
-FAIL: 0
-
-By Category:
-- Narrative:        13/13 (100%)
-- Client:            6/6  (100%)
-- Intent:            9/9  (100%)
-- Edge:              4/4  (100%)
-- Surgical:         11/11 (100%)
-- Entity Detection: 11/11 (100%)
-- Marketing:         7/7  (100%)
-- Context Story:     3/3  (100%)
-```
+The eval suite covers 8 categories: narrative, client, intent, edge, surgical, entity detection, marketing, and context story. All {{ site.data.facts.eval_query_count }} queries currently pass ({{ site.data.facts.eval_summary }}).
 
 ### Flaky Test Handling
 

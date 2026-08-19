@@ -193,49 +193,31 @@ Generate vector embeddings and upsert to Pinecone for semantic search.
 **Output:**
 - Pinecone index: `matt-portfolio-v2`
 - Namespace: `default`
-- Dimensions: 1536 (OpenAI text-embedding-3-small)
+- Dimensions: 1536 (OpenAI `{{ site.data.facts.embedding_model }}`)
 
 ### Embedding Strategy
 
 **Text Composition for Embedding:**
 
-```python
-def build_embedding_text(story):
-    """
-    Combines multiple fields into rich semantic representation:
+`build_embedding_text()` in `build_custom_embeddings.py` assembles a labeled composition. In order:
 
-    1. Title (story title - improves keyword matching)
-    2. Theme + Industry + Sub-category (behavioral context)
-    3. 5P Summary (concise overview)
-    4. STAR fields: Situation, Task, Action, Result (2-3 items each)
-    5. Process details (max 3 items)
-    6. Public tags (comma-separated)
+1. A bracketed header: `[Title] [Theme] in Industry (Sub-category)`
+2. `Use Cases:` (front-loaded because it is the strongest retrieval signal per story)
+3. `Summary:` (from `5PSummary`)
+4. The full STAR block: `Situation:`, `Task:`, `Action:`, `Result:`
+5. `Process:`
+6. `Competencies:`
+7. `Keywords:` (from `public_tags`)
+8. `Interview Questions:`
 
-    Result: ~200-400 token text optimized for behavioral queries
-    """
-    parts = [
-        story.get("Title", ""),
-        f"{story.get('Theme', '')} | {story.get('Industry', '')} | {story.get('Sub-category', '')}",
-        story.get("5PSummary", ""),
-        # STAR fields (truncated to 2-3 items each)
-        " ".join(story.get("Situation", [])[:3]),
-        " ".join(story.get("Task", [])[:3]),
-        " ".join(story.get("Action", [])[:3]),
-        " ".join(story.get("Result", [])[:3]),
-        # Process and tags
-        " ".join(story.get("Process", [])[:3]),
-        ", ".join(story.get("public_tags", []))
-    ]
-    return " ".join(p for p in parts if p).strip()
-```
+Each field is truncated by character limit, not by item count, to keep total input in the range that produces stable embeddings.
 
 **Why This Approach:**
 
-- **Title inclusion:** Story titles contain key terminology users search for directly (e.g., "Platform Modernization", "Cloud Migration")
-- **Behavioral focus:** Theme/Industry/Sub-category surface in behavioral interviews
-- **Balanced detail:** Full STAR fields would dilute semantic signal (too verbose)
-- **Tag inclusion:** Public tags capture essence without verbosity
-- **Process field:** Critical for "how did you..." questions
+- **Title in the header:** Story titles contain key terminology users search for directly (e.g., "Platform Modernization", "Cloud Migration")
+- **Use cases front-loaded:** Per-story use case wording is the tuned retrieval signal
+- **Full STAR block:** Behavioral queries land on Situation/Task/Action/Result content, not just summaries
+- **Tags and interview questions included:** They carry query-adjacent vocabulary the STAR prose does not always use
 
 **Key Decision (January 2026):**
 Added Title to embedding text after observing that users often search for story titles verbatim (e.g., "tell me more about TICARA"). Previously, title-only queries had low similarity scores.
@@ -262,8 +244,8 @@ Added Title to embedding text after observing that users often search for story 
 ```
 
 **Field Mapping (JSONL → Pinecone):**
-- `Sub-category` → `domain` (for backward compatibility)
-- All entity fields stored lowercase for consistent filtering
+- `domain` is composed as `Category + " / " + Sub-category` (both source fields joined; not a direct alias)
+- Entity field casing is field-specific rather than uniform: `division`, `employer`, `project`, `place` store lowercase values, while `client`, `role`, `title`, `domain` preserve their canonical (typically PascalCase) casing. See `config/constants.py` (`PINECONE_LOWERCASE_FIELDS`).
 - Tags stored as array for multi-tag filtering
 
 ### Environment Configuration
@@ -326,12 +308,12 @@ Entity detection searches across 6 fields via Pinecone `$or`:
 # Searches: Client OR Employer OR Division OR Project OR Place OR Title
 pinecone_filter = {
     "$or": [
-        {"client": {"$eq": "Accenture"}},
-        {"employer": {"$eq": "Accenture"}},
-        {"division": {"$eq": "accenture"}},  # lowercase
-        {"project": {"$eq": "accenture"}},   # lowercase
-        {"place": {"$eq": "accenture"}},     # lowercase
-        {"title": {"$eq": "Accenture"}}      # PascalCase
+        {"client": {"$eq": "Accenture"}},     # PascalCase value
+        {"employer": {"$eq": "accenture"}},   # lowercase value
+        {"division": {"$eq": "accenture"}},   # lowercase value
+        {"project": {"$eq": "accenture"}},    # lowercase value
+        {"place": {"$eq": "accenture"}},      # lowercase value
+        {"title": {"$eq": "Accenture"}}       # PascalCase value
     ]
 }
 ```

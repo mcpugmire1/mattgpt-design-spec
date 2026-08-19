@@ -66,8 +66,6 @@ Files Updated:
 
 Facts are single-sourced from `llm_portfolio_assistant` into `_data/facts.yml` by the sync workflow. Prose references `{{ site.data.facts.* }}`. Hand-editing a fact in a doc is a bug: fix it by updating the source and re-running the sync.
 
-**Config sync:** `_config.yml` and `_config_netlify.yml` must stay identical on identity fields (title, description, url). The deployed build reads `_config_netlify.yml`. If they diverge, the live site reads stale identity. When editing either file, update both.
-
 **Wireframes** are the UI source of truth unless production has moved past them, in which case the running app wins. When they conflict, flag it explicitly. Do not silently pick one.
 
 **No overclaiming.** Docs state real maturity including limits. Never imply enterprise CI/CD, automated pipelines, or practices not actually in place.

@@ -61,7 +61,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ### Architecture Evolutions Achieved
 
 **January 2026 - RAG Pipeline Cleanup:**
-- 5-stage RAG pipeline with 100% eval pass rate (64/64)
+- 5-stage RAG pipeline with 100% eval pass rate ({{ site.data.facts.eval_summary }})
 - Removed Entity Gate bouncer (was blocking legitimate queries)
 - Removed `classify_query_intent()` LLM call (redundant with router)
 - Semantic router now handles synthesis + out-of-scope + narrative detection
@@ -84,7 +84,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 **Timeline View Innovation:**
 - Era-based project grouping (timeline_view.py)
 - 5 career eras with date range calculation
-- Progressive disclosure pattern (6 most recent per era)
+- Progressive disclosure pattern per era
 
 **Mobile Implementation:**
 - Responsive CSS across global_styles.py and mobile_overrides.py
@@ -96,7 +96,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ## 5-Stage RAG Pipeline
 
 **Status:** Implemented (January 2026)
-**Quality:** 100% eval pass rate (64/64 queries)
+**Quality:** 100% eval pass rate ({{ site.data.facts.eval_summary }} queries)
 
 MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
 
@@ -113,7 +113,7 @@ graph LR
 - Zero embedding cost, executes in <5ms
 
 **Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
-- Embedding-based similarity matching against 15 intent families
+- Embedding-based similarity matching against {{ site.data.facts.intent_family_count }} intent families
 - Dual-threshold system: HARD_ACCEPT ({{ site.data.facts.router_hard_accept }}), SOFT_ACCEPT ({{ site.data.facts.router_soft_accept }})
 - Detects synthesis queries (no Pinecone search needed)
 - Flags out-of-scope industries gracefully
@@ -126,9 +126,9 @@ graph LR
 - Returns 0 results below minimum threshold
 
 **Stage 4: Entity Detection & Pinning**
-- Detects: Client, Employer, Division, Title
-- Hard filters: Client, Employer, Division, Project, Place
-- Soft filters: Title (semantic search ranks naturally)
+- Detects: Client, Employer, Division (intentionally narrower than the search field set to avoid false positives on generic values)
+- Hard filters (once an entity is confirmed): Client, Employer, Division, Project, Place
+- Soft filters: Title (participates in search ranking, not entity detection)
 - **Removed:** Entity Gate threshold bouncer (was blocking valid queries)
 
 **Stage 5: Intent-Aware Ranking**
@@ -283,16 +283,18 @@ MattGPT uses a **two-layer defense** (Stages 1-2 of the RAG pipeline):
 **How It Works:**
 
 1. User submits query
-2. Query is embedded using OpenAI text-embedding-3-small
+2. Query is embedded using OpenAI `{{ site.data.facts.embedding_model }}`
 3. Cosine similarity computed against canonical intent examples
 4. Query classified based on similarity threshold
 
 **Thresholds (Updated January 2026):**
 
 ```python
-HARD_ACCEPT = 0.80  # Clearly on-topic, no question
-SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72)
-# Below 0.40 = router rejects (search fallback may still attempt)
+HARD_ACCEPT = {{ site.data.facts.router_hard_accept }}  # Clearly on-topic, no question
+SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}  # Accept but log as borderline for review (lowered from 0.72)
+# Values are advisory. The router flag is used only to rescue low-confidence
+# queries from the Pinecone gate; it never causes a rejection on its own.
+# The rejection path is the Pinecone confidence gate (CONFIDENCE_LOW).
 ```
 
 **What Changed (January 2026):**
@@ -302,9 +304,9 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 - **Added:** Out-of-scope industry detection (intent_family == "out_of_scope")
 - **Added:** Narrative queries (intent_family == "narrative")
 - **Added:** Personal query detection (intent_family == "personal")
-- **Expanded:** 10 intent families → 15 intent families
+- **Expanded:** 10 intent families → {{ site.data.facts.intent_family_count }} intent families
 
-**Intent Families (15 categories):**
+**Intent Families ({{ site.data.facts.intent_family_count }} categories):**
 
 | Family | Example Queries |
 |--------|----------------|
@@ -334,9 +336,10 @@ SOFT_ACCEPT = 0.40  # Accept but log as borderline for review (lowered from 0.72
 "What's Matt's approach to team growth?" → intent_family: "team_scaling"
 # Logged for review, but accepted
 
-# REJECTED (score 0.35, below 0.40 threshold)
+# LOW-CONFIDENCE ON ROUTER (score 0.35, below 0.40 threshold)
 "What's the weather in New York?" → intent_family: None
-# Triggers off-domain response
+# Router flag is False, but the actual rejection happens at the Pinecone
+# confidence gate when no relevant story is found.
 ```
 
 ---
@@ -347,28 +350,28 @@ All thresholds are centralized in `config/constants.py` (single source of truth)
 
 **Semantic Router Thresholds:**
 ```python
-HARD_ACCEPT = 0.80   # Clearly on-topic, no question
-SOFT_ACCEPT = 0.40   # Accept but log as borderline for review
+HARD_ACCEPT = {{ site.data.facts.router_hard_accept }}   # Clearly on-topic, no question
+SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}   # Accept but log as borderline for review
 ```
 
 **RAG Confidence Thresholds:**
 ```python
-CONFIDENCE_HIGH = 0.25  # Strong match - show "Found X stories"
-CONFIDENCE_LOW = 0.20   # Raised from 0.15 to filter phantom similarity noise
+CONFIDENCE_HIGH = {{ site.data.facts.confidence_high }}  # Strong match - show "Found X stories"
+CONFIDENCE_LOW = {{ site.data.facts.confidence_low }}   # Raised from 0.15 to filter phantom similarity noise
 ```
 
 **Pinecone Search Parameters:**
 ```python
-PINECONE_MIN_SIM = 0.15   # Minimum similarity for Pinecone results
-SEARCH_TOP_K = 10         # Stories to fetch (headroom for reranking/filtering)
+PINECONE_MIN_SIM = {{ site.data.facts.pinecone_min_sim }}   # Minimum similarity for Pinecone results
+SEARCH_TOP_K = {{ site.data.facts.search_top_k }}         # Stories to fetch (headroom for reranking/filtering)
                           # Centralized Jan 2026 - was 100/7 conflict
 ```
 
 **Model Configuration:**
 ```python
-DEFAULT_CHAT_MODEL = "gpt-4o"              # Primary LLM (upgraded from gpt-4o-mini)
-DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"  # 1536 dimensions
-SEARCH_TOP_K = 10                          # Was 100 (explore) / 7 (ask) - now unified
+DEFAULT_CHAT_MODEL = "{{ site.data.facts.chat_model }}"              # Primary LLM (upgraded from gpt-4o-mini)
+DEFAULT_EMBEDDING_MODEL = "{{ site.data.facts.embedding_model }}"  # 1536 dimensions
+SEARCH_TOP_K = {{ site.data.facts.search_top_k }}                          # Was 100 (explore) / 7 (ask) - now unified
 ```
 
 ---
@@ -379,7 +382,7 @@ SEARCH_TOP_K = 10                          # Was 100 (explore) / 7 (ask) - now u
 
 Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious off-domain queries.
 
-**Filter Categories (34):**
+**Filter Categories:**
 
 | Category | Pattern Examples | Sample Rejected Queries |
 |----------|-----------------|------------------------|
@@ -395,9 +398,8 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 | **general_knowledge** | `\b(capital of|president of|who is the)\b` | "Who is the president of France?" |
 
 **Performance:**
-- Pattern matching is O(n) where n = number of patterns (79)
-- Executes in <5ms before semantic routing
-- Zero embedding cost for obvious nonsense
+- Pattern matching is linear in the number of patterns and executes in under 5ms
+- Runs before semantic routing, so obvious nonsense is caught at zero embedding cost
 
 ---
 
@@ -434,7 +436,7 @@ What would you like to know about Matt's experience?
 
 ### How the Two-Stage Gate Works
 
-Off-domain queries are rejected in two stages before reaching Pinecone. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }}–{{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} triggers the off-domain response with suggestion chips.
+Off-domain queries are handled in two stages. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }} to {{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} produces a low-confidence router signal. The actual rejection for low-confidence queries happens at the Pinecone confidence gate downstream, not at the router itself; a low router score alone will not reject a query if Pinecone still finds a confident match.
 
 ---
 
@@ -447,9 +449,9 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 ### What's Live Today (June 2026)
 
 - Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- **5-stage RAG pipeline** with 100% eval pass rate (64/64)
+- **5-stage RAG pipeline** with 100% eval pass rate ({{ site.data.facts.eval_summary }})
 - **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
-- **Semantic router** with 15 intent families + out-of-scope/personal detection
+- **Semantic router** with {{ site.data.facts.intent_family_count }} intent families + out-of-scope/personal detection
 - **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
 - **Query analytics**: 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
 - **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
@@ -471,7 +473,7 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 - [Product Vision](01-product-vision) - Strategic positioning
 - [UX Design Process](03-ux-design-process) - Design decisions
 - [Building MattGPT](04-building-mattgpt) - Development journey
-- [RAG Quality Evaluation](11-testing-and-quality) - Eval framework (64/64, 100%)
+- [RAG Quality Evaluation](11-testing-and-quality) - Eval framework ({{ site.data.facts.eval_summary }}, 100%)
 
 ---
 

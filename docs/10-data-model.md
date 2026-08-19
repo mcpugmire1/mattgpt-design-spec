@@ -227,13 +227,13 @@ Complete alphabetical field reference:
 | `Sub-category` | str | No | Yes | Yes | No | No |
 | `Task` | list[str] | No | Yes | No | No | No |
 | `Theme` | str | No | Yes | No | No | No |
-| `Title` | str | Yes | Yes | No | Soft | Via summary |
+| `Title` | str | Yes | Yes | No | No | Via summary |
 | `Use Case(s)` | list[str] | No | Yes | No | No | No |
 
 **Notes:**
-- **Entity Detection** column shows fields used by `detect_entity()` for semantic router
-- **Soft** entity detection (Title) means detected but not used for hard Pinecone filtering
-- Date fields (`Start_Date`, `End_Date`) are primarily for Timeline View and chronological sorting
+- **Entity Detection** column shows fields used by `detect_entity()` in the semantic router. The detection set is intentionally narrower than the search set to avoid false positives on generic values.
+- Once an entity is confirmed, search widens across more fields (see `ENTITY_SEARCH_FIELDS` in `config/constants.py`), including Title.
+- Date fields (`Start_Date`, `End_Date`) are primarily for Timeline View and chronological sorting.
 
 ---
 
@@ -253,18 +253,8 @@ story["id"] = str(story_id).strip()  # Coerce to string
 ```
 
 **List Field Normalization:**
-```python
-# These fields accept strings or arrays
-list_fields = [
-    "Situation", "Task", "Action", "Result",
-    "Process", "Performance", "Competencies", "Use Case(s)",
-    "Interview Questions"
-]
 
-for field in list_fields:
-    if field in story:
-        story[field] = _ensure_list(story[field])
-```
+List-typed STAR and 5P fields (`Situation`, `Task`, `Action`, `Result`, `Process`, `Performance`, `Competencies`, `Use Case(s)`) accept either a string or an array in the source JSONL and are coerced to a list at load time by `normalize_story()` in `utils/corpus_loader.py`. Empty and whitespace-only values are dropped.
 
 **Tag Parsing:**
 ```python
@@ -446,7 +436,7 @@ Simplified example:
 
 **Embedding Source:**
 - Model: OpenAI `text-embedding-3-small`
-- Input: Concatenation of `Title` + `5PSummary` + top 3 `Process` bullets
+- Input: a labeled composition assembled by `build_embedding_text()` in `build_custom_embeddings.py`. It front-loads `Use Case(s)`, then includes `Title`, `Theme`, `Industry`, `Sub-category`, `5PSummary`, the full STAR block (`Situation`, `Task`, `Action`, `Result`), `Process`, `Competencies`, `public_tags`, and `Interview Questions`. Each field is truncated by character limit, not by item count.
 - Dimension: 1536
 
 ### Vocabulary Building
