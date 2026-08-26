@@ -118,7 +118,7 @@ router_soft_accept: 0.4
 search_top_k: 25
 story_count: 123
 story_count_label: "100+"
-unit_test_file_count: 23
+unit_test_file_count: 25
 unit_test_files:
   - "test_ask_agy_button_css.py"
   - "test_assess_jd.py"
@@ -130,6 +130,8 @@ unit_test_files:
   - "test_explore_stories.py"
   - "test_filters.py"
   - "test_formatting.py"
+  - "test_generate_jsonl_from_excel.py"
+  - "test_generate_public_tags.py"
   - "test_global_styles.py"
   - "test_landing_cards.py"
   - "test_query_logger.py"
