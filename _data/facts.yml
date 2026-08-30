@@ -84,8 +84,8 @@ confidence_low: 0.2
 embedding_model: "text-embedding-3-small"
 env_vars:
   - "OPENAI_API_KEY"
-eval_query_count: 64
-eval_summary: "64/64"
+eval_query_count: 65
+eval_summary: "65/65"
 intent_family_count: 15
 intent_family_names:
   - "agile_transformation"
