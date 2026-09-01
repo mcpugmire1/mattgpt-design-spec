@@ -61,8 +61,8 @@ bdd_feature_files:
   - "story_detail_sidebar.feature"
   - "synthesis_guard.feature"
   - "why_agy_dialog.feature"
-bdd_scenario_count: 451
-bdd_summary: "451 scenarios across 46 feature files"
+bdd_scenario_count: 455
+bdd_summary: "455 scenarios across 46 feature files"
 chat_model: "gpt-4o"
 component_count: 13
 components:
