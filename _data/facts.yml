@@ -119,7 +119,7 @@ router_soft_accept: 0.4
 search_top_k: 25
 story_count: 123
 story_count_label: "100+"
-unit_test_file_count: 25
+unit_test_file_count: 26
 unit_test_files:
   - "test_ask_agy_button_css.py"
   - "test_assess_jd.py"
@@ -141,6 +141,7 @@ unit_test_files:
   - "test_scoring.py"
   - "test_scoring_contracts.py"
   - "test_semantic_router.py"
+  - "test_semantic_router_gating.py"
   - "test_story_detail.py"
   - "test_story_intelligence.py"
   - "test_summary_block.py"
