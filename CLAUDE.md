@@ -6,6 +6,7 @@ Read these before every session.
 - **Commit and push are separate gates, always.** A commit approval is not a push approval. Stop after committing and wait for an explicit "push" instruction. Never chain `git commit && git push`. Pushing to `origin/main` deploys to GitHub Pages, which is irreversible without a force push. (April 2026 incident: commit-then-push chain executed when only the commit had been approved.)
 - **No Co-Authored-By lines. Ever.** No `--no-verify`. No force push to main.
 - **No em dashes anywhere in this repo.** Not in docs, not in commits, not in this file. Use a colon, comma, or rewrite the sentence.
+- **Cite functions, files, and sections by name, not line number.** Line numbers go stale between commits.
 - **A number in this file is a bug.** CLAUDE.md contains no constants, counts, thresholds, or file inventories. Those live in `_data/facts.yml`.
 - **Inclusive, bias-free language throughout.** Describe people by scope, skill, and impact, not by demographic proxies. In practice: no "X+ years of experience" or tenure-span framing in published prose.
 - **Read existing `_layouts` and `_includes` before creating anything.** If a layout or include already exists, use it. Never author a layout from scratch.
@@ -89,9 +90,7 @@ Before creating any file, read what already exists:
 
 Primary nav groups: **The thinking** / **The build** / **Reference and roadmap**.
 
-Docs 06, 07, and 08 are not in the primary nav:
-- 07 (CSS Architecture) and 08 (Mobile Implementation) cross-link from Technical Architecture (02)
-- 06 (Explore Stories Filter Redesign) cross-links from its build doc
+Docs 07 and 08 are not in the primary nav: both cross-link from Technical Architecture (02).
 
 `CONTEXT.md` is the active project status doc. It stays excluded from the Jekyll build and is never archived. It is always current.
 
