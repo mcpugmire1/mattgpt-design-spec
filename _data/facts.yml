@@ -117,9 +117,9 @@ pinecone_min_sim: 0.15
 router_hard_accept: 0.8
 router_soft_accept: 0.4
 search_top_k: 25
-story_count: 123
+story_count: 124
 story_count_label: "100+"
-unit_test_file_count: 44
+unit_test_file_count: 47
 unit_test_files:
   - "test_ask_agy_button_css.py"
   - "test_ask_agy_history.py"
@@ -127,6 +127,8 @@ unit_test_files:
   - "test_ask_agy_prompt_composition.py"
   - "test_ask_agy_sources_layout.py"
   - "test_ask_agy_tool_answer.py"
+  - "test_ask_agy_tool_system_prompt.py"
+  - "test_ask_agy_turn_contract.py"
   - "test_assess_jd.py"
   - "test_backend_service.py"
   - "test_banking_landing_js.py"
@@ -143,6 +145,7 @@ unit_test_files:
   - "test_load_matt_profile_format.py"
   - "test_matt_dna_grounding.py"
   - "test_matt_dna_industry.py"
+  - "test_pinecone_egress.py"
   - "test_pinecone_service.py"
   - "test_profile_facts_return_shape.py"
   - "test_query_logger.py"
