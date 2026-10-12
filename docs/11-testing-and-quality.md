@@ -2,7 +2,7 @@
 
 **How MattGPT maintains quality through 3-layer testing strategy**
 
-> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality (100% pass rate, {{ site.data.facts.eval_summary }}), and BDD/E2E tests for UI workflows ({{ site.data.facts.bdd_summary }}).
+> This document describes the complete testing approach: unit tests for core components, RAG evaluation framework for pipeline quality ({{ site.data.facts.eval_query_count }} golden queries), and BDD/E2E tests for UI workflows ({{ site.data.facts.bdd_summary }}).
 
 ---
 
@@ -24,14 +24,14 @@
 <div class="mermaid">
 graph TD
     L3["Layer 3: BDD/E2E Tests<br/>{{ site.data.facts.bdd_summary }}<br/>Full UI workflows"]
-    L2["Layer 2: RAG Eval<br/>{{ site.data.facts.eval_query_count }} golden queries · {{ site.data.facts.eval_summary }} pass rate<br/>Eval-driven development"]
+    L2["Layer 2: RAG Eval<br/>{{ site.data.facts.eval_query_count }} golden queries · run before merge<br/>Eval-driven development"]
     L1["Layer 1: Unit Tests<br/>{{ site.data.facts.unit_test_file_count }} unit test files · Component isolation<br/>Fast feedback (under 1 min)"]
     L3 --> L2 --> L1
 </div>
 
 **Quality Metrics:**
 - **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} unit test files testing core components
-- **RAG Eval Pass Rate:** 100% ({{ site.data.facts.eval_summary }} queries)
+- **RAG Eval:** {{ site.data.facts.eval_query_count }} golden queries, one a known expected failure (Q59)
 - **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
 - **Total Test Runtime:** ~30 minutes (full suite)
 
@@ -106,8 +106,8 @@ pytest tests/unit/ -v
 
 **Location:** `tests/eval_rag_quality.py`
 **Framework:** pytest-based golden query testing
-**Coverage:** 64 queries across 8 categories
-**Current Pass Rate:** 100% ({{ site.data.facts.eval_summary }})
+**Coverage:** {{ site.data.facts.eval_query_count }} queries across 8 categories
+**Pass rate:** measured per run, not recorded in this spec. Q59 ("Where does Matt live?") is a known expected failure: its `xfail_reason` keeps it visible and the report counts it apart from failures.
 
 ### Why RAG Evals Matter
 
@@ -118,8 +118,8 @@ RAG evals validate end-to-end pipeline quality, not just component behavior. The
 - **Architecture changes:** Validate major refactors (e.g., Entity Gate removal)
 
 **Quality Gates:**
-- **Pre-Merge Requirement:** Eval pass rate ≥ 95% (61+/64)
-- **Production Deploy:** Eval pass rate ≥ 98% (63+/64)
+- **Pre-Merge Requirement:** Eval pass rate ≥ 95%
+- **Production Deploy:** Eval pass rate ≥ 98%
 
 ---
 
@@ -153,7 +153,7 @@ Named client entity detection and story pinning.
 - Correct Client entity detected and pinned to #1
 - High confidence score (≥0.25)
 
-### 3. Intent (9 queries)
+### 3. Intent (10 queries)
 
 Behavioral and stakeholder questions requiring STAR-formatted responses.
 
@@ -270,9 +270,8 @@ Marketing and landing page queries fail HARD if meta-commentary slips through. "
 **Question:** Are confidence thresholds applied correctly?
 
 **Validation:**
-- HIGH confidence (≥{{ site.data.facts.confidence_high }}) → "Found X stories"
-- LOW confidence (≥{{ site.data.facts.confidence_low }}) → "Relevance may be low" warning
-- NONE (<{{ site.data.facts.confidence_low }}) → "No strong matches" with suggestions
+- **Ask Agy:** HIGH confidence (≥{{ site.data.facts.confidence_high }}) gets an answer. Anything below that is declined with the low-confidence banner and suggestion chips, unless the question came from a suggestion chip or is a high-scoring behavioral question.
+- **My Work search:** LOW confidence (≥{{ site.data.facts.confidence_low }}) still shows results, with a "Relevance may be low" note (`explore_stories.py`).
 
 ---
 
@@ -395,15 +394,13 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ### Pass Rate Breakdown
 
-The eval suite covers 8 categories: narrative, client, intent, edge, surgical, entity detection, marketing, and context story. All {{ site.data.facts.eval_query_count }} queries currently pass ({{ site.data.facts.eval_summary }}).
+The eval suite covers 8 categories: narrative, client, intent, edge, surgical, entity detection, marketing, and context story. Q59 is a known expected failure; see Coverage above.
 
 ### Flaky Test Handling
 
 **LLM Variance:** GPT-4o responses vary slightly between runs (temperature = 0.4 for standard queries, 0.2 for synthesis)
 
-**Known Flaky Tests:**
-- Q14: "Tell me about a time Matt failed" (rephrasing variance)
-- Q27: "What's Matt's superpower?" (meta-commentary borderline cases)
+**Known Flaky Tests:** none tracked by query. Occasional failures from LLM variance usually pass on re-run (Known Limitations in the app repo's `ARCHITECTURE.md`).
 
 **Strategy:**
 - Run evals 3 times before declaring failure
@@ -415,7 +412,7 @@ The eval suite covers 8 categories: narrative, client, intent, edge, surgical, e
 **Pre-Merge Requirement:** Eval pass rate ≥ 95%
 **Production Deploy:** Eval pass rate ≥ 98%
 
-**Rationale:** 64 queries is small enough that 1-2 failures indicate real issues, not statistical noise.
+**Rationale:** {{ site.data.facts.eval_query_count }} queries is small enough that 1-2 failures indicate real issues, not statistical noise.
 
 ---
 
@@ -465,38 +462,31 @@ pytest tests/bdd/ -v
 
 Three automation layers are active: push to main triggers a Streamlit Cloud deploy (real continuous deployment, every merge ships immediately), a GitHub Actions cron job (~10 min schedule) keeps the app warm, and a push-triggered GitHub Actions job derives volatile facts from the source code and syncs them to `_data/facts.yml` in the design-spec repo.
 
-Test gates are not currently enforced by the pipeline. They run manually before merge and deploy (see Quality Gates below). If automated enforcement were added, the workflow would look like this:
+The unit suite is the one automated test gate, enforced twice:
 
-```yaml
-# .github/workflows/test.yml
-- name: Run Unit Tests
-  run: pytest tests/unit/ -v
+- **CI:** `.github/workflows/test.yml` runs `pytest tests/unit/` on every push and pull request to main. It needs no API keys, so it can't be skipped for lack of secrets.
+- **Pre-push hook:** `.pre-commit-config.yaml` runs the unit and integration tests (excluding network-bound ones) before each `git push`.
 
-- name: Run RAG Evaluations
-  run: pytest tests/eval_rag_quality.py -v
-
-- name: Run E2E Tests
-  run: pytest tests/bdd/ -v
-```
+The RAG eval and the BDD suite are not automated. The eval costs API tokens and takes minutes, and the BDD suite needs a running app, so both stay manual before merge.
 
 ---
 
 ## Quality Gates
 
-These gates run manually before merge and before production deploy. They are conventions, not automated checks.
+Unit tests are enforced by CI and the pre-push hook. The eval and BDD gates are conventions, run manually before merge and deploy, not automated checks.
 
 **Pre-Merge:**
 - All {{ site.data.facts.unit_test_file_count }} unit test files passing
-- RAG eval pass rate ≥ 95% (61+/64)
+- RAG eval pass rate ≥ 95%
 - BDD scenarios passing
 
 **Production Deploy:**
 - All {{ site.data.facts.unit_test_file_count }} unit test files passing
-- RAG eval pass rate ≥ 98% (63+/64)
+- RAG eval pass rate ≥ 98%
 - BDD scenarios passing
 - Manual smoke test (5 queries + 2 UI workflows)
 
-**Rationale:** 64 queries is small enough that 1-2 failures indicate real issues, not statistical noise. BDD scenarios validate complete user workflows end-to-end.
+**Rationale:** {{ site.data.facts.eval_query_count }} queries is small enough that 1-2 failures indicate real issues, not statistical noise. BDD scenarios validate complete user workflows end-to-end.
 
 ---
 
