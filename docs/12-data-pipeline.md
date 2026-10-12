@@ -295,8 +295,7 @@ Excel also owns `Interview Questions` (read from the sheet, split on `;`) and `p
 
 `MATT_DNA` is built at app startup by `generate_dynamic_dna()` in `backend_service.py`. Part of it is derived, part is read from the profile, and part is still written in code.
 
-- **Derived from the corpus:** clients grouped by Employer, Industry Experience (story counts and clients per Industry value), and the practitioner count, parsed by regex from the Cloud Innovation Center story with a "150" fallback
-- **From code constants:** the themes list, from `SYNTHESIS_THEMES`
+- **Derived from the corpus:** clients grouped by Employer, Industry Experience (story counts and clients per Industry value), the themes list (`SYNTHESIS_THEMES`, built from the stories' Theme values at startup), and the practitioner count, parsed by regex from the Cloud Innovation Center story with a "150" fallback
 - **Read from the profile:** `self_description` in `data/matt_profile.json`
 - **Hardcoded in the template:** Career Arc (including employer dates), Theme Strengths, Signature Achievements, How Matt Wins Business, and Leadership Philosophy
 
