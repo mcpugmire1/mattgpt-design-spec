@@ -24,7 +24,7 @@ The MattGPT CSS architecture uses a modern, variable-based approach to ensure co
 
 **Key Principles:**
 - CSS variables for all colors, spacing, and typography
-- Mobile-first responsive design
+- Desktop-first responsive design: desktop styles are the base, mobile changes are `max-width` overrides
 - Dark mode support via CSS variables
 - Component-scoped styling patterns
 - Streamlit override strategies
@@ -66,24 +66,20 @@ For spacing and border-radius, check existing patterns in `global_styles.py`: th
 ### Breakpoint Definitions
 
 ```css
-/* Mobile-first approach */
-/* Base styles: Mobile < 767px (no media query needed) */
+/* Desktop-first: base styles are the desktop layout (no media query) */
 
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
-    /* Tablet-specific styles */
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-    /* Desktop enhancements */
-}
-
-/* Mobile-specific overrides */
+/* Mobile overrides: where every new mobile change goes */
 @media (max-width: 767px) {
-    /* Mobile-specific adjustments */
+    /* Mobile adjustments; must not change desktop */
+}
+
+/* Tablet, where a layout needs it */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet adjustments */
 }
 ```
+
+The app repo's rule is that mobile changes go in `@media (max-width: 767px)` blocks and must not break desktop, checked at 375px, 767px and 1024px+. `min-width` queries are rare. Older blocks also use `max-width: 768px`, so a viewport exactly 768px wide gets mobile styles from some rules and not others; a few narrower queries (for example 480px) handle small phones.
 
 ### Implementation Location
 `llm_portfolio_assistant/ui/styles/global_styles.py` (mobile `@media` blocks, check the file for current line positions)
@@ -97,7 +93,7 @@ For spacing and border-radius, check existing patterns in `global_styles.py`: th
 - Touch-optimized controls
 - Horizontal scroll tables
 
-**Tablet (768-1024px):**
+**Tablet (768-1023px):**
 - 2-column grids
 - Collapsed sidebar navigation
 - Optimized spacing
@@ -131,7 +127,7 @@ st.markdown("""
 <style>
 .my-component {
     background: var(--bg-surface);
-    padding: var(--spacing-md);
+    padding: 16px;
 }
 
 .my-component:hover {
@@ -150,7 +146,7 @@ Streamlit applies its own CSS through emotion-cache. To override:
 [data-testid="stButton"] button {
     background: var(--accent-purple) !important;
     color: white !important;
-    border-radius: var(--radius-md) !important;
+    border-radius: 8px !important;
 }
 
 /* Use attribute selectors for stability */
@@ -170,18 +166,20 @@ Dark mode is implemented by swapping CSS variable values:
 ```css
 /* Light mode (default) */
 :root {
-    --bg-surface: #ffffff;
-    --text-primary: #2c3e50;
-    --border-color: #e0e0e0;
+    --bg-surface: ...;
+    --text-primary: ...;
+    --border-color: ...;
 }
 
-/* Dark mode */
+/* Dark mode: same names, dark values */
 body.dark-theme {
-    --bg-surface: #1a1a1a;
-    --text-primary: #e0e0e0;
-    --border-color: #3a3a3a;
+    --bg-surface: ...;
+    --text-primary: ...;
+    --border-color: ...;
 }
 ```
+
+The values live in the `:root` and `body.dark-theme` blocks of `global_styles.py`; as with the core variables, they are not copied here.
 
 ### Implementation Status
 CSS variable system in place (`global_styles.py`)
@@ -237,45 +235,27 @@ color: #2c3e50;
 background: #ffffff;
 ```
 
-### 2. Mobile-First Approach
+### 2. Desktop Base, Mobile Overrides
 
 ```css
-/* Good - Base styles for mobile, enhance for desktop */
+/* Base: the desktop layout */
 .card {
-    padding: var(--spacing-sm);
+    padding: 24px;
 }
 
-@media (min-width: 1024px) {
-    .card {
-        padding: var(--spacing-lg);
-    }
-}
-
-/* Bad - Desktop-first requires more overrides */
-.card {
-    padding: var(--spacing-lg);
-}
-
+/* Mobile: override only what changes */
 @media (max-width: 767px) {
     .card {
-        padding: var(--spacing-sm);
+        padding: 16px;
     }
 }
 ```
 
-### 3. Consistent Spacing Scale
+New mobile rules use `max-width: 767px`, not `768px`, and are checked at desktop width too.
 
-Use the spacing variables instead of arbitrary values:
+### 3. Reuse Existing Spacing Values
 
-```css
-/* Good */
-margin: var(--spacing-md);
-padding: var(--spacing-sm) var(--spacing-md);
-
-/* Bad */
-margin: 24px;
-padding: 16px 24px;
-```
+There are no spacing or radius variables. Before adding a value, find what similar components in `global_styles.py` already use and match it, rather than inventing a new size.
 
 ### 4. Component Isolation
 
