@@ -2,7 +2,7 @@
 
 **MattGPT: Mobile-Responsive Design**
 
-> This document details the mobile-first responsive design implementation for the MattGPT portfolio application, including breakpoints, patterns, and component behaviors.
+> This document details the responsive design implementation (desktop-first, with mobile overrides) for the MattGPT portfolio application, including breakpoints, patterns, and component behaviors.
 
 ---
 
@@ -10,7 +10,7 @@
 
 1. [Overview](#overview)
 2. [Responsive Breakpoints](#responsive-breakpoints)
-3. [Mobile-First Patterns](#mobile-first-patterns)
+3. [Mobile Patterns](#mobile-patterns)
 4. [Component Behaviors](#component-behaviors)
 5. [Touch Optimization](#touch-optimization)
 6. [Performance Considerations](#performance-considerations)
@@ -24,9 +24,9 @@ MattGPT implements production-quality mobile CSS in `@media` blocks across `glob
 
 **Key Stats:**
 - **Mobile Breakpoint:** < 767px
-- **Tablet Breakpoint:** 768px - 1024px
-- **Desktop Breakpoint:** > 1024px
-- **Mobile CSS:** `@media (max-width: 767px)` blocks in `global_styles.py` (see file for current positions)
+- **Tablet Breakpoint:** 768px - 1023px
+- **Desktop Breakpoint:** 1024px and up (the base styles)
+- **Mobile CSS:** `@media (max-width: 767px)` blocks in `global_styles.py` and `mobile_overrides.py`; older blocks also use `max-width: 768px`
 - **Touch Target Minimum:** 44px
 
 ---
@@ -36,24 +36,20 @@ MattGPT implements production-quality mobile CSS in `@media` blocks across `glob
 ### Breakpoint Definitions
 
 ```css
-/* Mobile First - Base styles apply to mobile */
-/* Default: Mobile < 767px */
+/* Desktop first: base styles are the desktop layout (no media query) */
 
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
-    /* Tablet-specific enhancements */
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-    /* Desktop-specific enhancements */
-}
-
-/* Mobile Overrides (when needed) */
+/* Mobile overrides: where every new mobile change goes */
 @media (max-width: 767px) {
-    /* Explicit mobile-only styles */
+    /* Mobile-only adjustments; must not change desktop */
+}
+
+/* Tablet, where a layout needs it */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet adjustments */
 }
 ```
+
+See [CSS Architecture](07-css-architecture#breakpoint-strategy) for the 767px versus 768px inconsistency in older blocks.
 
 ### Why These Breakpoints?
 
@@ -74,7 +70,7 @@ MattGPT implements production-quality mobile CSS in `@media` blocks across `glob
 
 ---
 
-## Mobile-First Patterns
+## Mobile Patterns
 
 ### 1. Stacking Layouts
 
@@ -110,18 +106,20 @@ MattGPT implements production-quality mobile CSS in `@media` blocks across `glob
 **Desktop:** Larger text
 **Mobile:** Optimized for readability
 
+Pattern (illustrative sizes):
+
 ```css
-/* Base (Mobile) */
+/* Base (desktop) */
 h1 {
-    font-size: 28px;
-    line-height: 1.2;
+    font-size: 48px;
+    line-height: 1.1;
 }
 
-/* Desktop */
-@media (min-width: 1024px) {
+/* Mobile override */
+@media (max-width: 767px) {
     h1 {
-        font-size: 48px;
-        line-height: 1.1;
+        font-size: 28px;
+        line-height: 1.2;
     }
 }
 ```
@@ -452,7 +450,7 @@ Place primary actions in the "thumb zone" (bottom 2/3 of screen on mobile).
 ## Roadmap
 
 ### Current State (Streamlit)
-Mobile-responsive CSS (200 lines)
+Mobile-responsive CSS (`mobile_overrides.py` plus `max-width` blocks in `global_styles.py`)
 Touch-optimized controls
 Horizontal scroll tables
 Stacking layouts
