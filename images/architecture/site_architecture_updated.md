@@ -1,5 +1,7 @@
 # MattGPT Site Architecture (December 2025)
 
+> **Historical snapshot, not maintained.** This page records the site and pipeline as of December 2025 (last edited January 30, 2026). Navigation, page names, the model, the file layout and the story and era counts have all changed since. For the current architecture, see [Technical Architecture](../../docs/02-technical-architecture.md).
+
 ## Page Hierarchy
 
 ```
