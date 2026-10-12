@@ -1,11 +1,26 @@
 # Current Project Context
 
-**Last Updated:** June 2026 (Staleness audit: eval 100%/64q, BDD 219/30, 6 priority docs corrected)
-**Session Status:** 🟢 Documentation Complete - Aligned with June 2026 Implementation
+**Last Updated:** October 2026 (drift pass against arch sync 850071c, in progress)
+**Session Status:** 🟡 Partly aligned: docs 02, 05, 09, 11 and 12 match `origin/main` of the app repo; the rest of the drift list is open (see Next Steps)
 
 ---
 
-## Latest Update: May 2026 - Feature Catch-Up + Design Spec Alignment
+## Latest Update: October 2026 - Drift Pass Against Arch Sync 850071c
+
+**What Changed:**
+A drift audit compared the spec with the app repo's `origin/main` and found the voice guide, architecture, API, data pipeline and testing docs describing behavior the app no longer has. Each fix was checked against `origin/main`, never the app repo's working tree, and committed one doc at a time.
+
+- **05 Agy Voice Guide:** openers match `STANDARD_OPENERS` / `SYNTHESIS_OPENERS`; "Great question!" removed; decline banners replace pivot and clarifying-question copy; closing offers marked PAUSED until MATTGPT-275 (ADR 035); loading-message dog humor allowed, answers excluded; thank-you and frustrated-user sections marked NOT IMPLEMENTED
+- **11 Testing and Quality:** unit tests are enforced by CI (`test.yml`) and the pre-push hook; eval and BDD stay manual; Q59 is a known expected failure; Ask Agy declines low confidence, My Work warns
+- **12 Data Pipeline:** Excel owns `public_tags` and `Interview Questions`; ids are `Title|Client` slugs; tags are LLM-generated; Pinecone metadata casing; MATT_DNA's derived, profile and hardcoded sections
+- **02 Technical Architecture:** pipeline diagram reordered (entity detection before search and the gate); router rejects only out_of_scope and personal at HARD_ACCEPT; synthesis retrieval; banner table
+- **09 API Reference:** module tables, data flow, `semantic_search()` return shape, `W_KW`, filter keys, environment variables
+
+**Found along the way:**
+- `facts.eval_summary` is not a measured pass rate: `extract_facts.py` writes the query count over itself. The spec no longer presents it as one.
+- App code defects (vocabulary key case, `place` metadata, `ERA_ORDER`, salary banner) are tracked in the app repo's backlog, not here.
+
+## Previous Update: May 2026 - Feature Catch-Up + Design Spec Alignment
 
 **What Changed (May 11):**
 Brought design spec current with shipped codebase work: Role Match Phase 4 slice 1 (lock icon + password gate), triage agent surface (`scripts/assess_jd.py` wrapping `jd_assessor.py` for external orchestration), Role Match wireframes added to `/wireframes/`, BDD scenario count updated to 246 across 13 feature files, query logger column count corrected to 32, historical narrative extracted from 02-technical-architecture to codebase HISTORY.md, stale "LATER" roadmap entry replaced (Role Match shipped, not aspirational), index.md landing page updated with Role Match links.
@@ -383,14 +398,10 @@ All 5 sections fully written with substantive personal content: Why I Built This
 
 ## Next Steps (Immediate Priorities)
 
-1. **Test Streamlit styling changes** - Refresh browser and verify all visual updates
-2. **Deploy updated Streamlit app** to Streamlit Cloud for job search
-3. **Fill in placeholder sections** in `04-building-mattgpt.md` with personal narrative (lower priority)
-   - Why I Built This
-   - Key Challenges & Solutions
-   - Lessons Learned
-   - Future Vision
-   - Build Timeline
+1. **Finish the drift list:** 07 and 08 (the CSS is desktop-first with max-width overrides), 04, 10, `images/architecture/site_architecture_updated.md`, `index.md` (eval count, checked at `origin/main` first), `keeping-docs-in-sync.md`, and the breakpoint line in `CLAUDE.md`
+2. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`, `ask_answer_model`; and stop using `eval_summary` until it reports a real run
+3. **Re-pass docs 02 and 05 when MATTGPT-275 lands:** streamed answers on `ASK_ANSWER_MODEL`, the new answer path, and the return of closing offers (remove the PAUSED callouts)
+4. **Update doc 05's salary line when MATTGPT-298 lands** (salary questions get a polite reply instead of the nonsense banner)
 
 ---
 
