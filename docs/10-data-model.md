@@ -28,8 +28,8 @@ Each story is a JSON object with **Title-case field names** (matching source Exc
 - Comma-separated strings auto-parsed to lists (e.g., `"public_tags": "aws,cloud,platform"`)
 
 **Loading Behavior:**
-- List fields are normalized at load time (accepts both `"string"` and `["array"]`)
-- Missing fields default to `""` (strings) or `[]` (lists)
+- List fields are normalized at load time (accepts both `"string"` and `["array"]`), and comma-separated `public_tags` are split into a list
+- Normalization touches only fields that are present; `normalize_story()` in `utils/corpus_loader.py` does not add missing fields
 - Stories without an `id` field are skipped to maintain Pinecone mapping integrity
 
 ---
@@ -438,19 +438,12 @@ Simplified example:
 
 **Embedding Source:**
 - Model: OpenAI `text-embedding-3-small`
-- Input: a labeled composition assembled by `build_embedding_text()` in `build_custom_embeddings.py`. It front-loads `Use Case(s)`, then includes `Title`, `Theme`, `Industry`, `Sub-category`, `5PSummary`, the full STAR block (`Situation`, `Task`, `Action`, `Result`), `Process`, `Competencies`, `public_tags`, and `Interview Questions`. Each field is truncated by character limit, not by item count.
+- Input: a labeled composition assembled by `build_embedding_text()` in `build_custom_embeddings.py`. It opens with a header of `Title`, `Theme`, `Industry` and `Sub-category`, then front-loads `Use Case(s)`, then includes `5PSummary`, the full STAR block (`Situation`, `Task`, `Action`, `Result`), `Process`, `Competencies`, `public_tags`, and `Interview Questions`. Each field is truncated by character limit, not by item count.
 - Dimension: 1536
 
 ### Vocabulary Building
 
-At app startup, `initialize_vocab()` extracts tokens from:
-- `Title`
-- `Client`
-- `Sub-category` (domain)
-- `5PSummary`
-- `public_tags`
-
-Used for token overlap validation in search queries.
+`initialize_vocab()` is unused. Its vocabulary only serves the `enforce_overlap` branch of `semantic_search()`, which no production caller enables; it's scheduled for removal (MATTGPT-287). Ask Agy builds its vocabulary with `build_known_vocab()`.
 
 ---
 
