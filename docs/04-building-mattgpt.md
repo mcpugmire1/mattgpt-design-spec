@@ -76,13 +76,12 @@ I named it after Agy, my late Plott Hound (short for Agador Spartacus from "The 
 
 | Technology | Purpose | Why This Choice |
 |------------|---------|-----------------|
-| **Python 3.11** | Primary language | Rich ML/AI ecosystem, rapid prototyping |
+| **Python** | Primary language (code targets 3.11; CI and local dev run 3.13) | Rich ML/AI ecosystem, rapid prototyping |
 | **Streamlit** | Frontend framework (MVP) | 2-week build time vs 3+ months for React |
-| **OpenAI GPT-4o** | LLM for response generation | State-of-the-art reasoning and synthesis |
+| **OpenAI {{ site.data.facts.chat_model }}** | LLM for response generation | State-of-the-art reasoning and synthesis |
 | **Pinecone** | Vector database | Managed solution, fast ANN search |
 | **OpenAI Embeddings** | Embedding generation | text-embedding-3-small (1536-dim) |
 | **Pandas** | Data manipulation | JSONL processing and metadata handling |
-| **NumPy** | Numerical operations | Vector math and similarity scoring |
 | **Python venv** | Dependency management | Local dev environment with requirements.txt |
 | **Streamlit Cloud** | Deployment (MVP) | Free hosting for Streamlit apps |
 
@@ -155,7 +154,7 @@ One of the core technical innovations in MattGPT is the **semantic search** appr
 **The Algorithm:**
 
 ```python
-def semantic_search(query: str, top_k: int = 10) -> Dict:
+def semantic_search(query: str, top_k: int = SEARCH_TOP_K) -> Dict:
     """
     Pure semantic retrieval with confidence-based filtering
     to ensure high-quality, relevant results.
@@ -196,7 +195,7 @@ def semantic_search(query: str, top_k: int = 10) -> Dict:
 - **Semantic Understanding:** Recognizes that "bootstrap it" and "start a new project" are conceptually similar
 - **Confidence Scoring:** Three-tier system (high/low/none) ensures quality results
 - **Threshold Gating:** Prevents low-quality matches from appearing (minimum {{ site.data.facts.pinecone_min_sim }} similarity)
-- **Intent Recognition:** Understands user goals (interview prep, due diligence, pitch)
+- **Intent Routing:** Classifies the question's topic into one of {{ site.data.facts.intent_family_count }} intent families; mapping a visitor's goal (interview prep, due diligence, pitch) to tone is not implemented (see [Agy Voice Guide](05-agy-voice-guide#user-intent-recognition))
 
 This approach was validated through manual testing of common query patterns, demonstrating effective semantic understanding and confidence-based filtering.
 
@@ -249,7 +248,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 **Natural Language Queries:**
 - Ask in plain English: no keyword guessing required
-- Intent recognition understands question types (vetting, assessment, pitch)
+- The semantic router classifies the question's topic; it does not detect the visitor's goal (vetting, assessment, pitch)
 - Conversational follow-up with context retention
 
 ---
@@ -268,13 +267,13 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 **Metadata Enhancement:**
 - Client, industry, domain, and role filtering
-- Date range and outcome type filtering
+- Era, capability, tag and has-metric filtering
 - Supports precise targeting for specific queries
 
-**Re-ranking Algorithm:**
-- Boosts results by relevance + recency + credibility
-- Considers user intent (recruiter vetting vs deep assessment)
-- Fine-tuned using human-in-the-loop feedback
+**Ranking:**
+- Pinecone similarity blended with a keyword overlap score (`W_KW` in `config/constants.py`)
+- A story matching a detected entity is pinned to #1
+- No recency or credibility boost, and no ranking trained on feedback
 
 ---
 
@@ -311,11 +310,11 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 **5-Stage RAG Pipeline (January 2026):**
 - **Stage 1:** Rules-based nonsense detection (regex patterns)
-- **Stage 2:** Semantic router with 15 intent families (intent classification + out-of-scope/personal detection)
-- **Stage 3:** Confidence gating on Pinecone results
-- **Stage 4:** Entity detection & story pinning (Client, Employer, Division, Title)
-- **Stage 5:** Intent-aware ranking with context isolation (narrative vs entity queries)
-- **Quality:** 100% eval pass rate 
+- **Stage 2:** Semantic router with {{ site.data.facts.intent_family_count }} intent families (intent classification + out-of-scope/personal rejection at hard accept)
+- **Stage 3:** Entity detection (Client, Employer, Division, Title), which scopes the search
+- **Stage 4:** Pinecone search and confidence gating
+- **Stage 5:** Intent-aware ranking with entity pinning and context isolation (narrative vs entity queries)
+- **Quality:** gated by a {{ site.data.facts.eval_query_count }}-query golden eval
 
 **Conversational Workflow:**
 - Streamlit's stateful UI for session management
@@ -362,7 +361,7 @@ The fix was two-fold: mandatory STAR structure (every story needs verifiable Sit
 
 Streamlit is great for rapid prototyping. It's terrible for custom styling. Class names change between versions. CSS selectors that work on desktop break on mobile. The st-emotion-cache-* classes are generated dynamically and can't be targeted reliably.
 
-I learned to use data-testid attributes and container keys for CSS targeting. All application CSS lives in global_styles.py: carefully scoped overrides for Streamlit's generated class names. It's not pretty, but it works.
+I learned to use data-testid attributes and container keys for CSS targeting. Most application CSS lives in global_styles.py and mobile_overrides.py: carefully scoped overrides for Streamlit's generated class names. Components and pages also carry their own scoped style blocks. It's not pretty, but it works.
 
 ### The January 2026 RAG Pipeline Cleanup
 
@@ -372,7 +371,7 @@ The cleanup removed both:
 - **Entity Gate removed:** Was rejecting valid narrative/synthesis queries
 - **LLM intent classification removed:** Redundant with semantic router (which uses embeddings, not LLM calls)
 
-The semantic router now handles everything: 15 intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification ({{ site.data.facts.router_hard_accept }} hard accept / {{ site.data.facts.router_soft_accept }} soft accept), and graceful rejection with suggestion chips. At that stage (January 2026), eval quality improved to 98.4% (60/61) while reducing costs and latency; the suite has since grown to 64/64 (100%).
+The semantic router now handles everything: {{ site.data.facts.intent_family_count }} intent families (including narrative, synthesis, out-of-scope, personal), dual-threshold classification ({{ site.data.facts.router_hard_accept }} hard accept / {{ site.data.facts.router_soft_accept }} soft accept), and graceful rejection with suggestion chips. At that stage (January 2026), eval quality improved to 98.4% (60/61) while reducing costs and latency; the suite has since grown to {{ site.data.facts.eval_query_count }} queries.
 
 ---
 
@@ -452,7 +451,7 @@ Every line of code, every STAR story, every design decision serves that mission:
 - [Product Vision](01-product-vision) - Strategic positioning and user personas
 - [Technical Architecture](02-technical-architecture) - RAG pipeline and system design
 - [Audience Journeys](03-ux-design-process) - The four visitor journeys the design is derived from
-- [RAG Quality Evaluation](11-testing-and-quality) - How evals validate quality (100% pass rate, 64/64)
+- [RAG Quality Evaluation](11-testing-and-quality) - How evals validate quality ({{ site.data.facts.eval_query_count }} golden queries)
 
 ---
 
