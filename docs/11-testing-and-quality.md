@@ -137,7 +137,7 @@ Professional identity, career story, "builder" vocabulary, and synthesis questio
 - "Summarize Matt's career themes"
 
 **Expected Behavior:**
-- Uses verbatim "builder" vocabulary (sacred term as of March 2026)
+- Reflects Matt's identity terms; the eval checks concept stems such as "build" and "moderniz" against a minimum match count, not exact words
 - Broad thematic response, not story-specific details
 - No meta-commentary
 
