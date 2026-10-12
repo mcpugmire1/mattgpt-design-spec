@@ -39,7 +39,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - **Limited scalability:** Estimated ~100 concurrent users (not load-tested; Streamlit Community Cloud limits apply)
 - **No caching layer:** Direct database queries
 - ~~**Modular architecture:**~~ Shipped: refactored from monolithic app.py to component-based structure
-- ~~**Minimal observability:**~~ Shipped: 32-column query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
+- ~~**Minimal observability:**~~ Shipped: query logger to Google Sheets capturing events, intent, UTM attribution, and Role Match outcomes
 
 ### Key Decisions
 
@@ -61,7 +61,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ### Architecture Evolutions Achieved
 
 **January 2026 - RAG Pipeline Cleanup:**
-- 5-stage RAG pipeline with 100% eval pass rate ({{ site.data.facts.eval_summary }})
+- 5-stage RAG pipeline, gated by a golden-query eval
 - Removed Entity Gate bouncer (was blocking legitimate queries)
 - Removed `classify_query_intent()` LLM call (redundant with router)
 - Semantic router now handles synthesis + out-of-scope + narrative detection
@@ -83,7 +83,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 
 **Timeline View Innovation:**
 - Era-based project grouping (timeline_view.py)
-- 5 career eras with date range calculation
+- Career eras with date range calculation
 - Progressive disclosure pattern per era
 
 **Mobile Implementation:**
@@ -96,7 +96,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ## 5-Stage RAG Pipeline
 
 **Status:** Implemented (January 2026)
-**Quality:** 100% eval pass rate ({{ site.data.facts.eval_summary }} queries)
+**Quality:** gated by a {{ site.data.facts.eval_query_count }}-query golden eval (see [Testing and Quality](11-testing-and-quality))
 
 MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
 
@@ -104,7 +104,7 @@ MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensu
 
 <div class="mermaid">
 graph LR
-    Q[Query] --> S1["Stage 1<br/>Nonsense Filter"] --> S2["Stage 2<br/>Semantic Router"] --> S3["Stage 3<br/>Confidence Gate"] --> S4["Stage 4<br/>Entity Detection"] --> S5["Stage 5<br/>Intent Ranking"] --> R["LLM Response"]
+    Q[Query] --> S1["Stage 1<br/>Nonsense Filter"] --> S2["Stage 2<br/>Semantic Router"] --> S3["Stage 3<br/>Entity Detection"] --> S4["Stage 4<br/>Search + Confidence Gate"] --> S5["Stage 5<br/>Intent Ranking"] --> R["LLM Response"]
 </div>
 
 **Stage 1: Rules-Based Nonsense Detection**
@@ -115,21 +115,22 @@ graph LR
 **Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
 - Embedding-based similarity matching against {{ site.data.facts.intent_family_count }} intent families
 - Dual-threshold system: HARD_ACCEPT ({{ site.data.facts.router_hard_accept }}), SOFT_ACCEPT ({{ site.data.facts.router_soft_accept }})
-- Detects synthesis queries (no Pinecone search needed)
-- Flags out-of-scope industries gracefully
+- Detects synthesis queries, which switch retrieval to theme-filtered search
+- Rejects out-of-scope and personal queries, but only when the score is at least HARD_ACCEPT; below that, the query continues to search
 - **Replaced:** Legacy LLM intent classification (removed Jan 2026)
 
-**Stage 3: Confidence Gating**
-- Pinecone semantic search with confidence scoring
-- Thresholds: HIGH ({{ site.data.facts.confidence_high }}), LOW ({{ site.data.facts.confidence_low }})
-- Filters phantom similarity noise
-- Returns 0 results below minimum threshold
-
-**Stage 4: Entity Detection & Pinning**
+**Stage 3: Entity Detection**
+- Runs before search, so a detected entity scopes the Pinecone query
 - Detects: Client, Employer, Division (intentionally narrower than the search field set to avoid false positives on generic values)
 - Hard filters (once an entity is confirmed): Client, Employer, Division, Project, Place
 - Soft filters: Title (participates in search ranking, not entity detection)
 - **Removed:** Entity Gate threshold bouncer (was blocking valid queries)
+
+**Stage 4: Search and Confidence Gating**
+- Pinecone semantic search, scoped by any detected entity, with confidence scoring
+- Thresholds: HIGH ({{ site.data.facts.confidence_high }}), LOW ({{ site.data.facts.confidence_low }})
+- Ask Agy declines anything below HIGH with the low-confidence banner, unless the question came from a suggestion chip or the router scored it as a confident behavioral question
+- Returns 0 results below minimum threshold
 
 **Stage 5: Intent-Aware Ranking**
 - Narrative queries: Trust Pinecone semantic ranking
@@ -161,38 +162,33 @@ graph LR
 | **Ranking** | Pinecone score + entity pinning | Named clients prioritized over generic |
 | **Temperature** | 0.4 | 0.2 (lower for consistency) |
 | **Focus** | Single story deep-dive | Patterns across stories |
-| **Sacred Vocabulary** | Optional | **Required** ("builder") |
+| **Verbatim identity terms** | Same rule in both modes: required when the top story is Professional Narrative | Same |
 
 ### Synthesis Search Strategy
 
 **Theme-Filtered Parallel Search:**
 
+`get_synthesis_stories()` in `backend_service.py`, simplified:
+
 ```python
-# Don't rely on single query - search by themes
-themes = ["Platform Modernization", "Team Scaling", "Agile Transformation"]
-all_results = []
+# One embedding of the user's question, reused for every theme
+query_vector = _embed(question)
 
-for theme in themes:
-    results = semantic_search(theme, filters={})
-    all_results.extend(results[:3])  # Top 3 per theme
-
-# Prioritize named clients over generic
-named_first = sorted(all_results, key=lambda s: is_generic_client(s["Client"]))
-return named_first[:9]  # Max 9 stories for synthesis
+for theme in SYNTHESIS_THEMES:              # derived from the corpus at startup
+    flt = {"Theme": {"$eq": theme}}         # plus the entity field, if one was detected
+    results = idx.query(vector=query_vector, filter=flt, top_k=3)  # top_per_theme=3
 ```
+
+The answer is grounded in at most `LLM_STORY_LIMIT_SYNTHESIS` of the pooled stories.
 
 **Why Parallel Search:**
 - Single query might miss thematic breadth
 - Searching by themes ensures coverage across career
 - Named clients (JP Morgan, Johnson & Johnson) more credible than "Multiple Clients"
 
-### Sacred Vocabulary Enforcement
+### Verbatim Identity Terms
 
-**Verbatim phrase required in synthesis responses:**
-
-- **"builder"**: the one term that must appear verbatim
-
-Other vocabulary (modernizer, complexity to clarity, proof over promises, maintenance role) was removed from story data during March 2026 data quality cleanup. Only "builder" remains as a verbatim requirement.
+When the top story is a Professional Narrative story, `get_verbatim_requirement()` in `prompts.py` scans its `5PSummary` for a fixed list of Matt's identity phrases (such as "builder" and "modernizer") and requires the answer to use the ones it finds, verbatim. This applies in standard and synthesis mode alike; it is not part of `SYNTHESIS_DELTA`.
 
 **Why Strict:**
 - Professional narrative must be consistent across all synthesis queries
@@ -223,16 +219,14 @@ real outcomes, not just strategy decks.
 - Sets voice guidelines (no meta-commentary)
 
 **SYNTHESIS_DELTA:**
-```python
-+ """
-When answering synthesis/narrative queries:
-- Use MATT_DNA verbatim phrases: {sacred_vocab}
-- Synthesize patterns across projects (not individual deep-dives)
-- Focus on themes, career arc, professional identity
-- Ground in concrete examples (name clients, cite metrics)
-- Lower temperature (0.2) for consistency
-"""
-```
+Added to the base prompt for synthesis questions. In summary:
+- Show breadth across the stories provided, as natural prose with no section labels
+- Follow WHY (30-40%), HOW (40-50%), WHAT (10-20%) internally
+- Lead with the tension from the 2-3 most relevant stories; the rest are optional
+- Bold client names and key numbers; state facts rather than evaluate Matt
+- Cite only the clients in `{client_list}`, filled from the stories provided
+
+Temperature (0.2) is set by the caller, not the prompt.
 
 ### Synthesis vs Narrative Queries
 
@@ -292,9 +286,9 @@ MattGPT uses a **two-layer defense** (Stages 1-2 of the RAG pipeline):
 ```python
 HARD_ACCEPT = {{ site.data.facts.router_hard_accept }}  # Clearly on-topic, no question
 SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}  # Accept but log as borderline for review (lowered from 0.72)
-# Values are advisory. The router flag is used only to rescue low-confidence
-# queries from the Pinecone gate; it never causes a rejection on its own.
-# The rejection path is the Pinecone confidence gate (CONFIDENCE_LOW).
+# The router rejects on its own only for out_of_scope and personal queries
+# scoring at least HARD_ACCEPT (router_rejection_reason()). Every other
+# rejection of a weak query happens at the Pinecone confidence gate.
 ```
 
 **What Changed (January 2026):**
@@ -323,7 +317,7 @@ SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}  # Accept but log as bord
 | **agile_transformation** | "Tell me about agile transformation", "Scaling agile delivery" |
 | **narrative** | "What's Matt's professional identity?", "Builder vs maintainer?" |
 | **synthesis** | "What's Matt's professional narrative?", "Summarize Matt's career themes" |
-| **personal** | "How old is Matt?", "What's Matt's salary?", "Where does Matt live?" |
+| **personal** | "How old is Matt?", "Is Matt single?" (salary questions are caught earlier, by the `personal_compensation` nonsense rule) |
 | **out_of_scope** | Industry queries outside Matt's domain (graceful redirect) |
 
 **Example Classification:**
@@ -337,9 +331,9 @@ SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}  # Accept but log as bord
 # Logged for review, but accepted
 
 # LOW-CONFIDENCE ON ROUTER (score 0.35, below 0.40 threshold)
-"What's the weather in New York?" → intent_family: None
-# Router flag is False, but the actual rejection happens at the Pinecone
-# confidence gate when no relevant story is found.
+"<a question unlike any intent example>" → intent_family: None
+# Router flag is False and nothing rejects here; the query goes to search,
+# and the Pinecone confidence gate declines it if no story scores HIGH.
 ```
 
 ---
@@ -396,6 +390,10 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 | **personal_trivia** | `favorite (color|food|movie|song)` | "What's Matt's favorite color?" |
 | **creative_writing** | `\b(write|compose)\\b.*(poem|story|haiku)\b` | "Write me a poem" |
 | **general_knowledge** | `\b(capital of|president of|who is the)\b` | "Who is the president of France?" |
+| **personal_compensation** | `\b(salary|compensation|income|bonus)\b` | "What's Matt's salary?" |
+| **roleplay_impersonation** | `\b(roleplay|pretend|act)\b.*\b(as|to be)\b.*(her|him|my grandmother)` | "Pretend to be my grandmother" |
+
+The table shows a sample; `nonsense_filters.jsonl` has more categories. Five rules (`creative_writing` twice, `general_knowledge` twice, `gaming`) skip any question that names Matt or uses he, his or him, so "When was he at JP Morgan?" is not refused (ADR 043 in the app repo's `docs/ADR.md`).
 
 **Performance:**
 - Pattern matching is linear in the number of patterns and executes in under 5ms
@@ -407,36 +405,20 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 
 **When a query is rejected:**
 
-1. **Semantic router** flags query as below {{ site.data.facts.router_soft_accept }} threshold
-2. **Pattern filter** (optional) confirms off-domain category
-3. **Agy responds** with helpful redirect:
+Ask Agy shows a one-line banner with suggestion chips in place of an answer. The copy and chip sets live in `BANNER_COPY` and the `*_CHIPS` lists in `utils/ui_helpers.py`; which one appears depends on what rejected the query:
 
-**Example Response:**
-
-```
-🐾 I'm not finding matches for that in Matt's portfolio.
-
-I'm focused on Matt's enterprise transformation experience: things like agile delivery, platform engineering,
-team scaling, and stakeholder management.
-
-Try asking about:
-• "How did Matt scale teams at JP Morgan?"
-• "Show me Matt's platform engineering work"
-• "What's Matt's approach to innovation leadership?"
-
-What would you like to know about Matt's experience?
-```
-
-**Suggestion Chips Displayed:**
-- "Show me agile transformation projects"
-- "Tell me about Matt's leadership style"
-- "How did Matt scale engineering teams?"
+| Rejected by | Banner | Chips |
+|---|---|---|
+| Nonsense rule (Stage 1) | "🐾 Wrong trail. I'm a Plott Hound trained to track Matt's transformation work. Give me a real scent to follow." | `RULE_CHIPS` |
+| Router, personal (Stage 2) | "🐾 I'm focused on Matt's professional experience." | `PERSONAL_CHIPS` |
+| Router, out of scope (Stage 2) | "🐾 That's outside Matt's experience." | `OUT_OF_SCOPE_CHIPS` |
+| Confidence gate (Stage 4) | "🐾 I picked up a scent but lost the trail. Try rephrasing your question and I'll track it down." | `OUT_OF_SCOPE_CHIPS` |
 
 ---
 
 ### How the Two-Stage Gate Works
 
-Off-domain queries are handled in two stages. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }} to {{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} produces a low-confidence router signal. The actual rejection for low-confidence queries happens at the Pinecone confidence gate downstream, not at the router itself; a low router score alone will not reject a query if Pinecone still finds a confident match.
+Off-domain queries are handled in two stages. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }} to {{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} produces a low-confidence router signal. The router rejects on its own only for out-of-scope and personal queries at or above {{ site.data.facts.router_hard_accept }}. Every other weak query is rejected at the Pinecone confidence gate downstream; a low router score alone will not reject a query if Pinecone still finds a confident match.
 
 ---
 
@@ -449,11 +431,11 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 ### What's Live Today (June 2026)
 
 - Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- **5-stage RAG pipeline** with 100% eval pass rate ({{ site.data.facts.eval_summary }})
+- **5-stage RAG pipeline** gated by a {{ site.data.facts.eval_query_count }}-query golden eval
 - **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
 - **Semantic router** with {{ site.data.facts.intent_family_count }} intent families + out-of-scope/personal detection
 - **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
-- **Query analytics**: 32-column event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
+- **Query analytics**: event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
 - **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
 - 100+ STAR-structured project stories
 - Semantic search with confidence scoring and metadata filtering
@@ -473,7 +455,7 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 - [Product Vision](01-product-vision) - Strategic positioning
 - [UX Design Process](03-ux-design-process) - Design decisions
 - [Building MattGPT](04-building-mattgpt) - Development journey
-- [RAG Quality Evaluation](11-testing-and-quality) - Eval framework ({{ site.data.facts.eval_summary }}, 100%)
+- [RAG Quality Evaluation](11-testing-and-quality) - Eval framework ({{ site.data.facts.eval_query_count }} golden queries)
 
 ---
 
