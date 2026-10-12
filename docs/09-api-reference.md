@@ -13,7 +13,8 @@
 | Module | Purpose |
 |--------|---------|
 | `jd_assessor.py` | Role Match engine: JD extraction, requirement retrieval, assessment, `compute_recommendation()` |
-| `query_logger.py` | 32-column event logger to Google Sheets (query, feedback, Role Match, UTM) |
+| `query_logger.py` | Event logger to Google Sheets (query, feedback, Role Match, UTM) |
+| `matt_profile.py` | The one reader of `data/matt_profile.json`, shared by Role Match, the assessor and Ask Agy's profile facts |
 | `role_match_summary.py` | Role Match summary generation and scoring helpers |
 | `semantic_router.py` | Query intent classification using embedding similarity |
 | `rag_service.py` | Semantic search orchestration and confidence gating |
@@ -25,11 +26,11 @@
 | Module | Purpose |
 |--------|---------|
 | `client_utils.py` | Generic client detection and known client set helpers |
+| `corpus_loader.py` | Story loading and normalization without Streamlit, for eval harnesses and scripts |
 | `filters.py` | Story filtering (industry, capability, client, domain, role, tags) |
 | `formatting.py` | Text formatting and STAR story presentation |
 | `landing_cards.py` | Landing page card data helpers |
 | `scoring.py` | Hybrid scoring (semantic + keyword relevance) |
-| `search.py` | My Work search and filter orchestration |
 | `ui_helpers.py` | Session state management and UI rendering helpers |
 | `validation.py` | Input validation and token overlap checking |
 
@@ -86,15 +87,15 @@
 ```python
 is_portfolio_query_semantic(
     query: str,
-    hard_threshold: float = 0.80,
-    soft_threshold: float = 0.40
+    hard_threshold: float = HARD_ACCEPT,
+    soft_threshold: float = SOFT_ACCEPT,
 ) -> tuple[bool, float, str, str]
 ```
 
 **Parameters:**
 - `query` - User's query string
-- `hard_threshold` - Score above this = clearly valid (default 0.80)
-- `soft_threshold` - Score above this = valid but borderline (default 0.40, lowered from 0.72 in Jan 2026)
+- `hard_threshold` - Score above this = clearly valid (default `HARD_ACCEPT`, {{ site.data.facts.router_hard_accept }})
+- `soft_threshold` - Score above this = valid but borderline (default `SOFT_ACCEPT`, {{ site.data.facts.router_soft_accept }}; lowered from 0.72 in Jan 2026)
 
 **Returns:**
 - `is_valid` (bool) - True if query >= soft_threshold
@@ -102,7 +103,7 @@ is_portfolio_query_semantic(
 - `best_intent` (str) - Best matching canonical intent
 - `intent_family` (str) - Intent category (e.g., "background", "behavioral")
 
-**Intent Families (15 categories):**
+**Intent Families ({{ site.data.facts.intent_family_count }} categories):**
 - `background` - Career overview questions
 - `behavioral` - STAR behavioral interview questions
 - `delivery` - Delivery transformation and results
@@ -117,7 +118,7 @@ is_portfolio_query_semantic(
 - `narrative` - Professional identity and career narrative
 - `synthesis` - Cross-cutting themes and patterns
 - `out_of_scope` - Off-domain queries (retail, sports, etc.)
-- `personal` - Personal questions (age, family, salary, identity)
+- `personal` - Personal questions (age, family, identity); salary questions are caught earlier by the `personal_compensation` nonsense rule
 
 **Helper Functions:**
 
@@ -146,7 +147,7 @@ semantic_search(
     enforce_overlap: bool = False,
     min_overlap: float = 0.0,
     stories: list,
-    top_k: int = 10  # SEARCH_TOP_K
+    top_k: int = SEARCH_TOP_K  # {{ site.data.facts.search_top_k }}
 ) -> dict
 ```
 
@@ -164,15 +165,18 @@ semantic_search(
     "results": [story, ...],    # Stories with "pc" score attached
     "confidence": str,           # "high" | "low" | "none"
     "top_score": float,         # Highest Pinecone similarity score
-    "relaxed_count": int,       # Stories passing relaxed (no-filter) search
-    "active_filters": dict      # Filters that were applied to the query
+    "relaxed_count": int,       # Optional: results without industry/capability filters
+    "active_filters": list,     # Optional: (name, value) tuples for the filters that left 0 results
+    "profile_facts": ...,       # Present on every return: profile facts for the answer
 }
 ```
 
+`relaxed_count` and `active_filters` appear only when the industry or capability filters leave no results.
+
 **Confidence Thresholds:**
-- `CONFIDENCE_HIGH = 0.25` - Strong match, show "Found X stories"
-- `CONFIDENCE_LOW = 0.20` - Borderline, show "Relevance may be low" (raised from 0.15 in Jan 2026)
-- Below 0.20 = "none" - Show "No strong matches"
+- `CONFIDENCE_HIGH` ({{ site.data.facts.confidence_high }}) - "high". Ask Agy answers only at this level, except for suggestion-chip questions and confident behavioral matches
+- `CONFIDENCE_LOW` ({{ site.data.facts.confidence_low }}) - "low". My Work still shows results with a "Relevance may be low" note; Ask Agy declines (raised from 0.15 in Jan 2026)
+- Below `CONFIDENCE_LOW` - "none". Both surfaces show no story results
 
 **Vocabulary Initialization:**
 
@@ -192,16 +196,16 @@ initialize_vocab(stories: list[dict])
 _hybrid_score(
     pc_score: float,
     kw_score: float,
-    w_pc: float = 1.0,
-    w_kw: float = 0.0
+    w_pc: float = W_PC,
+    w_kw: float = W_KW
 ) -> float
 ```
 
 **Parameters:**
 - `pc_score` - Pinecone semantic similarity (0.0-1.0)
 - `kw_score` - Keyword overlap score (0.0-1.0)
-- `w_pc` - Weight for semantic score (default 1.0)
-- `w_kw` - Weight for keyword score (default 0.0, disabled)
+- `w_pc` - Weight for semantic score (default `W_PC` in `config/constants.py`, currently 1.0)
+- `w_kw` - Weight for keyword score (default `W_KW`, currently 0.15; raised from 0.0 in Aug 2026)
 
 **Returns:**
 - Weighted hybrid score: `(pc_score * w_pc) + (kw_score * w_kw)`
@@ -235,6 +239,8 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 |-----------|------|---------------|-------|
 | `industry` | str | `Industry` | Exact match |
 | `capability` | str | `Solution / Offering` | Exact match |
+| `era` | str | `Era` | Exact match (Timeline navigation) |
+| `personas` | list[str] | `personas` | OR logic (no story currently has this field) |
 | `clients` | list[str] | `Client` | OR logic |
 | `domains` | list[str] | `Sub-category` | OR logic |
 | `roles` | list[str] | `Role` | OR logic |
@@ -275,16 +281,22 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 │  - Return (is_valid, score, family)     │
 └────────┬────────────────────────────────┘
          │
-         ├─ [score >= 0.40] → ACCEPT
-         └─ [score < 0.40]  → REJECT (show off-domain response)
+         ▼
+┌─────────────────────────────────────────┐
+│  Entity Detection (backend_service.py)  │
+│  - detect_entity(): Client / Employer / │
+│    Division found in the query          │
+└────────┬────────────────────────────────┘
          │
+         ├─ [out_of_scope or personal, score >= HARD_ACCEPT]
+         │       → REJECT (banner + chips)
+         │  (any other score continues)
          ▼
 ┌─────────────────────────────────────────┐
 │  RAG Service (rag_service.py)           │
 │  - semantic_search(query, filters)      │
-│  - Entity Detection (Client/Employer/   │
-│    Division): pins matching story #1   │
-│  - Calls Pinecone with entity filters   │
+│  - Calls Pinecone, scoped by any        │
+│    detected entity                      │
 │  - Applies confidence gating            │
 │  - Filters results by metadata          │
 └────────┬────────────────────────────────┘
@@ -304,9 +316,12 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 │  - matches_filters() for each story     │
 └────────┬────────────────────────────────┘
          │
+         ├─ [Ask Agy, confidence below high] → DECLINE (banner + chips)
+         │
          ▼
 ┌─────────────────────────────────────────┐
 │  Response to User                       │
+│  - Matching story pinned to #1          │
 │  - Ranked stories with confidence       │
 │  - Source citations with scores         │
 │  - Related projects suggestions         │
@@ -348,16 +363,18 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 
 **Query Classification (Semantic Router):**
 ```
-Score >= 0.80  → HARD_ACCEPT (clearly on-topic)
-Score >= 0.40  → SOFT_ACCEPT (borderline, log for review - lowered from 0.72 in Jan 2026)
-Score <  0.40  → REJECT (off-domain, show suggestions)
+Score >= HARD_ACCEPT  → clearly on-topic; out_of_scope and personal are rejected here
+Score >= SOFT_ACCEPT  → borderline, logged for review (lowered from 0.72 in Jan 2026)
+Score <  SOFT_ACCEPT  → low router signal; no rejection, the query goes to search
 ```
+
+`router_rejection_reason()` in `services/semantic_router.py` is the only router rejection. Weak queries are rejected by the confidence gate below.
 
 **Result Confidence (RAG Service):**
 ```
-Top score >= 0.25  → HIGH confidence ("Found X stories")
-Top score >= 0.20  → LOW confidence ("Relevance may be low")
-Top score <  0.20  → NONE ("No strong matches")
+Top score >= CONFIDENCE_HIGH  → high: Ask Agy answers
+Top score >= CONFIDENCE_LOW   → low: My Work shows "Relevance may be low"; Ask Agy declines
+Top score <  CONFIDENCE_LOW   → none: no story results
 ```
 
 ---
@@ -376,26 +393,27 @@ Key session state variables used throughout the application:
 | `__pc_suppressed__` | bool | True if Pinecone results were suppressed (low confidence) |
 | `__dbg_pc_hits` | int | Number of Pinecone hits (for debugging) |
 | `ask_transcript` | list | Ask Agy chat history |
-| `selected_capability` | str | Selected capability for homepage filtering |
 
 ---
 
 ## Environment Variables
 
-Required environment variables (see `.env.example`):
+The app reads configuration through `get_conf()` in `config/settings.py`: Streamlit secrets first, then environment variables. `.env.example` lists only `OPENAI_API_KEY`; the full set the app reads is:
 
 ```bash
-# OpenAI API Configuration
+# OpenAI
 OPENAI_API_KEY=sk-...
 OPENAI_PROJECT_ID=proj_...
 OPENAI_ORG_ID=org-...
 
-# Pinecone Configuration
+# Pinecone
 PINECONE_API_KEY=...
-PINECONE_INDEX_NAME=matt-portfolio-v2
+PINECONE_INDEX_NAME=...
+PINECONE_NAMESPACE=...      # no default in code
 
-# Data File (optional, defaults to echo_star_stories_nlp.jsonl)
+# Optional
 STORIES_JSONL=echo_star_stories_nlp.jsonl
+VECTOR_BACKEND=faiss        # default
 ```
 
 ---
@@ -446,7 +464,7 @@ pytest --cov=services --cov=utils tests/
 ## Performance Considerations
 
 **Semantic Router:**
-- Embeddings cached to `data/intent_embeddings.json` (2MB)
+- Embeddings cached to `data/intent_embeddings.json`
 - Warm cache at startup with `warm_cache()`
 - Cosine similarity: O(n) where n = number of canonical intents ({{ site.data.facts.intent_total_count }})
 
