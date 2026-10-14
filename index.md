@@ -34,7 +34,7 @@ Under Ask Agy is a retrieval pipeline: stories embedded in Pinecone, routed by i
 
 ## The proof
 
-How do I know it works? The retrieval layer is gated by an eval suite. Right now it is 64 of 64 on a golden-query set I keep adding to whenever I find a question it should have handled and did not. A perfect score on a set I curate is not a brag. It is a fast signal when a change breaks retrieval before anyone sees it. Under the eval sit unit tests and a BDD and end-to-end suite that exercises the real workflows. The full breakdown is in the [testing and quality](docs/11-testing-and-quality) doc.
+How do I know it works? The retrieval layer is gated by an eval suite. Right now it passes 63 of {{ site.data.facts.eval_query_count }} in the latest recorded runs (October 2026) on a golden-query set I keep adding to whenever I find a question it should have handled and did not: one is a known miss I keep visible on purpose, and the other failure moves between runs. A high score on a set I curate is not a brag. It is a fast signal when a change breaks retrieval before anyone sees it. Under the eval sit unit tests and a BDD and end-to-end suite that exercises the real workflows. The full breakdown is in the [testing and quality](docs/11-testing-and-quality) doc.
 
 ## The decisions
 
