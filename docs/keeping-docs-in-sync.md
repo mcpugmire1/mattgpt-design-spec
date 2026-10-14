@@ -14,19 +14,23 @@ The correction is to stop declaring facts and start deriving them.
 
 ## The pipeline
 
-A GitHub Actions job runs on every push to the source repository. It
-derives volatile facts from the running code and writes them to
-`_data/facts.yml`; the docs consume them through Jekyll Liquid
-references. Currently synced: model name, confidence thresholds, intent
-family count, BDD scenario and feature-file counts, and story count.
+A GitHub Actions job runs on every push to the source repository's
+`main` branch. It derives volatile facts from the running code and
+writes them to `_data/facts.yml`; the docs consume them through Jekyll
+Liquid references. Currently synced: chat and embedding model names,
+confidence and router thresholds, search defaults, intent family and
+example-phrase counts, story count, BDD and unit test inventories, the
+golden-query count, module, component and page inventories, and
+environment variables. Eval results are not synced: the eval count is
+the size of the query set, not the outcome of a run.
 
 A synced fact changes in exactly one place, the code. The docs that read
 it stay current with no review queue.
 
 ## What the pipeline does not cover
 
-Behavioral prose and claims about code paths. "Agy asks a clarifying
-question when confidence is low" is not derivable from a constant, and
+Behavioral prose and claims about code paths. "Agy declines a question
+when retrieval confidence is low" is not derivable from a constant, and
 no pipeline will tell you when it stops being true. That layer needs
 periodic human review.
 
