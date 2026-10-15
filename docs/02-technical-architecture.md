@@ -415,7 +415,7 @@ Off-domain queries are handled in two stages. Stage 1, the pattern gate, runs `i
 
 ## Data Governance & Architecture Principles
 
-For data governance, sovereignty patterns, entity search, anti-patterns, and ingestion workflow, see [Data Pipeline](12-data-pipeline).
+For data governance, sovereignty patterns, Pinecone metadata casing, anti-patterns, and ingestion workflow, see [Data Pipeline](12-data-pipeline).
 
 ## Current State Summary
 
