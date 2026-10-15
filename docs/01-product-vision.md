@@ -41,15 +41,15 @@ The corpus runs on two layers. The integrity layer is the STAR structure: every 
 
 **System Prompt & Integrity Mandate**
 
-> **Implementation Note:** The "system prompt" is implemented as a distributed architecture across multiple services (semantic_router.py, rag_service.py, backend_service.py) rather than a single prompt file. The documented principles guide routing logic, query validation, and response formatting.
+> **Implementation Note:** The system prompt is built by `build_tool_system_prompt()` in `prompts.py`, with MATT_DNA and Matt's profile facts supplied from `backend_service.py`. Routing and query validation live outside the prompt, in `semantic_router.py` and `nonsense_filters.jsonl`. The documented principles guide all three.
 
-Every answer is anchored to specific sourced projects and carries a clickable source chip linking back to the full STAR story, so any claim can be verified against the original. Nothing is generated that doesn't trace to source. The voice blends a strategic and a pragmatic register; the full archetype is in the Agy Voice Guide.
+Every answer draws on the stories its searches return, Matt's profile and the conversation. The retrieved stories appear as clickable source chips linking back to the full STAR story, so a claim can be checked against the original. The prompt instructs Agy not to invent examples beyond Matt's stories; no code guarantees it. The voice blends a strategic and a pragmatic register; the full archetype is in the Agy Voice Guide.
 
 ---
 
 ## Project Scope & Boundaries
 
-MattGPT is scoped deliberately. It answers only from the sourced project corpus: it won't give generic career advice, synthesize opinions, or speak to anything outside the stories. Displayed metrics are read-only, never editable from the interface. The point is a focused proof engine, not a chatbot.
+MattGPT is scoped deliberately. It answers only from Matt's stories, his profile and the conversation: it won't give generic career advice, synthesize opinions, or speak to anything outside them. Displayed metrics are read-only, never editable from the interface. The point is a focused proof engine, not a chatbot.
 
 ---
 
