@@ -30,11 +30,11 @@ MattGPT has four surfaces, each built for a different visitor:
 - **Role Match** takes a job description and returns an honest fit assessment.
 - **My Profile** is the fast read for someone deciding in under a minute.
 
-Under Ask Agy is a retrieval pipeline: stories embedded in Pinecone, routed by intent with an explicit out-of-scope path for questions it should refuse, and answered by GPT-4o with sources attached.
+Under Ask Agy is a retrieval pipeline: stories embedded in Pinecone, routed by intent with an explicit out-of-scope path for questions it should refuse, and answered by a model that writes its own searches over the stories and streams its answer with sources attached.
 
 ## The proof
 
-How do I know it works? The retrieval layer is gated by an eval suite. Right now it passes 63 of {{ site.data.facts.eval_query_count }} in the latest recorded runs (October 2026) on a golden-query set I keep adding to whenever I find a question it should have handled and did not: one is a known miss I keep visible on purpose, and the other failure moves between runs. A high score on a set I curate is not a brag. It is a fast signal when a change breaks retrieval before anyone sees it. Under the eval sit unit tests and a BDD and end-to-end suite that exercises the real workflows. The full breakdown is in the [testing and quality](docs/11-testing-and-quality) doc.
+How do I know it works? The answer pipeline is checked by an eval suite: a golden-query set of {{ site.data.facts.eval_query_count }} questions I keep adding to whenever I find one it should have handled and did not. I rebuilt the pipeline in October 2026, and the eval has not been run on the new version yet, so there is no current number to report. A high score on a set I curate is not a brag. It is a fast signal when a change breaks answers before anyone sees it. Under the eval sit unit tests and a BDD and end-to-end suite that exercises the real workflows. The full breakdown is in the [testing and quality](docs/11-testing-and-quality) doc.
 
 ## The decisions
 
@@ -52,7 +52,7 @@ Hundreds of calls went into this across data, retrieval, the surfaces, voice, an
 
 Small stack on purpose: Claude Code at the command line for the build, GitHub for source and history, and a webhook that deploys to Streamlit Cloud on every push. Push-to-deploy is real continuous deployment, and scheduled jobs keep the app warm and sync its data. This is not a fully mature, automated pipeline that enforces the test gates, and I won't dress it up as one. One person built this. The question worth asking is what discipline holds at that size.
 
-What holds: the eval gates the retrieval layer, so a regression shows up as a failing number, not a user complaint. BDD scenarios run red to green before a feature counts as done. A rules file sets the architectural conventions, and a pre-commit check keeps these pages from drifting off what is running.
+What holds: the eval checks the answer pipeline when I change it, so a regression shows up as a failing number, not a user complaint. BDD scenarios usually run red to green before a feature counts as done. A rules file sets the architectural conventions, and a sync job keeps the numbers on these pages current with the code; the prose around them still takes a review pass by hand.
 
 What does not: the architectural rules are not pipeline-enforced, so they are not always followed. Claude Code, the AI doing the implementation, will rebuild things that already exist or quietly change a protected value, and I catch it in review, not at a gate. Holding that line over a fast, capable, not-always-compliant tool is the real daily work, and it is closer to leading a team than a green pipeline would be.
 
