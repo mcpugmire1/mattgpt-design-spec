@@ -82,7 +82,7 @@ Before creating any file, read what already exists:
 - **Layouts:** check `_layouts/` first. Copy and modify an existing layout before authoring one from scratch.
 - **Includes:** check `_includes/` first. Reuse the nav include. Do not duplicate link lists.
 - **CSS:** all styles go in `assets/css/style.scss`. No new stylesheets. No inline styles.
-- **Breakpoints:** 375px / 768px / 1024px. Match the implementation repo.
+- **Breakpoints:** match the implementation repo. Current values are in [Mobile Implementation](docs/08-mobile-implementation.md).
 
 ---
 
