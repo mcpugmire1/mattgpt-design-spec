@@ -1,7 +1,7 @@
 # Current Project Context
 
-**Last Updated:** October 2026 (drift pass against arch sync 850071c, in progress)
-**Session Status:** 🟡 Partly aligned: docs 02, 05, 09, 11 and 12 match `origin/main` of the app repo; the rest of the drift list is open (see Next Steps)
+**Last Updated:** October 2026 (drift pass against arch sync 850071c)
+**Session Status:** 🟢 Aligned with `origin/main` of the app repo as of October 2026; open items wait on app work (see Next Steps)
 
 ---
 
@@ -15,6 +15,14 @@ A drift audit compared the spec with the app repo's `origin/main` and found the 
 - **12 Data Pipeline:** Excel owns `public_tags` and `Interview Questions`; ids are `Title|Client` slugs; tags are LLM-generated; Pinecone metadata casing; MATT_DNA's derived, profile and hardcoded sections
 - **02 Technical Architecture:** pipeline diagram reordered (entity detection before search and the gate); router rejects only out_of_scope and personal at HARD_ACCEPT; synthesis retrieval; banner table
 - **09 API Reference:** module tables, data flow, `semantic_search()` return shape, `W_KW`, filter keys, environment variables
+- **07 and 08 CSS and Mobile:** desktop-first with `max-width` overrides; mobile range includes 767px
+- **04 Building MattGPT:** stack, topic-only intent routing, ranking, pipeline order; logging, tagging and export claims match the code
+- **10 Data Model:** loader behavior, embedding text order, unused vocabulary path
+- **index.md:** eval result reported from the latest recorded runs; last-updated footer added
+- **keeping-docs-in-sync.md:** synced fact list by category; decline example
+- **Site architecture page:** marked a dated historical snapshot
+- **CLAUDE.md:** breakpoint rule points to doc 08 instead of restating values
+- **Process:** the pass is captured as the `mattgpt-design-spec-sync` skill
 
 **Found along the way:**
 - `facts.eval_summary` is not a measured pass rate: `extract_facts.py` writes the query count over itself. The spec no longer presents it as one.
@@ -398,10 +406,9 @@ All 5 sections fully written with substantive personal content: Why I Built This
 
 ## Next Steps (Immediate Priorities)
 
-1. **Finish the drift list:** 07 and 08 (the CSS is desktop-first with max-width overrides), 04, 10, `images/architecture/site_architecture_updated.md`, `index.md` (eval count, checked at `origin/main` first), `keeping-docs-in-sync.md`, and the breakpoint line in `CLAUDE.md`
-2. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`, `ask_answer_model`; and stop using `eval_summary` until it reports a real run
-3. **Re-pass docs 02 and 05 when MATTGPT-275 lands:** streamed answers on `ASK_ANSWER_MODEL`, the new answer path, and the return of closing offers (remove the PAUSED callouts)
-4. **Update doc 05's salary line when MATTGPT-298 lands** (salary questions get a polite reply instead of the nonsense banner)
+1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`, `ask_answer_model`; and stop using `eval_summary` until it reports a real run, then use it for `index.md`'s eval result, which is hand-typed and dated
+2. **Re-pass docs 02, 03, 04, 05 and 09 and the dialog copy when MATTGPT-275 lands:** streamed answers on `ASK_ANSWER_MODEL`, the new answer path, conversation history, and the return of closing offers (remove the PAUSED callouts)
+3. **Update doc 05's salary line when MATTGPT-298 lands** (salary questions get a polite reply instead of the nonsense banner)
 
 ---
 
