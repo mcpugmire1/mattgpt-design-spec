@@ -1,11 +1,30 @@
 # Current Project Context
 
-**Last Updated:** October 2026 (drift pass against arch sync 850071c)
+**Last Updated:** October 2026 (MATTGPT-275 re-pass against app 4864291)
 **Session Status:** 🟢 Aligned with `origin/main` of the app repo as of October 2026; open items wait on app work (see Next Steps)
 
 ---
 
-## Latest Update: October 2026 - Drift Pass Against Arch Sync 850071c
+## Latest Update: October 2026 - MATTGPT-275 Re-pass
+
+**What Changed:**
+MATTGPT-275 (app 1095d2c) retired `rag_answer()`: Ask Agy now runs the nonsense rules and router redirects, then a tool loop in which the model writes its own searches and streams its answer. The confidence gate, entity detection and pinning, synthesis retrieval and temperatures went with it. Nearly every doc still described the old pipeline; every synced number stayed correct. Checked against the app's `origin/main`, one doc per commit.
+
+- **02, 09:** answer pipeline and diagram, Ask Agy backend reference, session keys, error handling; no confidence gate
+- **05:** no decline path; openers model-written from the lists; error copy in `agy_answer()`; dash and comparison rules; closers still PAUSED
+- **11:** the eval calls `agy_answer()` and checks answers and sources; no pass rate claimed; the 95% and 98% gates dropped
+- **04, 01, 03, index.md:** model, pipeline and grounding claims match the prompt instruction; no eval number until a run on the new pipeline
+- **10, 12:** entity fields no longer detected or pinned; the `$or` entity filter has no caller; dates reach the answer model
+- **keeping-docs-in-sync.md:** the decline example became the case study for prose drift
+- **Nav and wireframes:** nav em dashes and doc 08 description fixed; legacy prototypes moved to `archive/wireframes-legacy/` (they were unlinked but still published); v4 marked superseded where the app moved on
+
+**Found along the way (app side, handed to the backlog session):**
+- `facts.chat_model` comes from `DEFAULT_CHAT_MODEL`, which nothing in production reads; the answer model (`ASK_ANSWER_MODEL`) is not synced, so the docs cite the constant by name
+- No golden eval has run on the shipped pipeline; Q59's `xfail_reason` still cites the retired gate
+- When Pinecone returns no hits, `semantic_search()` falls back to the corpus in file order (MATTGPT-292)
+- The How Agy Searches dialog says Agy "says so plainly" when no story covers a question; the prompt instructs that only for profile categories (rule 0b)
+
+## Previous Update: October 2026 - Drift Pass Against Arch Sync 850071c
 
 **What Changed:**
 A drift audit compared the spec with the app repo's `origin/main` and found the voice guide, architecture, API, data pipeline and testing docs describing behavior the app no longer has. Each fix was checked against `origin/main`, never the app repo's working tree, and committed one doc at a time.
@@ -406,9 +425,13 @@ All 5 sections fully written with substantive personal content: Why I Built This
 
 ## Next Steps (Immediate Priorities)
 
-1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`, `ask_answer_model`; and stop using `eval_summary` until it reports a real run, then use it for `index.md`'s eval result, which is hand-typed and dated
-2. **Re-pass docs 02, 03, 04, 05 and 09 and the dialog copy when MATTGPT-275 lands:** streamed answers on `ASK_ANSWER_MODEL`, the new answer path, conversation history, and the return of closing offers (remove the PAUSED callouts)
-3. **Update doc 05's salary line when MATTGPT-298 lands** (salary questions get a polite reply instead of the nonsense banner)
+1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `ask_answer_model` (docs 02, 04 and 09 cite `ASK_ANSWER_MODEL` by name until then), `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`; and stop using `eval_summary` until it reports a real run
+2. **Report the golden eval once it runs on the shipped pipeline:** `index.md`, docs 02, 04 and 11 say no run yet; doc 11's Q59 note goes when the app drops its stale xfail
+3. **MATTGPT-275 closer work:** when the code-rendered closer and profile contact links land, remove doc 05's PAUSED callouts and revisit their stated reason
+4. **MATTGPT-298:** update doc 05's salary line (salary questions get a polite reply instead of the nonsense banner)
+5. **MATTGPT-294:** move Career Arc from "Hardcoded" to "Read from the profile" in doc 12's MATT_DNA list
+6. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09
+7. **Doc 05, next touch:** "When Agy doesn't know" adds citation rule 0b ("Nothing I know about Matt covers that" for profile categories)
 
 ---
 
