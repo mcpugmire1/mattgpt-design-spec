@@ -11,7 +11,7 @@
 1. [Overview](#overview)
 2. [Unit Tests](#unit-tests)
 3. [RAG Quality Evaluation](#rag-quality-evaluation)
-4. [BDD/E2E Tests](#bdde2e-tests-explore-stories)
+4. [BDD/E2E Tests](#bdde2e-tests)
 5. [Running Tests](#running-tests)
 6. [Quality Gates](#quality-gates)
 
@@ -24,16 +24,15 @@
 <div class="mermaid">
 graph TD
     L3["Layer 3: BDD/E2E Tests<br/>{{ site.data.facts.bdd_summary }}<br/>Full UI workflows"]
-    L2["Layer 2: RAG Eval<br/>{{ site.data.facts.eval_query_count }} golden queries · run before merge<br/>Eval-driven development"]
+    L2["Layer 2: RAG Eval<br/>{{ site.data.facts.eval_query_count }} golden queries · run by hand<br/>Eval-driven development"]
     L1["Layer 1: Unit Tests<br/>{{ site.data.facts.unit_test_file_count }} unit test files · Component isolation<br/>Fast feedback (under 1 min)"]
     L3 --> L2 --> L1
 </div>
 
 **Quality Metrics:**
 - **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} unit test files testing core components
-- **RAG Eval:** {{ site.data.facts.eval_query_count }} golden queries, one a known expected failure (Q59)
-- **BDD/E2E Pass Rate:** {{ site.data.facts.bdd_summary }}
-- **Total Test Runtime:** ~30 minutes (full suite)
+- **RAG Eval:** {{ site.data.facts.eval_query_count }} golden queries; no run yet on the October 2026 answer pipeline (MATTGPT-275)
+- **BDD/E2E:** {{ site.data.facts.bdd_summary }}
 
 RAG systems are notoriously hard to test. LLM outputs are non-deterministic, semantic similarity is fuzzy, and "good enough" is subjective. Without systematic testing, pipeline changes become high-risk guesswork.
 
@@ -55,43 +54,46 @@ MattGPT's testing strategy provides:
 
 ```
 tests/unit/
-├── test_rag_service.py           # RAG pipeline orchestration
-├── test_backend_service.py       # Story loading, filtering
-├── test_semantic_router.py       # Intent classification
-├── test_filters.py               # Filter logic (Client, Theme, etc.)
-├── test_scoring.py               # Confidence scoring, ranking
-├── test_validation.py            # Input validation, nonsense detection
-├── test_formatting.py            # Response formatting, source citations
-├── test_story_intelligence.py    # Story analysis, metadata extraction
+├── test_ask_agy_tool_answer.py         # Tool loop, streaming, broken streams, error messages
+├── test_ask_agy_tool_system_prompt.py  # The tool-path system prompt
+├── test_ask_agy_history.py             # Conversation history sent to the model
+├── test_ask_agy_post_processing.py     # Post-processing (bold spans and numbers)
+├── test_ask_agy_pending_turn.py        # The conversation view's pending-turn path
+├── test_no_dash_rule.py                # NO_DASH_RULE in the prompts
+├── test_comparison_rule.py             # COMPARISON_RULE in the prompts
+├── test_nonsense_portfolio_questions.py # Nonsense rules vs real portfolio questions
+├── test_backend_service.py             # send_to_backend(), off-domain logging
+├── test_rag_service.py                 # semantic_search()
+├── test_semantic_router.py             # Intent classification
+├── test_filters.py                     # Filter logic (Client, Theme, etc.)
+├── test_scoring.py                     # Hybrid keyword scoring
+├── test_validation.py                  # Input validation, nonsense detection
+├── test_formatting.py                  # Story formatting and 5P summaries
+├── test_story_intelligence.py          # Theme inference, story context (including dates)
 └── ... (see `tests/unit/` for the full list)
 ```
 
 ### What Unit Tests Cover
 
 **Component Isolation:**
-- RAG service methods (search, ranking, context assembly)
-- Semantic router intent detection
-- Filter logic (exact matches, multi-field entity search)
-- Confidence scoring calculations
-- Input validation (pattern matching, empty queries)
-- Response formatting (XML isolation, source extraction)
+- Ask Agy's tool loop: the required first search, stream retry before any text, error messages
+- The answer prompt: tool system prompt, dash and comparison rules
+- Post-processing of the answer (bolding, dashes)
+- `semantic_search()` and hybrid keyword scoring
+- Semantic router intent classification
+- Filter logic
+- Input validation and the nonsense rules
 
-**Example Test:**
+**Example Test** (`tests/unit/test_semantic_router.py`, `TestClassifyEmbeddingThreshold`):
 
 ```python
-def test_semantic_router_intent_detection():
-    """Verify semantic router correctly classifies query intents"""
-    test_cases = [
-        ("Show me Matt's platform engineering work", "technical"),
-        ("How did Matt scale teams?", "behavioral"),
-        ("Tell me about platform engineering", "technical"),
-        ("What's Matt's story?", "narrative"),
-    ]
-
-    for query, expected_intent in test_cases:
-        is_valid, score, intent, family = is_portfolio_query_semantic(query)
-        assert intent == expected_intent
-        assert score >= 0.40  # SOFT_ACCEPT threshold
+def test_is_valid_false_when_score_below_soft_threshold(self):
+    # Orthogonal vectors -> similarity 0.0, below any positive threshold.
+    query = _v(1.0, 0.0)
+    anchors = {"intent_a": _v(0.0, 1.0)}
+    is_valid, score, _, _ = _classify_embedding(query, anchors)
+    assert score < SOFT_ACCEPT
+    assert is_valid is False
 ```
 
 **Running Unit Tests:**
@@ -106,28 +108,28 @@ pytest tests/unit/ -v
 
 **Location:** `tests/eval_rag_quality.py`
 **Framework:** pytest-based golden query testing
-**Coverage:** {{ site.data.facts.eval_query_count }} queries across 8 categories
-**Pass rate:** measured per run, not recorded in this spec. Q59 ("Where does Matt live?") is a known expected failure: its `xfail_reason` keeps it visible and the report counts it apart from failures.
+**Coverage:** {{ site.data.facts.eval_query_count }} queries across the categories below
+**Under test:** `agy_answer()`, through the `rag_fn` fixture, which calls it in `rag_answer()`'s old `(query, filters, stories)` shape and ignores `filters`
+**Pass rate:** measured per run, not recorded in this spec. No golden eval has run on the shipped October 2026 pipeline yet; the last run (October 14, 2026) was on code from before the final MATTGPT-275 commit. Q59 ("Where does Matt live?") still carries an `xfail_reason` that cites the retired confidence gate; that run answered it.
 
 ### Why RAG Evals Matter
 
-RAG evals validate end-to-end pipeline quality, not just component behavior. They catch:
-- **Threshold calibration issues:** Queries that should pass but don't (or vice versa)
-- **Entity pinning failures:** Named entities not ranked #1
-- **Voice regressions:** Meta-commentary creeping back in
-- **Architecture changes:** Validate major refactors (e.g., Entity Gate removal)
+RAG evals check the final answer and its sources end to end, not just component behavior. They catch:
+- **Missing substance:** answers without the expected concepts (ground-truth stems)
+- **Client attribution:** a named client missing from the answer, or not bolded
+- **Thin synthesis:** synthesis answers drawn from too few stories or named clients
+- **Voice regressions:** meta-commentary creeping back in
+- **Architecture changes:** validate major refactors (e.g., Entity Gate removal, the MATTGPT-275 tool loop)
 
-**Quality Gates:**
-- **Pre-Merge Requirement:** Eval pass rate ≥ 95%
-- **Production Deploy:** Eval pass rate ≥ 98%
+An answer that comes back `degraded` (the error message) fails.
 
 ---
 
 ### Query Categories
 
-The 8 categories below match the Pass Rate Breakdown. Each targets a distinct failure mode.
+Each category targets a distinct failure mode; the query counts are in `GOLDEN_QUERIES` in `tests/eval_rag_quality.py`.
 
-### 1. Narrative (13 queries)
+### 1. Narrative
 
 Professional identity, career story, "builder" vocabulary, and synthesis questions.
 
@@ -141,21 +143,20 @@ Professional identity, career story, "builder" vocabulary, and synthesis questio
 - Broad thematic response, not story-specific details
 - No meta-commentary
 
-### 2. Client (6 queries)
+### 2. Client
 
-Named client entity detection and story pinning.
+Named-client questions.
 
 **Example Queries:**
 - "What did Matt do at JP Morgan?"
 - "Show me RBC work"
 
 **Expected Behavior:**
-- Correct Client entity detected and pinned to #1
-- High confidence score (≥0.25)
+- The client is named in the answer (`client_variants` accepted) and bolded (`check_client_attribution()`)
 
-### 3. Intent (10 queries)
+### 3. Intent
 
-Behavioral and stakeholder questions requiring STAR-formatted responses.
+Behavioral, synthesis, redirect, blocked and profile-fact questions; `expected_behavior` on each query decides the check.
 
 **Example Queries:**
 - "Tell me about a time Matt failed"
@@ -163,23 +164,26 @@ Behavioral and stakeholder questions requiring STAR-formatted responses.
 - "Describe a difficult stakeholder situation"
 
 **Expected Behavior:**
-- Returns stories with strong behavioral examples
-- No meta-commentary
-- Preserves STAR structure
+- Synthesis: enough named clients in the answer, and enough source stories and named-client sources
+- Redirect: the redirect copy; blocked: no answer
+- Profile fact: the answer contains the expected words (`must_contain`)
+- Other behavioral queries pass when an answer comes back
 
-### 4. Edge (4 queries)
+### 4. Edge
 
-Nonsense detection and graceful out-of-scope rejection.
+Thin themes, a multi-turn follow-up, and a synthesis question with a named client.
 
 **Example Queries:**
-- "What's the weather in New York?"
-- "asdfghjkl"
+- "Matt's GenAI work"
+- "How did Matt transform delivery at JP Morgan?"
 
 **Expected Behavior:**
-- Semantic router flags query as low confidence (score below {{ site.data.facts.router_soft_accept }}); Pinecone confidence gate handles the actual rejection downstream
-- Graceful off-domain response with suggestion chips
+- Synthesis with a client: the client is named and bolded
+- The others pass when an answer comes back; the multi-turn case is noted, not checked
 
-### 5. Surgical (11 queries)
+Garbage input is not tested here: the nonsense rules (including `gibberish` and `local_recommendations`) are tested in `tests/test_structural_assertions.py`.
+
+### 5. Surgical
 
 Delivery and technical depth questions requiring precise story retrieval.
 
@@ -189,22 +193,19 @@ Delivery and technical depth questions requiring precise story retrieval.
 - "What agile transformation experience does Matt have?"
 
 **Expected Behavior:**
-- Returns stories with technical details or delivery metrics
-- Confidence-based filtering for vague queries
+- Ground-truth stems and, where specified, client attribution
 
-### 6. Entity Detection (11 queries)
+### 6. Entity Detection
 
-Employer and Division entity pinning (complements Client category).
+Employer and Division questions. Since MATTGPT-275 removed `detect_entity()`, this category is skipped and always passes; the queries are kept as text.
 
 **Example Queries:**
 - "Show me Accenture projects"
 - "Tell me about Cloud Innovation Center work"
 
-**Expected Behavior:**
-- Correct Employer or Division entity detected and pinned to #1
-- High confidence score (≥0.25)
+**Expected Behavior:** none checked (skipped)
 
-### 7. Marketing (7 queries)
+### 7. Marketing
 
 Landing page queries requiring zero meta-commentary.
 
@@ -217,46 +218,34 @@ Landing page queries requiring zero meta-commentary.
 - NO meta-commentary (hardest constraint, zero tolerance)
 - Short, direct responses
 
-### 8. Context Story (3 queries)
+### 8. Context Story
 
-"Tell me more about [Title]" queries: tests Title soft-filter detection and retrieval.
+"Tell me more about: [Title]" queries, built at runtime from `story_index`.
 
 **Expected Behavior:**
-- Story retrieved by Title detection (soft-filter, not entity gate)
-- Sources returned and not blocked
-- Response references the named story
+- An answer comes back with sources
+- The named story is among the sources (found by the model's own searches)
 
 ---
 
 ### Evaluation Criteria
 
-### Source Relevance
+### Ground Truth and Attribution
 
-**Question:** Did the RAG pipeline return the correct stories?
-
-**Validation:**
-- Expected story IDs match actual results
-- Ranking order is appropriate (pinned stories at #1)
-- No irrelevant stories in top-k results
-
-### Entity Pinning Accuracy
-
-**Question:** When a query mentions a specific entity, does the matching story get pinned to #1?
+**Question:** Does the answer carry the expected substance and name the right clients?
 
 **Validation:**
-- Client query → Client-matching story at position #1
-- Employer query → Employer-matching story at position #1
-- Division query → Division-matching story at position #1
+- Ground-truth concept stems, against a minimum match count (`check_ground_truth()`)
+- Client named and bolded (`check_client_attribution()`)
+- Synthesis breadth: named clients in the answer, source stories and named-client sources
 
-**Edge Cases:**
-- Context exclusion prefixes ("after leaving Accenture" → don't pin Accenture stories)
-- Generic client names ("Multiple Clients" → no pinning)
+The eval does not check story ids or ranking.
 
 ### Meta-Commentary Detection (Voice Quality)
 
 **Question:** Does the response maintain Agy's voice (fact-relayer, not evaluator)?
 
-**Banned Patterns:**
+**Banned Patterns** (`META_COMMENTARY_PATTERNS` in `config/constants.py`, sample):
 - "this demonstrates"
 - "this reflects"
 - "this showcases"
@@ -265,13 +254,9 @@ Landing page queries requiring zero meta-commentary.
 
 Marketing and landing page queries fail HARD if meta-commentary slips through. "What's Matt's superpower?" should NOT return "This demonstrates Matt's ability to..."; it should say "Building from nothing" directly.
 
-### Confidence Threshold Behavior
+### Confidence and Ask Agy
 
-**Question:** Are confidence thresholds applied correctly?
-
-**Validation:**
-- **Ask Agy:** HIGH confidence (≥{{ site.data.facts.confidence_high }}) gets an answer. Anything below that is declined with the low-confidence banner and suggestion chips, unless the question came from a suggestion chip or is a high-scoring behavioral question.
-- **My Work search:** LOW confidence (≥{{ site.data.facts.confidence_low }}) still shows results, with a "Relevance may be low" note (`explore_stories.py`).
+Ask Agy has no confidence gate, so the eval checks no confidence tier. My Work still shows results at LOW confidence (≥{{ site.data.facts.confidence_low }}) with a "Relevance may be low" note (`explore_stories.py`); the eval does not cover My Work.
 
 ---
 
@@ -284,7 +269,7 @@ Marketing and landing page queries fail HARD if meta-commentary slips through. "
 python -m pytest tests/eval_rag_quality.py -v
 
 # Run specific category
-python -m pytest tests/eval_rag_quality.py -k "entity" -v
+python -m pytest tests/eval_rag_quality.py -k "client" -v
 
 # Show detailed output
 python -m pytest tests/eval_rag_quality.py -v -s
@@ -298,17 +283,17 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ### Common Failure Modes
 
-1. **Entity pinning miss:** Story with matching entity NOT at #1
-   - Check: Is entity detection firing? (debug logs)
-   - Check: Is Pinecone metadata filter working? (field casing)
+1. **Thin synthesis:** too few source stories or named clients
+   - Check: the model's `search_stories` queries, and what each search returned
 
-2. **Meta-commentary detected:** Response contains banned phrases
-   - Check: System prompt (is BANNED_PHRASES enforcement active?)
-   - Check: LLM temperature (higher = more creative violations)
+2. **Meta-commentary detected:** response contains a `META_COMMENTARY_PATTERNS` phrase
+   - Check: the system prompt's voice rules in `prompts.py`
 
-3. **Confidence threshold miss:** Expected HIGH, got LOW
-   - Check: Pinecone similarity scores (top_score < 0.25?)
-   - Check: Query embedding quality (is it finding semantically similar stories?)
+3. **Missing client or ground truth:** the answer leaves out the client or the expected concepts
+   - Check: whether the searches returned the story at all (the source cards show what was retrieved)
+
+4. **Degraded answer:** the error message came back
+   - Check: the `agy_answer fatal error` log line
 
 ---
 
@@ -364,20 +349,19 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 ### Test Case Format
 
+A real entry from `GOLDEN_QUERIES`:
+
 ```python
 {
-    "query": "Show me Accenture projects",
-    "expected_intent": "innovation",
-    "expected_entity": {
-        "type": "Client",
-        "value": "Accenture"
-    },
-    "expected_stories": ["story_id_1", "story_id_2"],
-    "pinned_story": "story_id_1",  # Must be at position #1
-    "min_confidence": "high",
-    "allow_meta_commentary": False  # Strict for marketing queries
+    "id": 12,
+    "query": "Matt's modernization work at RBC",
+    "expected_client": "RBC",
+    "client_variants": ["RBC", "Royal Bank"],
+    "category": "client",
 }
 ```
+
+Other keys in use include `expected_behavior`, `ground_truth`, `min_matches`, `min_clients`, `min_source_stories`, `min_source_named_clients`, `must_contain`, `must_not_contain_meta`, `story_index` and `xfail_reason`.
 
 ### When to Add a Test Case
 
@@ -388,17 +372,17 @@ python -m pytest tests/eval_rag_quality.py -v -s
 
 **Optional but Recommended:**
 - Common query patterns (top 10 from analytics)
-- Regression-prone areas (entity pinning, narrative queries)
+- Regression-prone areas (synthesis breadth, narrative queries)
 
 ### Metrics & Reporting
 
 ### Pass Rate Breakdown
 
-The eval suite covers 8 categories: narrative, client, intent, edge, surgical, entity detection, marketing, and context story. Q59 is a known expected failure; see Coverage above.
+The eval suite covers the categories above: narrative, client, intent, edge, surgical, entity detection (skipped), marketing, and context story. See Coverage above for Q59.
 
 ### Flaky Test Handling
 
-**LLM Variance:** GPT-4o responses vary slightly between runs (temperature = 0.4 for standard queries, 0.2 for synthesis)
+**LLM Variance:** answers vary between runs: the answer model (`ASK_ANSWER_MODEL`, no temperature setting) writes its own search queries, so both what it retrieves and what it writes can change
 
 **Known Flaky Tests:** none tracked by query. Occasional failures from LLM variance usually pass on re-run (Known Limitations in the app repo's `ARCHITECTURE.md`).
 
@@ -407,28 +391,19 @@ The eval suite covers 8 categories: narrative, client, intent, edge, surgical, e
 - Track flaky test rate (should be <5%)
 - Investigate if flakiness increases (sign of prompt instability)
 
-### Quality Gates
-
-**Pre-Merge Requirement:** Eval pass rate ≥ 95%
-**Production Deploy:** Eval pass rate ≥ 98%
-
-**Rationale:** {{ site.data.facts.eval_query_count }} queries is small enough that 1-2 failures indicate real issues, not statistical noise.
-
 ---
 
-## BDD/E2E Tests (Explore Stories)
+## BDD/E2E Tests
 
 **Location:** `tests/bdd/`
 **Framework:** pytest-bdd + Playwright
-**Runtime:** ~25 minutes
-
 ```bash
 pytest tests/bdd -v
 ```
 
-**Coverage ({{ site.data.facts.bdd_summary }}):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, Role Match, responsive layout, edge cases, and more.
+**Coverage ({{ site.data.facts.bdd_summary }}):** Search flow, filter combinations, view switching, story detail, Ask Agy navigation, deeplinks, pagination, navigation/reset, Role Match, responsive layout, Ask Agy's streamed answer and cross-page hand-off, edge cases, and more.
 
-**Status:** Red → Green → Refactor cycle enforced per feature. Scenarios written and committed before implementation code.
+**Status:** Red → Green → Refactor by convention: scenarios are usually written and committed before implementation code. Exceptions are recorded in the commit (MATTGPT-275's hand-off scenarios were written during its Green).
 
 **Rationale:** One doc, one truth. The old pyramid framework is conceptual fluff that doesn't reflect reality.
 
@@ -441,8 +416,6 @@ pytest tests/bdd -v
 ```bash
 # Run all tests (unit + RAG evals + E2E)
 pytest tests/ -v
-
-# Runtime: ~30 minutes
 ```
 
 ### Individual Test Layers
@@ -451,10 +424,10 @@ pytest tests/ -v
 # Unit tests only (<1 minute)
 pytest tests/unit/ -v
 
-# RAG evaluations only (~3 minutes)
+# RAG evaluations only (one answer-model call per query; the slowest layer per test)
 pytest tests/eval_rag_quality.py -v
 
-# E2E tests only (~25 minutes)
+# E2E tests only (needs a running app)
 pytest tests/bdd/ -v
 ```
 
@@ -467,26 +440,13 @@ The unit suite is the one automated test gate, enforced twice:
 - **CI:** `.github/workflows/test.yml` runs `pytest tests/unit/` on every push and pull request to main. It needs no API keys, so it can't be skipped for lack of secrets.
 - **Pre-push hook:** `.pre-commit-config.yaml` runs the unit and integration tests (excluding network-bound ones) before each `git push`.
 
-The RAG eval and the BDD suite are not automated. The eval costs API tokens and takes minutes, and the BDD suite needs a running app, so both stay manual before merge.
+The RAG eval and the BDD suite are not automated. The eval costs API tokens and takes minutes, and the BDD suite needs a running app, so both are run by hand.
 
 ---
 
 ## Quality Gates
 
-Unit tests are enforced by CI and the pre-push hook. The eval and BDD gates are conventions, run manually before merge and deploy, not automated checks.
-
-**Pre-Merge:**
-- All {{ site.data.facts.unit_test_file_count }} unit test files passing
-- RAG eval pass rate ≥ 95%
-- BDD scenarios passing
-
-**Production Deploy:**
-- All {{ site.data.facts.unit_test_file_count }} unit test files passing
-- RAG eval pass rate ≥ 98%
-- BDD scenarios passing
-- Manual smoke test (5 queries + 2 UI workflows)
-
-**Rationale:** {{ site.data.facts.eval_query_count }} queries is small enough that 1-2 failures indicate real issues, not statistical noise. BDD scenarios validate complete user workflows end-to-end.
+Unit tests are the one enforced gate: CI and the pre-push hook run them. BDD scenarios are run by hand before merge. The golden eval is run by hand on pipeline changes; no pass-rate threshold is recorded or enforced, and MATTGPT-275 merged without a golden run on its final code.
 
 ---
 
