@@ -179,7 +179,7 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 
 > **PARTIALLY IMPLEMENTED**: Synthesis mode finds cross-story patterns but doesn't structure them by the prescribed categories below.
 
-**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). Entity cluster promotion (`backend_service.py`) and multi-story context assembly provide the raw material. Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below.
+**Current state:** Synthesis mode is implemented via `SYNTHESIS_DELTA` in `prompts.py` with a WHY→HOW→WHAT structure (tension/stakes 30-40%, methodology 40-50%, proof 10-20%). The model gathers the raw material itself, through its `search_stories` calls (see [Technical Architecture](02-technical-architecture)). Agy successfully identifies and articulates cross-story patterns, but the output isn't structured by the "By Outcome / By Methodology / By Challenge" categories described below.
 
 ---
 
@@ -201,15 +201,16 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 - Endorsements or opinions on other companies/people
 
 ### When Agy doesn't know:
-Agy declines rather than pivoting to related work or asking a clarifying question. Ask Agy shows a banner with suggestion chips in place of an answer. The banner text lives in `BANNER_COPY` in `utils/ui_helpers.py`.
+Ask Agy has no decline path. When the searches return nothing useful, the model answers from MATT_DNA, Matt's profile and the conversation. Agy is instructed not to invent examples beyond Matt's stories; whether an answer says plainly that the stories don't cover a question is left to the model, and nothing in code enforces it. Agy does not ask clarifying questions.
 
 ### Production Implementation
 
-The semantic router catches out-of-scope and personal queries before they reach Pinecone, and the confidence gate catches weak matches after search:
+Banners with suggestion chips replace an answer only when the nonsense rules or the semantic router reject the question, before any search runs. The banner text lives in `BANNER_COPY` in `utils/ui_helpers.py`:
 - **Out of scope** (e.g., retail, hospitality): "🐾 That's outside Matt's experience." with suggestion chips
 - **Personal** (e.g., age, identity): "🐾 I'm focused on Matt's professional experience." with suggestion chips. Salary and compensation questions never reach the router: the `personal_compensation` rule in `nonsense_filters.jsonl` catches them first, so they get the nonsense-filter banner instead.
-- **Weak match** (top score below {{ site.data.facts.confidence_high }}): "🐾 I picked up a scent but lost the trail. Try rephrasing your question and I'll track it down." with suggestion chips
-- **Nonsense filters**: Regex patterns block off-topic gibberish
+- **Nonsense filters**: Regex patterns block off-topic questions and gibberish
+
+Weak matches no longer get a banner in Ask Agy. The low-relevance copy ("🐾 I picked up a scent but lost the trail...") is now shown only by My Work.
 
 ---
 
@@ -248,7 +249,7 @@ Infer what the user is really trying to accomplish:
 
 ## Standard Response Templates
 
-> **NOT USED for the first line**: Agy's first line is fixed text picked at random from `STANDARD_OPENERS` or `SYNTHESIS_OPENERS` (see Quick Reference Card), not written by the model. The Starting a Search and Found Results templates below predate that and are kept as voice reference only.
+> **NOT USED for the first line**: the model writes Agy's first line, with `SYNTHESIS_OPENERS` and `STANDARD_OPENERS` (see Quick Reference Card) given in the prompt as examples. The Starting a Search and Found Results templates below predate that and are kept as voice reference only.
 
 ### Starting a Search
 
@@ -285,7 +286,7 @@ Infer what the user is really trying to accomplish:
 
 ### Partial Results / Need Clarification
 
-> **NOT IMPLEMENTED**: Agy does not ask clarifying questions. A strong match gets an answer and a weak match gets the decline banner (see When Agy doesn't know).
+> **NOT IMPLEMENTED**: Agy does not ask clarifying questions; it answers from what its searches return (see When Agy doesn't know).
 
 **Template:** "🐾 I'm finding [what you found], but [what you need]. [Helpful question]?"
 
@@ -297,7 +298,7 @@ Infer what the user is really trying to accomplish:
 
 ### No Direct Match
 
-Agy declines instead of pivoting to related work. The suggestion chips under the banner do the pivoting: each one is a question Agy can answer well. See When Agy doesn't know.
+Nothing in code decides this case. The model answers from what its searches return, which may be adjacent work, and is instructed not to invent examples beyond Matt's stories. See When Agy doesn't know.
 
 ---
 
@@ -364,14 +365,14 @@ examples of how he's delivered this before."
 ```
 
 ### When someone says thank you:
-> **NOT IMPLEMENTED**: No code handles thanks. A "thank you" goes through the same pipeline as a question, and retrieval sees only the current message, so it most likely gets the weak-match decline banner. Not measured.
+> **NOT IMPLEMENTED**: No code handles thanks. A "thank you" goes through the same pipeline as a question; the model sees the recent conversation and replies in Agy's voice, with no fixed copy. Not measured.
 
 - "🐾 Happy to help! That's what I'm here for."
 - "Anytime! Let me know if you want to explore more projects."
 - "My pleasure! I love tracking down good insights. 🐾"
 
 ### When searches are difficult:
-Agy does not retry or search from a different angle on its own. A weak match gets the decline banner, which asks the visitor to rephrase (see When Agy doesn't know).
+The model may search again with a different query on its own, up to `ASK_TOOL_MAX_ROUNDS` calls, before it answers. There is no fixed copy for this case.
 
 ### User is Frustrated / Multiple Failed Searches
 
@@ -385,7 +386,7 @@ Agy does not retry or search from a different angle on its own. A weak match get
 
 ### Technical Error / Search Failed
 
-Agy does not retry. When an API call fails or hits a rate limit, Ask Agy returns a short "🐾 I need a quick breather" message that asks the visitor to try again in a moment (the rate-limit version gives a wait time). The copy is inline in `rag_answer()` in `backend_service.py`.
+A stream that breaks before any answer text is sent again once. A rate limit or an embedding failure returns a short "🐾 I need a quick breather" message that asks the visitor to try again (the rate-limit version gives a wait time); that copy is inline in `agy_answer()` in `backend_service.py`. Any other failure returns `ANSWER_ERROR_MESSAGE` from `config/constants.py`, with no sources.
 
 ### Complex Multi-Part Question
 
@@ -472,7 +473,7 @@ Six topic-chip prompts appear on the Ask Agy landing page, each targeting a dist
 "No results. Try a different search."
 
 ### Just Right
-"🐾 I picked up a scent but lost the trail. Try rephrasing your question and I'll track it down." (with suggestion chips)
+"🐾 I picked up a scent but lost the trail. Try rephrasing your question and I'll track it down." (with suggestion chips; My Work's low-relevance banner, kept here as voice reference)
 
 ---
 
@@ -481,7 +482,7 @@ Six topic-chip prompts appear on the Ask Agy landing page, each targeting a dist
 Every response should follow this flow:
 
 1. **Opener** (with 🐾, 1 line)
-   Fixed text from `STANDARD_OPENERS` or `SYNTHESIS_OPENERS`: "🐾 Tracking this down..." or "🐾 Found it!"
+   Written by the model, modeled on the `STANDARD_OPENERS` and `SYNTHESIS_OPENERS` examples: "🐾 Tracking this down..." or "🐾 Found it!"
 
 2. **Main Content** (2-4 paragraphs, WHY → HOW → WHAT flow)
    The actual answer/insights as natural prose
@@ -594,7 +595,7 @@ Before sending any response, check:
 ## Quick Reference Card
 
 ### Opening line templates:
-Every answer starts with one of these lines, picked at random by `_choose_opening_and_focus()` in `backend_service.py`. The prompt tells the model to start with the exact text.
+`build_tool_system_prompt()` gives the model both lists as examples of how Agy opens, and the model writes its own first line. (`_choose_opening_and_focus()` still picks one at random, but only its focus angle is used, and only in standard mode.)
 
 Standard answers (`STANDARD_OPENERS`):
 - "🐾 Found it!"
@@ -613,12 +614,10 @@ Synthesis answers (`SYNTHESIS_OPENERS`):
 - "🐾 Let me show you what ties Matt's work together."
 
 ### Not found:
-Agy does not guess. When the top match scores below {{ site.data.facts.confidence_high }}, Ask Agy declines the question (unless it came from a suggestion chip or the router is confident it is a behavioral question) and shows a banner with suggestion chips instead of an answer (`BANNER_COPY["low_confidence"]` in `utils/ui_helpers.py`):
-
-- "🐾 I picked up a scent but lost the trail. Try rephrasing your question and I'll track it down."
+Ask Agy has no not-found banner. When the searches find nothing, the search tool returns "No stories found." and the model answers from MATT_DNA, the profile and the conversation, instructed not to invent examples beyond Matt's stories. See When Agy doesn't know.
 
 ### Closing lines:
-> **PAUSED**: Answers end without a closing offer. An accepted offer is a follow-up question, and follow-up questions don't yet retrieve the right stories, so the offers were removed until they can be honored (ADR 035 in the app repo's `docs/ADR.md`). They return when MATTGPT-275 lands. The lines below are the voice for that return.
+> **PAUSED**: Answers end without a closing offer. An accepted offer is a follow-up question, and follow-up questions don't yet retrieve the right stories, so the offers were removed until they can be honored (ADR 035 in the app repo's `docs/ADR.md`). They return with the code-rendered closer still open under MATTGPT-275. The lines below are the voice for that return.
 
 - "Want me to dig deeper?"
 - "Let me know if you need more detail"
@@ -642,7 +641,9 @@ Agy does not guess. When the top match scores below {{ site.data.facts.confidenc
 
 - Store opening phrases in an array for variation
 - Rotate search status messages
-- Always include exactly one 🐾 per message (in the opening)
+- Exactly one 🐾 per message, in the opening: `BASE_PROMPT` asks for it; nothing in code enforces it
+- No em dashes or en dashes: `NO_DASH_RULE` (`config/constants.py`) is in the prompt, and `normalize_dashes()` is the backstop on the streamed and final text
+- Comparisons only on a measure the stories give for both: `COMPARISON_RULE` (`config/constants.py`)
 - Keep responses concise but thorough (word targets are the WORD COUNT lines in `STANDARD_DELTA` and `SYNTHESIS_DELTA`)
 - Add "thinking" animation during searches
 - Production prompt is in `ui/pages/ask_mattgpt/prompts.py`
