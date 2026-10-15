@@ -52,9 +52,9 @@ These fields are **required** for every story:
 
 ---
 
-## Entity Detection Fields
+## Entity Fields
 
-**Critical for semantic router and query routing (used by detect_entity())**
+**Not detected or pinned at answer time.** MATTGPT-275 retired `detect_entity()` and entity pinning; Ask Agy finds stories only through the search queries its answer model writes.
 
 | Field | Type | Purpose | Example |
 |-------|------|---------|---------|
@@ -62,15 +62,7 @@ These fields are **required** for every story:
 | `Employer` | str | Employment org (Matt's employer) | `"Accenture"`, `"Independent"` |
 | `Division` | str | Organizational division/unit | `"Cloud Innovation Center"`, `"Technology"` |
 
-**Entity Pinning Behavior:**
-- Query mentions "JP Morgan" → filters by `Client = "JP Morgan"`, pins matching story to #1
-- Query mentions "Accenture" → filters by `Employer = "Accenture"`, pins matching story to #1
-- Query mentions "Cloud Innovation Center" → filters by `Division = "Cloud Innovation Center"`
-- Multi-field search uses Pinecone `$or` operator across entity fields
-
-**Context Exclusion:**
-Prefixes like "after", "leaving", "before" prevent entity filtering:
-- "Career transition after Accenture" → broad search, NOT filtered to Accenture stories
+These fields still reach the answer: `Client` is shown on source cards and in each story's context for the model, and all three are in the Pinecone metadata. The multi-field `$or` entity filter (`ENTITY_SEARCH_FIELDS` in `config/constants.py`, applied in `pinecone_semantic_search()`) is still in the code, but no current caller sets an entity, so it never runs.
 
 ---
 
@@ -199,43 +191,42 @@ Fields used for search, filtering, and semantic routing:
 
 Complete alphabetical field reference:
 
-| Field | Type | Required | Searchable | Filterable | Entity Detection | Used in 5P Summary |
-|-------|------|----------|------------|------------|-----------------|-------------------|
-| `5PSummary` | str | No | Yes | No | No | Primary |
-| `Action` | list[str] | No | Yes | No | No | Via `Process` |
-| `Category` | str | No | Yes | No | No | No |
-| `Client` | str | Yes | Yes | Yes | Yes | No |
-| `Competencies` | list[str] | No | Yes | No | No | No |
-| `Division` | str | No | Yes | No | Yes | No |
-| `Employer` | str | No | Yes | No | Yes | No |
-| `End_Date` | str | No | No | No | No | No |
-| `Era` | str | No | Yes | Yes | No | No |
-| `id` | str | **Yes** | No | No | No | No |
-| `Industry` | str | Yes | Yes | Yes | No | No |
-| `Interview Questions` | list[str] | No | Yes | No | No | No |
-| `Performance` | list[str] | No | Yes | No | No | Outcome |
-| `Person` | str | No | Yes | No | No | No |
-| `Place` | str | No | Yes | No | No | No |
-| `Process` | list[str] | No | Yes | No | No | Approach |
-| `Project` | str | No | Yes | No | No | No |
-| `Project Scope / Complexity` | str | No | No | No | No | No |
-| `public_tags` | list[str] | No | Yes | Yes | No | No |
-| `Purpose` | str | No | Yes | No | No | Goal |
-| `Result` | list[str] | No | Yes | No | No | Via `Performance` |
-| `Role` | str | No | Yes | Yes | No | No |
-| `Situation` | list[str] | No | Yes | No | No | No |
-| `Solution / Offering` | str | No | Yes | Yes | No | No |
-| `Start_Date` | str | No | No | No | No | No |
-| `Sub-category` | str | No | Yes | Yes | No | No |
-| `Task` | list[str] | No | Yes | No | No | No |
-| `Theme` | str | No | Yes | No | No | No |
-| `Title` | str | Yes | Yes | No | No | Via summary |
-| `Use Case(s)` | list[str] | No | Yes | No | No | No |
+| Field | Type | Required | Searchable | Filterable | Used in 5P Summary |
+|-------|------|----------|------------|------------|-------------------|
+| `5PSummary` | str | No | Yes | No | Primary |
+| `Action` | list[str] | No | Yes | No | Via `Process` |
+| `Category` | str | No | Yes | No | No |
+| `Client` | str | Yes | Yes | Yes | No |
+| `Competencies` | list[str] | No | Yes | No | No |
+| `Division` | str | No | Yes | No | No |
+| `Employer` | str | No | Yes | No | No |
+| `End_Date` | str | No | No | No | No |
+| `Era` | str | No | Yes | Yes | No |
+| `id` | str | **Yes** | No | No | No |
+| `Industry` | str | Yes | Yes | Yes | No |
+| `Interview Questions` | list[str] | No | Yes | No | No |
+| `Performance` | list[str] | No | Yes | No | Outcome |
+| `Person` | str | No | Yes | No | No |
+| `Place` | str | No | Yes | No | No |
+| `Process` | list[str] | No | Yes | No | Approach |
+| `Project` | str | No | Yes | No | No |
+| `Project Scope / Complexity` | str | No | No | No | No |
+| `public_tags` | list[str] | No | Yes | Yes | No |
+| `Purpose` | str | No | Yes | No | Goal |
+| `Result` | list[str] | No | Yes | No | Via `Performance` |
+| `Role` | str | No | Yes | Yes | No |
+| `Situation` | list[str] | No | Yes | No | No |
+| `Solution / Offering` | str | No | Yes | Yes | No |
+| `Start_Date` | str | No | No | No | No |
+| `Sub-category` | str | No | Yes | Yes | No |
+| `Task` | list[str] | No | Yes | No | No |
+| `Theme` | str | No | Yes | No | No |
+| `Title` | str | Yes | Yes | No | Via summary |
+| `Use Case(s)` | list[str] | No | Yes | No | No |
 
 **Notes:**
-- **Entity Detection** column shows fields used by `detect_entity()` in the semantic router. The detection set is intentionally narrower than the search set to avoid false positives on generic values.
-- Once an entity is confirmed, search widens across more fields (see `ENTITY_SEARCH_FIELDS` in `config/constants.py`), including Title.
-- Date fields (`Start_Date`, `End_Date`) are primarily for Timeline View and chronological sorting.
+- The Entity Detection column was removed with `detect_entity()` (MATTGPT-275); see Entity Fields above.
+- Date fields (`Start_Date`, `End_Date`) drive Timeline View and chronological sorting. When a story has both, `build_story_context_for_rag()` also adds a `[DATES]: <Start_Date> to <End_Date>` line to the story text Ask Agy's search tool returns, so the answer model can answer "when" and "how long" questions.
 
 ---
 
@@ -374,6 +365,10 @@ if "public_tags" in story and isinstance(story["public_tags"], str):
 
 ## Field Evolution History
 
+### October 2026 - Entity Detection Retired
+- `detect_entity()`, `ENTITY_ALIASES` and entity pinning removed with `rag_answer()` (MATTGPT-275); the entity fields stay in the data
+- Story dates added to the context the answer model sees (`build_story_context_for_rag()`)
+
 ### January 2026 - Entity Detection & Evaluation
 - Added entity fields: `Employer`, `Division`, `Project` (for semantic router)
 - Added `Interview Questions` field (for eval framework and semantic search)
@@ -443,7 +438,7 @@ Simplified example:
 
 ### Vocabulary Building
 
-`initialize_vocab()` is unused. Its vocabulary only serves the `enforce_overlap` branch of `semantic_search()`, which no production caller enables; it's scheduled for removal (MATTGPT-287). Ask Agy builds its vocabulary with `build_known_vocab()`.
+`initialize_vocab()` is unused. Its vocabulary only serves the `enforce_overlap` branch of `semantic_search()`, which no production caller enables; it's scheduled for removal (MATTGPT-287). Ask Agy builds no vocabulary: `build_known_vocab()` was retired with `rag_answer()` (MATTGPT-275).
 
 ---
 
