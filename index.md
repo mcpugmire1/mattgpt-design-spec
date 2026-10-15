@@ -78,3 +78,7 @@ The live application is at [askmattgpt.streamlit.app](https://askmattgpt.streaml
 ## Contact
 
 Matt Pugmire. [LinkedIn](https://www.linkedin.com/in/matt-pugmire). [Ask Agy](https://askmattgpt.streamlit.app).
+
+---
+
+*Last updated: {{ site.data.page_dates['index'] }}*
