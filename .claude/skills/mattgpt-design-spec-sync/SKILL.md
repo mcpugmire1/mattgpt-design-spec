@@ -14,8 +14,10 @@ does. The spec repo's CLAUDE.md applies in full; this skill adds the pass itself
   Never read the working tree: another session may have uncommitted work in it.
   Use `git show origin/main:<path>` and `git grep <pattern> origin/main -- <paths>`.
 - Pull the spec repo first (`git pull`; rebase and autostash are configured).
-- Targets: published pages (`index.md`, `docs/*.md`) plus `CONTEXT.md`,
-  `CLAUDE.md` and `README.md`. `archive/` is out of scope.
+- Targets: published pages (`index.md`, `docs/*.md`), the nav include,
+  wireframes, `CONTEXT.md` and `README.md`. `archive/` is out of scope.
+- `CLAUDE.md` is Matt's: never edit it. Report its drift in the pass's
+  report and in `CONTEXT.md` Next Steps.
 - Label every finding as one of:
   - **supported**: code on origin/main backs it as written
   - **stale**: it was true once; the code has moved on
