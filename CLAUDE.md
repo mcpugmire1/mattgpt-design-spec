@@ -88,9 +88,9 @@ Before creating any file, read what already exists:
 
 ## Nav and Structure
 
-Primary nav groups: **The thinking** / **The build** / **Reference and roadmap**.
+Primary nav groups: **The thinking** / **The build** / **Reference**.
 
-Docs 07 and 08 are not in the primary nav: both cross-link from Technical Architecture (02).
+All published docs are in the primary nav. `doc-nav.html` is the source of truth for grouping and order.
 
 `CONTEXT.md` is the active project status doc. It stays excluded from the Jekyll build and is never archived. It is always current.
 
@@ -111,41 +111,3 @@ Before creating a new `.md` file, justify why it can't go into:
 - A `CONTEXT.md` entry
 
 Transitory files go in `docs/working/` with a lifecycle declaration and a defined deletion target. Permanent new top-level docs require explicit approval.
-
----
-
-## File Structure
-```
-mattgpt-design-spec/
-├── index.md                          # Landing page - the build record
-├── README.md                         # Project overview (mirrors index.md identity)
-├── CONTEXT.md                        # Active project status; excluded from build
-├── CLAUDE.md                         # This file
-├── _config.yml                       # Jekyll config - identity fields must match _config_netlify.yml
-├── _config_netlify.yml               # Deployed build config - this is what the live site reads
-├── docs/                             # Published specification
-│   ├── 01-product-vision.md
-│   ├── 02-technical-architecture.md
-│   ├── 03-ux-design-process.md
-│   ├── 04-building-mattgpt.md
-│   ├── 05-agy-voice-guide.md
-│   ├── 07-css-architecture.md                 # Cross-linked from 02
-│   ├── 08-mobile-implementation.md            # Cross-linked from 02
-│   ├── 09-api-reference.md
-│   ├── 10-data-model.md
-│   ├── 11-testing-and-quality.md
-│   ├── 12-data-pipeline.md
-│   ├── audit-2026-06-15.md
-│   └── working/                      # Transitory files with deletion targets
-├── _layouts/                         # Jekyll layouts - reuse before creating
-├── _includes/                        # Jekyll includes - reuse nav, don't duplicate
-├── _data/
-│   └── facts.yml                     # Single source of truth for all facts
-├── assets/
-│   └── css/
-│       └── style.scss                # All CSS lives here
-├── wireframes/                       # UI source of truth (unless app has moved past)
-├── images/
-├── brand-kit/
-└── archive/                          # Sausage; excluded from Jekyll build
-```
