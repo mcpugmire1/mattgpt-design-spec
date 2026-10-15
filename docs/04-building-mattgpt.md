@@ -151,7 +151,7 @@ I named it after Agy, my late Plott Hound (short for Agador Spartacus from "The 
 
 One of the core technical innovations in MattGPT is the **semantic search** approach that combines vector-based meaning matching with confidence-based filtering.
 
-**The Algorithm:**
+**The Algorithm (simplified sketch):** the real `semantic_search()` also applies metadata filters, blends in keyword overlap, and pins entity matches; see [API Reference](09-api-reference).
 
 ```python
 def semantic_search(query: str, top_k: int = SEARCH_TOP_K) -> Dict:
@@ -197,7 +197,7 @@ def semantic_search(query: str, top_k: int = SEARCH_TOP_K) -> Dict:
 - **Threshold Gating:** Prevents low-quality matches from appearing (minimum {{ site.data.facts.pinecone_min_sim }} similarity)
 - **Intent Routing:** Classifies the question's topic into one of {{ site.data.facts.intent_family_count }} intent families; mapping a visitor's goal (interview prep, due diligence, pitch) to tone is not implemented (see [Agy Voice Guide](05-agy-voice-guide#user-intent-recognition))
 
-This approach was validated through manual testing of common query patterns, demonstrating effective semantic understanding and confidence-based filtering.
+Retrieval quality is checked by the {{ site.data.facts.eval_query_count }}-query golden eval described in [Testing and Quality](11-testing-and-quality).
 
 ### Data Governance: The Two-Layer Model
 
@@ -218,10 +218,9 @@ Every story is authored with all four STAR fields and at least one metric.
 - **Place:** Client, industry, geographic context
 - **Purpose:** Capability area, transformation type
 
-**Semantic Public Tags (Industry Standards):**
-- **O*NET Competencies:** Standardized skill taxonomy
-- **SFIA Framework:** IT professional skills
-- **LinkedIn Skills:** Common search terms
+**Public Tags and Competencies:**
+- **Public tags:** curated in the Excel source, which is authoritative (see [Data Pipeline](12-data-pipeline))
+- **Competencies:** `generate_competencies.py` has an LLM suggest competencies per story, exported to a spreadsheet for review. Its prompt asks for SFIA, O*NET and LinkedIn skills terminology; that is a prompt instruction, not a mapping to those frameworks.
 
 This dual-layer approach ensures both **data integrity** (every answer is auditable) and **search intelligence** (pattern recognition and cross-project synthesis).
 
@@ -237,9 +236,9 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Prevents hallucination by constraining to known projects
 
 **Automated Tag Generation:**
-- Extracts keywords using NLP and ontology mapping
-- Aligns skills to industry standards (O*NET, SFIA)
-- Enables discovery through multiple taxonomies
+- An LLM suggests competencies from each story's content, for human review
+- The prompt asks for SFIA, O*NET and LinkedIn skills terminology; there is no ontology lookup
+- A story's Competencies field is part of the text that gets embedded (`build_custom_embeddings.py`)
 
 **Embedded Classification:**
 - Discovers similar or complementary projects
@@ -300,7 +299,6 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Faceted search with result counts
 
 **Export & Share:**
-- PDF download via print dialog (MVP gated export)
 - Unique project-level URLs for sharing specific stories
 - Copy-to-clipboard for quick reference
 
@@ -324,7 +322,6 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 **Semantic Embeddings:**
 - OpenAI text-embedding-3-small
 - 1536-dimensional vector space
-- ~1.2s average embedding + retrieval time
 
 **Metadata Filtering:**
 - Pinecone metadata filters for faceted search
@@ -337,9 +334,9 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Core RAG pipeline remains unchanged across UI iterations
 
 **Logging & Observability:**
-- Query analysis and performance tracking
-- Response quality monitoring
-- System health metrics (latency, error rate, cache hit ratio)
+- Every query is logged to a Google Sheet by `log_query()` in `services/query_logger.py`: intent family, confidence, top score, result count and redirect reason
+- Visitor answer ratings are logged alongside
+- No latency, error-rate or cache metrics are collected
 
 ---
 
@@ -383,7 +380,7 @@ I originally planned to build a React + FastAPI stack. I'm glad I didn't. Stream
 
 ### Data Quality > Fancy Algorithms
 
-I spent more time curating STAR stories and validating metadata than I did on the ML pipeline. That discipline paid off: every AI response traces to auditable source data, and users trust the system because it never makes things up.
+I spent more time curating STAR stories and validating metadata than I did on the ML pipeline. That discipline paid off: every AI response traces to auditable source data, and Ask Agy says when Matt's stories don't cover a question.
 
 ### Refactoring the Monolith
 
