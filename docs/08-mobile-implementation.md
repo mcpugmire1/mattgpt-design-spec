@@ -23,7 +23,7 @@
 MattGPT implements production-quality mobile CSS in `@media` blocks across `global_styles.py` and `mobile_overrides.py`. The patterns described below use prose rather than source selectors; for actual class names and rules, read those files directly.
 
 **Key Stats:**
-- **Mobile Breakpoint:** < 767px
+- **Mobile Breakpoint:** ≤ 767px
 - **Tablet Breakpoint:** 768px - 1023px
 - **Desktop Breakpoint:** 1024px and up (the base styles)
 - **Mobile CSS:** `@media (max-width: 767px)` blocks in `global_styles.py` and `mobile_overrides.py`; older blocks also use `max-width: 768px`
@@ -61,8 +61,8 @@ See [CSS Architecture](07-css-architecture#breakpoint-strategy) for the 767px ve
 
 | Device Category | Width Range | Breakpoint |
 |----------------|-------------|------------|
-| Mobile Portrait | 320-767px | < 767px |
-| Mobile Landscape | 568-926px | < 767px or 768-1024px |
+| Mobile Portrait | 320-767px | ≤ 767px |
+| Mobile Landscape | 568-926px | ≤ 767px or 768-1024px |
 | Tablet Portrait | 768-834px | 768-1024px |
 | Tablet Landscape | 1024-1194px | > 1024px |
 | Laptop | 1280-1920px | > 1024px |
@@ -145,7 +145,7 @@ h1 {
 - All links still visible
 - Touch-friendly targets
 
-**Mobile (< 767px):**
+**Mobile (≤ 767px):**
 - Logo + hamburger menu
 - Vertical stacked links (hidden by default)
 - Full-width dropdown on menu open
