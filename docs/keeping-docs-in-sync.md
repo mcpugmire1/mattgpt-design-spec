@@ -17,8 +17,9 @@ The correction is to stop declaring facts and start deriving them.
 A GitHub Actions job runs on every push to the source repository's
 `main` branch. It derives volatile facts from the running code and
 writes them to `_data/facts.yml`; the docs consume them through Jekyll
-Liquid references. Currently synced: chat and embedding model names,
-confidence and router thresholds, search defaults, intent family and
+Liquid references. Currently synced: the embedding model name, a chat
+model constant that no longer names Ask Agy's answer model (that model
+is not synced yet), confidence and router thresholds, search defaults, intent family and
 example-phrase counts, story count, BDD and unit test inventories, the
 golden-query count, module, component and page inventories, and
 environment variables. Eval results are not synced: the eval count is
@@ -30,9 +31,11 @@ it stay current with no review queue.
 ## What the pipeline does not cover
 
 Behavioral prose and claims about code paths. "Agy declines a question
-when retrieval confidence is low" is not derivable from a constant, and
-no pipeline will tell you when it stops being true. That layer needs
-periodic human review.
+when retrieval confidence is low" was true until October 2026, when
+MATTGPT-275 removed Ask Agy's confidence gate. The threshold it named
+is still synced and still correct, so nothing in the pipeline flagged
+the sentence; this page carried it as current until a review pass
+caught it. That layer needs periodic human review.
 
 ## The review layer
 
@@ -47,7 +50,14 @@ rules file was stale, which is the case for deriving rather than
 restating. Fixed in the source repo.
 
 Everything the June pass corrected by hand is now either synced or
-recorded here. The next pass covers prose only.
+recorded here.
+
+The October 2026 pass followed MATTGPT-275, which rebuilt Ask Agy's
+answer path. It was almost all prose: nearly every doc still described
+a confidence gate, entity pinning and a model the code no longer used,
+while every synced number stayed correct. The pass now runs the same
+way each time: claims checked against the source repo's `main`, one
+doc per commit, and the live site checked after each push.
 
 ---
 
