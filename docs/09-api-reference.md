@@ -2,7 +2,7 @@
 
 **Technical reference for llm_portfolio_assistant codebase**
 
-> This document covers the function signatures, parameters, return types, and data flow for every service, utility, and UI module in the codebase. Check here before writing any code that touches semantic routing, RAG retrieval, story filtering, or session state.
+> This document covers the function signatures, parameters, return types, and data flow for every service, utility, and UI module in the codebase. Check here before writing any code that touches semantic routing, Ask Agy's answer path, RAG retrieval, story filtering, or session state.
 
 ---
 
@@ -17,7 +17,7 @@
 | `matt_profile.py` | The one reader of `data/matt_profile.json`, shared by Role Match, the assessor and Ask Agy's profile facts |
 | `role_match_summary.py` | Role Match summary generation and scoring helpers |
 | `semantic_router.py` | Query intent classification using embedding similarity |
-| `rag_service.py` | Semantic search orchestration and confidence gating |
+| `rag_service.py` | Semantic search and confidence labeling (My Work gates its banners on the label; Ask Agy does not) |
 | `pinecone_service.py` | Vector database integration for semantic search |
 | `story_service.py` | Story metadata and data management (stub) |
 
@@ -66,13 +66,13 @@
 
 **Ask Agy Submodules (ask_mattgpt/):**
 - `__init__.py` - Module router
-- `backend_service.py` - Chat backend and LLM orchestration
+- `backend_service.py` - Ask Agy backend: `send_to_backend()`, `agy_answer()` and its tool loop
 - `styles.py` - Chat-specific CSS
 - `conversation_helpers.py` - Conversation logic
 - `conversation_view.py` - Conversation UI rendering
 - `landing_view.py` - Landing view with capability cards
 - `prompts.py` - System prompts and LLM prompt templates
-- `story_intelligence.py` - Story analysis and persona inference
+- `story_intelligence.py` - Theme inference and story context for the search tool
 - `shared_state.py` - Shared conversation state
 - `utils.py` - Conversation utilities
 
@@ -135,6 +135,45 @@ warm_cache()
 
 ---
 
+### Ask Agy Backend (`ui/pages/ask_mattgpt/backend_service.py`)
+
+**Entry point and answer loop**
+
+```python
+send_to_backend(
+    prompt: str,
+    filters: dict,             # unused
+    ctx: dict | None,          # unused
+    stories: list[dict],
+    on_delta: Callable[[str], None] | None = None,
+) -> dict
+
+agy_answer(
+    question: str,
+    stories: list[dict],
+    history: list[dict[str, str]] | None = None,
+    on_delta: Callable[[str], None] | None = None,
+) -> dict
+```
+
+`send_to_backend()` builds `history` from `st.session_state["ask_transcript"]` with `_build_history_messages()` (the last `ASK_HISTORY_MAX_MESSAGES` messages, banners skipped) and calls `agy_answer()`. `agy_answer()` runs the nonsense rules and the router's out_of_scope and personal redirects, then the tool loop on `ASK_ANSWER_MODEL`. `on_delta` receives the streamed answer text, with `normalize_dashes()` applied.
+
+**Returns:** `answer_md`, `sources` (`{"id", "title", "client"}` per story the searches returned), `modes`, `default_mode`, `intent_family`, `rejection_reason`, and on answers and errors `profile_categories` and `degraded`. `confidence` and `entity_match` are always `None`. The app repo's `ARCHITECTURE.md` (agy_answer Return Contract) is the source.
+
+**Search tool:**
+
+```python
+_run_search_tool(arguments: str, stories: list[dict]) -> tuple[str, list[dict], float]
+# One search_stories call: semantic_search(query, {}, stories=stories, top_k=SEARCH_TOP_K),
+# the top results each as <story title="...">, a Professional Narrative story with
+# get_verbatim_requirement() appended. Returns (tool output, stories, top score);
+# the output is "No stories found." when nothing is returned.
+```
+
+**System prompt:** `build_tool_system_prompt(is_synthesis, matt_dna, profile_facts, opener_examples, focus_angle="")` in `prompts.py`: the mode's system prompt, `TOOL_STORY_NOTE`, then `build_answer_instructions()`, which carries `NO_DASH_RULE` and `COMPARISON_RULE`.
+
+---
+
 ### RAG Service (`services/rag_service.py`)
 
 **Semantic Search Orchestration**
@@ -154,8 +193,8 @@ semantic_search(
 **Parameters:**
 - `query` - Search query string
 - `filters` - Filter dictionary (industry, capability, client, etc.)
-- `enforce_overlap` - If True, require token overlap with known vocabulary
-- `min_overlap` - Minimum overlap ratio (0.0-1.0)
+- `enforce_overlap` - If True, require token overlap with known vocabulary (no current caller sets it)
+- `min_overlap` - Minimum overlap ratio (0.0-1.0) (no current caller sets it)
 - `stories` - Full list of story dictionaries
 - `top_k` - Max results to return
 
@@ -174,9 +213,11 @@ semantic_search(
 `relaxed_count` and `active_filters` appear only when the industry or capability filters leave no results.
 
 **Confidence Thresholds:**
-- `CONFIDENCE_HIGH` ({{ site.data.facts.confidence_high }}) - "high". Ask Agy answers only at this level, except for suggestion-chip questions and confident behavioral matches
-- `CONFIDENCE_LOW` ({{ site.data.facts.confidence_low }}) - "low". My Work still shows results with a "Relevance may be low" note; Ask Agy declines (raised from 0.15 in Jan 2026)
-- Below `CONFIDENCE_LOW` - "none". Both surfaces show no story results
+- `CONFIDENCE_HIGH` ({{ site.data.facts.confidence_high }}) - "high"
+- `CONFIDENCE_LOW` ({{ site.data.facts.confidence_low }}) - "low". My Work shows results with a "Relevance may be low" note (raised from 0.15 in Jan 2026)
+- Below `CONFIDENCE_LOW` - "none". No story results: My Work shows "No strong matches", and Ask Agy's search tool returns "No stories found."
+- Ask Agy reads only the results and `top_score`; the label does not decide whether it answers
+- When Pinecone returns no hits, `semantic_search()` falls back to the corpus in file order with confidence "low" (MATTGPT-292 in the app backlog)
 
 **Vocabulary Initialization:**
 
@@ -256,7 +297,7 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 
 ## Data Flow Summary
 
-### 1. User Query → Semantic Router → RAG Pipeline
+### 1. Ask Agy Query → Answer
 
 ```
 ┌─────────────────┐
@@ -266,26 +307,18 @@ matches_filters(s: dict, F: dict | None = None) -> bool
          │
          ▼
 ┌─────────────────────────────────────────┐
-│  Nonsense Filter (nonsense_filters.jsonl│
+│  Nonsense Rules (nonsense_filters.jsonl)│
 │  - Regex pattern match against query    │
-│  - Blocks off-topic / abusive queries   │
+│  - Skipped for suggestion chips         │
 └────────┬────────────────────────────────┘
          │
-         └─ [match] → REJECT immediately
+         ├─ [match] → REJECT (banner + chips)
          │
          ▼
 ┌─────────────────────────────────────────┐
 │  Semantic Router (semantic_router.py)   │
-│  - Embed query (OpenAI text-embedding)  │
-│  - Compare to canonical intents         │
+│  - Embed query, compare to intents      │
 │  - Return (is_valid, score, family)     │
-└────────┬────────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────────┐
-│  Entity Detection (backend_service.py)  │
-│  - detect_entity(): Client / Employer / │
-│    Division found in the query          │
 └────────┬────────────────────────────────┘
          │
          ├─ [out_of_scope or personal, score >= HARD_ACCEPT]
@@ -293,38 +326,29 @@ matches_filters(s: dict, F: dict | None = None) -> bool
          │  (any other score continues)
          ▼
 ┌─────────────────────────────────────────┐
-│  RAG Service (rag_service.py)           │
-│  - semantic_search(query, filters)      │
-│  - Calls Pinecone, scoped by any        │
-│    detected entity                      │
-│  - Applies confidence gating            │
-│  - Filters results by metadata          │
-└────────┬────────────────────────────────┘
-         │
-         ▼
+│  Tool Loop (agy_answer)                 │
+│  - System prompt, recent conversation,  │
+│    the question                         │
+│  - Model on ASK_ANSWER_MODEL writes     │
+│    search_stories queries, up to        │
+│    ASK_TOOL_MAX_ROUNDS                  │
+└────────┬───────────────────▲────────────┘
+         │ search_stories    │ <story> blocks
+         ▼                   │
 ┌─────────────────────────────────────────┐
-│  Pinecone Service (pinecone_service.py) │
-│  - Query vector index                   │
-│  - Return top_k matches with scores     │
-└────────┬────────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────────┐
-│  Filters (utils/filters.py)             │
-│  - Apply industry/capability filters    │
-│  - Apply advanced filters               │
-│  - matches_filters() for each story     │
-└────────┬────────────────────────────────┘
-         │
-         ├─ [Ask Agy, confidence below high] → DECLINE (banner + chips)
-         │
+│  semantic_search(query, {})             │
+│  - Pinecone top_k, blended with W_KW    │
+│  - Hits below CONFIDENCE_LOW dropped    │
+│  - No entity or facet filters, no gate  │
+└─────────────────────────────────────────┘
+         │ (after the last search)
          ▼
 ┌─────────────────────────────────────────┐
 │  Response to User                       │
-│  - Matching story pinned to #1          │
-│  - Ranked stories with confidence       │
-│  - Source citations with scores         │
-│  - Related projects suggestions         │
+│  - Answer streams, then is replaced by  │
+│    the post-processed text              │
+│  - Sources: stories the searches        │
+│    returned                             │
 └─────────────────────────────────────────┘
 ```
 
@@ -359,22 +383,22 @@ matches_filters(s: dict, F: dict | None = None) -> bool
 └─────────────────────────────────────────┘
 ```
 
-### 3. Confidence Gating Logic
+### 3. Router and Confidence Logic
 
 **Query Classification (Semantic Router):**
 ```
 Score >= HARD_ACCEPT  → clearly on-topic; out_of_scope and personal are rejected here
 Score >= SOFT_ACCEPT  → borderline, logged for review (lowered from 0.72 in Jan 2026)
-Score <  SOFT_ACCEPT  → low router signal; no rejection, the query goes to search
+Score <  SOFT_ACCEPT  → low router signal; no rejection, the query goes on
 ```
 
-`router_rejection_reason()` in `services/semantic_router.py` is the only router rejection. Weak queries are rejected by the confidence gate below.
+`router_rejection_reason()` in `services/semantic_router.py` is the only router rejection, shared by Ask Agy and My Work. Ask Agy has no confidence gate: every other query goes to the tool loop.
 
 **Result Confidence (RAG Service):**
 ```
-Top score >= CONFIDENCE_HIGH  → high: Ask Agy answers
-Top score >= CONFIDENCE_LOW   → low: My Work shows "Relevance may be low"; Ask Agy declines
-Top score <  CONFIDENCE_LOW   → none: no story results
+Top score >= CONFIDENCE_HIGH  → high
+Top score >= CONFIDENCE_LOW   → low: My Work shows "Relevance may be low"
+Top score <  CONFIDENCE_LOW   → none: no story results (Ask Agy's tool returns "No stories found.")
 ```
 
 ---
@@ -389,10 +413,15 @@ Key session state variables used throughout the application:
 | `filters` | dict | Active filters (industry, capability, clients, domains, etc.) |
 | `__pc_last_ids__` | dict | Story ID → Pinecone score mapping |
 | `__pc_snippets__` | dict | Story ID → snippet text mapping |
-| `__last_ranked_sources__` | list | Ordered list of story IDs from last search |
+| `__last_ranked_sources__` | list | Ordered list of story IDs from last search (written by `rag_service.py`; no current reader) |
 | `__pc_suppressed__` | bool | True if Pinecone results were suppressed (low confidence) |
 | `__dbg_pc_hits` | int | Number of Pinecone hits (for debugging) |
-| `ask_transcript` | list | Ask Agy chat history |
+| `ask_transcript` | list | Ask Agy chat history; the source of `_build_history_messages()` |
+| `ask_last_reason` / `ask_last_query` | str | Why the last Ask Agy question was redirected, and the question; routes the banner |
+| `__ask_from_suggestion__` | bool | Question came from a suggestion chip: skips the nonsense rules and the router |
+| `__ask_force_answer__` | bool | Same bypass, set by landing, follow-up and banner suggestion chips |
+| `__embed_failure__` | bool | The query embedding failed; Ask Agy returns a breather message |
+| `seed_prompt` | str | A question handed to Ask Agy from another page (landing input, chips, story detail) |
 
 ---
 
@@ -426,8 +455,14 @@ VECTOR_BACKEND=faiss        # default
 
 **RAG Service:**
 - Returns empty results for invalid queries
-- Gracefully handles Pinecone failures with local fallback
+- Falls back to the local corpus when Pinecone returns no hits or fails (MATTGPT-292)
 - Preserves UI state even when search fails
+
+**Ask Agy (`agy_answer()`):**
+- A stream that breaks before any answer text is sent again once; after text, the turn fails
+- A rate limit or an embedding failure returns a "quick breather" message
+- Any other error returns `ANSWER_ERROR_MESSAGE` (`config/constants.py`) with no sources and `degraded: True`
+- The client's read timeout is `ASK_ANSWER_READ_TIMEOUT_S`
 
 **Filters:**
 - Handles missing fields gracefully (defaults to empty strings/lists)
@@ -453,6 +488,7 @@ pytest tests/unit/test_scoring.py            # Hybrid scoring tests
 pytest tests/unit/test_formatting.py         # STAR formatting tests
 pytest tests/unit/test_validation.py         # Input validation tests
 pytest tests/unit/test_backend_service.py    # Ask Agy backend tests
+pytest tests/unit/test_ask_agy_tool_answer.py # Tool loop, streaming, errors
 pytest tests/unit/test_story_intelligence.py # Story analysis tests
 
 # With coverage
@@ -470,7 +506,7 @@ pytest --cov=services --cov=utils tests/
 
 **RAG Service:**
 - Pinecone queries: ~200-500ms
-- Confidence gating prevents returning low-quality results
+- Hits below `CONFIDENCE_LOW` are dropped
 - Local fallback for offline/error scenarios
 
 **Filters:**
