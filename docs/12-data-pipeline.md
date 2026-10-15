@@ -299,39 +299,20 @@ Excel also owns `Interview Questions` (read from the sheet, split on `;`) and `p
 - **Read from the profile:** `self_description` in `data/matt_profile.json`
 - **Hardcoded in the template:** Career Arc (including employer dates), Theme Strengths, Signature Achievements, How Matt Wins Business, and Leadership Philosophy
 
-Verbatim identity terms such as "builder" and "modernizer" are not part of MATT_DNA: `get_verbatim_requirement()` in `prompts.py` requires them when the top story is a Professional Narrative story whose `5PSummary` uses them.
+Verbatim identity terms such as "builder" and "modernizer" are not part of MATT_DNA: `get_verbatim_requirement()` in `prompts.py` requires them for every Professional Narrative story a `search_stories` call returns whose `5PSummary` uses them.
 
 **Why Dynamic (where it is):**
 - Single source of truth for clients and industries (story corpus at runtime)
 - Story changes update those sections everywhere
 - The hardcoded sections are the known exception: they change only with a code edit
 
-**2. Multi-Field Entity Search**
+**2. Entity Search Filter (No Caller)**
 
-Entity detection searches across 6 fields via Pinecone `$or`:
-```python
-# Query: "Show me Accenture projects"
-# Searches: Client OR Employer OR Division OR Project OR Place OR Title
-pinecone_filter = {
-    "$or": [
-        {"client": {"$eq": "Accenture"}},     # PascalCase value
-        {"employer": {"$eq": "accenture"}},   # lowercase value
-        {"division": {"$eq": "accenture"}},   # lowercase value
-        {"project": {"$eq": "accenture"}},    # lowercase value
-        {"place": {"$eq": "accenture"}},      # matches nothing: no place field is written
-        {"title": {"$eq": "Accenture"}}       # PascalCase value
-    ]
-}
-```
+`pinecone_semantic_search()` still builds a Pinecone `$or` filter across `ENTITY_SEARCH_FIELDS` (`config/constants.py`) when a caller passes an entity. Since MATTGPT-275 none does: `detect_entity()` was retired, and Ask Agy's search tool passes no filters. The field casing below still applies to any filter on this metadata.
 
 **Field-Specific Casing (Pinecone Metadata):**
 - **Lowercase:** `division`, `employer`, `project` (and `industry`, `complexity`, which are not entity fields)
 - **PascalCase:** `client`, `role`, `title`, `domain`
-
-**Why Multi-Field:**
-- "Accenture" might appear as Client, Employer, or Division
-- Maximizes recall while maintaining precision
-- Avoids false negatives from single-field matching
 
 **3. UI Hydration**
 
