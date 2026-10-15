@@ -27,7 +27,7 @@ mattgpt-design-spec/
 │   ├── 10-data-model.md
 │   ├── 11-testing-and-quality.md
 │   ├── 12-data-pipeline.md
-│   ├── audit-2026-06-15.md
+│   ├── keeping-docs-in-sync.md
 │   └── working/                    # Transitory drafts (lifecycle-declared)
 │
 ├── _layouts/                       # Jekyll layout overrides
