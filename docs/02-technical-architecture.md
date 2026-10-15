@@ -27,7 +27,7 @@ MattGPT's architecture evolved through intentional phases:
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
 | **Frontend/Backend** | Streamlit (Monolith) | Rapid prototyping framework |
-| **LLM** | OpenAI {{ site.data.facts.chat_model }} | Natural language processing |
+| **LLM** | OpenAI (Ask Agy's current answer model is `ASK_ANSWER_MODEL` in `config/constants.py`) | Natural language processing |
 | **Vector Database** | Pinecone | Semantic search and embeddings |
 | **Dependencies** | Python venv + pip | Local development environment |
 
@@ -59,6 +59,13 @@ The MVP phase consciously accepted limitations to accelerate learning:
 - Search relevance tuning
 
 ### Architecture Evolutions Achieved
+
+**October 2026 - Ask Agy on a Tool Loop (MATTGPT-275):**
+- `rag_answer()` retired; Ask Agy answers through `agy_answer()`
+- The answering model writes its own search queries through a `search_stories` tool, and its answer streams
+- Retired with it: the Ask Agy confidence gate, entity detection and pinning, theme-filtered synthesis retrieval, and fixed temperatures
+- Added: dash and comparison rules in the prompt, a stream timeout and retry, and story dates in the search tool's output
+- Recorded as ADRs 047 to 051 in the app repo's `docs/ADR.md`
 
 **January 2026 - RAG Pipeline Cleanup:**
 - 5-stage RAG pipeline, gated by a golden-query eval
@@ -93,50 +100,53 @@ The MVP phase consciously accepted limitations to accelerate learning:
 
 ---
 
-## 5-Stage RAG Pipeline
+## Ask Agy Answer Pipeline
 
-**Status:** Implemented (January 2026)
-**Quality:** gated by a {{ site.data.facts.eval_query_count }}-query golden eval (see [Testing and Quality](11-testing-and-quality))
+**Status:** Implemented October 2026 (MATTGPT-275), replacing the January 2026 5-stage pipeline
+**Quality:** the golden eval ({{ site.data.facts.eval_query_count }} queries) calls `agy_answer()`; no golden eval has run on the shipped pipeline yet (see [Testing and Quality](11-testing-and-quality))
 
-MattGPT uses a **5-stage RAG (Retrieval-Augmented Generation) pipeline** to ensure accurate, grounded responses:
+`send_to_backend()` calls `agy_answer()` in `backend_service.py`. The app repo's `ARCHITECTURE.md` (Production RAG Pipeline and Component Contracts) is the source for the values named here.
 
 ### Pipeline Overview
 
 <div class="mermaid">
 graph LR
-    Q[Query] --> S1["Stage 1<br/>Nonsense Filter"] --> S2["Stage 2<br/>Semantic Router"] --> S3["Stage 3<br/>Entity Detection"] --> S4["Stage 4<br/>Search + Confidence Gate"] --> S5["Stage 5<br/>Intent Ranking"] --> R["LLM Response"]
+    Q[Query] --> S1["Nonsense Rules"] --> S2["Semantic Router"] --> L["Tool Loop<br/>ASK_ANSWER_MODEL"]
+    L -->|search_stories| S["semantic_search"]
+    S --> L
+    L --> R["Streamed Answer"]
 </div>
 
-**Stage 1: Rules-Based Nonsense Detection**
+**Step 1: Rules-Based Nonsense Detection**
 - Fast regex matching against `nonsense_filters.jsonl` patterns
-- Catches obvious off-domain queries (weather, sports, stocks, etc.)
-- Zero embedding cost, executes in <5ms
+- Catches obvious off-domain queries (weather, sports, stocks, etc.) and garbage input (`gibberish`, `local_recommendations`), which matters more now that no confidence gate sits behind it
+- Zero embedding cost; skipped for suggestion chips
 
-**Stage 2: Semantic Router (Intent + Out-of-Scope Detection)**
+**Step 2: Semantic Router (Intent + Redirects)**
 - Embedding-based similarity matching against {{ site.data.facts.intent_family_count }} intent families
 - Dual-threshold system: HARD_ACCEPT ({{ site.data.facts.router_hard_accept }}), SOFT_ACCEPT ({{ site.data.facts.router_soft_accept }})
-- Detects synthesis queries, which switch retrieval to theme-filtered search
-- Rejects out-of-scope and personal queries, but only when the score is at least HARD_ACCEPT; below that, the query continues to search
-- **Replaced:** Legacy LLM intent classification (removed Jan 2026)
+- Redirects out-of-scope and personal queries, but only when the score is at least HARD_ACCEPT; below that, the query goes on to the tool loop
+- The `synthesis` family switches the system prompt to synthesis mode; it does not change retrieval
+- Fail-open on errors; skipped for suggestion chips
 
-**Stage 3: Entity Detection**
-- Runs before search, so a detected entity scopes the Pinecone query
-- Detects: Client, Employer, Division (intentionally narrower than the search field set to avoid false positives on generic values)
-- Hard filters (once an entity is confirmed): Client, Employer, Division, Project, Place
-- Soft filters: Title (participates in search ranking, not entity detection)
-- **Removed:** Entity Gate threshold bouncer (was blocking valid queries)
+**Step 3: Tool Loop**
+- The model gets the system prompt, the last `ASK_HISTORY_MAX_MESSAGES` messages of the conversation, and the question as asked
+- The first call must call `search_stories`; later calls, up to `ASK_TOOL_MAX_ROUNDS`, may search again; one more call with no tools must answer
+- The model writes each search query itself, from the question and the conversation
+- Runs on `ASK_ANSWER_MODEL` on the Responses API, with `ASK_ANSWER_REASONING_EFFORT`; the model takes no temperature
 
-**Stage 4: Search and Confidence Gating**
-- Pinecone semantic search, scoped by any detected entity, with confidence scoring
-- Thresholds: HIGH ({{ site.data.facts.confidence_high }}), LOW ({{ site.data.facts.confidence_low }})
-- Ask Agy declines anything below HIGH with the low-confidence banner, unless the question came from a suggestion chip or the router scored it as a confident behavioral question
-- Returns 0 results below minimum threshold
+**Step 4: Search (each `search_stories` call)**
+- `semantic_search(query, {})` with no facet or entity filters: Pinecone top {{ site.data.facts.search_top_k }}, sorted by a blend of the Pinecone score and a keyword score (`W_KW`)
+- Hits below LOW ({{ site.data.facts.confidence_low }}) are dropped; `_run_search_tool()` returns the top of what is left, each story wrapped in its own `<story>` tag so the model can tell them apart
+- With nothing left, the tool returns "No stories found." and the model answers from MATT_DNA, the profile and the conversation, or says the record doesn't cover it
+- Known issue: when Pinecone returns no hits at all, `semantic_search()` falls back to the corpus in file order (MATTGPT-292 in the app backlog)
 
-**Stage 5: Intent-Aware Ranking**
-- Narrative queries: Trust Pinecone semantic ranking
-- Entity queries: Pin matching story to #1
-- Context isolation via XML tags prevents cross-story bleed
-- Multi-field entity search across 6 fields
+**Step 5: Stream, Then Swap**
+- Answer text streams with `normalize_dashes()` applied
+- When the turn finishes, the streamed text is replaced by `_postprocess_agy_text()`'s output
+- Sources are every story the searches returned, deduplicated; source cards show what was retrieved, not what the answer cited
+
+**No longer in Ask Agy:** the confidence gate (search confidence does not decide whether Ask Agy answers), entity detection and pinning, theme-filtered synthesis retrieval, and fixed temperatures. My Work still uses the confidence tiers for its own relevance banners.
 
 ---
 
@@ -155,40 +165,18 @@ graph LR
 
 ### How Synthesis Differs from Standard
 
+Retrieval is the same tool loop in both modes. Synthesis changes only the prompt:
+
 | Aspect | Standard Mode | Synthesis Mode |
 |--------|--------------|----------------|
-| **Search Strategy** | Pinecone vector search | Theme-filtered parallel search |
-| **Story Selection** | Top 5 with diversity | Named-clients-first across themes, mode determines final slice |
-| **Ranking** | Pinecone score + entity pinning | Named clients prioritized over generic |
-| **Temperature** | 0.4 | 0.2 (lower for consistency) |
-| **Focus** | Single story deep-dive | Patterns across stories |
-| **Verbatim identity terms** | Same rule in both modes: required when the top story is Professional Narrative | Same |
-
-### Synthesis Search Strategy
-
-**Theme-Filtered Parallel Search:**
-
-`get_synthesis_stories()` in `backend_service.py`, simplified:
-
-```python
-# One embedding of the user's question, reused for every theme
-query_vector = _embed(question)
-
-for theme in SYNTHESIS_THEMES:              # derived from the corpus at startup
-    flt = {"Theme": {"$eq": theme}}         # plus the entity field, if one was detected
-    results = idx.query(vector=query_vector, filter=flt, top_k=3)  # top_per_theme=3
-```
-
-The answer is grounded in at most `LLM_STORY_LIMIT_SYNTHESIS` of the pooled stories.
-
-**Why Parallel Search:**
-- Single query might miss thematic breadth
-- Searching by themes ensures coverage across career
-- Named clients (JP Morgan, Johnson & Johnson) more credible than "Multiple Clients"
+| **System prompt** | `STANDARD_DELTA` | `SYNTHESIS_DELTA` |
+| **Focus** | A random angle from `FOCUS_ANGLES` | No focus angle; breadth across stories |
+| **Opener examples** | The same list in both modes: `SYNTHESIS_OPENERS` plus `STANDARD_OPENERS` | Same |
+| **Verbatim identity terms** | Same rule in both modes: required for every Professional Narrative story a search returns | Same |
 
 ### Verbatim Identity Terms
 
-When the top story is a Professional Narrative story, `get_verbatim_requirement()` in `prompts.py` scans its `5PSummary` for a fixed list of Matt's identity phrases (such as "builder" and "modernizer") and requires the answer to use the ones it finds, verbatim. This applies in standard and synthesis mode alike; it is not part of `SYNTHESIS_DELTA`.
+For every Professional Narrative story a `search_stories` call returns, `_run_search_tool()` appends `get_verbatim_requirement()` from `prompts.py`, which scans the story's `5PSummary` for a fixed list of Matt's identity phrases (such as "builder" and "modernizer") and requires the answer to use the ones it finds, verbatim. This applies in standard and synthesis mode alike; it is not part of `SYNTHESIS_DELTA`.
 
 **Why Strict:**
 - Professional narrative must be consistent across all synthesis queries
@@ -224,9 +212,7 @@ Added to the base prompt for synthesis questions. In summary:
 - Follow WHY (30-40%), HOW (40-50%), WHAT (10-20%) internally
 - Lead with the tension from the 2-3 most relevant stories; the rest are optional
 - Bold client names and key numbers; state facts rather than evaluate Matt
-- Cite only the clients in `{client_list}`, filled from the stories provided
-
-Temperature (0.2) is set by the caller, not the prompt.
+- Cite only the clients shown in the stories (Ask Agy passes no client list, so the prompt's `{client_list}` falls back to that wording)
 
 ### Synthesis vs Narrative Queries
 
@@ -240,9 +226,7 @@ Temperature (0.2) is set by the caller, not the prompt.
 - "How has Matt's work evolved across his career?"
 - "Tell me Matt's background"
 
-**Both use synthesis mode, but:**
-- Synthesis → thematic patterns
-- Narrative → chronological career story
+Only the `synthesis` family switches to synthesis mode; narrative questions get the standard prompt.
 
 ---
 
@@ -252,14 +236,14 @@ Temperature (0.2) is set by the caller, not the prompt.
 
 ### Architecture Overview
 
-MattGPT uses a **two-layer defense** (Stages 1-2 of the RAG pipeline):
+MattGPT uses a **two-layer defense** (Steps 1-2 of the answer pipeline):
 
-**Layer 1: Pattern-Based Filters** (Stage 1)
+**Layer 1: Pattern-Based Filters** (Step 1)
 - Fast regex patterns for common off-domain categories
 - Catches edge cases before semantic routing
 - Zero-shot detection without embedding costs
 
-**Layer 2: Semantic Router** (Stage 2)
+**Layer 2: Semantic Router** (Step 2)
 - Embedding-based similarity matching against canonical intent examples
 - Dual-threshold system for confident classification
 - Handles intent classification, synthesis detection, and out-of-scope flagging
@@ -287,8 +271,8 @@ MattGPT uses a **two-layer defense** (Stages 1-2 of the RAG pipeline):
 HARD_ACCEPT = {{ site.data.facts.router_hard_accept }}  # Clearly on-topic, no question
 SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}  # Accept but log as borderline for review (lowered from 0.72)
 # The router rejects on its own only for out_of_scope and personal queries
-# scoring at least HARD_ACCEPT (router_rejection_reason()). Every other
-# rejection of a weak query happens at the Pinecone confidence gate.
+# scoring at least HARD_ACCEPT (router_rejection_reason()). Ask Agy has no
+# other rejection: every other query goes to the tool loop.
 ```
 
 **What Changed (January 2026):**
@@ -332,8 +316,8 @@ SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}  # Accept but log as bord
 
 # LOW-CONFIDENCE ON ROUTER (score 0.35, below 0.40 threshold)
 "<a question unlike any intent example>" → intent_family: None
-# Router flag is False and nothing rejects here; the query goes to search,
-# and the Pinecone confidence gate declines it if no story scores HIGH.
+# Router flag is False and nothing rejects here; the query goes to the
+# tool loop, and the model answers from what its searches return.
 ```
 
 ---
@@ -350,8 +334,8 @@ SOFT_ACCEPT = {{ site.data.facts.router_soft_accept }}   # Accept but log as bor
 
 **RAG Confidence Thresholds:**
 ```python
-CONFIDENCE_HIGH = {{ site.data.facts.confidence_high }}  # Strong match - show "Found X stories"
-CONFIDENCE_LOW = {{ site.data.facts.confidence_low }}   # Raised from 0.15 to filter phantom similarity noise
+CONFIDENCE_HIGH = {{ site.data.facts.confidence_high }}  # My Work's high-relevance tier
+CONFIDENCE_LOW = {{ site.data.facts.confidence_low }}   # Hits below this are dropped (My Work and Ask Agy's search tool)
 ```
 
 **Pinecone Search Parameters:**
@@ -361,11 +345,13 @@ SEARCH_TOP_K = {{ site.data.facts.search_top_k }}         # Stories to fetch (he
                           # Centralized Jan 2026 - was 100/7 conflict
 ```
 
-**Model Configuration:**
+**Model Configuration** (values in `config/constants.py`; the answer model is not yet a synced fact):
 ```python
-DEFAULT_CHAT_MODEL = "{{ site.data.facts.chat_model }}"              # Primary LLM (upgraded from gpt-4o-mini)
+ASK_ANSWER_MODEL              # Ask Agy's answer model, Responses API, streamed
+ASK_ANSWER_REASONING_EFFORT   # Reasoning effort for the answer model
+ASK_TOOL_MAX_ROUNDS           # Calls that may search before the answer call
+ASK_HISTORY_MAX_MESSAGES      # Conversation messages sent with each question
 DEFAULT_EMBEDDING_MODEL = "{{ site.data.facts.embedding_model }}"  # 1536 dimensions
-SEARCH_TOP_K = {{ site.data.facts.search_top_k }}                          # Was 100 (explore) / 7 (ask) - now unified
 ```
 
 ---
@@ -392,6 +378,8 @@ Fast regex matching against `nonsense_filters.jsonl` patterns to catch obvious o
 | **general_knowledge** | `\b(capital of|president of|who is the)\b` | "Who is the president of France?" |
 | **personal_compensation** | `\b(salary|compensation|income|bonus)\b` | "What's Matt's salary?" |
 | **roleplay_impersonation** | `\b(roleplay|pretend|act)\b.*\b(as|to be)\b.*(her|him|my grandmother)` | "Pretend to be my grandmother" |
+| **gibberish** | Two or more words each typed from one keyboard row | "asdf jkl qwerty" |
+| **local_recommendations** | `\b(best|good|cheap)\s+(pizza|restaurants?|bars?|coffee|...)\b` | "Best pizza in Atlanta" |
 
 The table shows a sample; `nonsense_filters.jsonl` has more categories. Five rules (`creative_writing` twice, `general_knowledge` twice, `gaming`) skip any question that names Matt or uses he, his or him, so "When was he at JP Morgan?" is not refused (ADR 043 in the app repo's `docs/ADR.md`).
 
@@ -409,16 +397,19 @@ Ask Agy shows a one-line banner with suggestion chips in place of an answer. The
 
 | Rejected by | Banner | Chips |
 |---|---|---|
-| Nonsense rule (Stage 1) | "🐾 Wrong trail. I'm a Plott Hound trained to track Matt's transformation work. Give me a real scent to follow." | `RULE_CHIPS` |
-| Router, personal (Stage 2) | "🐾 I'm focused on Matt's professional experience." | `PERSONAL_CHIPS` |
-| Router, out of scope (Stage 2) | "🐾 That's outside Matt's experience." | `OUT_OF_SCOPE_CHIPS` |
-| Confidence gate (Stage 4) | "🐾 I picked up a scent but lost the trail. Try rephrasing your question and I'll track it down." | `OUT_OF_SCOPE_CHIPS` |
+| Nonsense rule (Step 1) | "🐾 Wrong trail. I'm a Plott Hound trained to track Matt's transformation work. Give me a real scent to follow." | `RULE_CHIPS` |
+| Router, personal (Step 2) | "🐾 I'm focused on Matt's professional experience." | `PERSONAL_CHIPS` |
+| Router, out of scope (Step 2) | "🐾 That's outside Matt's experience." | `OUT_OF_SCOPE_CHIPS` |
+
+Ask Agy has no low-confidence banner; that copy (`BANNER_COPY["low_confidence"]`) is now shown only by My Work.
+
+**When the answer call fails:** a rate limit or an embedding failure returns one of the "quick breather" messages written in `agy_answer()`; any other error returns `ANSWER_ERROR_MESSAGE` (`config/constants.py`) with no sources. A stream that breaks before any answer text is sent again once.
 
 ---
 
 ### How the Two-Stage Gate Works
 
-Off-domain queries are handled in two stages. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }} to {{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} produces a low-confidence router signal. The router rejects on its own only for out-of-scope and personal queries at or above {{ site.data.facts.router_hard_accept }}. Every other weak query is rejected at the Pinecone confidence gate downstream; a low router score alone will not reject a query if Pinecone still finds a confident match.
+Off-domain queries are handled in two stages. Stage 1, the pattern gate, runs `is_nonsense()`, fast regex matching against `nonsense_filters.jsonl`, before any embedding is generated; queries caught here are rejected at zero embedding cost. Stage 2, the semantic router, embeds passing queries and scores them against {{ site.data.facts.intent_family_count }} intent families: a score above {{ site.data.facts.router_hard_accept }} is a hard accept, {{ site.data.facts.router_soft_accept }} to {{ site.data.facts.router_hard_accept }} is a soft accept (logged for review), and below {{ site.data.facts.router_soft_accept }} produces a low-confidence router signal. The router rejects on its own only for out-of-scope and personal queries at or above {{ site.data.facts.router_hard_accept }}. Every other query goes to the tool loop; a low router score does not reject a query, and no confidence gate sits downstream.
 
 ---
 
@@ -428,23 +419,23 @@ For data governance, sovereignty patterns, entity search, anti-patterns, and ing
 
 ## Current State Summary
 
-### What's Live Today (June 2026)
+### What's Live Today (October 2026)
 
 - Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
-- **5-stage RAG pipeline** gated by a {{ site.data.facts.eval_query_count }}-query golden eval
-- **GPT-4o** primary LLM (upgraded from GPT-4o-mini)
+- **Ask Agy answer pipeline**: nonsense rules and router redirects, then a tool loop in which the model searches the stories and streams its answer (`ASK_ANSWER_MODEL` in `config/constants.py`)
+- **Golden eval** of {{ site.data.facts.eval_query_count }} queries, run by hand; no run yet on the October 2026 pipeline
 - **Semantic router** with {{ site.data.facts.intent_family_count }} intent families + out-of-scope/personal detection
 - **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
 - **Query analytics**: event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
 - **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
 - 100+ STAR-structured project stories
-- Semantic search with confidence scoring and metadata filtering
+- Semantic search: Ask Agy's search tool, and My Work's filters with confidence banners
 - **Timeline View** with Era-based career progression
 - **Mobile-responsive design** (global_styles.py + mobile_overrides.py; breakpoints: 767px, 1024px)
 - **Dark mode support** via CSS variables
 - **Modular architecture** ({{ site.data.facts.ask_mattgpt_module_file_count }}-file ask_mattgpt/ structure)
 - **BDD test suite**: {{ site.data.facts.bdd_summary }}
-- Conversation history and context management
+- Conversation history: the last `ASK_HISTORY_MAX_MESSAGES` messages go to the answer model, which writes its search queries with them in view
 - Related Projects UX pattern
 
 
