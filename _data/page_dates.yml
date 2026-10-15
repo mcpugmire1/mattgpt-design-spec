@@ -1,4 +1,4 @@
-# Auto-generated — do not edit manually.
+# Auto-generated: do not edit manually.
 # Updated by .github/workflows/receive-facts.yml
 
 01-product-vision: "June 2026"
@@ -13,3 +13,4 @@
 11-testing-and-quality: "October 2026"
 12-data-pipeline: "October 2026"
 keeping-docs-in-sync: "October 2026"
+index: "October 2026"
