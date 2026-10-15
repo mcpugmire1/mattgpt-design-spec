@@ -36,10 +36,10 @@ mattgpt-design-spec/
 │   └── facts.yml                   # Derived from source repo on every push
 │
 ├── assets/css/style.scss           # Brand styling
-├── wireframes/                     # Interactive HTML prototypes
+├── wireframes/                     # Current wireframes (v4, Role Match)
 ├── images/                         # Diagrams, architecture, screenshots
 ├── brand-kit/                      # Logos, avatars, favicons
-└── archive/                        # Retired session artifacts
+└── archive/                        # Retired session artifacts and legacy prototypes
 ```
 
 ---
