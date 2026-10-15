@@ -78,7 +78,7 @@ I named it after Agy, my late Plott Hound (short for Agador Spartacus from "The 
 |------------|---------|-----------------|
 | **Python** | Primary language (code targets 3.11; CI and local dev run 3.13) | Rich ML/AI ecosystem, rapid prototyping |
 | **Streamlit** | Frontend framework (MVP) | 2-week build time vs 3+ months for React |
-| **OpenAI {{ site.data.facts.chat_model }}** | LLM for response generation | State-of-the-art reasoning and synthesis |
+| **OpenAI (`ASK_ANSWER_MODEL` in `config/constants.py`)** | LLM for Ask Agy's answers, on the Responses API, streamed | State-of-the-art reasoning and synthesis |
 | **Pinecone** | Vector database | Managed solution, fast ANN search |
 | **OpenAI Embeddings** | Embedding generation | text-embedding-3-small (1536-dim) |
 | **Pandas** | Data manipulation | JSONL processing and metadata handling |
@@ -122,26 +122,21 @@ I named it after Agy, my late Plott Hound (short for Agador Spartacus from "The 
               │
               ▼
    ┌─────────────────────┐
-   │  Query Embedding    │
-   │  + Intent Analysis  │
+   │  Nonsense Rules +   │
+   │  Semantic Router    │
+   │  (redirects)        │
    └──────────┬──────────┘
               │
               ▼
-   ┌─────────────────────┐
-   │  Semantic Search    │
-   │ (Vector Similarity  │
-   │ + Confidence Score) │
-   └──────────┬──────────┘
+   ┌─────────────────────┐        ┌─────────────────────┐
+   │  Tool Loop          │ ─────▶ │  Semantic Search    │
+   │  (answer model      │ ◀───── │ (Vector Similarity  │
+   │  writes searches)   │        │ + Keyword Blend)    │
+   └──────────┬──────────┘        └─────────────────────┘
               │
               ▼
    ┌─────────────────────┐
-   │  RAG Orchestrator   │
-   │  (GPT-4o + Context) │
-   └──────────┬──────────┘
-              │
-              ▼
-   ┌─────────────────────┐
-   │  Synthesized        │
+   │  Streamed           │
    │  Response +         │
    │  Source Citations   │
    └─────────────────────┘
@@ -151,7 +146,7 @@ I named it after Agy, my late Plott Hound (short for Agador Spartacus from "The 
 
 One of the core technical innovations in MattGPT is the **semantic search** approach that combines vector-based meaning matching with confidence-based filtering.
 
-**The Algorithm (simplified sketch):** the real `semantic_search()` also applies metadata filters, blends in keyword overlap, and pins entity matches; see [API Reference](09-api-reference).
+**The Algorithm (simplified sketch):** the real `semantic_search()` also applies metadata filters (My Work) and blends in keyword overlap; Ask Agy's answer model calls it through a search tool. See [API Reference](09-api-reference).
 
 ```python
 def semantic_search(query: str, top_k: int = SEARCH_TOP_K) -> Dict:
@@ -193,11 +188,11 @@ def semantic_search(query: str, top_k: int = SEARCH_TOP_K) -> Dict:
 **Why This Matters:**
 
 - **Semantic Understanding:** Recognizes that "bootstrap it" and "start a new project" are conceptually similar
-- **Confidence Scoring:** Three-tier system (high/low/none) ensures quality results
+- **Confidence Scoring:** Three tiers (high/low/none); hits below low never reach Ask Agy's answer model, and My Work shows the tier as a relevance note
 - **Threshold Gating:** Prevents low-quality matches from appearing (minimum {{ site.data.facts.pinecone_min_sim }} similarity)
 - **Intent Routing:** Classifies the question's topic into one of {{ site.data.facts.intent_family_count }} intent families; mapping a visitor's goal (interview prep, due diligence, pitch) to tone is not implemented (see [Agy Voice Guide](05-agy-voice-guide#user-intent-recognition))
 
-Retrieval quality is checked by the {{ site.data.facts.eval_query_count }}-query golden eval described in [Testing and Quality](11-testing-and-quality).
+Answers are checked end to end by the {{ site.data.facts.eval_query_count }}-query golden eval described in [Testing and Quality](11-testing-and-quality); it has not yet run on the October 2026 pipeline.
 
 ### Data Governance: The Two-Layer Model
 
@@ -232,8 +227,8 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 **RAG (Retrieval-Augmented Generation):**
 - Uses structured STAR stories and semantic search
-- Grounds all responses in verifiable source data
-- Prevents hallucination by constraining to known projects
+- Answers from the stories its searches return, Matt's profile and the conversation, with the retrieved stories shown as source cards
+- The prompt instructs Agy not to invent examples beyond Matt's stories, and to answer "Nothing I know about Matt covers that" when his profile has nothing on a topic; no code guarantees either
 
 **Automated Tag Generation:**
 - An LLM suggests competencies from each story's content, for human review
@@ -261,17 +256,17 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 **Confidence-Based Filtering:**
 - Three-tier system: high, low, none
-- Prevents low-quality matches from appearing
-- Ensures results are relevant and trustworthy
+- Hits below low are dropped before Ask Agy's answer model sees them
+- My Work shows the tier as a relevance note
 
 **Metadata Enhancement:**
 - Client, industry, domain, and role filtering
 - Era, capability, tag and has-metric filtering
-- Supports precise targeting for specific queries
+- Supports precise targeting in My Work; Ask Agy's searches pass no filters
 
 **Ranking:**
 - Pinecone similarity blended with a keyword overlap score (`W_KW` in `config/constants.py`)
-- A story matching a detected entity is pinned to #1
+- The answer model chooses which of the retrieved stories to use
 - No recency or credibility boost, and no ranking trained on feedback
 
 ---
@@ -306,18 +301,20 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 
 ### Backend & DevOps
 
-**5-Stage RAG Pipeline (January 2026):**
-- **Stage 1:** Rules-based nonsense detection (regex patterns)
-- **Stage 2:** Semantic router with {{ site.data.facts.intent_family_count }} intent families (intent classification + out-of-scope/personal rejection at hard accept)
-- **Stage 3:** Entity detection (Client, Employer, Division, Title), which scopes the search
-- **Stage 4:** Pinecone search and confidence gating
-- **Stage 5:** Intent-aware ranking with entity pinning and context isolation (narrative vs entity queries)
-- **Quality:** gated by a {{ site.data.facts.eval_query_count }}-query golden eval
+**Ask Agy Answer Pipeline (October 2026, MATTGPT-275):**
+- **Step 1:** Rules-based nonsense detection (regex patterns)
+- **Step 2:** Semantic router with {{ site.data.facts.intent_family_count }} intent families (out-of-scope/personal redirect at hard accept; the synthesis family switches the prompt)
+- **Step 3:** Tool loop: the answer model writes its own `search_stories` queries, then answers
+- **Step 4:** Each search: Pinecone similarity blended with keyword overlap, hits below low dropped
+- **Step 5:** The answer streams, then is replaced by the post-processed text
+- **Quality:** a {{ site.data.facts.eval_query_count }}-query golden eval, run by hand; no run yet on this pipeline
+- Replaced the January 2026 5-stage pipeline (entity detection, confidence gating, entity pinning); see [Technical Architecture](02-technical-architecture)
 
 **Conversational Workflow:**
 - Streamlit's stateful UI for session management
 - Context retention across multi-turn conversations
-- Semantic router handles synthesis, narrative, and out-of-scope queries
+- The answer model sees the recent conversation when it writes its searches
+- Semantic router switches the synthesis prompt and redirects out-of-scope and personal queries
 
 **Semantic Embeddings:**
 - OpenAI text-embedding-3-small
@@ -334,7 +331,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - Core RAG pipeline remains unchanged across UI iterations
 
 **Logging & Observability:**
-- Every query is logged to a Google Sheet by `log_query()` in `services/query_logger.py`: intent family, confidence, top score, result count and redirect reason
+- Every query is logged to a Google Sheet by `log_query()` in `services/query_logger.py`: intent family, top score, result count and redirect reason, plus the confidence tier for My Work searches
 - Visitor answer ratings are logged alongside
 - No latency, error-rate or cache metrics are collected
 
@@ -380,7 +377,7 @@ I originally planned to build a React + FastAPI stack. I'm glad I didn't. Stream
 
 ### Data Quality > Fancy Algorithms
 
-I spent more time curating STAR stories and validating metadata than I did on the ML pipeline. That discipline paid off: every AI response traces to auditable source data, and Ask Agy says when Matt's stories don't cover a question.
+I spent more time curating STAR stories and validating metadata than I did on the ML pipeline. That discipline paid off: every AI response traces to auditable source data, and Agy is instructed not to invent examples beyond Matt's stories.
 
 ### Refactoring the Monolith
 
