@@ -117,7 +117,7 @@ router_soft_accept: 0.4
 search_top_k: 25
 story_count: 124
 story_count_label: "100+"
-unit_test_file_count: 51
+unit_test_file_count: 54
 unit_test_files:
   - "test_ask_agy_button_css.py"
   - "test_ask_agy_history.py"
@@ -135,10 +135,13 @@ unit_test_files:
   - "test_capability_subtitles.py"
   - "test_category_cards.py"
   - "test_comparison_rule.py"
+  - "test_corpus_loader.py"
+  - "test_eval_surgical_no_logging.py"
   - "test_explore_stories.py"
   - "test_extract_requirements_split.py"
   - "test_filters.py"
   - "test_formatting.py"
+  - "test_generate_jsonl_excel_counters.py"
   - "test_generate_jsonl_from_excel.py"
   - "test_global_styles.py"
   - "test_landing_cards.py"
