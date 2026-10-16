@@ -13,9 +13,9 @@ This is the record of how MattGPT was designed, built, and kept running. If you 
 
 I held the build to four principles. They are also the bar you can hold it to.
 
-**Proof over claims.** Every claim traces to a real, sourced story. If it cannot cite its evidence, it does not reach a user.
+**Proof over claims.** Every answer is built to trace to a real, sourced story or to my profile, with the sources shown beside it. A prompt holds that line, not code, and the testing doc shows how well it holds.
 
-**Honest before impressive.** The system says when it does not know and will not inflate a match. Where the engineering is thin, this record says so.
+**Honest before impressive.** Agy is built to say when it doesn't know, and Role Match won't inflate a match. Where the engineering is thin, this record says so.
 
 **Design from the audience, not the feature.** The surfaces came from real visitor journeys, not a feature wishlist.
 
