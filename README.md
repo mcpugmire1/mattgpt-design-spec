@@ -1,6 +1,6 @@
 # MattGPT: The Build
 
-The design and build record for [MattGPT](https://askmattgpt.streamlit.app) — an AI-powered portfolio assistant built on a RAG pipeline over 100+ STAR-structured career stories.
+The design and build record for [MattGPT](https://askmattgpt.streamlit.app), an AI-powered portfolio assistant built on a RAG pipeline over 100+ STAR-structured career stories.
 
 Read it as the audit, not the advertisement. The published spec is at [mcpugmire1.github.io/mattgpt-design-spec](https://mcpugmire1.github.io/mattgpt-design-spec).
 
@@ -12,7 +12,7 @@ Source code: [llm_portfolio_assistant](https://github.com/mcpugmire1/llm_portfol
 
 ```
 mattgpt-design-spec/
-├── index.md                        # Landing page — the build record
+├── index.md                        # Landing page: the build record
 ├── README.md                       # This file
 │
 ├── docs/                           # Published specification
