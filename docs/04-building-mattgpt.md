@@ -228,7 +228,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 **RAG (Retrieval-Augmented Generation):**
 - Uses structured STAR stories and semantic search
 - Answers from the stories its searches return, Matt's profile and the conversation, with the retrieved stories shown as source cards
-- The prompt instructs Agy not to invent examples beyond Matt's stories, and to answer "Nothing I know about Matt covers that" when his profile has nothing on a topic; no code guarantees either
+- The prompt instructs Agy not to invent examples beyond Matt's stories, and to decline in its own voice, naming the topic, when his profile has nothing on it; code picks the decline's opening line, but no code guarantees either rule is followed
 
 **Automated Tag Generation:**
 - An LLM suggests competencies from each story's content, for human review
