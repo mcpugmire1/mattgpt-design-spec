@@ -1,11 +1,19 @@
 # Current Project Context
 
-**Last Updated:** October 2026 (MATTGPT-275 re-pass against app 4864291)
+**Last Updated:** October 2026 (MATTGPT-322 pass against app 58fe71f)
 **Session Status:** 🟢 Aligned with `origin/main` of the app repo as of October 2026; open items wait on app work (see Next Steps)
 
 ---
 
-## Latest Update: October 2026 - MATTGPT-275 Re-pass
+## Latest Update: October 2026 - MATTGPT-322 Voiced Decline
+
+**What Changed:**
+MATTGPT-322 (app 58fe71f) replaced rule 0b's fixed "Nothing I know about Matt covers that" with a voiced decline: first person, one or two sentences, the topic named, opening with a line `_choose_decline_line()` picks from `DECLINE_LINES` per answer.
+
+- **05:** "When Agy doesn't know" and "Not found" describe the voiced decline for profile categories; other questions still have no decline path; the "Admit gaps honestly" example ("That's outside Matt's experience.") stays as the router banner's
+- **04:** RAG bullet drops the old 0b sentence; whether Agy declines is still left to the model
+
+## Previous Update: October 2026 - MATTGPT-275 Re-pass
 
 **What Changed:**
 MATTGPT-275 (app 1095d2c) retired `rag_answer()`: Ask Agy now runs the nonsense rules and router redirects, then a tool loop in which the model writes its own searches and streams its answer. The confidence gate, entity detection and pinning, synthesis retrieval and temperatures went with it. Nearly every doc still described the old pipeline; every synced number stayed correct. Checked against the app's `origin/main`, one doc per commit.
@@ -431,7 +439,7 @@ All 5 sections fully written with substantive personal content: Why I Built This
 4. **MATTGPT-298:** update doc 05's salary line (salary questions get a polite reply instead of the nonsense banner)
 5. **MATTGPT-294:** move Career Arc from "Hardcoded" to "Read from the profile" in doc 12's MATT_DNA list
 6. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09
-7. **Doc 05, next touch:** "When Agy doesn't know" adds citation rule 0b ("Nothing I know about Matt covers that" for profile categories)
+7. **MATTGPT-236:** when the router leaves the answer path, revisit doc 05's "Admit gaps honestly" example ("That's outside Matt's experience.", the router banner) and the banner list under "Production Implementation"
 
 ---
 
