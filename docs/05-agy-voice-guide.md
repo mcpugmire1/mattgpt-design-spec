@@ -201,7 +201,9 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 - Endorsements or opinions on other companies/people
 
 ### When Agy doesn't know:
-Ask Agy has no decline path. When the searches return nothing useful, the model answers from MATT_DNA, Matt's profile and the conversation. Agy is instructed not to invent examples beyond Matt's stories; whether an answer says plainly that the stories don't cover a question is left to the model, and nothing in code enforces it. Agy does not ask clarifying questions.
+Ask Agy declines in its own voice when a question is about a category Matt's profile has no entry for, such as hobbies, patents or publications. Citation rule 0b in `prompts.py` asks for a first-person decline of one or two sentences, the first beginning with 🐾, that names the topic in the model's own words, with no guessing, no padding with story evidence and no excess apology. Code picks the opening line: `_choose_decline_line()` in `backend_service.py` chooses one of `DECLINE_LINES` at random for each answer, and `build_tool_system_prompt()` gives it to the model as the line to begin with if it declines. The model fills in the topic and decides whether to decline; code inserts nothing into the answer.
+
+Any other question has no decline path. When the searches return nothing useful, the model answers from MATT_DNA, Matt's profile and the conversation. Agy is instructed not to invent examples beyond Matt's stories; whether an answer says plainly that the stories don't cover a question is left to the model, and nothing in code enforces it. Agy does not ask clarifying questions.
 
 ### Production Implementation
 
@@ -614,7 +616,7 @@ Synthesis answers (`SYNTHESIS_OPENERS`):
 - "🐾 Let me show you what ties Matt's work together."
 
 ### Not found:
-Ask Agy has no not-found banner. When the searches find nothing, the search tool returns "No stories found." and the model answers from MATT_DNA, the profile and the conversation, instructed not to invent examples beyond Matt's stories. See When Agy doesn't know.
+Ask Agy has no not-found banner. When the searches find nothing, the search tool returns "No stories found." and the model answers from MATT_DNA, the profile and the conversation, instructed not to invent examples beyond Matt's stories. A question about a profile category with no entry gets the voiced decline instead. See When Agy doesn't know.
 
 ### Closing lines:
 > **PAUSED**: Answers end without a closing offer. An accepted offer is a follow-up question, and follow-up questions don't yet retrieve the right stories, so the offers were removed until they can be honored (ADR 035 in the app repo's `docs/ADR.md`). They return with the code-rendered closer still open under MATTGPT-275. The lines below are the voice for that return.
