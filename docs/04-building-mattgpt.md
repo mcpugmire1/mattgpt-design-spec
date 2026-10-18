@@ -192,7 +192,7 @@ def semantic_search(query: str, top_k: int = SEARCH_TOP_K) -> Dict:
 - **Threshold Gating:** Prevents low-quality matches from appearing (minimum {{ site.data.facts.pinecone_min_sim }} similarity)
 - **Intent Routing:** Classifies the question's topic into one of {{ site.data.facts.intent_family_count }} intent families; mapping a visitor's goal (interview prep, due diligence, pitch) to tone is not implemented (see [Agy Voice Guide](05-agy-voice-guide#user-intent-recognition))
 
-Answers are checked end to end by the {{ site.data.facts.eval_query_count }}-query golden eval described in [Testing and Quality](11-testing-and-quality); it has not yet run on the October 2026 pipeline.
+Answers are checked end to end by the {{ site.data.facts.eval_query_count }}-query golden eval described in [Testing and Quality](11-testing-and-quality#rag-quality-evaluation), which also reports its last run on the October 2026 pipeline.
 
 ### Data Governance: The Two-Layer Model
 
@@ -307,7 +307,7 @@ This dual-layer approach ensures both **data integrity** (every answer is audita
 - **Step 3:** Tool loop: the answer model writes its own `search_stories` queries, then answers
 - **Step 4:** Each search: Pinecone similarity blended with keyword overlap, hits below low dropped
 - **Step 5:** The answer streams, then is replaced by the post-processed text
-- **Quality:** a {{ site.data.facts.eval_query_count }}-query golden eval, run by hand; no run yet on this pipeline
+- **Quality:** a {{ site.data.facts.eval_query_count }}-query golden eval, run by hand; last run and result in [Testing and Quality](11-testing-and-quality#rag-quality-evaluation)
 - Replaced the January 2026 5-stage pipeline (entity detection, confidence gating, entity pinning); see [Technical Architecture](02-technical-architecture)
 
 **Conversational Workflow:**
