@@ -31,7 +31,7 @@ graph TD
 
 **Quality Metrics:**
 - **Unit Test Coverage:** {{ site.data.facts.unit_test_file_count }} unit test files testing core components
-- **RAG Eval:** {{ site.data.facts.eval_query_count }} golden queries; no run yet on the October 2026 answer pipeline (MATTGPT-275)
+- **RAG Eval:** {{ site.data.facts.eval_query_count }} golden queries; last run October 16, 2026, on the October 2026 answer pipeline (see Last run below)
 - **BDD/E2E:** {{ site.data.facts.bdd_summary }}
 
 RAG systems are notoriously hard to test. LLM outputs are non-deterministic, semantic similarity is fuzzy, and "good enough" is subjective. Without systematic testing, pipeline changes become high-risk guesswork.
@@ -110,7 +110,7 @@ pytest tests/unit/ -v
 **Framework:** pytest-based golden query testing
 **Coverage:** {{ site.data.facts.eval_query_count }} queries across the categories below
 **Under test:** `agy_answer()`, through the `rag_fn` fixture, which calls it in `rag_answer()`'s old `(query, filters, stories)` shape and ignores `filters`
-**Pass rate:** measured per run, not recorded in this spec. No golden eval has run on the shipped October 2026 pipeline yet; the last run (October 14, 2026) was on code from before the final MATTGPT-275 commit. Q59 ("Where does Matt live?") still carries an `xfail_reason` that cites the retired confidence gate; that run answered it.
+**Last run:** October 16, 2026, on app commit `3d1f63d`, after the October 2026 pipeline shipped (MATTGPT-320). With `test_agy_behavior.py` and `test_structural_assertions.py` in the same run, 282 tests: 275 passed, 4 failed, 3 skipped. The failures were Q6, Q17 and Q65 and the corpus-literals check. Evidence: `docs/evidence/MATTGPT-320/golden_20261016_102942/` in the app repo. Later prompt changes, such as MATTGPT-322's decline, have not been through a golden run since. No pass rate is tracked over time; each run's evidence folder is the record.
 
 ### Why RAG Evals Matter
 
@@ -378,7 +378,7 @@ Other keys in use include `expected_behavior`, `ground_truth`, `min_matches`, `m
 
 ### Pass Rate Breakdown
 
-The eval suite covers the categories above: narrative, client, intent, edge, surgical, entity detection (skipped), marketing, and context story. See Coverage above for Q59.
+The eval suite covers the categories above: narrative, client, intent, edge, surgical, marketing, and context story. The entity detection queries are kept as query text but no test runs them, since `detect_entity()` was removed in MATTGPT-275.
 
 ### Flaky Test Handling
 
