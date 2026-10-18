@@ -1,17 +1,23 @@
 # Current Project Context
 
-**Last Updated:** October 2026 (MATTGPT-322 pass against app 58fe71f)
+**Last Updated:** October 2026 (MATTGPT-322, -320, -294 and -323 pass against app 58fe71f)
 **Session Status:** 🟢 Aligned with `origin/main` of the app repo as of October 2026; open items wait on app work (see Next Steps)
 
 ---
 
-## Latest Update: October 2026 - MATTGPT-322 Voiced Decline
+## Latest Update: October 2026 - MATTGPT-322 Voiced Decline and Landed Follow-ups
 
 **What Changed:**
 MATTGPT-322 (app 58fe71f) replaced rule 0b's fixed "Nothing I know about Matt covers that" with a voiced decline: first person, one or two sentences, the topic named, opening with a line `_choose_decline_line()` picks from `DECLINE_LINES` per answer.
 
 - **05:** "When Agy doesn't know" and "Not found" describe the voiced decline for profile categories; other questions still have no decline path; the "Admit gaps honestly" example ("That's outside Matt's experience.") stays as the router banner's
 - **04:** RAG bullet drops the old 0b sentence; whether Agy declines is still left to the model
+- **11:** reports MATTGPT-320's golden run (October 16, 2026, app 3d1f63d) with its evidence path; Q59's xfail note dropped (MATTGPT-319); entity detection queries skip only the entity check and still run through the structural checks
+- **02, 04, index.md:** point to doc 11 for the run result instead of restating it; index.md's "What holds" says the eval runs after major changes to the answer pipeline
+- **12:** the export rebuilds the JSONL from Excel on every run (MATTGPT-323); the Career Arc is read from `career_arc` in the profile (MATTGPT-294)
+
+**Found along the way (app side, handed to the backlog session):**
+- `eval_summary` is built from counting query ids, not a run; the last golden run's result is typed in doc 11 until `extract_facts.py` syncs it (ticket logged)
 
 ## Previous Update: October 2026 - MATTGPT-275 Re-pass
 
@@ -433,13 +439,11 @@ All 5 sections fully written with substantive personal content: Why I Built This
 
 ## Next Steps (Immediate Priorities)
 
-1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `ask_answer_model` (docs 02, 04 and 09 cite `ASK_ANSWER_MODEL` by name until then), `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`; and stop using `eval_summary` until it reports a real run
-2. **Report the golden eval once it runs on the shipped pipeline:** `index.md`, docs 02, 04 and 11 say no run yet; doc 11's Q59 note goes when the app drops its stale xfail
-3. **MATTGPT-275 closer work:** when the code-rendered closer and profile contact links land, remove doc 05's PAUSED callouts and revisit their stated reason
-4. **MATTGPT-298:** update doc 05's salary line (salary questions get a polite reply instead of the nonsense banner)
-5. **MATTGPT-294:** move Career Arc from "Hardcoded" to "Read from the profile" in doc 12's MATT_DNA list
-6. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09
-7. **MATTGPT-236:** when the router leaves the answer path, revisit doc 05's "Admit gaps honestly" example ("That's outside Matt's experience.", the router banner) and the banner list under "Production Implementation"
+1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `ask_answer_model` (docs 02, 04 and 09 cite `ASK_ANSWER_MODEL` by name until then), `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`; the last golden run (doc 11's "Last run" line is typed with its date and evidence path until then); and stop using `eval_summary` until it reports a real run
+2. **MATTGPT-275 closer work:** when the code-rendered closer and profile contact links land, remove doc 05's PAUSED callouts and revisit their stated reason
+3. **MATTGPT-298:** update doc 05's salary line (salary questions get a polite reply instead of the nonsense banner)
+4. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09
+5. **MATTGPT-236:** when the router leaves the answer path, update the docs that describe Ask Agy's router redirects (02, 05, 09), and revisit doc 05's "Admit gaps honestly" example ("That's outside Matt's experience.", the router banner) and the banner list under "Production Implementation"
 
 ---
 
