@@ -28,7 +28,7 @@ Excel Master Sheet → JSONL Conversion → Semantic Enrichment → Embeddings �
 
 **Purpose:** Transform structured STAR stories from Excel into semantically searchable vectors while preserving data integrity and governance.
 
-**Guiding Principle:** **Excel is the single source of truth.** All content originates there. Scripts preserve, never overwrite.
+**Guiding Principle:** **Excel is the single source of truth.** All content originates there. The export rebuilds the JSONL from it on every run, after backing up the previous file.
 
 ---
 
@@ -36,7 +36,7 @@ Excel Master Sheet → JSONL Conversion → Semantic Enrichment → Embeddings �
 
 ### Purpose
 
-Convert Excel master sheet to structured JSONL format while preserving existing data.
+Convert the Excel master sheet to structured JSONL, rebuilt from Excel on every run.
 
 ### Script Details
 
@@ -51,10 +51,10 @@ Convert Excel master sheet to structured JSONL format while preserving existing 
 
 ### Key Features
 
-**Merge Strategy:**
+**Rebuild Rule:**
+- The JSONL is rebuilt from the Excel master on every run; nothing from the previous JSONL carries over (MATTGPT-323)
 - Excel is authoritative for `public_tags`: a blank Public Tags cell means blank tags in the JSONL
-- `content` is kept from the previous JSONL when Excel has none (it usually doesn't)
-- Fields that exist only in the previous JSONL are kept; fields Excel supplies are overwritten
+- `content` is written empty (Excel usually has none)
 - `id` is always regenerated as the `Title|Client` slug, e.g. `about-matt-my-leadership-journey|accenture`
 
 **Backup Protection:**
@@ -117,7 +117,7 @@ Comma-separated tags automatically split:
 - `"aws, cloud, platform"` → `["aws", "cloud", "platform"]`
 
 **IDs:**
-- Generated from Title and Client on every run (see Merge Strategy); an earlier id is replaced
+- Generated from Title and Client on every run (see Rebuild Rule); an earlier id is replaced
 
 ---
 
@@ -281,12 +281,10 @@ PINECONE_NAMESPACE=default
 Excel also owns `Interview Questions` (read from the sheet, split on `;`) and `public_tags` (a blank cell means blank tags).
 
 **JSONL Owns:**
-- `content`, kept from the previous JSONL when Excel has none
 - LLM-generated `public_tags` in `echo_star_stories_nlp.jsonl`, for stories whose Excel tags are blank
-- Any other field that exists only in the JSONL
 
-**Scripts Preserve:**
-- Merge strategy: Excel updates flow in and overwrite the fields Excel supplies; JSONL-only fields are kept
+**Scripts Guarantee:**
+- Rebuild: the export writes the JSONL from Excel alone; nothing from the previous JSONL carries over
 - Backup on write: timestamped `.bak-` copies prevent data loss
 
 ### January 2026 Sovereignty Patterns
@@ -296,8 +294,8 @@ Excel also owns `Interview Questions` (read from the sheet, split on `;`) and `p
 `MATT_DNA` is built at app startup by `generate_dynamic_dna()` in `backend_service.py`. Part of it is derived, part is read from the profile, and part is still written in code.
 
 - **Derived from the corpus:** clients grouped by Employer, Industry Experience (story counts and clients per Industry value), the themes list (`SYNTHESIS_THEMES`, built from the stories' Theme values at startup), and the practitioner count, parsed by regex from the Cloud Innovation Center story with a "150" fallback
-- **Read from the profile:** `self_description` in `data/matt_profile.json`
-- **Hardcoded in the template:** Career Arc (including employer dates), Theme Strengths, Signature Achievements, How Matt Wins Business, and Leadership Philosophy
+- **Read from the profile:** `self_description` and `career_arc` in `data/matt_profile.json`. The Career Arc renders its progression, each employer with years and an optional note, and current status from the profile; its Cloud Innovation Center line uses the derived practitioner count
+- **Hardcoded in the template:** Theme Strengths, Signature Achievements, How Matt Wins Business, and Leadership Philosophy
 
 Verbatim identity terms such as "builder" and "modernizer" are not part of MATT_DNA: `get_verbatim_requirement()` in `prompts.py` requires them for every Professional Narrative story a `search_stories` call returns whose `5PSummary` uses them.
 
