@@ -103,7 +103,7 @@ The MVP phase consciously accepted limitations to accelerate learning:
 ## Ask Agy Answer Pipeline
 
 **Status:** Implemented October 2026 (MATTGPT-275), replacing the January 2026 5-stage pipeline
-**Quality:** the golden eval ({{ site.data.facts.eval_query_count }} queries) calls `agy_answer()`; no golden eval has run on the shipped pipeline yet (see [Testing and Quality](11-testing-and-quality))
+**Quality:** the golden eval ({{ site.data.facts.eval_query_count }} queries) calls `agy_answer()`; for the last run on the shipped pipeline, see [Testing and Quality](11-testing-and-quality#rag-quality-evaluation)
 
 `send_to_backend()` calls `agy_answer()` in `backend_service.py`. The app repo's `ARCHITECTURE.md` (Production RAG Pipeline and Component Contracts) is the source for the values named here.
 
@@ -423,7 +423,7 @@ For data governance, sovereignty patterns, Pinecone metadata casing, anti-patter
 
 - Production Streamlit application at [askmattgpt.streamlit.app](https://askmattgpt.streamlit.app)
 - **Ask Agy answer pipeline**: nonsense rules and router redirects, then a tool loop in which the model searches the stories and streams its answer (`ASK_ANSWER_MODEL` in `config/constants.py`)
-- **Golden eval** of {{ site.data.facts.eval_query_count }} queries, run by hand; no run yet on the October 2026 pipeline
+- **Golden eval** of {{ site.data.facts.eval_query_count }} queries, run by hand; last run and result in [Testing and Quality](11-testing-and-quality#rag-quality-evaluation)
 - **Semantic router** with {{ site.data.facts.intent_family_count }} intent families + out-of-scope/personal detection
 - **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
 - **Query analytics**: event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
