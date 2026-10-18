@@ -197,13 +197,13 @@ Delivery and technical depth questions requiring precise story retrieval.
 
 ### 6. Entity Detection
 
-Employer and Division questions. Since MATTGPT-275 removed `detect_entity()`, this category is skipped and always passes; the queries are kept as text.
+Employer and Division questions. Since MATTGPT-275 removed `detect_entity()`, `evaluate_query()` skips the entity check and passes these queries; the structural checks in `test_structural_assertions.py` still run them.
 
 **Example Queries:**
 - "Show me Accenture projects"
 - "Tell me about Cloud Innovation Center work"
 
-**Expected Behavior:** none checked (skipped)
+**Expected Behavior:** no entity check; the structural checks apply
 
 ### 7. Marketing
 
@@ -378,7 +378,7 @@ Other keys in use include `expected_behavior`, `ground_truth`, `min_matches`, `m
 
 ### Pass Rate Breakdown
 
-The eval suite covers the categories above: narrative, client, intent, edge, surgical, marketing, and context story. The entity detection queries are kept as query text but no test runs them, since `detect_entity()` was removed in MATTGPT-275.
+The eval suite covers the categories above: narrative, client, intent, edge, surgical, marketing, and context story. Since MATTGPT-275 removed `detect_entity()`, the entity detection queries no longer check entity scoping: `evaluate_query()` marks them skipped and passed, and `test_structural_assertions.py` still runs them through its voice, meta-commentary and structural checks.
 
 ### Flaky Test Handling
 
