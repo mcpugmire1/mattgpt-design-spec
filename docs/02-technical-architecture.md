@@ -145,6 +145,9 @@ graph LR
 - Answer text streams with `normalize_dashes()` applied
 - When the turn finishes, the streamed text is replaced by `_postprocess_agy_text()`'s output
 - Sources are every story the searches returned, deduplicated; source cards show what was retrieved, not what the answer cited
+- Story cards are capped at `SOURCES_MAX_SURGICAL` (`conversation_helpers.py`): `agy_answer()` sets no query intent, so the larger synthesis cap never applies
+- When the answer states a fact from Matt's profile, the prompt asks the model to end with that category's marker (`_MARKER_INSTRUCTION` in `prompts.py`); `_postprocess_agy_text()` strips the markers and returns the cited categories as `profile_categories`
+- Each cited category gets a full-width fact card, labelled "From Matt's profile", stacked above the story cards and not counted toward their cap (MATTGPT-250). `_fact_card_html()` reads its entries from `data/matt_profile.json`, never from the answer text. If the profile can't be read, the fact cards are skipped and the error is logged
 
 **No longer in Ask Agy:** the confidence gate (search confidence does not decide whether Ask Agy answers), entity detection and pinning, theme-filtered synthesis retrieval, and fixed temperatures. My Work still uses the confidence tiers for its own relevance banners.
 
