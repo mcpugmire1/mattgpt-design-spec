@@ -442,8 +442,13 @@ All 5 sections fully written with substantive personal content: Why I Built This
 1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `ask_answer_model` (docs 02, 04 and 09 cite `ASK_ANSWER_MODEL` by name until then), `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`; the last golden run (doc 11's "Last run" line is typed with its date and evidence path until then); and stop using `eval_summary` until it reports a real run
 2. **MATTGPT-275 closer work:** when the code-rendered closer and profile contact links land, remove doc 05's PAUSED callouts and revisit their stated reason
 3. **MATTGPT-298:** update doc 05's salary line (salary questions get a polite reply instead of the nonsense banner)
-4. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09
-5. **MATTGPT-236:** when the router leaves the answer path, update the docs that describe Ask Agy's router redirects (02, 05, 09), and revisit doc 05's "Admit gaps honestly" example ("That's outside Matt's experience.", the router banner) and the banner list under "Production Implementation"
+4. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09 and describe the logged fallback, which is not shown as search results
+5. **MATTGPT-236:** when the router leaves the answer path, update the docs that describe Ask Agy's router redirects (02, 05, 09), and revisit doc 05's "Admit gaps honestly" example ("That's outside Matt's experience.", the router banner) and the banner list under "Production Implementation". Doc 05's personal banner ("age, identity") becomes rule 0b's decline for the questions ADR 054 moves; check identity questions against the code, since ADR 054 doesn't name them. Breadth on big-picture and named division or client questions, with more than 3 cards, is described once the replacement signal is decided and lands (with MATTGPT-338)
+6. **MATTGPT-128:** source cards are the stories the answer cited, not every story retrieved: doc 02's Step 5 and doc 01 say the opposite today. Fact answers show no story cards beside the fact cards
+7. **MATTGPT-340:** the opener is code-picked and used word for word; doc 05's Quick Reference and Templates say the model writes its own first line
+8. **MATTGPT-338:** doc 11's entity detection line says `evaluate_query()` marks those queries skipped and passed; once -338 lands they are skipped and not passed
+9. **Wording variants:** when a variants measure runs on `agy_answer()`, describe coverage beyond synonyms (misspellings, punctuation, natural phrasing)
+10. **After the MATTGPT-128 governor trial:** draft a change-governance page (removal list, Decision trailers, governor and checker, decision packet, guard hooks; the 1095d2c walkthrough as the case), shown in chat first; revisit `index.md`'s "What holds" and "With a team" lines
 
 ---
 
