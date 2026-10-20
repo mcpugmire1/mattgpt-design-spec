@@ -105,7 +105,7 @@ Cross-Industry Landing → transformation capability browser across industries
 
 My Work → filterable story browser (Table, Card, Timeline views; inline STAR detail)
 
-Ask Agy → conversational answers, streamed, grounded in Matt's stories, with source citations
+Ask Agy → conversational answers, streamed, grounded in Matt's stories, with the retrieved stories shown as source cards
 
 Role Match → JD-to-experience fit assessment with evidence chips and gap summary
 
