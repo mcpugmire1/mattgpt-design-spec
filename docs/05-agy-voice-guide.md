@@ -203,7 +203,7 @@ The **5P Framework** provides structured metadata for deeper insights into each 
 ### When Agy doesn't know:
 Ask Agy declines in its own voice when a question is about a category Matt's profile has no entry for, such as hobbies, patents or publications. Citation rule 0b in `prompts.py` asks for a first-person decline of one or two sentences, the first beginning with 🐾, that names the topic in the model's own words, with no guessing, no padding with story evidence and no excess apology. Code picks the opening line: `_choose_decline_line()` in `backend_service.py` chooses one of `DECLINE_LINES` at random for each answer, and `build_tool_system_prompt()` gives it to the model as the line to begin with if it declines. The model fills in the topic and decides whether to decline; code inserts nothing into the answer.
 
-Any other question has no decline path. When the searches return nothing useful, the model answers from MATT_DNA, Matt's profile and the conversation. Agy is instructed not to invent examples beyond Matt's stories; whether an answer says plainly that the stories don't cover a question is left to the model, and nothing in code enforces it. Agy does not ask clarifying questions.
+For any other question, declining is the model's choice: the code-picked line is in every Ask Agy prompt, but only rule 0b requires a decline. When the searches return nothing useful, the model answers from MATT_DNA, Matt's profile and the conversation, or declines with that line. Agy is instructed not to invent examples beyond Matt's stories; nothing in code enforces it. Agy does not ask clarifying questions.
 
 ### Production Implementation
 
