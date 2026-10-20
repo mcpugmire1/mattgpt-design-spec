@@ -449,6 +449,18 @@ All 5 sections fully written with substantive personal content: Why I Built This
 8. **MATTGPT-338:** doc 11's entity detection line says `evaluate_query()` marks those queries skipped and passed; once -338 lands they are skipped and not passed
 9. **Wording variants:** when a variants measure runs on `agy_answer()`, describe coverage beyond synonyms (misspellings, punctuation, natural phrasing)
 10. **After the MATTGPT-128 governor trial:** draft a change-governance page (removal list, Decision trailers, governor and checker, decision packet, guard hooks; the 1095d2c walkthrough as the case), shown in chat first; revisit `index.md`'s "What holds" and "With a team" lines
+11. **Role Match intent lines** (Arch Governor's checker-passed draft, Oct 20, 2026, against app 4753532, which was not yet on `origin/main` when queued; re-check each against `origin/main` before writing). Form: the intent in one sentence plus links to the records behind it; link app-side ADRs and tickets rather than restating them. Do these after the out-of-date fixes.
+    - R1 honest rating: add the under-call half (MATTGPT-244 acceptance); the rest is in `index.md` "The decisions" and doc 03 J1
+    - R2 verbatim extraction, steady requirement count: ADR 052, MATTGPT-160, MATTGPT-302 (G1: doc 03 J1, doc 09 Services Layer)
+    - R3 evidence-backed, nothing invented, a strong rating cites at least one item: the assessor prompt in `services/jd_assessor.py`, MATTGPT-244 (G2: docs 03 J1 and 01)
+    - R4 under 90 seconds: already stated; no measurement defined (scorecard section 4, MATTGPT-160)
+    - R5 agrees with Ask Agy: MATTGPT-268, MATTGPT-309 (G3: doc 03 J3 has it only as a failure mode)
+    - R6 recommendation and fit score in the private view only: MATTGPT-012 (G4; waits on -012). The "private view" line in doc 02 What's Live goes with the out-of-date fixes
+    - R7 no dashes in model-written text, except the JD's own wording or a cited story title: MATTGPT-302, ADR 048 (G5: doc 05 Implementation Notes covers Ask Agy only; wording waits on -302's D2)
+    - R8 failures visible, a failed row marked unassessed, not dropped: scorecard driver 7 (G6: doc 09 Error Handling; retry and timeout wait on D10 at -302's go)
+    - R9 Role Match's model name from `config/constants.py`: MATTGPT-302, MATTGPT-140 (G7: doc 02 Model Configuration; changes when -302 or -140 lands)
+    - R10 desktop only, a gate below 1024px: ADR 062 (app dd73b45, not yet on `origin/main` when queued), `role_match.feature` "DESKTOP ONLY" scenarios (G8)
+12. **Revisit the sync skill and the process** once the coverage gaps are closed: the spec holds intent, decisions and the visitor experience; code detail lives in `ARCHITECTURE.md` and the ADRs; Arch sync tags spec-visible ADRs onto this queue
 
 ---
 
