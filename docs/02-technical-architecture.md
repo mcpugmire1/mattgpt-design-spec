@@ -428,7 +428,7 @@ For data governance, sovereignty patterns, Pinecone metadata casing, anti-patter
 - **Ask Agy answer pipeline**: nonsense rules and router redirects, then a tool loop in which the model searches the stories and streams its answer (`ASK_ANSWER_MODEL` in `config/constants.py`)
 - **Golden eval** of {{ site.data.facts.eval_query_count }} queries, run by hand; last run and result in [Testing and Quality](11-testing-and-quality#rag-quality-evaluation)
 - **Semantic router** with {{ site.data.facts.intent_family_count }} intent families + out-of-scope/personal detection
-- **Role Match**: JD-to-experience matching (Phases 1-3: recruiter view, evidence chips, action buttons; Phase 4 slice 1: lock icon + password gate for private view)
+- **Role Match**: JD-to-experience matching (recruiter view, evidence chips, action buttons); the private view for Matt (MATTGPT-012) is not built yet
 - **Query analytics**: event logger to Google Sheets (assessment, chip click, action button, UTM attribution)
 - **Triage agent surface**: `scripts/assess_jd.py` CLI wraps `jd_assessor.py` for external agent orchestration (engine-as-adapter pattern)
 - 100+ STAR-structured project stories
