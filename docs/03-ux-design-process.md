@@ -25,7 +25,7 @@ MattGPT is designed around four audience journeys, not surfaces. The navigation 
 
 **Path:**
 1. Lands on Home, passes 3-second test
-2. Locates Role Match in navigation (fourth item)
+2. Clicks "Match it" in the Home hero, or Role Match in the navigation
 3. Pastes JD → receives fit assessment with evidence-backed ratings
 4. Reviews matched experience, gap assessment, and logistics (location, work model, availability)
 5. Exports candidate brief → forwards to hiring manager in under 30 seconds
@@ -88,7 +88,7 @@ MattGPT is designed around four audience journeys, not surfaces. The navigation 
 - A clean URL to embed
 - Confidence that what the recipient sees matches what the intro promised
 
-**Failure modes:** No clear "this is the language about Matt" surface. Voice block uses pitch-register or consulting-deck language the referrer can't reuse in a Slack DM. No copy-intro-language affordance: PDF export and URL copy exist, but pre-composed third-person text formatted for pasting does not.
+**Failure modes:** No clear "this is the language about Matt" surface. Voice block uses pitch-register or consulting-deck language the referrer can't reuse in a Slack DM. No copy-intro-language affordance: pre-composed third-person text formatted for pasting. My Profile now has one ("Copy this intro language"), beside the PDF download.
 
 ---
 
@@ -99,7 +99,7 @@ MattGPT is designed around four audience journeys, not surfaces. The navigation 
 ```
 Home → capability entry points routing visitors to the right surface
 
-Banking Landing → client and capability filters into banking project stories
+Banking Landing → named banking clients, and capability cards that filter into banking project stories
 
 Cross-Industry Landing → transformation capability browser across industries
 
