@@ -119,60 +119,51 @@ For the full search and retrieval pipeline, see [Technical Architecture](02-tech
 
 ## Decisions by Surface
 
-The decisions that shape what each surface does, one line each. The reasoning, alternatives and detail live in the app repo's ADRs, cited by number. A decision marked *no ADR yet* is made and running, but not yet recorded as an ADR.
+The decisions that shape what each surface does, one line each. The full record, with reasoning and alternatives, is the app repo's [ADR.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/docs/ADR.md).
 
 ### Ask Agy
 
-Records: [ADR.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/docs/ADR.md)
-
-- Ask Agy is a conversation; retrieval is its evidence step, and the model writes its own searches (ADR 040, ADR 047)
-- The first call always searches (ADR 047)
-- Search confidence never decides whether Agy answers; rules catch garbage input (ADR 047)
-- Follow-ups carry the recent conversation (ADR 034)
-- Questions naming Matt get past the general-topic rules; roleplay has its own rule (ADR 043)
-- Off-topic questions about other people are the nonsense rules' job, not the router's (ADR 045)
-- Profile facts are stated as written; a direct no is reserved for certifications (ADR 030)
-- MATT_DNA states only what a story or the profile backs (ADR 036)
-- There is no list of clients to avoid; the list of real clients does that job (ADR 037)
-- Matt's self-description is labelled as his own words and used by Ask Agy only (ADR 038)
-- Industry experience comes from the stories, not a hand list (ADR 042)
-- No closing offers (ADR 035)
-- No dashes (ADR 048)
-- Comparisons only on a measure both stories give (ADR 049)
-- A broken answer gets one retry, then an honest message (ADR 050)
-- Story dates reach the model (ADR 051)
-- Questions about a profile topic Matt has nothing on get a decline in Agy's voice (*no ADR yet*; MATTGPT-322)
-- Code removes evaluative sentences as a backstop to the prompt (*no ADR yet*)
+- Ask Agy is a conversation; retrieval is its evidence step, and the model writes its own searches
+- The first call always searches
+- Search confidence never decides whether Agy answers; rules catch garbage input
+- Follow-ups carry the recent conversation
+- Questions naming Matt get past the general-topic rules; roleplay has its own rule
+- Off-topic questions about other people are the nonsense rules' job, not the router's
+- Profile facts are stated as written; a direct no is reserved for certifications
+- MATT_DNA states only what a story or the profile backs
+- There is no list of clients to avoid; the list of real clients does that job
+- Matt's self-description is labelled as his own words and used by Ask Agy only
+- Industry experience comes from the stories, not a hand list
+- No closing offers
+- No dashes
+- Comparisons only on a measure both stories give
+- A broken answer gets one retry, then an honest message
+- Story dates reach the model
+- Questions about a profile topic Matt has nothing on get a decline in Agy's voice
 
 ### Role Match
 
-Records: [ADR.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/docs/ADR.md)
-
-- Extract the requirements, then retrieve and assess each one (ADR 016)
-- Each row shows the JD's own bullet word for word (ADR 052)
-- Matt's self-description is kept out of the assessment (ADR 038)
-- Logistics are shown as facts, never scored as requirements (*no ADR yet*)
-- Rows the run didn't reach show as unassessed, never as gaps (*no ADR yet*; MATTGPT-248)
-- Share and Export carry what the screen shows (*no ADR yet*)
-- A paste that isn't a JD never reaches the model (*no ADR yet*; MATTGPT-240)
+- Extract the requirements, then retrieve and assess each one
+- Each row shows the JD's own bullet word for word
+- Matt's self-description is kept out of the assessment
+- Logistics are shown as facts, never scored as requirements
+- Rows the run didn't reach show as unassessed, never as gaps
+- Share and Export carry what the screen shows
+- A paste that isn't a JD never reaches the model
 
 ### My Work
 
-Records: [ADR.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/docs/ADR.md)
-
-- Weak matches get a soft warning so the visitor can refine; this tier is My Work only (ADR 033, kept for My Work by ADR 047)
-- The Table is a native grid, not AgGrid, so its rows are checked by eye, not by tests (ADR 032)
-- The default view leaves out narrative stories, so the first impression is the project portfolio (*no ADR yet*)
-- During a search outage, results are hidden rather than shown as a fallback (*no ADR yet*; MATTGPT-230)
+- Weak matches get a soft warning so the visitor can refine; this tier is My Work only
+- The Table is a native grid, not AgGrid, so its rows are checked by eye, not by tests
+- The default view leaves out narrative stories, so the first impression is the project portfolio
+- During a search outage, results are hidden rather than shown as a fallback
 
 ### Home and Landing Pages
 
-Records: [ADR.md](https://github.com/mcpugmire1/llm_portfolio_assistant/blob/main/docs/ADR.md)
-
-- No STAR or 5P jargon in the UI (ADR 012)
-- Cross-Industry shows no client count, because that work is anonymized (*no ADR yet*)
-- Capabilities backed by one story are shown on purpose (*no ADR yet*)
-- Narrative stories stay off landing cards and counts (*no ADR yet*)
+- No STAR or 5P jargon in the UI
+- Cross-Industry shows no client count, because that work is anonymized
+- Capabilities backed by one story are shown on purpose
+- Narrative stories stay off landing cards and counts
 
 ---
 
