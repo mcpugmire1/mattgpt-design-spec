@@ -19,7 +19,7 @@
 
 Four visitor types shaped the surface design. Each needs something different from the same story corpus.
 
-**A recruiter with a job description** needs a fast, forwardable fit signal. Role Match takes the JD, returns a scored assessment with evidence-backed ratings and a gap summary, and produces an artifact a hiring manager can act on in under 90 seconds.
+**A recruiter with a job description** needs a fast, forwardable fit signal. Role Match takes the JD, rates each requirement with the evidence behind it, summarizes the gaps, and produces an artifact a hiring manager can act on in under 90 seconds.
 
 **A recruiter doing inbound triage** needs six facts in 30 seconds: level, last company, last team size, geo, current status, target titles. My Profile is the entry point. No digging required.
 
