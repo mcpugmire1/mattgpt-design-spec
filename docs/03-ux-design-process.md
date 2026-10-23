@@ -132,7 +132,7 @@ The decisions that shape what each surface does, one line each. The full record,
 - Profile facts are stated as written; a direct no is reserved for certifications
 - MATT_DNA states only what a story or the profile backs
 - There is no list of clients to avoid; the list of real clients does that job
-- Matt's self-description is labelled as his own words and used by Ask Agy only
+- The self-description in Matt's profile is labelled as his own words and used by Ask Agy only
 - Industry experience comes from the stories, not a hand list
 - No closing offers
 - No dashes
@@ -145,7 +145,7 @@ The decisions that shape what each surface does, one line each. The full record,
 
 - Extract the requirements, then retrieve and assess each one
 - Each row shows the JD's own bullet word for word
-- Matt's self-description is kept out of the assessment
+- The self-description in Matt's profile is kept out of the assessment
 - Logistics are shown as facts, never scored as requirements
 - Rows the run didn't reach show as unassessed, never as gaps
 - Share and Export carry what the screen shows
