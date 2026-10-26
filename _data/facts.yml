@@ -60,7 +60,7 @@ bdd_feature_files:
   - "why_agy_dialog.feature"
 bdd_scenario_count: 448
 bdd_summary: "448 scenarios across 43 feature files"
-chat_model: "gpt-4o"
+chat_model: "gpt-5.6-terra"
 component_count: 13
 components:
   - "action_buttons.py"
@@ -116,7 +116,7 @@ router_soft_accept: 0.4
 search_top_k: 25
 story_count: 124
 story_count_label: "100+"
-unit_test_file_count: 57
+unit_test_file_count: 61
 unit_test_files:
   - "test_ask_agy_button_css.py"
   - "test_ask_agy_history.py"
@@ -154,13 +154,16 @@ unit_test_files:
   - "test_nonsense_portfolio_questions.py"
   - "test_pinecone_egress.py"
   - "test_pinecone_service.py"
+  - "test_pre_commit_config.py"
   - "test_profile_facts_return_shape.py"
   - "test_query_logger.py"
   - "test_rag_service.py"
+  - "test_required_extraction_responsibilities.py"
   - "test_role_match_assessment_flag.py"
   - "test_role_match_chip_toggle.py"
   - "test_role_match_gate.py"
   - "test_role_match_logging.py"
+  - "test_role_match_model.py"
   - "test_role_match_pending_row.py"
   - "test_role_match_render.py"
   - "test_role_match_timing.py"
@@ -175,3 +178,4 @@ unit_test_files:
   - "test_thinking_indicator.py"
   - "test_utils.py"
   - "test_validation.py"
+  - "test_work_model.py"
