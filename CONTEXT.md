@@ -439,7 +439,7 @@ All 5 sections fully written with substantive personal content: Why I Built This
 
 ## Next Steps (Immediate Priorities)
 
-1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `ask_answer_model` (docs 02, 04 and 09 cite `ASK_ANSWER_MODEL` by name until then), `role_match_model` (ticket text given to Matt Oct 28, 2026: rename `chat_model`, which since app 466b55a holds Role Match's model; doc 02 cites `DEFAULT_CHAT_MODEL` by name until then), `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`; the last golden run (doc 11's "Last run" line is typed with its date and evidence path until then); and stop using `eval_summary` until it reports a real run
+1. **Swap hand-typed values for facts** once `extract_facts.py` emits them: `ask_answer_model` (docs 02, 04 and 09 cite `ASK_ANSWER_MODEL` by name until then), `role_match_model` (MATTGPT-373: rename `chat_model`, which since app 466b55a holds Role Match's model; doc 02 cites `DEFAULT_CHAT_MODEL` by name until then), `standard_openers`, `synthesis_openers`, `banner_copy`, `w_pc`, `w_kw`; the last golden run (doc 11's "Last run" line is typed with its date and evidence path until then); and stop using `eval_summary` until it reports a real run
 2. **MATTGPT-275 closer work:** when the code-rendered closer and profile contact links land, remove doc 05's PAUSED callouts and revisit their stated reason
 3. **MATTGPT-298:** update doc 05's salary line (salary questions get a polite reply instead of the nonsense banner)
 4. **MATTGPT-292:** when the file-order fallback is fixed, drop the known-issue notes in docs 02 and 09 and describe the logged fallback, which is not shown as search results
@@ -459,9 +459,10 @@ All 5 sections fully written with substantive personal content: Why I Built This
     - R7 no dashes in model-written text, except the JD's own wording or a cited story title: MATTGPT-302, ADR 048 (G5: doc 05 Implementation Notes covers Ask Agy only; wording waits on -302's D2)
     - R8 failures visible, a failed row marked unassessed, not dropped: scorecard driver 7 (G6: doc 09 Error Handling; retry and timeout wait on D10 at -302's go)
     - R9 Role Match's model name from `config/constants.py`: MATTGPT-302, MATTGPT-140 (G7: doc 02 Model Configuration; changes when -302 or -140 lands)
-    - R10 desktop only, a gate below 1024px: ADR 062 (app dd73b45, not yet on `origin/main` when queued), `role_match.feature` "DESKTOP ONLY" scenarios (G8)
+    - R10 desktop only, a gate below 1024px: ADR 062 (app dd73b45, not yet on `origin/main` when queued), `role_match.feature` "DESKTOP ONLY" scenarios (G8). The gate reads the width of `streamlit_js_eval`'s frame, not the window, once per session (app ticket filed Oct 28, 2026, lane 2): state the decision (desktop only), not a pixel cutoff
 12. **Revisit the sync skill and the process** once the coverage gaps are closed: the spec holds intent, decisions and the visitor experience; code detail lives in `ARCHITECTURE.md` and the ADRs; Arch sync tags spec-visible ADRs onto this queue
 13. **MATTGPT-372, Agy's voice:** hold doc 05's "Who is Agy?", Voice DNA and Voice Principles until the ticket settles which description is the real one. Doc 05 describes a persona (traits, the 60/30/10 blend, tracking metaphors, dry humor) that `BASE_PROMPT` in `prompts.py` doesn't carry; its "## VOICE" block is warm, steady, grounded, confident and calm. Doc 05 calls Agy "he", `BASE_PROMPT` "she". Check visitor-facing copy with the `agy-voice-review` skill
+14. **Doc 11 Value Scorecard (MATTGPT-370):** the section is drafted in the working tree; commit once app 299f7f3, 98175da and 0e22bb2 are on `origin/main`, after re-checking each claim against `docs/value_scorecard.md` there and confirming the GitHub link shows the new file
 
 ---
 
