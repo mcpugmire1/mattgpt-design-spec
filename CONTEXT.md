@@ -33,7 +33,7 @@ MATTGPT-275 (app 1095d2c) retired `rag_answer()`: Ask Agy now runs the nonsense 
 - **Nav and wireframes:** nav em dashes and doc 08 description fixed; legacy prototypes moved to `archive/wireframes-legacy/` (they were unlinked but still published); v4 marked superseded where the app moved on
 
 **Found along the way (app side, handed to the backlog session):**
-- `facts.chat_model` comes from `DEFAULT_CHAT_MODEL`, which nothing in production reads; the answer model (`ASK_ANSWER_MODEL`) is not synced, so the docs cite the constant by name
+- `facts.chat_model` comes from `DEFAULT_CHAT_MODEL`, which nothing in production reads (until 466b55a, when Role Match moved onto it); the answer model (`ASK_ANSWER_MODEL`) is not synced, so the docs cite the constant by name
 - No golden eval has run on the shipped pipeline; Q59's `xfail_reason` still cites the retired gate
 - When Pinecone returns no hits, `semantic_search()` falls back to the corpus in file order (MATTGPT-292)
 - The How Agy Searches dialog says Agy "says so plainly" when no story covers a question; the prompt instructs that only for profile categories (rule 0b)
@@ -461,7 +461,7 @@ All 5 sections fully written with substantive personal content: Why I Built This
     - R9 Role Match's model name from `config/constants.py`: MATTGPT-302, MATTGPT-140 (G7: doc 02 Model Configuration; changes when -302 or -140 lands)
     - R10 desktop only, a gate below 1024px: ADR 062 (app dd73b45, not yet on `origin/main` when queued), `role_match.feature` "DESKTOP ONLY" scenarios (G8)
 12. **Revisit the sync skill and the process** once the coverage gaps are closed: the spec holds intent, decisions and the visitor experience; code detail lives in `ARCHITECTURE.md` and the ADRs; Arch sync tags spec-visible ADRs onto this queue
-13. **Agy's voice** (Matt's voice ticket; key to come from Matt): hold doc 05's "Who is Agy?", Voice DNA and Voice Principles until the ticket settles which description is the real one. Doc 05 describes a persona (traits, the 60/30/10 blend, tracking metaphors, dry humor) that `BASE_PROMPT` in `prompts.py` doesn't carry; its "## VOICE" block is warm, steady, grounded, confident and calm. Doc 05 calls Agy "he", `BASE_PROMPT` "she". Check visitor-facing copy with the `agy-voice-review` skill
+13. **MATTGPT-372, Agy's voice:** hold doc 05's "Who is Agy?", Voice DNA and Voice Principles until the ticket settles which description is the real one. Doc 05 describes a persona (traits, the 60/30/10 blend, tracking metaphors, dry humor) that `BASE_PROMPT` in `prompts.py` doesn't carry; its "## VOICE" block is warm, steady, grounded, confident and calm. Doc 05 calls Agy "he", `BASE_PROMPT` "she". Check visitor-facing copy with the `agy-voice-review` skill
 
 ---
 
