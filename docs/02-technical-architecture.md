@@ -348,12 +348,14 @@ SEARCH_TOP_K = {{ site.data.facts.search_top_k }}         # Stories to fetch (he
                           # Centralized Jan 2026 - was 100/7 conflict
 ```
 
-**Model Configuration** (values in `config/constants.py`; the answer model is not yet a synced fact):
+**Model Configuration** (values in `config/constants.py`; the model names are not cited as synced facts yet):
 ```python
 ASK_ANSWER_MODEL              # Ask Agy's answer model, Responses API, streamed
 ASK_ANSWER_REASONING_EFFORT   # Reasoning effort for the answer model
 ASK_TOOL_MAX_ROUNDS           # Calls that may search before the answer call
 ASK_HISTORY_MAX_MESSAGES      # Conversation messages sent with each question
+DEFAULT_CHAT_MODEL            # Role Match's model, for extraction and assessment
+DEFAULT_REASONING_EFFORT      # Reasoning effort for Role Match's calls
 DEFAULT_EMBEDDING_MODEL = "{{ site.data.facts.embedding_model }}"  # 1536 dimensions
 ```
 
